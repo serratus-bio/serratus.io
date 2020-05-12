@@ -1,0 +1,7 @@
+main:
+  - title: "About"
+    url: /about/
+  - title: "Team"
+    url: /team/
+  - title: "Contributing"
+    url: /contributing/
