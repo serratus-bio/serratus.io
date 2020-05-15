@@ -7,6 +7,7 @@ twitter_username: jekyllrb
 github_username:  jekyll
 
 # Build settings
-theme: minimal-mistakes-jekyll
+remote_theme: "mmistakes/minimal-mistakes@4.19.2"
 plugins:
   - jekyll-feed
+  - jekyll-include-cache
