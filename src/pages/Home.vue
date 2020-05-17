@@ -2,7 +2,7 @@
     <div class="h-screen flex flex-col items-center bg-blue-500 justify-center">
         <img src="@/assets/images/serratus.jpg" alt="serratus home" class="absolute top-0 h-full w-full">
         <div class="flex flex-col z-10 items-center text-white ">
-            <h1 class="text-5xl font-semibold text-center">Welcome to Serratus</h1>
+            <h1 class="text-5xl font-semibold text-center">Welcome to Serratus!</h1>
             <h1 class="text-xl font-light text-center">An open source, <strong> ultra-deep </strong>  search for Novel Coronaviruses.</h1>
             <a onClick="window.open(this.href); return false" href="https://github.com/ababaian/serratus" class="border border-white flex text-xl mt-16 justify-center items-center w-auto  px-6 py-2 mt-4 rounded-md hover:text-blue-600 hover:bg-white"> 
 
