@@ -1,6 +1,6 @@
 <template>
   <section class="text-blue-700 body-font bg-white h-screen flex flex-col justify-center">
-    <div class="container px-5 py-24 mx-auto">
+    <div class="container px-5 py-24 mx-auto mt-12">
       <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
         <div class="p-4 md:w-1/3 sm:mb-0 mb-6">
           <div
@@ -149,7 +149,7 @@
           >NCBI SRA Database</h2>
           <p
             class="text-lg text-gray-800 leading-relaxed mt-2 text-center"
-          >The NCBI SRA database contains over 1 million RNA-seq libraries amounting to a whopping 5.72 petabytes (yes, that prefix is right, peta-bytes) of data. It is our goal to reanalyze all of these sequences utilizing our ultra-high throughput analysis pipeline hosted on Aamazon Web Service's (AWS) Cloud Computing.</p>
+          >The NCBI SRA database contains over 1 million RNA-seq libraries amounting to a whopping 5.72 petabytes (yes, that prefix is right, peta-bytes) of data. It is our goal to reanalyze all of these sequences utilizing our ultra-high throughput analysis pipeline hosted on Amazon Web Service's (AWS) Cloud Computing.</p>
         </div>
         <div class="p-4 md:w-1/3 sm:mb-0 mb-6">
           <div

@@ -11,13 +11,14 @@
 
 <script>
 import Navbar from './components/Navbar.vue'
+
 // import Landing from './components/Landing.vue'
 import './assets/css/tailwind.css' 
 
 export default {
   name: 'App',
   components: {
-    Navbar
+    Navbar,
   }
 }
 </script>

@@ -2,6 +2,7 @@
   <header class="text-gray-700 body-font top-0 fixed w-full bg-white shadow-lg">
     <div class="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
       <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+
         <img src="../assets/images/serrlogo.png" class="w-8 h-8"/>
         <span class="ml-3 text-xl">Serratus</span>
       </a>
@@ -27,5 +28,8 @@ export default {
 </script>
 
 <style scoped>
+logo {
+  filter: invert(100%)
+}
 
 </style>

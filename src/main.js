@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import VueRouter from 'vue-router'
+import VueYouTubeEmbed from 'vue-youtube-embed'
 // import Home from './pages/Home.vue'
 import About from './pages/Why.vue'
 import Info from './pages/Info.vue'
@@ -16,6 +17,8 @@ Vue.config.productionTip = false
 // component: () => import('../views/Dashboard.vue')
 
 Vue.use(VueRouter)
+
+Vue.use(VueYouTubeEmbed)
 
 const routes = [
   { path: '/', component: Landing },
