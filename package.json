@@ -6,7 +6,7 @@
   "homepage": "https://github.com/myusername/my-app",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --no-clean",
     "lint": "vue-cli-service lint",
     "deploy": "node ./node_modules/vue-gh-pages/index.js"
   },
