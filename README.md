@@ -1,24 +1,20 @@
-# serratus-vue
+# serratus.io
 
-## Project setup
+Serratus website built using Vue.js.
+
+## Quickstart
+
+Clone the repository, build and preview the site locally:
+
 ```
+git clone https://github.com/serratus-bio/serratus.io.git
+cd serratus.io
 npm install
-```
-
-### Compiles and hot-reloads for development
-```
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Go to http://localhost:8080/
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Useful links
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [Vue.js Configuration Reference](https://cli.vuejs.org/config/)
