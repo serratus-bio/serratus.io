@@ -1,5 +1,13 @@
+@import url(//fonts.googleapis.com/css?family=Merriweather:900);
+
+
+
 @tailwind base;
 
 @tailwind components;
 
 @tailwind utilities;
+
+body {
+    overflow: hidden;
+}

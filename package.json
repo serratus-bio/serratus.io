@@ -10,7 +10,9 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "react-spring": "^8.0.27"
+    "react-scroll": "^1.7.16",
+    "react-spring": "^8.0.27",
+    "typeface-league-spartan": "0.0.44"
   },
   "scripts": {
     "build:css": "postcss src/styles/tailwind.css -o src/styles/main.css",
