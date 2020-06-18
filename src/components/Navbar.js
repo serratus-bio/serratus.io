@@ -8,7 +8,6 @@ const Navbar = () => {
 
     const handleClick = () => {
         setMenu(!menu)
-        console.log("hi")
     }
 
 
@@ -17,11 +16,11 @@ const Navbar = () => {
              
            {menu ? 
            <div>
-                <div className="flex flex-col fixed w-screen h-screen bg-gray-500 p-4 z-10 border-b-2 align-items justify-center border-gray-300 text-center">
-                <NavLink exact to="/" className="sm:invisible text-xl ml-32 p-6 text-size hover:text-blue-800"  onClick={() => handleClick()} activeClassName="text-blue-600">Home</NavLink>
-                <NavLink exact to="/About" className=" sm:invisible ml-32  text-xl p-6 hover:text-blue-800" onClick={() => handleClick()} activeClassName="text-blue-600">About</NavLink>
-                <NavLink exact to="/Projects" className="sm:invisible text-xl ml-32 p-6 hover:text-blue-800" onClick={() => handleClick()} activeClassName="text-blue-600">Projects</NavLink>
-                <a href="/danLohrResume.pdf" onClick={() => handleClick()} className=" sm:invisible text-xl font-mono ml-32 p-6 hover:text-blue-800" target="_blank">Resume</a>
+                <div className="flex flex-col fixed w-screen h-screen bg-gray-500 p-4 z-10 border-b-2 align-items justify-center border-gray-300 text-center mb-64 pb-32">
+                <NavLink exact to="/" className="sm:invisible font-mono text-xl ml-2 p-6 text-size hover:text-blue-800"  onClick={() => handleClick()} activeClassName="text-blue-600">Home</NavLink>
+                <NavLink exact to="/About" className=" sm:invisible font-mono ml-2  text-xl p-6 hover:text-blue-800" onClick={() => handleClick()} activeClassName="text-blue-600">About</NavLink>
+                <NavLink exact to="/Projects" className="sm:invisible font-mono text-xl ml-2 p-6 hover:text-blue-800" onClick={() => handleClick()} activeClassName="text-blue-600">Projects</NavLink>
+                <a href="/danLohrResume.pdf" onClick={() => handleClick()} className=" sm:invisible text-xl font-mono ml-2 p-6 hover:text-blue-800" target="_blank">Resume</a>
                </div> 
                </div>
                : 
