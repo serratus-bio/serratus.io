@@ -6,6 +6,7 @@ import requests
 app = Flask(__name__,
             static_folder = "./dist/assets",
             template_folder = "./dist")
+application = app  # for AWS EB
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 @app.route('/api/test')
