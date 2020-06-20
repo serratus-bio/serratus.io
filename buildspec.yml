@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - cd frontend
+      - npm install
+      - npm run build
+artifacts:
+  files:
+    - dist/**/*
+    - application.py
+    - requirements.txt
+    - .ebextensions/**/*
