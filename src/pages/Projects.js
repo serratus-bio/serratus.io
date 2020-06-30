@@ -43,10 +43,12 @@ function Projects() {
                         <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#Vue</span>
                         <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#TailwindCSS</span>
                         <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#AWS</span>
-                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#GitHub</span>
-                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2">#Docker</span>
+                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#Postgres</span>
+                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2">#CSharp</span>
+                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2">#.NETCore</span>
+                        <span class="inline-block bg-gray-300 hover:bg-gray-500 hover:text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2">#EFCore</span>
                       </div>
-                      <div className="flex flex-row p-4 justify-center">
+                      <div className="flex flex-row p-4 justify-center mt-2">
                       <a target="_blank" rel="noopener noreferrer" href="https://github.com/ababaian/serratus" ><img src="/gh.png" className=""></img></a>
                       </div>
                   </div>
