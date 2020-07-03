@@ -1,3 +1,5 @@
 flask
 flask-cors
 requests
+numpy
+matplotlib

@@ -11,5 +11,6 @@ artifacts:
     - dist/**/*
     - application.py
     - summary_parser.py
+    - summary_plotters.py
     - requirements.txt
     - .ebextensions/**/*
