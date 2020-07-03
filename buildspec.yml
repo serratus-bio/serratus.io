@@ -9,6 +9,6 @@ phases:
 artifacts:
   files:
     - dist/**/*
-    - application.py
+    - backend/**/*
     - requirements.txt
     - .ebextensions/**/*
