@@ -5,8 +5,8 @@ import requests
 from summary_parser import get_json
 
 app = Flask(__name__,
-            static_folder = "../dist/assets",
-            template_folder = "../dist")
+            static_folder = "./dist/assets",
+            template_folder = "./dist")
 app.config['JSON_SORT_KEYS'] = False
 application = app  # for AWS EB
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
