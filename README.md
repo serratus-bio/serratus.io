@@ -13,10 +13,17 @@ cd frontend
 npm install
 npm run build
 cd ..
-flask run
+bash run.sh
 ```
 
 Go to http://localhost:5000/
+
+## API (in development)
+
+- `/api/summary/<sra_accession>`: raw JSON of summary file
+    - Example: https://dev.serratus.io/api/summary/ERR2756788
+- `/api/summary/<sra_accession>/coverage_heatmap.png`: coverage heatmap constructed from coverage cartoons.
+    - Example: https://dev.serratus.io/api/summary/ERR2756788/coverage_heatmap.png
 
 ## Useful links
 
