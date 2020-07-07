@@ -2,7 +2,7 @@ import React from 'react'
 
 function Projects() {
     return (
-      <section class="text-blue-700 body-font bg-white h-screen flex flex-col justify-center">
+      <section class="text-blue-700 bg-blue-300 body-font h-screen flex flex-col justify-center">
       <div class="container px-5 py-24 mx-auto">
         <div class="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
           <div class="p-4 md:w-1/3 sm:mb-0 mb-6">
@@ -242,7 +242,7 @@ function Projects() {
             >Cloud Architecture</h2>
             <p
               class="text-lg text-gray-800 leading-relaxed mt-2 text-center"
-            >Since there is a lot of data, we need a lot of computers. AWS allows us to spin up hundreds of them at a single time to process data in parallel, utilizing the same bioinformatics pipeline on each of them. Serratus is currently operational, scaling up to 250 nodes with real time tracking and cluster performance analysis, but we are not stopping there..</p>
+            >Since there is a lot of data, we need a lot of computers. AWS allows us to spin up hundreds of them at a single time to process data in parallel, utilizing the same bioinformatics pipeline on each of them. Serratus is currently operational, scaling up to 250 nodes with real time tracking and cluster performance analysis, but we are not stopping there...</p>
           </div>
           <div class="p-4 md:w-1/3 sm:mb-0 mb-6">
             <div

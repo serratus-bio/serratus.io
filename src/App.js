@@ -6,6 +6,7 @@ import './styles/main.css';
 import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
+import Data from './pages/Data'
 // import Background from './images/background.jpg'
 
 const App = () => {
@@ -18,25 +19,32 @@ const App = () => {
   });
 
   return (
-    <>
+    // <>
+    <div>
       <Navbar></Navbar>
-      {transitions.map(({ item, props, key}) => (
-        <animated.div key={key} style={props}>
-          <Switch location={item} >
-              <Route exact path="/">
-                  <Home />
-              </Route>
-              <Route exact path="/About">
-                  <About/>
-              </Route>
-              <Route exact path="/Projects">
-                  <Projects/>
-              </Route>
-          </Switch>
-        </animated.div>
-      ))}
+      <Switch  >
+      <Route exact path="/">
+          <Home />
+      </Route>
+      <Route exact path="/Mission">
+          <About/>
+      </Route>
+      <Route exact path="/Technology">
+          <Projects/>
+      </Route>
+      <Route exact path="/Data">
+          <Data/>
+      </Route>
+  </Switch>
+    </div>
+
+    //   {/* {transitions.map(({ item, props, key}) => (
+    //     <animated.div key={key} style={props}> */}
+
+    //     {/* </animated.div>
+    //   ))}
     
-    </>
+    // </> */}
   );
 }
 
