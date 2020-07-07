@@ -3,14 +3,16 @@ import React from 'react';
 const Home = () => {
     return (
             
-            <div className="flex md:absolute w-screen flex-col h-screen justify-center items-center" >
-            <img src="/background.jpg" className="opacity-75" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
-            <div className="flex absolute w-full flex-col h-screen justify-center items-center">
-                <p className="ml-20 sm:p-6 sm:ml-6" style={{marginTop: 50, fontFamily: 'Merriweather', fontStyle: 'bold', fontSize: '60px'}}>Hi, my name is Dan. </p>
-                <p className=" font-sans text-2xl sm:text-5xl ml-2 pl-10 sm:pl-8">I am a Full Stack Developer with a <em>passion</em> to <u>create</u>.</p>
-                <a target="_blank" rel="noopener noreferrer" href="mailto:danlohra@gmail.com" className="mt-10 font-mono text-3xl border-2 border-black rounded-lg px-4 py-2 hover:bg-gray-100 hover:text-blue-600 hover:border-white">Get In Touch</a>
-            </div>
+        <div class="h-screen flex flex-col items-center bg-blue-500 justify-center">
+        <img src="/serratus.jpg" alt="serratus home" class="absolute top-0 h-full w-full"></img>
+        <div class="flex flex-col z-10 items-center text-white ">
+            <h1 class="text-5xl font-semibold text-center mt-16">Welcome to Serratus</h1>
+            <h1 class="text-xl font-light text-center">An open source, <strong> ultra-deep </strong>  search for Novel Coronaviruses.</h1>
+            <a onClick="window.open(this.href); return false" href="https://github.com/ababaian/serratus" class="border border-white flex text-xl mt-16 justify-center items-center w-auto  px-6 py-2 rounded-md hover:text-blue-600 hover:bg-white"> 
+
+                <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" class="fill-current h-6 w-6  mr-3" viewBox="0 0 24 24" ><path d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z" /></svg>Join Us On GitHub</a>
         </div>
+    </div>
 
 
     )
