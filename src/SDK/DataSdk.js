@@ -15,7 +15,7 @@ export default class TrackSdk {
     }
 
     async getSraHeatMapByName(sraName) {
-        const response = await axios.get(`http://api.serratus.io/api/summary/${sraName}/coverage_heatmap.png`, { responseType: 'blob' });
+        const response = await axios.get(`https://api.serratus.io/api/summary/${sraName}/coverage_heatmap.png`, { responseType: 'blob' });
             return response.data;
     }
 
