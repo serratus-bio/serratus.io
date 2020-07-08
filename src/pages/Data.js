@@ -32,24 +32,31 @@ const  Data = (props) => {
         catch {
             setImageError("No heat map for this SRA")
         }
-
     }
     
     return (
-        // data ? 
-        //     <div>
-        //         <text>HI</text>
-        //     </div>
-        //     :
-        <div className="h-screen flex flex-col items-center bg-blue-500 justify-center">
-        {data ? <div>data</div> : <div>no data</div>}
-        {heatMap ? <img src={heatMap} className="h-auto w-auto"></img> : <div>{imageError}</div> }
-            
-            <input onChange={e => setSearchString(e.target.value)}></input>
+        <div className="h-screen w-screen flex flex-col items-center bg-blue-500 justify-center p-6">
+            <div class="w-1/2 h-64 flex flex-col justify-center">
 
-            <button onClick={() => genSra()} className="h-10 w-24 bg-gray-500" title="get heat">get heat map</button>
-            
-       
+           
+            <div class="flex flex-col justify-center items-center">
+                {data.sra 
+                ? 
+                <div>SRA: {data.sra}</div> 
+              
+                : 
+                <div>SRA: </div>}
+                {heatMap ? 
+                <img src={heatMap} className="h-full w-full p-6 m-6"></img>
+                : 
+                <div>{imageError}</div> }
+                <div class="flex flex-col justify-center items-center">
+                    <input class="p-2 border-black border-2 rounded-lg" onChange={e => setSearchString(e.target.value)}></input>
+                    <button class="" onClick={() => genSra()} className="h-10 w-32 border-black border-2 rounded-lg" title="get heat">Search</button>
+                </div>
+                <a src={`https://www.ncbi.nlm.nih.gov/sra/?term=${data.sra}`}></a>
+            </div>
+            </div>
         </div>
     )
 }

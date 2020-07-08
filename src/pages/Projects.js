@@ -55,7 +55,7 @@ function Projects() {
                   </div>
                   <div class="sm:max-w-sm rounded-lg overflow-hidden bg-white shadow-2xl mt-40 sm:m-10 sm:pt-0">
                 <div class="w-full flex flex-col justify-center items-center p-10">
-                <img class="h-24 w-24" src="/db.png" alt="Muzer Logo"/>
+                <img class="h-24 w-24" src="/dbcloud.png" alt="cloud db image"/>
                 </div>
                     <div class="px-6 py-4">
                       <div class="font-bold text-xl mb-2 text-center">CoV Sequence Database</div>
