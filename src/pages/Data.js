@@ -1,62 +1,90 @@
-import React from 'react';
-import Axios from 'axios';
+import React from "react";
 import DataSdk from '../SDK/DataSdk';
-import { get } from 'react-scroll/modules/mixins/scroller';
 
-const  Data = (props) => {
-    const [searchString, setSearchString] = React.useState("")
+const Data = (props) => {
+    var sra_accession = new URLSearchParams(props.location.search).get("accession");
+    console.log(`SRA Accession: ${sra_accession}`);
     const [data, setData] = React.useState({});
     const [heatMap, setHeatMap] = React.useState();
     const [imageError, setImageError] = React.useState("");
+    const [summaryJson, setSummaryJson] = React.useState({});
+    const [entrezId, setEntrezId] = React.useState();
+    const [entrezStudyName, setEntrezStudyName] = React.useState("");
+    const dataSdk = new DataSdk();
 
-    const genSra = () => {
-        getData(searchString)
-        getImage(searchString)
-    }
-
-    const getData = async (searchString) => {
-        const dataSdk = new DataSdk();
-        const sraData = await dataSdk.getSraByName(searchString); 
-        setData(sraData);  
-        console.log(sraData); 
-    }
-
-    const getImage = async (searchString) => {
-        const dataSdk = new DataSdk();
-        try {
-            const img = await dataSdk.getSraHeatMapByName(searchString);
-            let sraHeatMap = URL.createObjectURL(img)
-            setHeatMap(sraHeatMap)
-            console.log(sraHeatMap);
-        }
-        catch {
-            setImageError("No heat map for this SRA")
-        }
-    }
+    React.useEffect(() => {
+        let ignore = false;
     
-    return (
-        <div className="h-screen w-screen flex flex-col items-center bg-blue-500 justify-center p-6">
-            <div class="w-1/2 h-64 flex flex-col justify-center">
+        async function fetchSerratusApiData() {
+          const summaryJson = await dataSdk.fetchAccessionJSON(sra_accession);
+          const heatMapData = await dataSdk.getSraHeatMapByName(sra_accession);
+          let sraHeatMap = URL.createObjectURL(heatMapData)
+          if (!ignore) {
+            setSummaryJson(summaryJson);
+            setHeatMap(sraHeatMap);
+          }
+        }
 
-           
-            <div class="flex flex-col justify-center items-center">
-                {data.sra 
-                ? 
-                <div>SRA: {data.sra}</div> 
-              
-                : 
-                <div>SRA: </div>}
-                {heatMap ? 
-                <img src={heatMap} className="h-full w-full p-6 m-6"></img>
-                : 
-                <div>{imageError}</div> }
-                <div class="flex flex-col justify-center items-center">
-                    <input class="p-2 border-black border-2 rounded-lg" onChange={e => setSearchString(e.target.value)}></input>
-                    <button class="" onClick={() => genSra()} className="h-10 w-32 border-black border-2 rounded-lg" title="get heat">Search</button>
-                </div>
-                <a src={`https://www.ncbi.nlm.nih.gov/sra/?term=${data.sra}`}></a>
+        async function fetchNCBIApiData() {
+            let response = await dataSdk.fetchEsearch(sra_accession);
+            let parser = new DOMParser();
+            let esearchResults = parser.parseFromString(response, 'text/xml');
+            let entrezId = esearchResults
+                .getElementsByTagName("eSearchResult")[0]
+                .getElementsByTagName("IdList")[0]
+                .getElementsByTagName("Id")[0]
+                .textContent;
+            console.log(entrezId);
+
+            response = await dataSdk.fetchEsummary(entrezId);
+            let esummaryResults = parser.parseFromString(response, 'text/xml');
+            let expXmlText = esummaryResults
+                .getElementsByTagName("eSummaryResult")[0]
+                .getElementsByTagName("DocSum")[0]
+                .getElementsByTagName("Item")[0]
+                .textContent;
+            expXmlText = '<?xml version="1.0" encoding="UTF-8" ?>' + expXmlText;
+            let expXml = parser.parseFromString(expXmlText, 'text/xml');
+            let entrezStudyName = expXml
+            console.log(response);
+            console.log(expXmlText);
+            console.log(entrezStudyName);
+
+            if (!ignore) {
+                setEntrezId(entrezId);
+            }
+          }
+    
+        fetchSerratusApiData();
+        fetchNCBIApiData()
+        return () => { ignore = true; }
+      }, []);
+
+    const studyName = "<name>";
+
+    return (
+        <div class="flex flex-wrap">
+            <div class="w-full text-center mb-8">
+                <div class="text-2xl">{sra_accession} Report Page</div>
             </div>
+            <div class="w-2/3"></div>
+            <div class="w-1/6">
+                <div><a class="text-blue-500" href={`https://www.ncbi.nlm.nih.gov/sra/?term=${sra_accession}`}>SRA Link</a></div>
             </div>
+            <div class="w-1/6">
+                <div><a class="text-blue-500" href={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${sra_accession}`}>Trace Link</a></div>
+            </div>
+            {entrezId ? entrezId : <span>Waiting on ESearch</span>}
+            <div class="w-full">Study Name: {studyName}</div>
+            <div class="w-full">Families: </div>
+            <ul>
+                {summaryJson.families ?
+                    summaryJson.families.map(family => (
+                        <li>{family.family}</li>
+                    )) : <li>Loading...</li>
+                }
+            </ul>
+            <img src={heatMap} className="p-6 m-6"></img>
         </div>
     )
 }

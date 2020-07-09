@@ -14,6 +14,11 @@ export default class TrackSdk {
         return response.data
     }
 
+    async fetchAccessionJSON(accession) {
+        const response = await axios.get(`https://api.serratus.io/api/summary/${accession}`);
+        return response.data;
+    }
+
     async getSraHeatMapByName(sraName) {
         const response = await axios.get(`https://api.serratus.io/api/summary/${sraName}/coverage_heatmap.png`, { responseType: 'blob' });
             return response.data;
@@ -26,5 +31,15 @@ export default class TrackSdk {
     async deleteTrack(track) {
         const response = await axios.delete(`http://localhost:3000/tracks/${track.trackId}`);
         return response.data
+    }
+
+    async fetchEsearch(accession) {
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=${accession}&retmax=1&usehistory=y`, {responseType: 'text'});
+        return response.data;
+    }
+
+    async fetchEsummary(entrezId) {
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=sra&id=${entrezId}`, {responseType: 'text'});
+        return response.data;
     }
 }
