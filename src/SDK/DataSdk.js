@@ -33,13 +33,41 @@ export default class TrackSdk {
         return response.data
     }
 
-    async fetchEsearch(accession) {
+    async getEsearch(accession) {
         const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=${accession}&retmax=1&usehistory=y`, {responseType: 'text'});
         return response.data;
     }
 
-    async fetchEsummary(entrezId) {
+    async getEsummary(entrezId) {
         const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=sra&id=${entrezId}`, {responseType: 'text'});
         return response.data;
     }
+
+    async getEntrezData(sra_accession) {
+        // eSearch
+        let response = await this.getEsearch(sra_accession);
+        let parser = new DOMParser();
+        let esearchResults = parser.parseFromString(response, 'text/xml');
+        let entrezId = esearchResults
+            .querySelector("eSearchResult")
+            .querySelector("IdList")
+            .querySelector("Id")
+            .textContent;
+        // eSummary
+        response = await this.getEsummary(entrezId);
+        let esummaryResults = parser.parseFromString(response, 'text/xml');
+        let expXmlText = esummaryResults
+            .querySelector("eSummaryResult")
+            .querySelector("DocSum")
+            .querySelector("Item") // first Item
+            .textContent;
+        // eSummary expXml
+        expXmlText = '<tag>' + expXmlText + '</tag>';
+        let expXml = parser.parseFromString(expXmlText, 'text/xml');
+        let entrezStudyName = expXml
+            .getRootNode()
+            .querySelector('Study')
+            .getAttribute('name')
+        return entrezStudyName;
+      }
 }
