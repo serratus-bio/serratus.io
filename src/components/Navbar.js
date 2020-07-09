@@ -24,7 +24,7 @@ const Navbar = () => {
                </div> 
                </div>
                : 
-            <div className="flex flex-row absolute w-screen bg-gray-100 sm:p-4 justify-between z-10 border-b-2  border-gray-300">
+            <div className="flex flex-row w-screen bg-gray-100 sm:p-4 justify-between z-10 border-b-2  border-gray-300">
            <NavLink exact to="/"  className="invisible sm:visible sm:ml-10 w-20 h-8 "><img src="/logo.png"></img></NavLink>
            <div className="justify-flex-end mt-1 mr-10">
            {/* <text>hi</text> */}
