@@ -109,11 +109,11 @@ const Data = (props) => {
         // </div>
         <div>
             
-            <div className="h-screen w-screen flex flex-col items-center justify-center pt-6 pb-24">
+            <div className="h-screen w-screen flex flex-col items-center justify-center">
         {/* <Visual></Visual> */}
             <img src="/serratus.jpg" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
             
-            <div class="w-3/4 max-h-full  flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg p-4 shadow-2xl bg-opacity-25">
+            <div class="w-3/4 max-h-full  flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg p-4 mb-20 shadow-2xl bg-opacity-25">
                     <div className="w-5/6 bg-gray-400 h-64 border rounded-lg border-gray-600 shadow-xl m-1 z-20">
                     {searchBox}
                     {sraAccession ? pageLinks : <div></div> }

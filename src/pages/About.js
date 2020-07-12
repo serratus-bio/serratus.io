@@ -2,10 +2,10 @@ import React from 'react'
 
 const About = () => {
     return (
-<div class="">
-<img src="/serratus.jpg" className="absolute top-0 h-full w-full opacity-75" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
+<div class="h-screen flex flex-col items-center justify-center">
+<img src="/serratus.jpg" className="invisible sm:visible sm:fixed z-0 opacity-75" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />        
 
-<div class="h-screen w-screen flex flex-col justify-center items-center pt-12 bg-blue-300 z-10">
+<div class="h-screen w-screen flex flex-col justify-center items-center pt-12 z-10">
 <h1 class="text-5xl text-black font-semibold text-center bg-white p-6 rounded-lg shadow-2xl z-20">Why Serratus?</h1>
 <h1 class="text-xl text-black font-light text-center w-3/4 lg:w-3/5 mt-8 bg-white p-6 rounded-lg shadow-2xl z-20">
   <strong>The world needs us.</strong> We are currently in a pandemic and we are ill-equiped.

@@ -4,7 +4,7 @@ function Projects() {
     return (
       // <section class="text-blue-700 bg-blue-300 body-font h-screen flex flex-col justify-center">
             <div>
-        <div className="bg-gray-700 sm:bg-blue-300 flex absolute w-full h-screen justify-center items-center overflow-y-visible sm:overflow-y-hidden overflow-x-hidden">
+        <div className="flex absolute w-full h-screen justify-center items-center overflow-y-visible sm:overflow-y-hidden overflow-x-hidden">
           <img src="/serratus.jpg" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
               <div className="flex flex-col sm:flex-row absolute mt-48 mb-40 pt-56 pb-32 sm:mt-10 p-6 sm:p-0">
                 <div class="sm:max-w-sm rounded-lg overflow-hidden bg-white shadow-2xl mt-40 sm:m-10 sm:pt-0">
