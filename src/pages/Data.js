@@ -112,13 +112,13 @@ const Data = (props) => {
         {/* <Visual></Visual> */}
             <img src="/serratus.jpg" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
             <div class="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
-                <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl -mt-2 z-20 m-1">
+                <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl p-1 -mt-2 z-20 m-1">
                     {searchBox}
                     {sraAccession ? pageLinks : <div></div> }
                     <div class="w-full text-center text-xl">{entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
                     </div>
                 </div>
-                <div className="flex h-64 flex-col justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
+                <div className="flex h-64 flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
                     <div class="w-1/2">
                     
                         <Visual></Visual>
