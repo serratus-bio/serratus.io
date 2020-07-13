@@ -133,7 +133,7 @@ const Data = (props) => {
                                             <div> Score: {family.score} </div>
                                             <div> PctId: {family.pctid} </div>
                                     </div>
-                                    )) : <div>Loading...</div>
+                                    )) : <div>{sraAccession ? "Loading..." : ""}</div>
                                 }
                             </div>
                         </div>
