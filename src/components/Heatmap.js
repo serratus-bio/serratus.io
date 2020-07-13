@@ -5,17 +5,17 @@ import DataSdk from '../SDK/DataSdk';
 import { drawHeatmap } from '../SDK/D3Heatmap.js';
 
 const Heatmap = (props) => {
-    var accessionFromParam = new URLSearchParams(props.location.search).get("accession");
+    var accession = props.accession;
     const dataSdk = new DataSdk();
 
     async function plot() {
-        let summaryJson = await dataSdk.fetchAccessionJSON(accessionFromParam);
+        let summaryJson = await dataSdk.fetchAccessionJSON(accession);
         var faux = props.connectFauxDOM('div', 'chart');
         drawHeatmap(d3, faux, summaryJson);
     }
 
     React.useEffect(() => {
-        if (!accessionFromParam) {
+        if (!accession) {
             return;
         }
         plot();

@@ -1,6 +1,7 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import Visual from "../components/Visual";
+import Heatmap from '../components/Heatmap';
 
 const Data = (props) => {
     var accessionFromParam = new URLSearchParams(props.location.search).get("accession");
@@ -46,6 +47,7 @@ const Data = (props) => {
     }, []);
 
     const redirect = accession => e => {
+        setAccession(accession)
         console.log(`/Data?accession=${accession}`);
         window.location.href = `/Data?accession=${accession}`
     }
@@ -115,8 +117,8 @@ const Data = (props) => {
                         </div>
                     </div>
                 <div className="flex h-64 flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
-                    <div class="w-1/2">
-                        <Visual></Visual>
+                    <div class="w-1/2 h-64">
+                        {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
                     </div>
                 </div>
                 <div className="flex flex-col h-64 w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl overflow-y-auto m-1">
