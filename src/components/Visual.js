@@ -3,25 +3,25 @@ import * as d3 from 'd3';
 import DataSdk from '../SDK/DataSdk';
 
 const Visual = (props) => {
-    const svgRef = useRef();
     const [data, setData] = useState([100, 25, 35, 45, 85]);
     const [summaryJson, setSummaryJson] = useState({});
     const [heatMap, setHeatMap] = useState("");
     const dataSdk = new DataSdk();
+
+    // These are the refs we can hook into for d3
     const canvasRef = useRef();
-    // set the dimensions and margins of the graph
-    // var margin = {top: 30, right: 30, bottom: 30, left: 100},
-    // width = 600 - margin.left - margin.right,
-    // height = 450 - margin.top - margin.bottom;
+    const svgRef = useRef();
 
-    // var svg = d3.select(svgRef.current)
-    // .append("svg")
-    // .attr("width", width + margin.left + margin.right)
-    // .attr("height", height + margin.top + margin.bottom)
-    // .append("g")
-    // .attr("transform",
-    //         "translate(" + margin.left + "," + margin.top + ")");
+    //hardcode api test
+    async function draw() {
+        const sraHeatMap = await dataSdk.getSraHeatMapByName("DRR000746")
+        const heatMap = URL.createObjectURL(sraHeatMap)
+        setHeatMap(heatMap)
+        console.log(heatMap)
+        // drawHeatmap(summaryJson, svgRef.current);
+    }
 
+    //Hardcode api test
     const getJson = async () => {
         const summaryJsonFromAPI = await dataSdk.getSraByName("DRR000745");
         setSummaryJson(summaryJsonFromAPI);
@@ -212,15 +212,8 @@ const Visual = (props) => {
             drawFamilyHeatmap(family);
         });
     }
-
-    async function draw() {
-        const sraHeatMap = await dataSdk.getSraHeatMapByName("DRR000746")
-        const heatMap = URL.createObjectURL(sraHeatMap)
-        setHeatMap(heatMap)
-        console.log(heatMap)
-        // drawHeatmap(summaryJson, svgRef.current);
-      }
       
+    // Leaving here for a place holder
     useEffect(() => {
         // const svg = select(svgRef.current)
         // svg.selectAll("circle").data(data)
@@ -229,30 +222,24 @@ const Visual = (props) => {
         //         .attr("cx", value => value * 2)
         //         .attr("cy", value => value * 2)
         //         .attr("stroke", "red")   
-
-        //Read the data
+        // Read the data
         // draw();
-      
     }, []);
 
     return (
         <div className="flex flex-col justify-center items-center">
-            {/* <svg ref={svgRef}>
-
-            
-            
-            
-            // </svg> */}
-             {/* <canvas ref={canvasRef}></canvas> */}
+            {/* React ref hooks could go here?
+                <svg ref={svgRef}></svg> 
+            <canvas ref={canvasRef}></canvas>  */}
             <img src={heatMap} className="p-6 w-4/5"></img>  
             <br/>
             <div className="flex flex-row">
-            <button className="p-2" onClick={() => getJson()}>
-                Get JSON
-            </button>
-            <button className="p-2" onClick={() => draw()}>
-                Make Map
-            </button>
+                <button className="p-2" onClick={() => getJson()}>
+                    Get JSON
+                </button>
+                <button className="p-2" onClick={() => draw()}>
+                    Make Map
+                </button>
             </div>
         </div>
     )

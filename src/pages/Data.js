@@ -103,32 +103,25 @@ const Data = (props) => {
     )
 
     return (
-        // <div class="m-6">
-        //     {searchBox}
-        //     {sraAccession ? reportContent : <div></div> }
-        // </div>
         <div>
             <div className="h-screen w-screen flex flex-col items-center justify-center">
-        {/* <Visual></Visual> */}
             <img src="/serratus.jpg" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
-            <div class="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
-                <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl p-1 -mt-2 z-20 m-1">
-                    {searchBox}
-                    {sraAccession ? pageLinks : <div></div> }
-                    <div class="w-full text-center text-xl">{entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
+                <div class="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
+                    <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl p-1 -mt-2 z-20 m-1">
+                        {searchBox}
+                        {sraAccession ? pageLinks : <div></div> }
+                        <div class="w-full text-center text-xl">
+                            {entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
+                        </div>
                     </div>
-                </div>
                 <div className="flex h-64 flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
                     <div class="w-1/2">
-                    
                         <Visual></Visual>
-                        {/* <img src={heatMap} className="p-6"></img> */}
                     </div>
                 </div>
                 <div className="flex flex-col h-64 w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl overflow-y-auto m-1">
-                        <div className="text-center text-xl border-gray-800 border-1 p-1 italic">Families:</div>
+                    <div className="text-center text-xl border-gray-800 border-1 p-1 italic">Families:</div>
                         <div className="overflow-y-auto">
-                        
                             <div className="h-full ">
                                 {summaryJson.families ?
                                     summaryJson.families.map(family => (
@@ -141,34 +134,11 @@ const Data = (props) => {
                                     )) : <div>Loading...</div>
                                 }
                             </div>
+                        </div>
                     </div>
-                </div>
-        
-
-
-
-
-
-                {/* <div class="flex flex-col justify-center items-center">
-                    {data.sra 
-                    ? 
-                    <div>SRA: {data.sra}</div> 
-                    : 
-                    <div>SRA: </div>}
-                    {heatMap ? 
-                    <img src={heatMap} className="h-full w-full p-6 m-6"></img>
-                    : 
-                    <div>{imageError}</div> }
-                    <div class="flex flex-col justify-center items-center">
-                        <input class="p-2 border-black border-2 rounded-lg" onChange={e => setSearchString(e.target.value)}></input>
-                        <button class="" onClick={() => genSra()} className="h-10 w-32 border-black border-2 rounded-lg" title="get heat">Search</button>
-                    </div>
-                    <a src={`https://www.ncbi.nlm.nih.gov/sra/?term=${data.sra}`}></a>
-                </div> */}
                 </div>
             </div>
         </div>
-       
     )
 }
 

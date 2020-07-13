@@ -23,19 +23,18 @@ const App = () => {
     <div>
       <Navbar></Navbar>
       <Switch  >
-      <Route exact path="/">
-          <Home />
-      </Route>
-      <Route exact path="/Mission">
-          <About/>
-      </Route>
-      <Route exact path="/Technology">
-          <Projects/>
-      </Route>
-      <Route exact path="/Data" component={Data} />
-  </Switch>
+        <Route exact path="/">
+            <Home />
+        </Route>
+        <Route exact path="/Mission">
+            <About/>
+        </Route>
+        <Route exact path="/Technology">
+            <Projects/>
+        </Route>
+        <Route exact path="/Data" component={Data} />
+      </Switch>
     </div>
-
     //   {/* {transitions.map(({ item, props, key}) => (
     //     <animated.div key={key} style={props}> */}
 
