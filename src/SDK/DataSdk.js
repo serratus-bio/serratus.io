@@ -10,7 +10,7 @@ export default class TrackSdk {
         return response.data;
     }
     async getSraByName(sraName) {
-        const response = await axios.get(`https://localhost:44363/api/runs/get-run/${sraName}`);
+        const response = await axios.get(`http://serratustest-dev-sumdb.us-east-1.elasticbeanstalk.com/api/runs/get-run/${sraName}`);
         return response.data
     }
 

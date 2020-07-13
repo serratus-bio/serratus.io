@@ -188,7 +188,7 @@ export function drawHeatmap(d3, selector, summary) {
                 var currentY = parseInt(d3.select(this).select("svg").attr("y"));
                 d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
             }
-            if (d3.select(this).attr("rowId") == currentRow.attr("rowId")) {
+            if (d3.select(this).attr("rowid") == currentRow.attr("rowid")) {
                 shift = true;
                 subsectionG.attr("visibility", toggleVisibilityValue(subsectionVisibility));
                 var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
@@ -219,7 +219,7 @@ export function drawHeatmap(d3, selector, summary) {
 
     function toggleFamilyRow(familyName) {
         var allRows = d3.selectAll(".family");
-        var currentRow = d3.select(`.family[rowId="${familyName}"]`);
+        var currentRow = d3.select(`.family[rowid="${familyName}"]`);
         var subsectionHeight = 300;
         toggleIRow(allRows, currentRow, subsectionHeight);
     }
@@ -232,7 +232,7 @@ export function drawHeatmap(d3, selector, summary) {
                 var currentY = parseInt(d3.select(this).select("svg").attr("y"));
                 d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
             }
-            if (d3.select(this).attr("rowId") == familyName) {
+            if (d3.select(this).attr("rowid") == familyName) {
                 shift = true;
                 var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
                 d3.select(this).select("svg").transition().duration(fadeTime).attr("height", currentHeight + shiftY);
@@ -242,7 +242,7 @@ export function drawHeatmap(d3, selector, summary) {
 
     function toggleAccessionRow(familyName, accessionName) {
         var allRows = d3.selectAll(".accession");
-        var currentRow = d3.select(`.accession[rowId="${accessionName}"]`);
+        var currentRow = d3.select(`.accession[rowid="${accessionName}"]`);
         var subsectionVisibility = currentRow.select("g.subsection").attr("visibility");
         var subSectionVisible = subsectionVisibility == "visible";
         var subsectionHeight = 100;
@@ -383,7 +383,7 @@ export function drawHeatmap(d3, selector, summary) {
         var familyCoverageData = getFamilyCoverageData(family);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
-            .attr("rowId", `${family.family}`);
+            .attr("rowid", `${family.family}`);
         var familySubGroup = drawExpandableRow(familyG, family.family, "family", familyCoverageData, i);
         addFamilyText(familySubGroup, family);
 
@@ -400,7 +400,7 @@ export function drawHeatmap(d3, selector, summary) {
             var accessionCoverageData = getAccessionCoverageData(accession);
             var accessionG = familyAccessionsG.append("g")
                 .attr("class", "accession")
-                .attr("rowId", `${accession.acc}`)
+                .attr("rowid", `${accession.acc}`)
                 .attr("family", `${family.family}`);
             var accessionSubGroup = drawExpandableRow(
                 accessionG, accession.acc, "accession",

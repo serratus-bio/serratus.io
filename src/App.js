@@ -7,7 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Data from './pages/Data'
-import Heatmap from './pages/Heatmap'
+import Heatmap from './components/Heatmap'
 // import Background from './images/background.jpg'
 
 const App = () => {
@@ -24,20 +24,18 @@ const App = () => {
     <div>
       <Navbar></Navbar>
       <Switch  >
-      <Route exact path="/">
-          <Home />
-      </Route>
-      <Route exact path="/Mission">
-          <About/>
-      </Route>
-      <Route exact path="/Technology">
-          <Projects/>
-      </Route>
-      <Route exact path="/Data" component={Data} />
-      <Route exact path="/heatmap" component={Heatmap} />
-  </Switch>
+        <Route exact path="/">
+            <Home />
+        </Route>
+        <Route exact path="/Mission">
+            <About/>
+        </Route>
+        <Route exact path="/Technology">
+            <Projects/>
+        </Route>
+        <Route exact path="/Data" component={Data} />
+      </Switch>
     </div>
-
     //   {/* {transitions.map(({ item, props, key}) => (
     //     <animated.div key={key} style={props}> */}
 
