@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Data from './pages/Data'
+import Heatmap from './pages/Heatmap'
 // import Background from './images/background.jpg'
 
 const App = () => {
