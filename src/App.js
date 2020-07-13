@@ -7,6 +7,7 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Data from './pages/Data'
+import Test from './pages/Test'
 // import Background from './images/background.jpg'
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
           <Projects/>
       </Route>
       <Route exact path="/Data" component={Data} />
+      <Route exact path="/test" component={Test} />
   </Switch>
     </div>
 
