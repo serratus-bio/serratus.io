@@ -21,7 +21,6 @@ const Data = (props) => {
           setSummaryJson(summaryJson);
           setHeatMap(sraHeatMap);
           console.log("Done fetching Serratus API data.");
-          console.log(summaryJson);
         }
     }
 
@@ -127,7 +126,7 @@ const Data = (props) => {
                             <div className="h-full ">
                                 {summaryJson.families ?
                                     summaryJson.families.map(family => (
-                                    <div onClick={() => console.log("hi")} key={family.family} className="flex flex-row justify-between border rounded-md bg-gray-300 border-gray-700 p-2 italic m-1 cursor-pointer">
+                                    <div key={family.family} className="flex flex-row justify-between border rounded-md bg-gray-300 border-gray-700 p-2 italic m-1 cursor-pointer">
                                             <div>{family.family} </div>
                                             <div> Cvg: {family.cvg} </div>
                                             <div> Score: {family.score} </div>
