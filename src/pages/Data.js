@@ -108,45 +108,42 @@ const Data = (props) => {
         //     {sraAccession ? reportContent : <div></div> }
         // </div>
         <div>
-            
             <div className="h-screen w-screen flex flex-col items-center justify-center">
         {/* <Visual></Visual> */}
             <img src="/serratus.jpg" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
-            
-            <div class="w-3/4 max-h-full  flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg p-4 mb-20 shadow-2xl bg-opacity-25">
-                    <div className="w-5/6 bg-gray-400 h-64 border rounded-lg border-gray-600 shadow-xl m-1 z-20">
+            <div class="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
+                <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl -mt-2 z-20 m-1">
                     {searchBox}
                     {sraAccession ? pageLinks : <div></div> }
                     <div class="w-full text-center text-xl">{entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
                     </div>
-                    </div>
-                    <div className="flex flex-col justify-center items-center w-5/6 bg-gray-400 max-h-full border rounded-lg border-gray-600 shadow-xl m-1">
-
+                </div>
+                <div className="flex h-64 flex-col justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
                     <div class="w-1/2">
                     
                         <Visual></Visual>
                         {/* <img src={heatMap} className="p-6"></img> */}
                     </div>
+                </div>
+                <div className="flex flex-col h-64 w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl overflow-y-auto m-1">
+                        <div className="text-center text-xl border-gray-800 border-1 p-1 italic">Families:</div>
+                        <div className="overflow-y-auto">
+                        
+                            <div className="h-full ">
+                                {summaryJson.families ?
+                                    summaryJson.families.map(family => (
+                                    <div onClick={() => console.log("hi")} key={family.family} className="flex flex-row justify-between border rounded-md bg-gray-300 border-gray-700 p-2 italic m-1 cursor-pointer">
+                                            <div>{family.family} </div>
+                                            <div> Cvg: {family.cvg} </div>
+                                            <div> Score: {family.score} </div>
+                                            <div> PctId: {family.pctid} </div>
+                                    </div>
+                                    )) : <div>Loading...</div>
+                                }
+                            </div>
                     </div>
-                    <div className="flex flex-col h-full w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 overflow-y-auto">
-                            <div className="text-center text-xl border-gray-800 border-1 p-1 italic">Families:</div>
-                            <div className="overflow-y-auto">
-                            
-                                <div className="h-full p-2">
-                                    {summaryJson.families ?
-                                        summaryJson.families.map(family => (
-                                        <div onClick={() => console.log("hi")} key={family.family} className="flex flex-row justify-between border rounded-md bg-gray-300 border-gray-700 p-2 italic m-1 cursor-pointer">
-                                                <div>{family.family} </div>
-                                                <div> Cvg: {family.cvg} </div>
-                                                <div> Score: {family.score} </div>
-                                                <div> PctId: {family.pctid} </div>
-                                        </div>
-                                        )) : <div>Loading...</div>
-                                    }
-                                </div>
-                        </div>
-                    </div>
-         
+                </div>
+        
 
 
 

@@ -6,6 +6,7 @@ const Visual = (props) => {
     const svgRef = useRef();
     const [data, setData] = useState([100, 25, 35, 45, 85]);
     const [summaryJson, setSummaryJson] = useState({});
+    const [heatMap, setHeatMap] = useState("");
     const dataSdk = new DataSdk();
     const canvasRef = useRef();
     // set the dimensions and margins of the graph
@@ -213,8 +214,11 @@ const Visual = (props) => {
     }
 
     async function draw() {
-        console.log(summaryJson)
-        drawHeatmap(summaryJson, svgRef.current);
+        const sraHeatMap = await dataSdk.getSraHeatMapByName("DRR000746")
+        const heatMap = URL.createObjectURL(sraHeatMap)
+        setHeatMap(heatMap)
+        console.log(heatMap)
+        // drawHeatmap(summaryJson, svgRef.current);
       }
       
     useEffect(() => {
@@ -233,11 +237,14 @@ const Visual = (props) => {
 
     return (
         <div className="flex flex-col justify-center items-center">
-            <svg ref={svgRef}>
+            {/* <svg ref={svgRef}>
 
-                
-            </svg>
-            <canvas ref={canvasRef}></canvas>
+            
+            
+            
+            // </svg> */}
+             {/* <canvas ref={canvasRef}></canvas> */}
+            <img src={heatMap} className="p-6 w-4/5"></img>  
             <br/>
             <div className="flex flex-row">
             <button className="p-2" onClick={() => getJson()}>
