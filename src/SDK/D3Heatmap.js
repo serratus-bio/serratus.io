@@ -122,7 +122,7 @@ export function drawHeatmap(d3, selector, summary) {
         else {
             link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family.family}`;
             linkText = "NCBI Taxonomy Browser";
-            linkWidth = 170;
+            linkWidth = 175;
         }
         var linkHeight = 20;
         var linkSvg = textGroup.append("svg")
@@ -379,8 +379,7 @@ export function drawHeatmap(d3, selector, summary) {
 
     var chartSvg = d3.select(selector)
         .append("svg")
-        .attr("width", 750)
-        .attr("height", 660);
+        .attr("viewBox", `0 0 750 660`);
     var familiesSvg = chartSvg.append("svg")
         .attr("y", 20);
 

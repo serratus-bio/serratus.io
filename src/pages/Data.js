@@ -116,7 +116,7 @@ const Data = (props) => {
                         </div>
                     </div>
                     <div className="flex flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
-                        <div class="w-auto h-auto overflow-y-auto">
+                        <div class="w-5/6 h-auto overflow-y-auto">
                             {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
                         </div>
                     </div>
