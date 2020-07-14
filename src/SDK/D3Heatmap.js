@@ -364,7 +364,7 @@ export function drawHeatmap(d3, selector, summary) {
     }
 
     var sectionMargin = {top: 2, right: 300, bottom: 2, left: 200};
-    var sectionWidth = 800;
+    var sectionWidth = 750;
     var sectionHeight = 20;
     var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
     var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
@@ -379,7 +379,7 @@ export function drawHeatmap(d3, selector, summary) {
 
     var chartSvg = d3.select(selector)
         .append("svg")
-        .attr("width", 800)
+        .attr("width", 750)
         .attr("height", 660);
     var familiesSvg = chartSvg.append("svg")
         .attr("y", 20);
