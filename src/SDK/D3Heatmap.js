@@ -93,18 +93,40 @@ export function drawHeatmap(d3, selector, summary) {
     };
 
     function addColumns(gElement, summaryEntry=null) {
-        var colWidth = 45;
-        var columns = ["score", "pctid", "aln", "glb", "cvgpct"];
-        if (summaryEntry) {
-            columns = columns.map((col) => summaryEntry[col]);
+        var colHeight = sectionHeight;
+        var columnNameMap = {
+            "score": "Score",
+            "pctid": "Identity%",
+            "cvgpct": "Coverage%",
+            "aln": "Reads"
         }
+        var columnSizeMap = {
+            "score": 50,
+            "pctid": 80,
+            "cvgpct": 88,
+            "aln": 70
+        }
+        var columns = ["score", "pctid", "aln", "cvgpct"];
         var textG = gElement.append("g")
             .attr("transform",
                   `translate(${sectionMargin.left + barWidth + 10}, 15)`);
-        columns.forEach((column, i) => {
+        var prevWidth = 0;
+        columns.forEach((column) => {
+            var colWidth = columnSizeMap[column];
+            var colText = summaryEntry ? summaryEntry[column] : columnNameMap[column];
+            textG.append("rect")
+                .attr("fill", "none")
+                .style("stroke", "black")
+                .style("stroke-width", 1)
+                .attr("width", colWidth)
+                .attr("height", colHeight)
+                .attr("x", prevWidth)
+                .attr("y", -15);
             textG.append("text")
-                .text(column)
-                .attr("x", colWidth * i);
+                .text(colText)
+                .style("text-anchor", "middle")
+                .attr("x", prevWidth + (colWidth / 2));
+            prevWidth += colWidth;
         });
     }
 
