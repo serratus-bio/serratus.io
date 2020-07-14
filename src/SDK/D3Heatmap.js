@@ -92,6 +92,22 @@ export function drawHeatmap(d3, selector, summary) {
             .call(d3.axisRight(legendScale));
     };
 
+    function addColumns(gElement, summaryEntry=null) {
+        var colWidth = 45;
+        var columns = ["score", "pctid", "aln", "glb", "cvgpct"];
+        if (summaryEntry) {
+            columns = columns.map((col) => summaryEntry[col]);
+        }
+        var textG = gElement.append("g")
+            .attr("transform",
+                  `translate(${sectionMargin.left + barWidth + 10}, 15)`);
+        columns.forEach((column, i) => {
+            textG.append("text")
+                .text(column)
+                .attr("x", colWidth * i);
+        });
+    }
+
     function addFamilyText(gElement, family) {
         var textGroup = gElement.append("g")
             .attr("transform",
@@ -249,16 +265,10 @@ export function drawHeatmap(d3, selector, summary) {
         var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
         toggleIRow(allRows, currentRow, subsectionHeight);
         shiftLowerFamilies(familyName, shiftY);
-
     }
 
     function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         var rowType = dataBin;
-        var sectionWidth = 600;
-        var sectionHeight = 20;
-        var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
-        var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
-        var barBorder = {size: 1, color: '#999'};
 
         y = rowIndex * sectionHeight;
         var entrySvg = gElement.append("svg")
@@ -285,7 +295,9 @@ export function drawHeatmap(d3, selector, summary) {
             .call(d3.axisLeft(y));
         yAxis.select("path").remove();
         yAxis.select("line").remove();
-        yAxis.selectAll("text").attr("x", -25);
+        yAxis.selectAll("text")
+            .attr("x", -25)
+            .style("font-size", 12);
         
         var caret = yAxis.append("g")
             .attr("transform", `translate(-12, 9)`)
@@ -351,7 +363,12 @@ export function drawHeatmap(d3, selector, summary) {
         return subsection
     }
 
-    var sectionMargin = {top: 2, right: 100, bottom: 2, left: 150};
+    var sectionMargin = {top: 2, right: 300, bottom: 2, left: 200};
+    var sectionWidth = 800;
+    var sectionHeight = 20;
+    var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
+    var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
+    var barBorder = {size: 1, color: '#999'};
 
     var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
         .domain([0, 1]);
@@ -362,12 +379,13 @@ export function drawHeatmap(d3, selector, summary) {
 
     var chartSvg = d3.select(selector)
         .append("svg")
-        .attr("width", 600)
-        .attr("height", 1000);
+        .attr("width", 800)
+        .attr("height", 660);
     var familiesSvg = chartSvg.append("svg")
         .attr("y", 20);
 
     drawLegend();
+    addColumns(chartSvg);
 
     var familyTextHeight = 50;
 
@@ -385,6 +403,7 @@ export function drawHeatmap(d3, selector, summary) {
             .attr("class", "family")
             .attr("rowid", `${family.family}`);
         var familySubGroup = drawExpandableRow(familyG, family.family, "family", familyCoverageData, i);
+        addColumns(familyG.select("svg"), family);
         addFamilyText(familySubGroup, family);
 
         var familyAccessionsG = familySubGroup.append("g")
@@ -405,6 +424,7 @@ export function drawHeatmap(d3, selector, summary) {
             var accessionSubGroup = drawExpandableRow(
                 accessionG, accession.acc, "accession",
                 accessionCoverageData, i);
+            addColumns(accessionG.select("svg"), accession);
             addAccessionText(accessionSubGroup, family, accession);
         });
     });
