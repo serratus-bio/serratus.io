@@ -115,26 +115,9 @@ const Data = (props) => {
                             {entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
                         </div>
                     </div>
-                <div className="flex h-64 flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
-                    <div class="w-600 h-64 overflow-y-auto">
-                        {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
-                    </div>
-                </div>
-                <div className="flex flex-col h-64 w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl overflow-y-auto m-1">
-                    <div className="text-center text-xl border-gray-800 border-1 p-1 italic">Families:</div>
-                        <div className="overflow-y-auto">
-                            <div className="h-full ">
-                                {summaryJson.families ?
-                                    summaryJson.families.map(family => (
-                                    <div key={family.family} className="flex flex-row justify-between border rounded-md bg-gray-300 border-gray-700 p-2 italic m-1 cursor-pointer">
-                                            <div>{family.family} </div>
-                                            <div> Cvg: {family.cvg} </div>
-                                            <div> Score: {family.score} </div>
-                                            <div> PctId: {family.pctid} </div>
-                                    </div>
-                                    )) : <div>{sraAccession ? "Loading..." : ""}</div>
-                                }
-                            </div>
+                    <div className="flex flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
+                        <div class="w-5/6 h-auto overflow-y-auto">
+                            {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
                         </div>
                     </div>
                 </div>

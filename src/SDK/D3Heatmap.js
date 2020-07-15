@@ -43,12 +43,12 @@ export function drawHeatmap(d3, selector, summary) {
     }
 
     // adapted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d
-    function drawLegend() {
+    function drawLegend(svgElement) {
         var legendWidth = 80,
             legendHeight = 200,
             margin = {top: 10, right: 60, bottom: 10, left: 2};
 
-        var legendSvg = chartSvg.append("svg")
+        var legendSvg = svgElement.append("svg")
             .attr("width", legendWidth)
             .attr("height", legendHeight);
 
@@ -92,6 +92,103 @@ export function drawHeatmap(d3, selector, summary) {
             .call(d3.axisRight(legendScale));
     };
 
+    function addColumns(gElement, summaryEntry=null) {
+        var yShift = 15;
+        var colHeight = sectionHeight;
+        var colMap = {
+            "score": {
+                "name": "Score",
+                "desc": "Pan-genome coverage",
+                "valueSuffix": "%",
+                "size": 50,
+                "domain": [0, 100],
+                "fill": "#67c286"
+            },
+            "pctid": {
+                "name": "Identity",
+                "desc": "Average alignment identity",
+                "size": 70,
+                "valueSuffix": "%",
+                "domain": [75, 100],
+                "fill": "#fdb53c"
+            },
+            "aln": {
+                "name": "Reads",
+                "desc": "Number of alignments (bowtie2)",
+                "size": 70,
+                "valueSuffix": "",
+                "domain": [0, 1000],
+                "fill": "#658fc4"
+            }
+        }
+        var textG = gElement.append("g")
+            .attr("transform",
+                  `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
+        var prevWidth = 0;
+        var columns = ["score", "pctid", "aln"];
+        columns.forEach((column) => {
+            var colAttrs = colMap[column];
+            var colWidth = colAttrs["size"];
+            var colText = summaryEntry ? summaryEntry[column] : colAttrs["name"];
+            var cellG = textG.append("g");
+            var text = textG.append("text")
+                .text(colText)
+                .style("text-anchor", "middle")
+                .attr("x", prevWidth + (colWidth / 2));
+            if (summaryEntry) {
+                if (colText != null) {
+                    text.text(colText + colAttrs.valueSuffix)
+                        .style("opacity", 0)
+                        .attr("column", column)
+                        .style("font-size", 12);
+                    var diff = parseInt(colText) - colAttrs["domain"][0];
+                    var diffCapped = Math.min(diff, colAttrs["domain"][1]);
+                    var range = colAttrs["domain"][1] - colAttrs["domain"][0];
+                    var colorBarWidth = colWidth * diffCapped / range;
+                    var colorBar = cellG.append("rect")
+                        .attr("fill", colAttrs["fill"])
+                        .attr("width", colorBarWidth)
+                        .attr("height", colHeight)
+                        .attr("x", prevWidth)
+                        .attr("y", -yShift);
+                    var border = cellG.append("rect")
+                        .attr("fill", "none")
+                        .style("stroke", "black")
+                        .style("stroke-width", 1)
+                        .attr("width", colWidth)
+                        .attr("height", colHeight)
+                        .attr("x", prevWidth)
+                        .attr("y", -yShift);
+                }
+            }
+            var tooltipFontSize = 10;
+            var tooltipX = sectionMargin.left + barWidth + prevWidth + (colWidth / 2);
+            var tooltipY = 15;
+            var hoverForColumnText = textG.append("rect")
+                .attr("width", colWidth)
+                .attr("height", colHeight)
+                .attr("x", prevWidth)
+                .attr("y", -yShift)
+                .style("opacity", 0)
+                .on("mouseover", () => {
+                    d3.selectAll(`[column="${column}"]`).style("opacity", 1);
+                    d3.select("#tooltip")
+                        .text(colAttrs["desc"])
+                        .attr("font-size", tooltipFontSize)
+                        .attr("x", tooltipX)
+                        .attr("y", tooltipY)
+                        .style("text-anchor", "middle")
+                        .style("opacity", 1);
+                })
+                .on("mouseout", () => {
+                    d3.selectAll(`[column="${column}"]`).style("opacity", 0);
+                    d3.select("#tooltip").style("opacity", 0);
+                });
+
+            prevWidth += colWidth;
+        });
+    }
+
     function addFamilyText(gElement, family) {
         var textGroup = gElement.append("g")
             .attr("transform",
@@ -106,7 +203,7 @@ export function drawHeatmap(d3, selector, summary) {
         else {
             link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family.family}`;
             linkText = "NCBI Taxonomy Browser";
-            linkWidth = 170;
+            linkWidth = 175;
         }
         var linkHeight = 20;
         var linkSvg = textGroup.append("svg")
@@ -249,16 +346,10 @@ export function drawHeatmap(d3, selector, summary) {
         var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
         toggleIRow(allRows, currentRow, subsectionHeight);
         shiftLowerFamilies(familyName, shiftY);
-
     }
 
     function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         var rowType = dataBin;
-        var sectionWidth = 600;
-        var sectionHeight = 20;
-        var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
-        var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
-        var barBorder = {size: 1, color: '#999'};
 
         y = rowIndex * sectionHeight;
         var entrySvg = gElement.append("svg")
@@ -285,7 +376,9 @@ export function drawHeatmap(d3, selector, summary) {
             .call(d3.axisLeft(y));
         yAxis.select("path").remove();
         yAxis.select("line").remove();
-        yAxis.selectAll("text").attr("x", -25);
+        yAxis.selectAll("text")
+            .attr("x", -25)
+            .style("font-size", 12);
         
         var caret = yAxis.append("g")
             .attr("transform", `translate(-12, 9)`)
@@ -324,14 +417,14 @@ export function drawHeatmap(d3, selector, summary) {
             .style("opacity", 0)
             .style("fill", "#000");
 
-        var clickExpandRect = entrySvg.append("rect")
+        var clickExpandShiftX = 20
+        var clickExpandRect = entryG.append("rect")
             .attr("class", "click-expand")
             .attr("visibility", "visible")
-            .attr("width", sectionWidth)
-            .attr("height", sectionHeight)
-            .style("stroke", barBorder.color)
+            .attr("transform", `translate(${-clickExpandShiftX}, 0)`)
+            .attr("width", barWidth + clickExpandShiftX)
+            .attr("height", barHeight)
             .style("opacity", 0)
-            .style("stroke-width", barBorder.size)
             .style('cursor', 'pointer').on("click", function() {
                 if (rowType == "family") {
                     toggleFamilyRow(name);
@@ -351,7 +444,13 @@ export function drawHeatmap(d3, selector, summary) {
         return subsection
     }
 
-    var sectionMargin = {top: 2, right: 100, bottom: 2, left: 150};
+    var sectionMargin = {top: 2, right: 300, bottom: 2, left: 200};
+    var sectionWidth = 750;
+    var sectionHeight = 20;
+    var tableShiftY = 40;
+    var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
+    var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
+    var barBorder = {size: 1, color: '#999'};
 
     var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
         .domain([0, 1]);
@@ -362,12 +461,15 @@ export function drawHeatmap(d3, selector, summary) {
 
     var chartSvg = d3.select(selector)
         .append("svg")
-        .attr("width", 600)
-        .attr("height", 1000);
+        .attr("viewBox", `0 0 750 700`);
     var familiesSvg = chartSvg.append("svg")
-        .attr("y", 20);
+        .attr("y", tableShiftY);
+    var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
 
-    drawLegend();
+    drawLegend(familiesSvg);
+    var columnHeadersG = chartSvg.append("g")
+        .attr("transform", `translate(0, ${tableShiftY - sectionHeight})`);
+    addColumns(columnHeadersG);
 
     var familyTextHeight = 50;
 
@@ -385,6 +487,7 @@ export function drawHeatmap(d3, selector, summary) {
             .attr("class", "family")
             .attr("rowid", `${family.family}`);
         var familySubGroup = drawExpandableRow(familyG, family.family, "family", familyCoverageData, i);
+        addColumns(familyG.select("svg"), family);
         addFamilyText(familySubGroup, family);
 
         var familyAccessionsG = familySubGroup.append("g")
@@ -405,6 +508,7 @@ export function drawHeatmap(d3, selector, summary) {
             var accessionSubGroup = drawExpandableRow(
                 accessionG, accession.acc, "accession",
                 accessionCoverageData, i);
+            addColumns(accessionG.select("svg"), accession);
             addAccessionText(accessionSubGroup, family, accession);
         });
     });
