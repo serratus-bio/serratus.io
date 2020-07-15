@@ -1,12 +1,14 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import Heatmap from '../components/Heatmap';
+import { useLocation } from 'react-router-dom'
 
 const Data = (props) => {
     var accessionFromParam = new URLSearchParams(props.location.search).get("accession");
     const [sraAccession, setAccession] = React.useState(accessionFromParam);
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setEntrezStudyName] = React.useState("");
+    const pathName = useLocation().pathname;
     const dataSdk = new DataSdk();
 
     async function fetchEntrezData(ignore) {
@@ -31,8 +33,7 @@ const Data = (props) => {
 
     const redirect = accession => e => {
         setAccession(accession)
-        console.log(`/Data?accession=${accession}`);
-        window.location.href = `/Data?accession=${accession}`
+        window.location.href = `${pathName}?accession=${accession}`
     }
 
     let searchBox = (
