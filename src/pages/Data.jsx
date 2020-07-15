@@ -36,20 +36,20 @@ const Data = (props) => {
     }
 
     let searchBox = (
-        <div class="flex flex-col items-center z-10 mt-2">
-            <div class="flex-row z-10">
-                <input class="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Accession ID" onChange={e => setInputAccession(e.target.value)} />
-                <button onClick={redirect(inputAccession)} class="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
+        <div className="flex flex-col items-center z-10 mt-2">
+            <div className="flex-row z-10">
+                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Accession ID" onChange={e => setInputAccession(e.target.value)} />
+                <button onClick={redirect(inputAccession)} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
             </div>
         </div>
     )
 
     let pageLinks = (
         <div className="flex flex-col justify-center items-center">
-            <div id="external-links" class="flex flex-row w-1/2 justify-between">
-                <div><a class="text-blue-500" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/sra/?term=${sraAccession}`}>SRA Link</a></div>
-                <div><a class="text-blue-500" target="_blank" rel="noopener noreferrer" href={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${sraAccession}`}>Trace Link</a></div>
-                <div><a class="text-blue-500" href={`https://s3.amazonaws.com/lovelywater/bam/${sraAccession}.bam`} download>Download BAM File</a></div>
+            <div id="external-links" className="flex flex-row w-1/2 justify-between">
+                <div><a className="text-blue-500" target="_blank" rel="noopener noreferrer" href={`https://www.ncbi.nlm.nih.gov/sra/?term=${sraAccession}`}>SRA Link</a></div>
+                <div><a className="text-blue-500" target="_blank" rel="noopener noreferrer" href={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${sraAccession}`}>Trace Link</a></div>
+                <div><a className="text-blue-500" href={`https://s3.amazonaws.com/lovelywater/bam/${sraAccession}.bam`} download>Download BAM File</a></div>
             </div>
         </div>
     )
@@ -58,16 +58,16 @@ const Data = (props) => {
         <div>
             <div className="h-screen w-screen flex flex-col items-center justify-center">
                 <img src="/serratus.jpg" alt="serratus mountain" className="invisible sm:visible opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
-                <div class="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
+                <div className="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 mt-10 mb-32">
                     <div className="w-5/6 bg-gray-400 h-32 border rounded-lg border-gray-600 shadow-xl p-1 -mt-2 z-20 m-1">
                         {searchBox}
                         {sraAccession ? pageLinks : <div></div>}
-                        <div class="w-full text-center text-xl">
+                        <div className="w-full text-center text-xl">
                             {entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
                         </div>
                     </div>
                     <div className="flex flex-col justify-end items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1">
-                        <div class="w-5/6 h-auto overflow-y-auto">
+                        <div className="w-5/6 h-auto overflow-y-auto">
                             {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
                         </div>
                     </div>
