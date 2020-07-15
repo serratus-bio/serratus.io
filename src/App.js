@@ -1,48 +1,31 @@
 import React from 'react';
 import Navbar from './components/Navbar'
-import { Route, useLocation, Switch, BrowserRouter as Router } from "react-router-dom";
-import {useTransition, animated} from 'react-spring'
+import { Route, useLocation, Switch} from "react-router-dom";
+import {useTransition} from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home'
 import About from './pages/About'
 import Projects from './pages/Projects'
 import Data from './pages/Data'
-import Heatmap from './components/Heatmap'
-// import Background from './images/background.jpg'
 
 const App = () => {
   const location = useLocation()
-  const transitions = useTransition(location, location => location.pathname, {
+  useTransition(location, location => location.pathname, {
     from: { opacity: 0, transform: "translate(100%, 0)" },
     enter: { opacity: 1, transform: "translate(0, 0)" },
     leave: { opacity: 0, transform: "translate(-100%, 0)" },
-    
   });
 
   return (
-    // <>
     <div>
       <Navbar></Navbar>
-      <Switch  >
-        <Route exact path="/">
-            <Home />
-        </Route>
-        <Route exact path="/Mission">
-            <About/>
-        </Route>
-        <Route exact path="/Technology">
-            <Projects/>
-        </Route>
+      <Switch>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/Mission" component={About} />
+        <Route exact path="/Technology" component={Projects} />
         <Route exact path="/Data" component={Data} />
       </Switch>
     </div>
-    //   {/* {transitions.map(({ item, props, key}) => (
-    //     <animated.div key={key} style={props}> */}
-
-    //     {/* </animated.div>
-    //   ))}
-    
-    // </> */}
   );
 }
 
