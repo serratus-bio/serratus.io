@@ -161,31 +161,29 @@ export function drawHeatmap(d3, selector, summary) {
                         .attr("y", -yShift);
                 }
             }
-            else {
-                var tooltipFontSize = 10;
-                var tooltipX = sectionMargin.left + barWidth + prevWidth + (colWidth / 2);
-                var tooltipY = 15;
-                var hoverForColumnText = textG.append("rect")
-                    .attr("width", colWidth)
-                    .attr("height", colHeight)
-                    .attr("x", prevWidth)
-                    .attr("y", -yShift)
-                    .style("opacity", 0)
-                    .on("mouseover", () => {
-                        d3.selectAll(`[column="${column}"]`).style("opacity", 1);
-                        d3.select("#tooltip")
-                            .text(colAttrs["desc"])
-                            .attr("font-size", tooltipFontSize)
-                            .attr("x", tooltipX)
-                            .attr("y", tooltipY)
-                            .style("text-anchor", "middle")
-                            .style("opacity", 1);
-                    })
-                    .on("mouseout", () => {
-                        d3.selectAll(`[column="${column}"]`).style("opacity", 0);
-                        d3.select("#tooltip").style("opacity", 0);
-                    });
-            }
+            var tooltipFontSize = 10;
+            var tooltipX = sectionMargin.left + barWidth + prevWidth + (colWidth / 2);
+            var tooltipY = 15;
+            var hoverForColumnText = textG.append("rect")
+                .attr("width", colWidth)
+                .attr("height", colHeight)
+                .attr("x", prevWidth)
+                .attr("y", -yShift)
+                .style("opacity", 0)
+                .on("mouseover", () => {
+                    d3.selectAll(`[column="${column}"]`).style("opacity", 1);
+                    d3.select("#tooltip")
+                        .text(colAttrs["desc"])
+                        .attr("font-size", tooltipFontSize)
+                        .attr("x", tooltipX)
+                        .attr("y", tooltipY)
+                        .style("text-anchor", "middle")
+                        .style("opacity", 1);
+                })
+                .on("mouseout", () => {
+                    d3.selectAll(`[column="${column}"]`).style("opacity", 0);
+                    d3.select("#tooltip").style("opacity", 0);
+                });
 
             prevWidth += colWidth;
         });
