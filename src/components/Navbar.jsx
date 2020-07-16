@@ -12,6 +12,7 @@ const Navbar = () => {
           <NavLink exact to="/mission" className="invisible sm:visible ml-10 hover:text-blue-800" activeClassName="text-blue-600">Mission</NavLink>
           <NavLink exact to="/technology" className="invisible sm:visible ml-10 hover:text-blue-800" activeClassName="text-blue-600">Technology</NavLink>
           <NavLink exact to="/data" className="invisible sm:visible ml-10 hover:text-blue-800" activeClassName="text-blue-600">Data</NavLink>
+          <NavLink exact to="/report" className="invisible sm:visible ml-10 hover:text-blue-800" activeClassName="text-blue-600">Report</NavLink>
           <a href="https://github.com/ababaian/serratus" className="invisible sm:visible ml-8 bg-white font-mono border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
