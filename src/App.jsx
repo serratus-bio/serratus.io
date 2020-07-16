@@ -3,10 +3,11 @@ import Navbar from './components/Navbar'
 import { Route, useLocation, Switch} from "react-router-dom";
 import {useTransition} from 'react-spring'
 import './styles/main.css';
-import Home from './pages/Home'
-import Mission from './pages/Mission'
-import Technology from './pages/Technology'
-import Data from './pages/Data'
+import Home from './pages/Home';
+import Mission from './pages/Mission';
+import Technology from './pages/Technology';
+import Data from './pages/Data';
+import Report from './pages/Report';
 
 const App = () => {
   const location = useLocation()
@@ -24,6 +25,7 @@ const App = () => {
         <Route exact path="/mission" component={Mission} />
         <Route exact path="/technology" component={Technology} />
         <Route exact path="/data" component={Data} />
+        <Route exact path="/report" component={Report} />
       </Switch>
     </div>
   );
