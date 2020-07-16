@@ -67,7 +67,7 @@ const Data = (props) => {
                         </div>
                 </div>
                 <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-24">
-                    <div class="w-full flex flex-col overflow-y-scroll" style={{height: 600}} id="style-2">
+                    <div class="w-full flex flex-col overflow-y-auto" style={{height: 600}} id="style-2">
                         {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
                     </div>
                 </div>
