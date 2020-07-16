@@ -3,7 +3,7 @@ import DataSdk from '../SDK/DataSdk';
 import Heatmap from '../components/Heatmap';
 import { useLocation } from 'react-router-dom'
 
-const Data = (props) => {
+const Report = (props) => {
     var accessionFromParam = new URLSearchParams(props.location.search).get("accession");
     const [sraAccession, setAccession] = React.useState(accessionFromParam);
     const [inputAccession, setInputAccession] = React.useState("");
@@ -76,4 +76,4 @@ const Data = (props) => {
     )
 }
 
-export default Data;
+export default Report;
