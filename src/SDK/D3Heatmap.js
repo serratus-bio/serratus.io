@@ -1,3 +1,4 @@
+/* eslint-disable */
 export function drawHeatmap(d3, selector, summary) {
     var cvgCartoonMap = {
         '_': 0,

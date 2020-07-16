@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export default class TrackSdk {
     async createTrack(options) {
-        const response =  await axios.post(`http://localhost:3000/musers/1/tracks`, null, options);
+        const response = await axios.post(`http://localhost:3000/musers/1/tracks`, null, options);
         return response.data;
     }
     async getTracks(name = "", skip = 0, take = 100) {
@@ -21,11 +21,11 @@ export default class TrackSdk {
 
     async getSraHeatMapByName(sraName) {
         const response = await axios.get(`https://api.serratus.io/api/summary/${sraName}/coverage_heatmap.png`, { responseType: 'blob' });
-            return response.data;
+        return response.data;
     }
 
     async updateTrack(trackId, swipe) {
-        const response = await axios.put(`http://10.0.0.157:3000/musers/1/sessions/1/tracks/${trackId}`, {swipe: swipe});
+        const response = await axios.put(`http://10.0.0.157:3000/musers/1/sessions/1/tracks/${trackId}`, { swipe: swipe });
         return response.data;
     }
     async deleteTrack(track) {
@@ -34,12 +34,12 @@ export default class TrackSdk {
     }
 
     async getEsearch(accession) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=${accession}&retmax=1&usehistory=y`, {responseType: 'text'});
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=${accession}&retmax=1&usehistory=y`, { responseType: 'text' });
         return response.data;
     }
 
     async getEsummary(entrezId) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=sra&id=${entrezId}`, {responseType: 'text'});
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=sra&id=${entrezId}`, { responseType: 'text' });
         return response.data;
     }
 
@@ -69,5 +69,5 @@ export default class TrackSdk {
             .querySelector('Study')
             .getAttribute('name')
         return entrezStudyName;
-      }
+    }
 }
