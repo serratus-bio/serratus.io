@@ -9,8 +9,8 @@ const About = () => {
         <h1 className="text-xl text-black font-light text-center w-3/4 lg:w-3/5 mt-8 bg-white p-6 rounded-lg shadow-2xl z-20">
           <strong>The world needs us.</strong>
               We are currently in a pandemic and we are ill-equiped.
-              The quality of the sequencing data available for SARS-Cov-2 (Covid-19) is not in good condition,
-              with only 12% of coronaviruses having complete genomes.
+              The quality of the sequencing data available for SARS-Cov-2 (COVID-19) is not in good condition,
+              with only ~43% of coronaviruses having complete genomes.
               It is also likely that many more viruses in the same family have yet to be discovered.
               Serratus is here to help, but how?
         </h1>
