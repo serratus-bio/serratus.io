@@ -1,5 +1,5 @@
 /* eslint-disable */
-export function drawHeatmap(d3, selector, summary) {
+export function drawReport(d3, selector, summary) {
     var cvgCartoonMap = {
         '_': 0,
         '.': 0.25,

@@ -2,11 +2,11 @@ import React from 'react';
 import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
 import DataSdk from '../SDK/DataSdk';
-import { drawHeatmap } from '../SDK/D3Heatmap.js';
+import { drawReport } from '../SDK/drawReport.js';
 
 const dataSdk = new DataSdk();
 
-const Heatmap = (props) => {
+const ReportChart = (props) => {
     var accession = props.accession;
     const [summaryJson, setSummaryJson] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -22,7 +22,7 @@ const Heatmap = (props) => {
 
         if (summaryJson) {
             var faux = props.connectFauxDOM('div', 'chart');
-            drawHeatmap(d3, faux, summaryJson);
+            drawReport(d3, faux, summaryJson);
         }
     }
 
@@ -59,5 +59,5 @@ const Heatmap = (props) => {
     )
 }
 
-const FauxChart = withFauxDOM(Heatmap);
+const FauxChart = withFauxDOM(ReportChart);
 export default FauxChart;

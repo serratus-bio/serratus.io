@@ -1,6 +1,6 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
-import Heatmap from '../components/Heatmap';
+import ReportChart from '../components/ReportChart';
 import { useLocation } from 'react-router-dom'
 
 const Report = (props) => {
@@ -68,7 +68,7 @@ const Report = (props) => {
                 </div>
                 <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-12 pr-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{height: 600}} id="style-2">
-                        {sraAccession ? <Heatmap accession={sraAccession}></Heatmap> : <div></div>}
+                        {sraAccession ? <ReportChart accession={sraAccession}></ReportChart> : <div></div>}
                     </div>
                 </div>
             </div>
