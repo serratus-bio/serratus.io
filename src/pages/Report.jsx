@@ -63,7 +63,7 @@ const Report = (props) => {
                     {searchBox}
                     {sraAccession ? pageLinks : <div></div> }
                         <div className="w-full text-center text-xl">
-                            {entrezStudyName ? <div className="text-xl italic">Study: {entrezStudyName}</div> : <div></div>}
+                            {entrezStudyName ? <div className="text-xl">{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
                         </div>
                 </div>
                 <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-24">
