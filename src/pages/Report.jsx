@@ -1,10 +1,12 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import ReportChart from '../components/ReportChart';
+import { useLocation } from 'react-router-dom'
 
 const dataSdk = new DataSdk();
 
 const Report = (props) => {
+    const [pathName, setPathName] = React.useState(useLocation().pathname);
     const [sraAccession, setAccession] = React.useState(() => {
         return new URLSearchParams(props.location.search).get("accession");
     });
@@ -27,9 +29,7 @@ const Report = (props) => {
 
     function loadAccessionPage(accession) {
         setAccession(accession);
-        let currentUrlParams = new URLSearchParams(window.location.search);
-        currentUrlParams.set('accession', accession);
-        props.history.push(window.location.pathname + "?" + currentUrlParams.toString());
+        window.location.href = `${pathName}?accession=${accession}`
     }
 
     async function fetchEntrezData() {
