@@ -11,14 +11,12 @@ const Report = (props) => {
     const pathName = useLocation().pathname;
     const dataSdk = new DataSdk();
 
-    async function fetchEntrezData(ignore) {
+    async function fetchEntrezData() {
         setEntrezStudyName("Loading...")
         console.log("Fetching Entrez data...");
         let entrezStudyName = await dataSdk.getEntrezData(sraAccession);
-        if (!ignore) {
-            setEntrezStudyName(entrezStudyName);
-            console.log("Done fetching Entrez data.");
-        }
+        setEntrezStudyName(entrezStudyName);
+        console.log("Done fetching Entrez data.");
     }
 
     React.useEffect(() => {
@@ -26,9 +24,7 @@ const Report = (props) => {
             return;
         }
         console.log(`Loading report page for ${sraAccession}.`);
-        let ignore = false;
-        fetchEntrezData(ignore);
-        return () => { ignore = true; }
+        fetchEntrezData();
     }, []);
 
     const redirect = accession => e => {
