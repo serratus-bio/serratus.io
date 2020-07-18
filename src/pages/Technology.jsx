@@ -31,7 +31,7 @@ function Projects() {
               </p>
             </div>
             <div className="flex flex-col p-4 justify-center items-center ml-32 h-32 w-32">
-              <a target="_blank" rel="noopener noreferrer" href="https://github.com/ababaian/serratus/wiki/Architecture-and-Pipeline" ><img src="/gh.png" alt="GitHub logo" className=""></img></a>
+              <a target="_blank" rel="noopener noreferrer" href="https://github.com/ababaian/serratus/wiki/Architecture-and-Pipeline" ><img src="/aws-logo.png" alt="GitHub logo" className=""></img></a>
             </div>
           </div>
           <div className="sm:max-w-sm rounded-lg overflow-hidden bg-white shadow-2xl mt-40 sm:m-10 sm:pt-0">
