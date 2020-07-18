@@ -53,15 +53,6 @@ const Report = (props) => {
         fetchEntrezData();
     }, [sraAccession]);
 
-    let searchBox = (
-        <div className="flex flex-col items-center z-10 mt-2">
-            <div className="flex-row z-10">
-                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Run Accession" onKeyUp={searchOnKeyUp} />
-                <button onClick={searchButtonClick} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
-            </div>
-        </div>
-    )
-
     const LinkButton = (props) => {
         let aAttrs = {};
         if (props.newTab) {
@@ -113,7 +104,12 @@ const Report = (props) => {
                 sm:shadow-2xl
                 lg:w-3/4 lg:mt-6 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600">
                 <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
-                    {searchBox}
+                    <div className="flex flex-col items-center z-10 mt-2">
+                        <div className="flex-row z-10">
+                            <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Run Accession" onKeyUp={searchOnKeyUp} />
+                            <button onClick={searchButtonClick} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
+                        </div>
+                    </div>
                     {sraAccession ? pageLinks : null}
                     <div className="w-full text-center text-xl">
                         {entrezStudyName ? <div>{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : null}
