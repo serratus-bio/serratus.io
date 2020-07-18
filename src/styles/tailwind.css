@@ -8,6 +8,7 @@
 
 body {
     overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
 }
 
 #style-2::-webkit-scrollbar-track

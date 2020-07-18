@@ -1,7 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar'
-import { Route, useLocation, Switch} from "react-router-dom";
-import {useTransition} from 'react-spring'
+import { Route, useLocation, Switch } from "react-router-dom";
+import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
 import Mission from './pages/Mission';
