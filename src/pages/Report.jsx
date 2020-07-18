@@ -13,7 +13,7 @@ const Report = (props) => {
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setEntrezStudyName] = React.useState("");
 
-    // clicked "Report on navigation bar"
+    // clicked "Report" on navigation bar
     if (sraAccession && !currentAccession) {
         loadAccessionPage(currentAccession);
     }
@@ -74,16 +74,18 @@ const Report = (props) => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center justify-center ">
-            <img src="/serratus.jpg" alt="serratus mountain" className="invisible sm:visible opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
-            <div className="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 p-1 mt-10 mb-32 ">
-                <div className="w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl p-1 z-20 m-1">
+            <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
+            <div className="flex flex-col justify-center items-center w-full h-full z-10 rounded-lg p-1 mt-10 mb-32
+                sm:shadow-2xl
+                lg:w-3/4 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600">
+                <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
                     {searchBox}
                     {sraAccession ? pageLinks : <div></div>}
                     <div className="w-full text-center text-xl">
-                        {entrezStudyName ? <div className="text-xl">{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
+                        {entrezStudyName ? <div>{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
                     </div>
                 </div>
-                <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-12 pr-12">
+                <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {sraAccession ?
                             <ReportChart accession={sraAccession}></ReportChart> :
