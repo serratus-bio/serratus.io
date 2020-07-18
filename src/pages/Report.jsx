@@ -1,18 +1,21 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import ReportChart from '../components/ReportChart';
+import ReportInfo from "../components/ReportIntro";
 import { useLocation } from 'react-router-dom'
 
 const dataSdk = new DataSdk();
 
 const Report = (props) => {
+    let currentAccession = new URLSearchParams(props.location.search).get("accession");
     const [pathName, setPathName] = React.useState(useLocation().pathname);
-    const [sraAccession, setAccession] = React.useState(() => {
-        return new URLSearchParams(props.location.search).get("accession");
-    });
+    const [sraAccession, setAccession] = React.useState(currentAccession);
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setEntrezStudyName] = React.useState("");
-    const [chartComponent, setChartComponent] = React.useState(null);
+
+    if (currentAccession != sraAccession) {
+        loadAccessionPage(currentAccession);
+    }
 
     function searchOnKeyUp(e) {
         if (e.keyCode == 13) {
@@ -29,7 +32,8 @@ const Report = (props) => {
 
     function loadAccessionPage(accession) {
         setAccession(accession);
-        window.location.href = `${pathName}?accession=${accession}`
+        let newUrl = accession ? `${pathName}?accession=${accession}` : pathName;
+        window.location.href = newUrl;
     }
 
     async function fetchEntrezData() {
@@ -46,15 +50,12 @@ const Report = (props) => {
         }
         console.log(`Loading report page for ${sraAccession}.`);
         fetchEntrezData();
-        setChartComponent(
-            (<ReportChart accession={sraAccession}></ReportChart>)
-        )
     }, [sraAccession]);
 
     let searchBox = (
         <div className="flex flex-col items-center z-10 mt-2">
             <div className="flex-row z-10">
-                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Accession ID" onKeyUp={searchOnKeyUp} />
+                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Run Accession" onKeyUp={searchOnKeyUp} />
                 <button onClick={searchButtonClick} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
             </div>
         </div>
@@ -83,7 +84,10 @@ const Report = (props) => {
                 </div>
                 <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-12 pr-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
-                        {sraAccession ? chartComponent : <div></div>}
+                        {sraAccession ?
+                            <ReportChart accession={sraAccession}></ReportChart> :
+                            <ReportInfo></ReportInfo>
+                        }
                     </div>
                 </div>
             </div>
