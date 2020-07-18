@@ -40,7 +40,7 @@ const ReportChart = (props) => {
         <div className="text-center">
             <span>This accession has not been processed... yet.</span><br />
             <span>To request this sample be processed, please </span>
-            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" className="text-blue-600">
+            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                 submit an issue on GitHub
             </a>
             <span>.</span>
