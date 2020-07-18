@@ -73,9 +73,9 @@ const Report = (props) => {
     )
 
     return (
-        <div className="h-screen w-screen flex flex-col items-center justify-center ">
+        <div className="flex flex-col items-center justify-center ">
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
-            <div className="flex flex-col justify-center items-center w-full h-full z-10 rounded-lg p-1 mt-10 mb-32
+            <div className="flex flex-col justify-center items-center w-full z-10 rounded-lg p-1 mt-10 mb-32
                 sm:shadow-2xl
                 lg:w-3/4 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600">
                 <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
