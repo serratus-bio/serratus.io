@@ -7,11 +7,10 @@ import { drawReport } from '../SDK/drawReport.js';
 const dataSdk = new DataSdk();
 
 const ReportChart = (props) => {
-    var accession = props.accession;
     const [summaryJson, setSummaryJson] = React.useState(null);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    async function initialRender() {
+    async function renderChart(accession) {
         if (!accession) {
             return;
         }
@@ -27,8 +26,8 @@ const ReportChart = (props) => {
     }
 
     React.useEffect(() => {
-        initialRender();
-    }, []);
+        renderChart(props.accession);
+    }, [props.accession]);
 
     let loading = (
         <div className="text-center">

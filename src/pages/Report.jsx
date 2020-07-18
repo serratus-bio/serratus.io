@@ -1,22 +1,43 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import ReportChart from '../components/ReportChart';
-import { useLocation } from 'react-router-dom'
+
+const dataSdk = new DataSdk();
 
 const Report = (props) => {
-    var accessionFromParam = new URLSearchParams(props.location.search).get("accession");
-    const [sraAccession, setAccession] = React.useState(accessionFromParam);
+    const [sraAccession, setAccession] = React.useState(() => {
+        return new URLSearchParams(props.location.search).get("accession");
+    });
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setEntrezStudyName] = React.useState("");
-    const pathName = useLocation().pathname;
-    const dataSdk = new DataSdk();
+    const [chartComponent, setChartComponent] = React.useState(null);
+
+    function searchOnKeyUp(e) {
+        if (e.keyCode == 13) {
+            loadAccessionPage(e.target.value);
+        }
+        else {
+            setInputAccession(e.target.value);
+        }
+    }
+
+    function searchButtonClick() {
+        loadAccessionPage(inputAccession);
+    }
+
+    function loadAccessionPage(accession) {
+        setAccession(accession);
+        let currentUrlParams = new URLSearchParams(window.location.search);
+        currentUrlParams.set('accession', accession);
+        props.history.push(window.location.pathname + "?" + currentUrlParams.toString());
+    }
 
     async function fetchEntrezData() {
         setEntrezStudyName("Loading...")
         console.log("Fetching Entrez data...");
-        let entrezStudyName = await dataSdk.getEntrezData(sraAccession);
+        let entrezStudyName = await dataSdk.tryGetEntrezData(sraAccession);
         setEntrezStudyName(entrezStudyName);
-        console.log("Done fetching Entrez data.");
+        console.log(entrezStudyName ? "Done fetching Entrez data." : "Could not load Entrez data.");
     }
 
     React.useEffect(() => {
@@ -25,18 +46,16 @@ const Report = (props) => {
         }
         console.log(`Loading report page for ${sraAccession}.`);
         fetchEntrezData();
-    }, []);
-
-    const redirect = accession => e => {
-        setAccession(accession)
-        window.location.href = `${pathName}?accession=${accession}`
-    }
+        setChartComponent(
+            (<ReportChart accession={sraAccession}></ReportChart>)
+        )
+    }, [sraAccession]);
 
     let searchBox = (
         <div className="flex flex-col items-center z-10 mt-2">
             <div className="flex-row z-10">
-                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Accession ID" onChange={e => setInputAccession(e.target.value)} />
-                <button onClick={redirect(inputAccession)} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
+                <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Accession ID" onKeyUp={searchOnKeyUp} />
+                <button onClick={searchButtonClick} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
             </div>
         </div>
     )
@@ -53,18 +72,18 @@ const Report = (props) => {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center justify-center ">
-            <img src="/serratus.jpg" alt="serratus mountain" className="invisible sm:visible opacity-75 sm:fixed" style={{objectFit: 'cover', minWidth: '100vh', minHeight: '100vh'}} />
+            <img src="/serratus.jpg" alt="serratus mountain" className="invisible sm:visible opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="w-3/4 h-full flex flex-col justify-center items-center z-10 bg-blue-400 border border-gray-600 rounded-lg shadow-2xl bg-opacity-25 p-1 mt-10 mb-32 ">
                 <div className="w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl p-1 z-20 m-1">
                     {searchBox}
-                    {sraAccession ? pageLinks : <div></div> }
-                        <div className="w-full text-center text-xl">
-                            {entrezStudyName ? <div className="text-xl">{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
-                        </div>
+                    {sraAccession ? pageLinks : <div></div>}
+                    <div className="w-full text-center text-xl">
+                        {entrezStudyName ? <div className="text-xl">{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
+                    </div>
                 </div>
                 <div className="flex flex-col flex-1 justify-center items-center w-5/6 bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 pl-12 pr-12">
-                    <div className="w-full flex flex-col overflow-y-auto" style={{height: 600}} id="style-2">
-                        {sraAccession ? <ReportChart accession={sraAccession}></ReportChart> : <div></div>}
+                    <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
+                        {sraAccession ? chartComponent : <div></div>}
                     </div>
                 </div>
             </div>
