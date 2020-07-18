@@ -1,12 +1,11 @@
 import React from 'react';
 import Navbar from './components/Navbar'
-import { Route, useLocation, Switch} from "react-router-dom";
-import {useTransition} from 'react-spring'
+import { Route, useLocation, Switch } from "react-router-dom";
+import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Technology from './pages/Technology';
-import Explore from './pages/Explore';
 import Report from './pages/Report';
 
 const App = () => {
@@ -25,7 +24,6 @@ const App = () => {
         <Route exact path="/mission" component={Mission} />
         <Route exact path="/technology" component={Technology} />
         <Route exact path="/report" component={Report} />
-        <Route exact path="/explore" component={Explore} />
       </Switch>
     </div>
   );

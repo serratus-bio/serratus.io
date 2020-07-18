@@ -1,5 +1,5 @@
 /* eslint-disable */
-export function drawHeatmap(d3, selector, summary) {
+export function drawReport(d3, selector, summary) {
     var cvgCartoonMap = {
         '_': 0,
         '.': 0.25,
@@ -92,6 +92,27 @@ export function drawHeatmap(d3, selector, summary) {
             .attr("transform", `translate(${legendWidth - margin.left - margin.right}, ${margin.top - 0.5})`)
             .call(d3.axisRight(legendScale));
     };
+
+    function addHeaders(gElement) {
+        var yShift = 15;
+
+        var colText = "Match";
+        var xShift = sectionMargin.left + rowLabelShiftX;
+        var textG = gElement.append("g")
+        var text = textG.append("text")
+            .text(colText)
+            .style("text-anchor", "end")
+            .attr("transform",
+                  `translate(${xShift}, ${yShift})`);
+
+        var colText = "Coverage Heatmap";
+        var xShift = sectionMargin.left + (barWidth / 2);
+        var text = textG.append("text")
+            .text(colText)
+            .style("text-anchor", "middle")
+            .attr("transform",
+                  `translate(${xShift}, ${yShift})`);
+    }
 
     function addColumns(gElement, summaryEntry=null) {
         var yShift = 15;
@@ -190,61 +211,40 @@ export function drawHeatmap(d3, selector, summary) {
         });
     }
 
+    function getFamilyLink(familyName) {
+        if (familyName == "AMR") {
+            return "https://card.mcmaster.ca/";
+        }
+        else {
+            return `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${familyName}`;
+        }
+    }
+
+    function getAccessionLink(familyName, accessionName) {
+        if (familyName == "AMR") {
+            var genbankAcc = accessionName.slice(0, accessionName.lastIndexOf("_"))
+            return `https://www.ncbi.nlm.nih.gov/nuccore/${genbankAcc}`;
+        }
+        else {
+            return `https://www.ncbi.nlm.nih.gov/nuccore/${accessionName}`;
+        }
+    }
+
     function addFamilyText(gElement, family) {
         var textGroup = gElement.append("g")
             .attr("transform",
                   `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
-        var link, linkText, linkWidth;
-        if (family.family == "AMR") {
-            link = "https://card.mcmaster.ca/";
-            linkText = "CARD";
-            linkWidth = 45;
-        }
-        else {
-            link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family.family}`;
-            linkText = "NCBI Taxonomy Browser";
-            linkWidth = 175;
-        }
-        var linkHeight = 20;
-        var linkSvg = textGroup.append("svg")
-            .attr("width", linkWidth)
-            .attr("height", linkHeight)
-            .attr("x", 20);
-        var linkRectA = linkSvg
-            .append("a")
-            .attr("xlink:href", link)
-            .attr("target", "_blank")
-            .append("rect")
-            .attr("opacity", 0)
-            .attr("width", linkWidth)
-            .attr("height", linkHeight);
-        var linkTextA = linkSvg.append("text")
-            .style("fill", "blue")
-            .style("pointer-events", "none")
-            .text(linkText)
-            .attr("transform",
-                  `translate(0, ${sectionMargin.top + 14})`);
-
         var accessionsHeaderY = 40;
         var textEntry = textGroup.append("text")
             .attr("transform",
                   `translate(0, ${accessionsHeaderY})`)
-            .text(`Top ${maxAccessions} accessions by cvgpct:`);
+            .text(`Top ${maxAccessions} accessions by coverage:`);
     }
 
     function addAccessionText(gElement, family, accession) {
-        var link;
-        if (family.family == "AMR") {
-            var genbank_acc = accession.acc.slice(0, accession.acc.lastIndexOf("_"))
-            link = `https://www.ncbi.nlm.nih.gov/nuccore/${genbank_acc}`;
-        }
-        else {
-            link = `https://www.ncbi.nlm.nih.gov/nuccore/${accession.acc}`;
-        }
-
         var linkText = "GenBank";
-        var linkWidth = 200;
+        var linkWidth = barWidth;
         var linkHeight = 20;
         var textGroup = gElement.append("g")
             .attr("transform",
@@ -252,19 +252,10 @@ export function drawHeatmap(d3, selector, summary) {
         var linkSvg = textGroup.append("svg")
             .attr("width", linkWidth)
             .attr("height", linkHeight)
-            .attr("x", 20);
-        var linkRectA = linkSvg
-            .append("a")
-            .attr("xlink:href", link)
-            .attr("target", "_blank")
-            .append("rect")
-            .attr("opacity", 0)
-            .attr("width", linkWidth)
-            .attr("height", linkHeight);
-        var linkTextA = linkSvg.append("text")
-            .style("fill", "blue")
-            .style("pointer-events", "none")
-            .text(linkText)
+            .attr("x", 10);
+        var text = linkSvg.append("text")
+            .text("Name: " + accession.name)
+            .style("font-size", 10)
             .attr("transform",
                   `translate(0, ${sectionMargin.top + 14})`);
     }
@@ -319,7 +310,17 @@ export function drawHeatmap(d3, selector, summary) {
         var allRows = d3.selectAll(".family");
         var currentRow = d3.select(`.family[rowid="${familyName}"]`);
         var subsectionHeight = 300;
-        toggleIRow(allRows, currentRow, subsectionHeight);
+        var waitForAccession = false;
+        currentRow.selectAll(".accession").each(function(d, i) {
+            var accessionName = d3.select(this).attr("rowid");
+            var isExpanded = !d3.select(this).select(`.subsection[visibility="visible"]`).empty();
+            if (isExpanded) {
+                toggleAccessionRow(familyName, accessionName);
+                waitForAccession = true;
+            }
+        });
+        var timeout = waitForAccession ? 500 : 0;  // hacky fix for family+acc collapse
+        setTimeout(() => {toggleIRow(allRows, currentRow, subsectionHeight)}, timeout);
     }
 
     function shiftLowerFamilies(familyName, shiftY) {
@@ -378,8 +379,33 @@ export function drawHeatmap(d3, selector, summary) {
         yAxis.select("path").remove();
         yAxis.select("line").remove();
         yAxis.selectAll("text")
-            .attr("x", -25)
-            .style("font-size", 12);
+            .attr("x", rowLabelShiftX)
+            .style("font-size", 12)
+            .style("fill", "blue")
+            .style('cursor', 'pointer')
+            .each( function(d, i){
+                var link;
+                if (rowType == "family") {
+                    link = getFamilyLink(name);
+                }
+                else {
+                    var familyName = gElement.attr("family");
+                    link = getAccessionLink(familyName, name);
+                }
+                var textWidth = 100;
+                var textHeight = 14;
+                d3.select(this.parentNode)
+                    .append("a")
+                    .attr("xlink:href", link)
+                    .attr("target", "_blank")
+                .append("rect")
+                    .attr("x", rowLabelShiftX - textWidth)
+                    .attr("y", -8)
+                    .attr("width", textWidth)
+                    .attr("height", textHeight)
+                    .attr("fill", "black")
+                    .style("opacity", 0)
+            });
         
         var caret = yAxis.append("g")
             .attr("transform", `translate(-12, 9)`)
@@ -452,6 +478,7 @@ export function drawHeatmap(d3, selector, summary) {
     var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
     var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
     var barBorder = {size: 1, color: '#999'};
+    var rowLabelShiftX = -25;
 
     var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
         .domain([0, 1]);
@@ -470,6 +497,7 @@ export function drawHeatmap(d3, selector, summary) {
     drawLegend(familiesSvg);
     var columnHeadersG = chartSvg.append("g")
         .attr("transform", `translate(0, ${tableShiftY - sectionHeight})`);
+    addHeaders(columnHeadersG);
     addColumns(columnHeadersG);
 
     var familyTextHeight = 50;
