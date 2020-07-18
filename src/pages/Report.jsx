@@ -114,9 +114,9 @@ const Report = (props) => {
                 lg:w-3/4 lg:mt-6 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600">
                 <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
                     {searchBox}
-                    {sraAccession ? pageLinks : <div></div>}
+                    {sraAccession ? pageLinks : null}
                     <div className="w-full text-center text-xl">
-                        {entrezStudyName ? <div>{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : <div></div>}
+                        {entrezStudyName ? <div>{sraAccession}: <span className="italic">{entrezStudyName}</span></div> : null}
                     </div>
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
