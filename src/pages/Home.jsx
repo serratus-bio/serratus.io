@@ -7,9 +7,9 @@ const Home = () => {
             <div className="flex flex-col z-10 items-center text-white ">
                 <h1 className="text-5xl font-semibold text-center mt-16 z-10">Welcome to Serratus</h1>
                 <h1 className="text-xl font-light text-center z-10">An open source, <strong> ultra-deep </strong>  search for Novel Coronaviruses.</h1>
-                <a href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="border z-10 border-white flex text-xl mt-16 justify-center items-center w-auto  px-6 py-2 rounded-md hover:text-blue-600 hover:bg-white" target="_blank" rel="noopener noreferrer">
-                    <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" className="fill-current h-6 w-6  mr-3" viewBox="0 0 24 24" ><path d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z" /></svg>
-                    Join Us On GitHub
+                <a href="/report" className="border z-10 border-white flex text-xl mt-16 justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" enableBackground="new 0 0 24 24" className="fill-current h-6 w-6  mr-3" viewBox="0 0 24 24" ><path d="M9,2 C5.146,2 2,5.146 2,9 C2,12.854 5.146,16 9,16 C10.748,16 12.345,15.348 13.574,14.281 L14,14.707 L14,16 L19.586,21.586 C20.138,22.138 21.034,22.138 21.586,21.586 C22.138,21.034 22.138,20.138 21.586,19.586 L16,14 L14.707,14 L14.281,13.574 C15.348,12.345 16,10.748 16,9 C16,5.146 12.854,2 9,2 z M9,4 C11.773,4 14,6.227 14,9 C14,11.773 11.773,14 9,14 C6.227,14 4,11.773 4,9 C4,6.227 6.227,4 9,4 z"/></svg>
+                    Explore Data
                 </a>
             </div>
         </div>
