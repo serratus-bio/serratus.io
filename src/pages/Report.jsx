@@ -13,7 +13,8 @@ const Report = (props) => {
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setEntrezStudyName] = React.useState("");
 
-    if (currentAccession != sraAccession) {
+    // clicked "Report on navigation bar"
+    if (sraAccession && !currentAccession) {
         loadAccessionPage(currentAccession);
     }
 
