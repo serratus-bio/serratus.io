@@ -106,8 +106,8 @@ const Report = (props) => {
                 <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
                     <div className="flex flex-col items-center z-10 mt-2">
                         <div className="flex-row z-10">
-                            <input className="rounded border-2 border-gray-300 px-2 m-1" type="text" placeholder="Enter SRA Run Accession" onKeyUp={searchOnKeyUp} />
-                            <button onClick={searchButtonClick} className="rounded bg-blue-500 text-white font-bold py-1 px-4" type="submit">Go</button>
+                            <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder="Search SRA Run Accession" onKeyUp={searchOnKeyUp} />
+                            <button onClick={searchButtonClick} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                         </div>
                     </div>
                     {sraAccession ? pageLinks : null}
