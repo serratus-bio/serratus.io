@@ -32,7 +32,6 @@ const Report = (props) => {
     }
 
     function loadAccessionPage(accession) {
-        setAccession(accession);
         let newUrl = accession ? `${pathName}?accession=${accession}` : pathName;
         window.location.href = newUrl;
     }
