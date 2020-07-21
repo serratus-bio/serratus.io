@@ -14,6 +14,7 @@ const Navbar = () => {
           <NavLink exact to="/" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Home</NavLink>
           <NavLink exact to="/mission" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Mission</NavLink>
           <NavLink exact to="/technology" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Technology</NavLink>
+          <NavLink exact to="/query" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Query</NavLink>
           <NavLink exact to="/report" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Report</NavLink>
           <a href="https://github.com/ababaian/serratus" className="ml-8 bg-white font-mono border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
