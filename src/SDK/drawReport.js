@@ -216,18 +216,15 @@ export function drawReport(d3, selector, summary) {
             return "https://card.mcmaster.ca/";
         }
         else {
-            return `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${familyName}`;
+            return `/query?family=${familyName}`;
         }
     }
 
     function getAccessionLink(familyName, accessionName) {
         if (familyName == "AMR") {
-            var genbankAcc = accessionName.slice(0, accessionName.lastIndexOf("_"))
-            return `https://www.ncbi.nlm.nih.gov/nuccore/${genbankAcc}`;
+            accessionName = accessionName.slice(0, accessionName.lastIndexOf("_"))
         }
-        else {
-            return `https://www.ncbi.nlm.nih.gov/nuccore/${accessionName}`;
-        }
+        return `/query?genbank=${accessionName}`;
     }
 
     function addFamilyText(gElement, family) {
@@ -385,8 +382,10 @@ export function drawReport(d3, selector, summary) {
             .style('cursor', 'pointer')
             .each( function(d, i){
                 var link;
+                var isAMR = false;
                 if (rowType == "family") {
                     link = getFamilyLink(name);
+                    isAMR = name == "AMR";
                 }
                 else {
                     var familyName = gElement.attr("family");
@@ -394,11 +393,13 @@ export function drawReport(d3, selector, summary) {
                 }
                 var textWidth = 100;
                 var textHeight = 14;
-                d3.select(this.parentNode)
+                var linkA = d3.select(this.parentNode)
                     .append("a")
                     .attr("xlink:href", link)
-                    .attr("target", "_blank")
-                .append("rect")
+                if (isAMR) {
+                    linkA.attr("target", "_blank")
+                }
+                linkA.append("rect")
                     .attr("x", rowLabelShiftX - textWidth)
                     .attr("y", -8)
                     .attr("width", textWidth)
