@@ -81,6 +81,27 @@ export function drawQueryResults(d3, selector, results) {
             .call(d3.axisRight(legendScale));
     };
 
+    function addHeaders(gElement) {
+        var yShift = 15;
+
+        var colText = "Hit";
+        var xShift = sectionMargin.left + rowLabelShiftX;
+        var textG = gElement.append("g")
+        var text = textG.append("text")
+            .text(colText)
+            .style("text-anchor", "end")
+            .attr("transform",
+                  `translate(${xShift}, ${yShift})`);
+
+        var colText = "Coverage Heatmap";
+        var xShift = sectionMargin.left + (barWidth / 2);
+        var text = textG.append("text")
+            .text(colText)
+            .style("text-anchor", "middle")
+            .attr("transform",
+                  `translate(${xShift}, ${yShift})`);
+    }
+
     function addColumns(gElement, summaryEntry=null) {
         var yShift = 15;
         var colHeight = sectionHeight;
@@ -262,6 +283,7 @@ export function drawQueryResults(d3, selector, results) {
     var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
     var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
     var barBorder = {size: 1, color: '#999'};
+    var rowLabelShiftX = -25;
 
     var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
         .domain([0, 1]);
@@ -281,6 +303,7 @@ export function drawQueryResults(d3, selector, results) {
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
         .attr("transform", `translate(0, ${tableShiftY - sectionHeight})`);
+    addHeaders(columnHeadersG);
     addColumns(columnHeadersG);
 
     results.forEach((hit, i) => {
