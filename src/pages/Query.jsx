@@ -1,13 +1,13 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
-import ExploreChart from '../components/ExploreChart';
-import ExploreInfo from "../components/ExploreIntro";
+import QueryChart from '../components/QueryChart';
+import QueryInfo from "../components/QueryIntro";
 import LinkButton from "../components/LinkButton";
 import { useLocation } from 'react-router-dom'
 
 const dataSdk = new DataSdk();
 
-const Explore = (props) => {
+const Query = (props) => {
     let currentAccession = new URLSearchParams(props.location.search).get("accession");
     const [pathName, setPathName] = React.useState(useLocation().pathname);
     const [genbankAccession, setAccession] = React.useState(currentAccession);
@@ -48,7 +48,7 @@ const Explore = (props) => {
         if (!genbankAccession) {
             return;
         }
-        console.log(`Loading explore page for ${genbankAccession}.`);
+        console.log(`Loading query page for ${genbankAccession}.`);
         fetchEntrezData();
     }, [genbankAccession]);
 
@@ -85,8 +85,8 @@ const Explore = (props) => {
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {genbankAccession ?
-                            <ExploreChart accession={genbankAccession}></ExploreChart> :
-                            <ExploreInfo></ExploreInfo>
+                            <QueryChart accession={genbankAccession}></QueryChart> :
+                            <QueryInfo></QueryInfo>
                         }
                     </div>
                 </div>
@@ -95,4 +95,4 @@ const Explore = (props) => {
     )
 }
 
-export default Explore;
+export default Query;

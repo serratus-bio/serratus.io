@@ -2,11 +2,11 @@ import React from 'react';
 import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
 import DataSdk from '../SDK/DataSdk';
-import { drawExplore } from '../SDK/drawExplore.js';
+import { drawQueryResults } from '../SDK/drawQueryResults.js';
 
 const dataSdk = new DataSdk();
 
-const ExploreChart = (props) => {
+const QueryChart = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
 
@@ -20,7 +20,7 @@ const ExploreChart = (props) => {
         if (hasResults) {
             results = results.slice(0, 20);
             var faux = props.connectFauxDOM('div', 'chart');
-            drawExplore(d3, faux, results);
+            drawQueryResults(d3, faux, results);
         }
         setIsLoading(false);
     }
@@ -53,5 +53,5 @@ const ExploreChart = (props) => {
     )
 }
 
- const FauxChart = withFauxDOM(ExploreChart);
+ const FauxChart = withFauxDOM(QueryChart);
 export default FauxChart;

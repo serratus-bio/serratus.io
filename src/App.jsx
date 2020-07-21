@@ -7,7 +7,7 @@ import Home from './pages/Home';
 import Mission from './pages/Mission';
 import Technology from './pages/Technology';
 import Report from './pages/Report';
-import Explore from './pages/Explore';
+import Query from './pages/Query';
 
 const App = () => {
   const location = useLocation()
@@ -24,7 +24,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route exact path="/mission" component={Mission} />
         <Route exact path="/technology" component={Technology} />
-        <Route exact path="/explore" component={Explore} />
+        <Route exact path="/query" component={Query} />
         <Route exact path="/report" component={Report} />
       </Switch>
     </div>

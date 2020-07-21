@@ -1,5 +1,5 @@
 /* eslint-disable */
-export function drawExplore(d3, selector, results) {
+export function drawQueryResults(d3, selector, results) {
     var cvgCartoonMap = {
         '_': 0,
         '.': 0.25,

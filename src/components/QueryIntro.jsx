@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ReportInfo = () => {
+const QueryInfo = () => {
     return (
         <div className="text-center">
             Explore Serratus SRA run hits for a GenBank accession.<br />
@@ -10,4 +10,4 @@ const ReportInfo = () => {
     )
 }
 
-export default ReportInfo;
+export default QueryInfo;
