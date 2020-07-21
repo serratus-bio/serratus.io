@@ -10,7 +10,7 @@ const QueryChart = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    async function renderChart(accession) {
+    async function renderByAccession(accession) {
         if (!accession) {
             return;
         }
@@ -20,14 +20,39 @@ const QueryChart = (props) => {
         if (hasResults) {
             results = results.slice(0, 20);
             var faux = props.connectFauxDOM('div', 'chart');
-            drawQueryResults(d3, faux, results);
+            var columns = ["cvgPct", "pctId", "aln"];
+            drawQueryResults(d3, faux, results, columns);
+        }
+        setIsLoading(false);
+    }
+
+    async function renderByFamily(family) {
+        if (!family) {
+            return;
+        }
+        let results = await dataSdk.fetchSraHitsByFamily(family);
+        let hasResults = results && results.length != 0;
+        setHasResults(hasResults);
+        if (hasResults) {
+            results = results.slice(0, 20);
+            var faux = props.connectFauxDOM('div', 'chart');
+            var columns = ["score", "pctId", "aln"];
+            drawQueryResults(d3, faux, results, columns);
         }
         setIsLoading(false);
     }
 
     React.useEffect(() => {
-        renderChart(props.accession);
-    }, [props.accession]);
+        setIsLoading(true);
+        switch (props.type) {
+            case "family":
+                renderByFamily(props.value);
+                break;
+            case "genbank":
+                renderByAccession(props.value);
+                break;
+        }
+    }, [props.type, props.value]);
 
     let loading = (
         <div className="text-center">

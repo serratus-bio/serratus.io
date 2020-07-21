@@ -11,6 +11,11 @@ export default class DataSdk {
         return response.data;
     }
 
+    async fetchSraHitsByFamily(familyName) {
+        const response = await axios.get(`https://db.serratus.io/api/runs/get-runs-by-family/${familyName}`);
+        return response.data;
+    }
+
     async fetchAccessionJSON(accession) {
         const response = await axios.get(`https://api.serratus.io/api/summary/${accession}`);
         return response.data;

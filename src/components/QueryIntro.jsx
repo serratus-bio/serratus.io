@@ -3,8 +3,9 @@ import React from 'react';
 const QueryInfo = () => {
     return (
         <div className="text-center">
-            Explore Serratus SRA run hits for a GenBank accession.<br />
-            Example: <a className="text-blue-600" href="?genbank=EU769558.1">EU769558.1</a><br />
+            Explore Serratus SRA run hits for a family name or GenBank accession.<br />
+            Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a><br />
+            GenBank: <a className="text-blue-600" href="?genbank=EU769558.1">EU769558.1</a><br />
             <br />
             Alternatively, find Serratus analysis results of a given SRA run accession.<br />
             <br />

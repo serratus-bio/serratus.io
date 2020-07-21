@@ -24,11 +24,16 @@ const queryTypeInfo = {
 }
 
 const Query = (props) => {
+    let currentFamily = new URLSearchParams(props.location.search).get("family");
     let currentGenbank = new URLSearchParams(props.location.search).get("genbank");
     let currentRun = new URLSearchParams(props.location.search).get("run");
     let queryTypeFromParam = null;
     let queryValueFromParam = null;
-    if (currentGenbank) {
+    if (currentFamily) {
+        queryTypeFromParam = "family";
+        queryValueFromParam = currentFamily;
+    }
+    else if (currentGenbank) {
         queryTypeFromParam = "genbank";
         queryValueFromParam = currentGenbank;
     }
@@ -43,11 +48,11 @@ const Query = (props) => {
     const [queryValueStatic, setQueryValueStatic] = React.useState(queryValueFromParam);
     const [pathNameStatic, setPathNameStatic] = React.useState(useLocation().pathname);
 
-    if (!queryTypeFromParam) { queryTypeFromParam = "genbank" }  // set default
+    if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
     const [searchValue, setSearchValue] = React.useState("");
     const [placeholderText, setPlaceholderText] = React.useState(queryTypeInfo[searchType].placeholderText);
-    const [pageTitle, setPageTitle] = React.useState("");
+    const [pageTitle, setPageTitle] = React.useState();
 
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
@@ -55,6 +60,15 @@ const Query = (props) => {
     }
 
     const pageLinksByType = {
+        family: (
+            <div className="flex flex-col justify-center items-center my-3">
+                <LinkButton
+                    link={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${queryValueStatic}`}
+                    text="Taxonomy Browser"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+            </div>
+        ),
         genbank: (
             <div className="flex flex-col justify-center items-center my-3">
                 <LinkButton
@@ -88,7 +102,8 @@ const Query = (props) => {
     }
     
     const chartByType = {
-        genbank: <QueryChart accession={queryValueStatic}></QueryChart>,
+        family: <QueryChart type={queryTypeStatic} value={queryValueStatic}></QueryChart>,
+        genbank: <QueryChart type={queryTypeStatic} value={queryValueStatic}></QueryChart>,
         run: <ReportChart accession={queryValueStatic}></ReportChart>
     }
 
@@ -154,6 +169,9 @@ const Query = (props) => {
                     <div className="flex flex-col items-center z-10 mt-2">
                         <div className="items-center z-10">
                             <div>
+                                <input type="radio" name="querytype" value="family" checked={searchType == "family"}
+                                    onChange={queryTypeChange} />
+                                Family
                                 <input type="radio" name="querytype" value="genbank" checked={searchType == "genbank"}
                                     onChange={queryTypeChange} />
                                 GenBank
@@ -167,7 +185,11 @@ const Query = (props) => {
                     </div>
                     {queryValueStatic ? pageLinksByType[queryTypeStatic] : null}
                     <div className="w-full text-center text-xl">
-                        {queryValueStatic ? <div>{queryValueStatic}<span className="italic">: {pageTitle}</span></div> : null}
+                        {queryValueStatic ?
+                            <div>{queryValueStatic}
+                            {pageTitle ? <span className="italic">: {pageTitle}</span> : null}
+                            </div> : null
+                        }
                     </div>
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
