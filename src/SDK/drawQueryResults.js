@@ -86,10 +86,10 @@ export function drawQueryResults(d3, selector, results) {
         var colHeight = sectionHeight;
         var colMap = {
             "cvgPct": {
-                "name": "cvgPct",
+                "name": "Coverage",
                 "desc": "Sequence coverage (bins with at least 1 read)",
                 "valueSuffix": "%",
-                "size": 50,
+                "size": 70,
                 "domain": [0, 100],
                 "fill": "#67c286"
             },
