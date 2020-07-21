@@ -16,20 +16,21 @@ export default class DataSdk {
         return response.data;
     }
 
-    async getEsearch(accession) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=${accession}&retmax=1&usehistory=y`, { responseType: 'text' });
+    async getEsearch(db, term) {
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
         return response.data;
     }
 
-    async getEsummary(entrezId) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=sra&id=${entrezId}`, { responseType: 'text' });
+    async getEsummary(db, entrezId) {
+        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=${db}&id=${entrezId}`, { responseType: 'text' });
         return response.data;
     }
 
-    async tryGetEntrezData(sra_accession) {
+    async tryGetSraStudyName(accession) {
         try {
             // eSearch
-            let response = await this.getEsearch(sra_accession);
+            let db = "sra";
+            let response = await this.getEsearch(db, accession);
             let parser = new DOMParser();
             let esearchResults = parser.parseFromString(response, 'text/xml');
             let entrezId = esearchResults
@@ -38,7 +39,7 @@ export default class DataSdk {
                 .querySelector("Id")
                 .textContent;
             // eSummary
-            response = await this.getEsummary(entrezId);
+            response = await this.getEsummary(db, entrezId);
             let esummaryResults = parser.parseFromString(response, 'text/xml');
             let expXmlText = esummaryResults
                 .querySelector("eSummaryResult")

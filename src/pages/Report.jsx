@@ -39,7 +39,7 @@ const Report = (props) => {
     async function fetchEntrezData() {
         setEntrezStudyName("Loading...")
         console.log("Fetching Entrez data...");
-        let entrezStudyName = await dataSdk.tryGetEntrezData(sraAccession);
+        let entrezStudyName = await dataSdk.tryGetSraStudyName(sraAccession);
         setEntrezStudyName(entrezStudyName);
         console.log(entrezStudyName ? "Done fetching Entrez data." : "Could not load Entrez data.");
     }
