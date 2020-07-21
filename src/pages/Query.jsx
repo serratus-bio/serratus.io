@@ -14,7 +14,7 @@ const Query = (props) => {
     const [inputAccession, setInputAccession] = React.useState("");
     const [entrezStudyName, setGenBankTitle] = React.useState("");
 
-    // clicked "Report" on navigation bar
+    // clicked "Query" on navigation bar
     if (genbankAccession && !currentAccession) {
         loadAccessionPage(currentAccession);
     }
