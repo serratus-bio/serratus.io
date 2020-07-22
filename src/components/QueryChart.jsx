@@ -3,7 +3,7 @@ import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
 import DataSdk from '../SDK/DataSdk';
 import { drawQueryResults } from '../SDK/drawQueryResults.js';
-import { drawReport } from '../SDK/drawReport.js';
+import { drawRunResults } from '../SDK/drawRunResults.js';
 
 const dataSdk = new DataSdk();
 
@@ -53,7 +53,7 @@ const QueryChart = (props) => {
         setHasResults(hasResults);
         if (hasResults) {
             var faux = connectFauxDOM('div', 'chart');
-            drawReport(d3, faux, results);
+            drawRunResults(d3, faux, results);
         }
         setIsLoading(false);
     }, [connectFauxDOM]);
