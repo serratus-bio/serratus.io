@@ -31,6 +31,16 @@ const fetchTitle = async (type, value) => {
     return title;
 }
 
+const InputOption = (props) => {
+    return (
+        <div className="inline mx-2">
+            <input type="radio" name="querytype" value={props.value} checked={props.checked}
+                onChange={props.onChange} />
+            <span>{props.displayText}</span>
+        </div>
+    )
+}
+
 const Query = (props) => {
     let currentFamily = new URLSearchParams(props.location.search).get("family");
     let currentGenbank = new URLSearchParams(props.location.search).get("genbank");
@@ -105,7 +115,7 @@ const Query = (props) => {
 
     const pageLinksByType = {
         family: (
-            <div className="flex flex-col justify-center items-center my-3">
+            <div className="flex flex-col justify-center items-center my-2">
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${queryValueStatic}`}
                     text="Taxonomy Browser"
@@ -114,7 +124,7 @@ const Query = (props) => {
             </div>
         ),
         genbank: (
-            <div className="flex flex-col justify-center items-center my-3">
+            <div className="flex flex-col justify-center items-center my-2">
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/nuccore/${queryValueStatic}`}
                     text="GenBank"
@@ -124,7 +134,7 @@ const Query = (props) => {
         ),
         run: (
             <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-row justify-between my-3">
+                <div className="flex flex-row justify-between my-2">
                     <LinkButton
                         link={`https://www.ncbi.nlm.nih.gov/sra/?term=${queryValueStatic}`}
                         text="SRA"
@@ -155,28 +165,24 @@ const Query = (props) => {
                     <div className="flex flex-col items-center z-10 mt-2">
                         <div className="items-center z-10">
                             <div>
-                                <input type="radio" name="querytype" value="family" checked={searchType == "family"}
-                                    onChange={queryTypeChange} />
-                                Family
-                                <input type="radio" name="querytype" value="genbank" checked={searchType == "genbank"}
-                                    onChange={queryTypeChange} />
-                                GenBank
-                                <input type="radio" name="querytype" value="run" checked={searchType == "run"}
-                                    onChange={queryTypeChange} />
-                                SRA Run
+                                <InputOption value="family" displayText="Family" checked={searchType == "family"} onChange={queryTypeChange} />
+                                <InputOption value="genbank" displayText="GenBank" checked={searchType == "genbank"} onChange={queryTypeChange} />
+                                <InputOption value="run" displayText="SRA Run" checked={searchType == "run"} onChange={queryTypeChange} />
                             </div>
                             <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
                             <button onClick={searchButtonClick} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                         </div>
                     </div>
-                    {queryValueStatic ? pageLinksByType[queryTypeStatic] : null}
-                    <div className="w-full text-center text-xl">
+                    <div className="w-full text-center">
                         {queryValueStatic ?
-                            <div>{queryValueStatic}
-                            {pageTitle ? <span className="italic">: {pageTitle}</span> : null}
+                            <div>
+                                <div className="text-xl font-bold">{queryValueStatic}</div>
+                                {pageTitle ?
+                                    <div className="text-lg italic">{pageTitle}</div> : null}
                             </div> : null
                         }
                     </div>
+                    {queryValueStatic ? pageLinksByType[queryTypeStatic] : null}
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
