@@ -10,6 +10,8 @@ const dataSdk = new DataSdk();
 const downloadIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>);
 const externalLinkIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,21H5c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2h7v2H5v14h14v-7h2v7C21,20.1,20.1,21,19,21z" /><path d="M21 10L19 10 19 5 14 5 14 3 21 3z" /><path d="M6.7 8.5H22.3V10.5H6.7z" transform="rotate(-45.001 14.5 9.5)" /></svg>);
 
+const queryTypes = ["family", "genbank", "run"];
+
 const placeholderByQueryType = {
     family: "e.g. Coronaviridae",
     genbank: "e.g. EU769558.1",
@@ -42,24 +44,17 @@ const InputOption = (props) => {
 }
 
 const Query = (props) => {
-    let currentFamily = new URLSearchParams(props.location.search).get("family");
-    let currentGenbank = new URLSearchParams(props.location.search).get("genbank");
-    let currentRun = new URLSearchParams(props.location.search).get("run");
     let queryTypeFromParam = null;
     let queryValueFromParam = null;
-    if (currentFamily) {
-        queryTypeFromParam = "family";
-        queryValueFromParam = currentFamily;
-    }
-    else if (currentGenbank) {
-        queryTypeFromParam = "genbank";
-        queryValueFromParam = currentGenbank;
-    }
-    else if (currentRun) {
-        queryTypeFromParam = "run";
-        queryValueFromParam = currentRun;
-    }
-    // TODO: mutually exclusive parameters
+    var urlParams = new URLSearchParams(props.location.search);
+    queryTypes.forEach(queryType => {
+        var paramValue = urlParams.get(queryType);
+        // TODO: mutually exclusive parameters
+        if (paramValue) {
+            queryTypeFromParam = queryType;
+            queryValueFromParam = paramValue;
+        }
+    })
 
     // these values don't change until reload
     const [queryTypeStatic, setQueryTypeStatic] = React.useState(queryTypeFromParam);
