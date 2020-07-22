@@ -78,9 +78,23 @@ const QueryChart = (props) => {
         </div>
     )
 
+    let noResultsRun = (
+        <div>
+            <span>This accession has not been processed... yet.</span><br />
+            <span>To request this sample be processed, please </span>
+            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                submit an issue on GitHub
+            </a>
+            <span>.</span>
+        </div>
+    )
+
     let noResults = (
         <div className="text-center">
-            <span>Could not retrieve results for this query.</span>
+            {props.type == "run" ? 
+                noResultsRun :
+                <span>Could not retrieve results for this query.</span>
+            }
         </div>
     )
 
