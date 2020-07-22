@@ -1,78 +1,62 @@
 import React from 'react';
 import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
-import DataSdk from '../SDK/DataSdk';
 import { drawQueryResults } from '../SDK/drawQueryResults.js';
 import { drawRunResults } from '../SDK/drawRunResults.js';
-
-const dataSdk = new DataSdk();
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
     const connectFauxDOM = props.connectFauxDOM;
 
-    const renderByGenbank = React.useCallback(async (genbankAccession) => {
-        if (!genbankAccession) {
-            return;
-        }
-        let results = await dataSdk.fetchSraHitsByAccession(genbankAccession);
-        let hasResults = results && results.length !== 0;
-        setHasResults(hasResults);
-        if (hasResults) {
-            results = results.slice(0, 20);
-            var faux = connectFauxDOM('div', 'chart');
-            var columns = ["cvgPct", "pctId", "aln"];
-            drawQueryResults(d3, faux, results, columns);
-        }
-        setIsLoading(false);
-    }, [connectFauxDOM])
-
-    const renderByFamily = React.useCallback(async (family) => {
-        if (!family) {
-            return;
-        }
-        let results = await dataSdk.fetchSraHitsByFamily(family);
-        let hasResults = results && results.length !== 0;
-        setHasResults(hasResults);
-        if (hasResults) {
-            results = results.slice(0, 20);
-            var faux = connectFauxDOM('div', 'chart');
-            var columns = ["score", "pctId", "aln"];
-            drawQueryResults(d3, faux, results, columns);
-        }
-        setIsLoading(false);
-    }, [connectFauxDOM]);
-
-    const renderByRun = React.useCallback(async (sraAccession) => {
-        if (!sraAccession) {
-            return;
-        }
-        let results = await dataSdk.fetchSraRun(sraAccession);
-        let hasResults = Boolean(results);
-        setHasResults(hasResults);
-        if (hasResults) {
-            var faux = connectFauxDOM('div', 'chart');
-            drawRunResults(d3, faux, results);
-        }
-        setIsLoading(false);
-    }, [connectFauxDOM]);
-
     React.useEffect(() => {
+        if(!props.dataPromise) {
+            return;
+        }
         setIsLoading(true);
+        const getResultsCallback = (drawFunction, columns, hasResults) => {
+            return (results) => {
+                var faux = connectFauxDOM('div', 'chart');
+                if (hasResults) {
+                    drawFunction(d3, faux, results, columns);
+                }
+                setHasResults(hasResults);
+                setIsLoading(false);
+            }
+        }
+        var columns;
+        var callback;
         switch (props.type) {
             case "family":
-                renderByFamily(props.value);
+                columns = ["score", "pctId", "aln"];
+                props.dataPromise.then((data) => {
+                    data = data.slice(0, 20);
+                    let hasResults = data && data.length !== 0;
+                    callback = getResultsCallback(drawQueryResults, columns, hasResults);
+                    callback(data);
+                });
                 break;
             case "genbank":
-                renderByGenbank(props.value);
+                columns = ["cvgPct", "pctId", "aln"];
+                props.dataPromise.then((data) => {
+                    data = data.slice(0, 20);
+                    let hasResults = data && data.length !== 0;
+                    callback = getResultsCallback(drawQueryResults, columns, hasResults);
+                    callback(data);
+                });
                 break;
             case "run":
-                renderByRun(props.value);
+                columns = ["score", "pctid", "aln"];
+                callback = getResultsCallback(drawRunResults, columns);
+                props.dataPromise.then((data) => {
+                    let hasResults = Boolean(data);
+                    callback = getResultsCallback(drawRunResults, columns, hasResults);
+                    callback(data);
+                });
                 break;
             default:
         }
-    }, [props.type, props.value, renderByFamily, renderByGenbank, renderByRun]);
+    }, [props.type, props.value, props.dataPromise]);
 
     let loading = (
         <div className="text-center">

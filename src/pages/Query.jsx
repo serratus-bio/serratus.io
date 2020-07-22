@@ -18,12 +18,76 @@ const placeholderByQueryType = {
     run: "e.g. ERR2756788"
 }
 
-const fetchTitle = async (type, value) => {
+const getPageLink = (type, value) => {
+    if (type === "family") {
+        var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
+        var text = "Taxonomy Browser"
+        if (value === "AMR") {
+            link = "https://card.mcmaster.ca/";
+            text = "Database Website";
+        }
+        return (
+            <div className="flex justify-center items-center my-2">
+                <LinkButton
+                    link={link}
+                    text={text}
+                    icon={externalLinkIcon}
+                    newTab={true} />
+            </div>
+        )
+    }
+    if (type === "genbank") {
+        return (
+            <div className="flex justify-center items-center my-2">
+                <LinkButton
+                    link={`https://www.ncbi.nlm.nih.gov/nuccore/${value}`}
+                    text="GenBank"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+            </div>
+        )
+    }
+    if (type === "run") {
+        return (
+            <div className="flex justify-center items-center my-2">
+                <LinkButton
+                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${value}`}
+                    text="SRA"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+                <LinkButton
+                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${value}`}
+                    text="Trace"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+                <LinkButton
+                    link={`https://s3.amazonaws.com/lovelywater/bam/${value}.bam`}
+                    text="BAM"
+                    icon={downloadIcon}
+                    download={true} />
+            </div>
+        )
+    }
+}
+
+const fetchTitle = async (type, value, valueCorrected) => {
     console.log("Fetching Entrez data...");
+    console.log(value, valueCorrected);
     let title = null;
     switch (type) {
+        case "family":
+            if (value === "AMR") {
+                title = "The Comprehensive Antibiotic Resistance Database (CARD)";
+            }
+            break;
         case "genbank":
-            title = await dataSdk.tryGetGenBankTitle(value);
+            if (value !== valueCorrected) {
+                title = await dataSdk.tryGetGenBankTitle(valueCorrected);
+                title = `[AMR] ${title}`;
+            }
+            else {
+                title = await dataSdk.tryGetGenBankTitle(value);
+            }
             break;
         case "run":
             title = await dataSdk.tryGetSraStudyName(value);
@@ -32,6 +96,18 @@ const fetchTitle = async (type, value) => {
     }
     console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
     return title;
+}
+
+const getDataPromise = (type, value) => {
+    switch (type) {
+        case "family":
+            return dataSdk.fetchSraHitsByFamily(value);
+        case "genbank":
+            return dataSdk.fetchSraHitsByAccession(value);
+        case "run":
+            return dataSdk.fetchSraRun(value);
+        default:
+    }
 }
 
 const InputOption = (props) => {
@@ -55,7 +131,7 @@ const Query = (props) => {
             queryTypeFromParam = queryType;
             queryValueFromParam = paramValue;
         }
-    })
+    });
 
     // these values don't change until reload
     const queryTypeStatic = queryTypeFromParam;
@@ -67,6 +143,8 @@ const Query = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [placeholderText, setPlaceholderText] = React.useState(placeholderByQueryType[searchType]);
     const [pageTitle, setPageTitle] = React.useState();
+    const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
+    const [dataPromise, setDataPromise] = React.useState();
 
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
@@ -84,7 +162,7 @@ const Query = (props) => {
 
     function loadQueryPage(searchValue) {
         if (searchValue && !searchType) {
-            console.log("no query type selected");
+            // TODO: display indicator "no query type selected"
             return;
         }
         let newUrl = searchValue ? `${pathNameStatic}?${searchType}=${searchValue}` : pathNameStatic;
@@ -102,48 +180,19 @@ const Query = (props) => {
             return;
         }
         console.log(`Loading query result page for ${queryValueStatic}.`);
-        fetchTitle(queryTypeStatic, queryValueStatic).then(setPageTitle);
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic));
+        // check for AMR accession
+        let valueCorrected = queryValueStatic;
+        if (queryTypeStatic == "genbank") {
+            let patternForAMR = /.*_\d{7}/g;
+            let isFromAMR = queryValueStatic.match(patternForAMR);
+            if (isFromAMR) {
+                valueCorrected = valueCorrected.slice(0, valueCorrected.lastIndexOf("_"));
+                setQueryValueCorrected(valueCorrected);
+            }
+        }
+        fetchTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
     }, [queryTypeStatic, queryValueStatic]);
-
-    const pageLinksByType = {
-        family: (
-            <div className="flex justify-center items-center my-2">
-                <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${queryValueStatic}`}
-                    text="Taxonomy Browser"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-            </div>
-        ),
-        genbank: (
-            <div className="flex justify-center items-center my-2">
-                <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/nuccore/${queryValueStatic}`}
-                    text="GenBank"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-            </div>
-        ),
-        run: (
-            <div className="flex justify-center items-center my-2">
-                <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${queryValueStatic}`}
-                    text="SRA"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-                <LinkButton
-                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${queryValueStatic}`}
-                    text="Trace"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-                <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/bam/${queryValueStatic}.bam`}
-                    text="BAM"
-                    icon={downloadIcon}
-                    download={true} />
-            </div>
-        )
-    }
 
     return (
         <div className="flex absolute w-screen h-screen justify-center">
@@ -172,12 +221,12 @@ const Query = (props) => {
                             </div> : null
                         }
                     </div>
-                    {queryValueStatic ? pageLinksByType[queryTypeStatic] : null}
+                    {queryValueStatic ? getPageLink(queryTypeStatic, queryValueCorrected) : null}
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {queryValueStatic ?
-                            <QueryResult type={queryTypeStatic} value={queryValueStatic} /> :
+                            <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> :
                             <QueryIntro />
                         }
                     </div>
