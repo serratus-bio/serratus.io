@@ -86,10 +86,6 @@ const Query = (props) => {
         }
     }
 
-    function searchButtonClick() {
-        loadQueryPage(searchValue);
-    }
-
     function loadQueryPage(searchValue) {
         if (searchValue && !searchType) {
             console.log("no query type selected");
@@ -170,7 +166,7 @@ const Query = (props) => {
                                 <InputOption value="run" displayText="SRA Run" checked={searchType == "run"} onChange={queryTypeChange} />
                             </div>
                             <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                            <button onClick={searchButtonClick} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                            <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                         </div>
                     </div>
                     <div className="w-full text-center">
