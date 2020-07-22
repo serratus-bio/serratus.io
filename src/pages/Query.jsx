@@ -1,6 +1,6 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
-import QueryChart from '../components/QueryChart';
+import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import LinkButton from "../components/LinkButton";
 import { useLocation } from 'react-router-dom'
@@ -179,7 +179,7 @@ const Query = (props) => {
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {queryValueStatic ?
-                            <QueryChart type={queryTypeStatic} value={queryValueStatic} /> :
+                            <QueryResult type={queryTypeStatic} value={queryValueStatic} /> :
                             <QueryIntro />
                         }
                     </div>

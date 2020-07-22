@@ -7,7 +7,7 @@ import { drawRunResults } from '../SDK/drawRunResults.js';
 
 const dataSdk = new DataSdk();
 
-const QueryChart = (props) => {
+const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
     const connectFauxDOM = props.connectFauxDOM;
@@ -112,5 +112,5 @@ const QueryChart = (props) => {
     )
 }
 
-const FauxChart = withFauxDOM(QueryChart);
+const FauxChart = withFauxDOM(QueryResult);
 export default FauxChart;
