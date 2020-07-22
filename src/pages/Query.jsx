@@ -107,7 +107,7 @@ const Query = (props) => {
 
     const pageLinksByType = {
         family: (
-            <div className="flex flex-col justify-center items-center my-2">
+            <div className="flex justify-center items-center my-2">
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${queryValueStatic}`}
                     text="Taxonomy Browser"
@@ -116,7 +116,7 @@ const Query = (props) => {
             </div>
         ),
         genbank: (
-            <div className="flex flex-col justify-center items-center my-2">
+            <div className="flex justify-center items-center my-2">
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/nuccore/${queryValueStatic}`}
                     text="GenBank"
@@ -125,24 +125,22 @@ const Query = (props) => {
             </div>
         ),
         run: (
-            <div className="flex flex-col justify-center items-center">
-                <div className="flex flex-row justify-between my-2">
-                    <LinkButton
-                        link={`https://www.ncbi.nlm.nih.gov/sra/?term=${queryValueStatic}`}
-                        text="SRA"
-                        icon={externalLinkIcon}
-                        newTab={true} />
-                    <LinkButton
-                        link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${queryValueStatic}`}
-                        text="Trace"
-                        icon={externalLinkIcon}
-                        newTab={true} />
-                    <LinkButton
-                        link={`https://s3.amazonaws.com/lovelywater/bam/${queryValueStatic}.bam`}
-                        text="BAM"
-                        icon={downloadIcon}
-                        download={true} />
-                </div>
+            <div className="flex justify-center items-center my-2">
+                <LinkButton
+                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${queryValueStatic}`}
+                    text="SRA"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+                <LinkButton
+                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${queryValueStatic}`}
+                    text="Trace"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+                <LinkButton
+                    link={`https://s3.amazonaws.com/lovelywater/bam/${queryValueStatic}.bam`}
+                    text="BAM"
+                    icon={downloadIcon}
+                    download={true} />
             </div>
         )
     }
