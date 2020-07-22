@@ -1,7 +1,7 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import QueryChart from '../components/QueryChart';
-import QueryInfo from "../components/QueryIntro";
+import QueryIntro from "../components/QueryIntro";
 import LinkButton from "../components/LinkButton";
 import { useLocation } from 'react-router-dom'
 
@@ -10,16 +10,25 @@ const dataSdk = new DataSdk();
 const downloadIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>);
 const externalLinkIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,21H5c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2h7v2H5v14h14v-7h2v7C21,20.1,20.1,21,19,21z" /><path d="M21 10L19 10 19 5 14 5 14 3 21 3z" /><path d="M6.7 8.5H22.3V10.5H6.7z" transform="rotate(-45.001 14.5 9.5)" /></svg>);
 
-const queryTypeInfo = {
-    family: {
-        placeholderText: "e.g. Coronaviridae"
-    },
-    genbank: {
-        placeholderText: "e.g. EU769558.1"
-    },
-    run: {
-        placeholderText: "e.g. ERR2756788"
+const placeholderByQueryType = {
+    family: "e.g. Coronaviridae",
+    genbank: "e.g. EU769558.1",
+    run: "e.g. ERR2756788"
+}
+
+const fetchTitle = async (type, value) => {
+    console.log("Fetching Entrez data...");
+    let title = null;
+    switch (type) {
+        case "genbank":
+            title = await dataSdk.tryGetGenBankTitle(value);
+            break;
+        case "run":
+            title = await dataSdk.tryGetSraStudyName(value);
+            break;
     }
+    console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
+    return title;
 }
 
 const Query = (props) => {
@@ -50,13 +59,49 @@ const Query = (props) => {
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
     const [searchValue, setSearchValue] = React.useState("");
-    const [placeholderText, setPlaceholderText] = React.useState(queryTypeInfo[searchType].placeholderText);
+    const [placeholderText, setPlaceholderText] = React.useState(placeholderByQueryType[searchType]);
     const [pageTitle, setPageTitle] = React.useState();
 
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
         loadQueryPage(null);
     }
+
+    function searchOnKeyUp(e) {
+        if (e.keyCode == 13) {
+            loadQueryPage(e.target.value);
+        }
+        else {
+            setSearchValue(e.target.value);
+        }
+    }
+
+    function searchButtonClick() {
+        loadQueryPage(searchValue);
+    }
+
+    function loadQueryPage(searchValue) {
+        if (searchValue && !searchType) {
+            console.log("no query type selected");
+            return;
+        }
+        let newUrl = searchValue ? `${pathNameStatic}?${searchType}=${searchValue}` : pathNameStatic;
+        window.location.href = newUrl;
+    }
+
+    function queryTypeChange(e) {
+        let queryType = e.target.value;
+        setPlaceholderText(placeholderByQueryType[queryType]);
+        setSearchType(queryType);
+    }
+
+    React.useEffect(() => {
+        if (!queryValueStatic) {
+            return;
+        }
+        console.log(`Loading query result page for ${queryValueStatic}.`);
+        fetchTitle(queryTypeStatic, queryValueStatic).then(setPageTitle);
+    }, [queryValueStatic]);
 
     const pageLinksByType = {
         family: (
@@ -100,57 +145,6 @@ const Query = (props) => {
         )
     }
 
-    function searchOnKeyUp(e) {
-        if (e.keyCode == 13) {
-            loadQueryPage(e.target.value);
-        }
-        else {
-            setSearchValue(e.target.value);
-        }
-    }
-
-    function searchButtonClick() {
-        loadQueryPage(searchValue);
-    }
-
-    function loadQueryPage(searchValue) {
-        if (searchValue && !searchType) {
-            console.log("no query type selected");
-            return;
-        }
-        let newUrl = searchValue ? `${pathNameStatic}?${searchType}=${searchValue}` : pathNameStatic;
-        window.location.href = newUrl;
-    }
-
-    async function fetchTitle() {
-        console.log("Fetching Entrez data...");
-        let title = null;
-        switch (queryTypeStatic) {
-            case "genbank":
-                title = await dataSdk.tryGetGenBankTitle(queryValueStatic);
-                break;
-            case "run":
-                title = await dataSdk.tryGetSraStudyName(queryValueStatic);
-                break;
-        }
-        setPageTitle(title);
-        console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
-    }
-
-    React.useEffect(() => {
-        if (!queryValueStatic) {
-            return;
-        }
-        console.log(`Loading query result page for ${queryValueStatic}.`);
-        fetchTitle();
-    }, [queryValueStatic]);
-
-    let queryTypeChange = e => {
-        let queryType = e.target.value;
-        setPlaceholderText(queryTypeInfo[queryType].placeholderText);
-        setSearchType(queryType);
-    }
-
     return (
         <div className="flex absolute w-screen h-screen justify-center">
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
@@ -188,7 +182,7 @@ const Query = (props) => {
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {queryValueStatic ?
                             <QueryChart type={queryTypeStatic} value={queryValueStatic} /> :
-                            <QueryInfo />
+                            <QueryIntro />
                         }
                     </div>
                 </div>

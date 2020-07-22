@@ -1,6 +1,6 @@
 import React from 'react';
 
-const QueryInfo = () => {
+const QueryIntro = () => {
     return (
         <div className="text-center">
             Explore Serratus SRA run hits for a family name or GenBank accession.<br />
@@ -17,4 +17,4 @@ const QueryInfo = () => {
     )
 }
 
-export default QueryInfo;
+export default QueryIntro;
