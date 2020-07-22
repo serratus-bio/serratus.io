@@ -56,13 +56,13 @@ const QueryChart = (props) => {
 
     let loading = (
         <div className="text-center">
-            Loading report...
+            Loading... (this might take a while)
         </div>
     )
 
     let noResults = (
         <div className="text-center">
-            <span>Could not retrieve Serratus results for this accession.</span>
+            <span>Could not retrieve results for this query.</span>
         </div>
     )
 
