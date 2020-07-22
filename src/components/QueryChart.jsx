@@ -3,6 +3,7 @@ import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
 import DataSdk from '../SDK/DataSdk';
 import { drawQueryResults } from '../SDK/drawQueryResults.js';
+import { drawReport } from '../SDK/drawReport.js';
 
 const dataSdk = new DataSdk();
 
@@ -10,11 +11,11 @@ const QueryChart = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
 
-    async function renderByAccession(accession) {
-        if (!accession) {
+    async function renderByGenbank(genbankAccession) {
+        if (!genbankAccession) {
             return;
         }
-        let results = await dataSdk.fetchSraHitsByAccession(accession);
+        let results = await dataSdk.fetchSraHitsByAccession(genbankAccession);
         let hasResults = results && results.length != 0;
         setHasResults(hasResults);
         if (hasResults) {
@@ -42,6 +43,20 @@ const QueryChart = (props) => {
         setIsLoading(false);
     }
 
+    async function renderByRun(sraAccession) {
+        if (!sraAccession) {
+            return;
+        }
+        let results = await dataSdk.fetchSraRun(sraAccession);
+        let hasResults = Boolean(results);
+        setHasResults(hasResults);
+        if (hasResults) {
+            var faux = props.connectFauxDOM('div', 'chart');
+            drawReport(d3, faux, results);
+        }
+        setIsLoading(false);
+    }
+
     React.useEffect(() => {
         setIsLoading(true);
         switch (props.type) {
@@ -49,7 +64,10 @@ const QueryChart = (props) => {
                 renderByFamily(props.value);
                 break;
             case "genbank":
-                renderByAccession(props.value);
+                renderByGenbank(props.value);
+                break;
+            case "run":
+                renderByRun(props.value);
                 break;
         }
     }, [props.type, props.value]);

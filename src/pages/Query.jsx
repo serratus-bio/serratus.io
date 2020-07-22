@@ -1,7 +1,6 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import QueryChart from '../components/QueryChart';
-import ReportChart from '../components/ReportChart';
 import QueryInfo from "../components/QueryIntro";
 import LinkButton from "../components/LinkButton";
 import { useLocation } from 'react-router-dom'
@@ -100,12 +99,6 @@ const Query = (props) => {
             </div>
         )
     }
-    
-    const chartByType = {
-        family: <QueryChart type={queryTypeStatic} value={queryValueStatic}></QueryChart>,
-        genbank: <QueryChart type={queryTypeStatic} value={queryValueStatic}></QueryChart>,
-        run: <ReportChart accession={queryValueStatic}></ReportChart>
-    }
 
     function searchOnKeyUp(e) {
         if (e.keyCode == 13) {
@@ -132,7 +125,6 @@ const Query = (props) => {
     async function fetchTitle() {
         console.log("Fetching Entrez data...");
         let title = null;
-        console.log(queryTypeStatic);
         switch (queryTypeStatic) {
             case "genbank":
                 title = await dataSdk.tryGetGenBankTitle(queryValueStatic);
@@ -195,8 +187,8 @@ const Query = (props) => {
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
                         {queryValueStatic ?
-                            chartByType[queryTypeStatic] :
-                            <QueryInfo></QueryInfo>
+                            <QueryChart type={queryTypeStatic} value={queryValueStatic} /> :
+                            <QueryInfo />
                         }
                     </div>
                 </div>
