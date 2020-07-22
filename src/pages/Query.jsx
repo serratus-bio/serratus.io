@@ -28,6 +28,7 @@ const fetchTitle = async (type, value) => {
         case "run":
             title = await dataSdk.tryGetSraStudyName(value);
             break;
+        default:
     }
     console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
     return title;
@@ -57,9 +58,9 @@ const Query = (props) => {
     })
 
     // these values don't change until reload
-    const [queryTypeStatic, setQueryTypeStatic] = React.useState(queryTypeFromParam);
-    const [queryValueStatic, setQueryValueStatic] = React.useState(queryValueFromParam);
-    const [pathNameStatic, setPathNameStatic] = React.useState(useLocation().pathname);
+    const queryTypeStatic = queryTypeFromParam;
+    const queryValueStatic = queryValueFromParam;
+    const pathNameStatic = useLocation().pathname;
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
@@ -73,7 +74,7 @@ const Query = (props) => {
     }
 
     function searchOnKeyUp(e) {
-        if (e.keyCode == 13) {
+        if (e.keyCode === 13) {
             loadQueryPage(e.target.value);
         }
         else {
@@ -102,7 +103,7 @@ const Query = (props) => {
         }
         console.log(`Loading query result page for ${queryValueStatic}.`);
         fetchTitle(queryTypeStatic, queryValueStatic).then(setPageTitle);
-    }, [queryValueStatic]);
+    }, [queryTypeStatic, queryValueStatic]);
 
     const pageLinksByType = {
         family: (
@@ -156,9 +157,9 @@ const Query = (props) => {
                     <div className="flex flex-col items-center z-10 mt-2">
                         <div className="items-center z-10">
                             <div>
-                                <InputOption value="family" displayText="Family" checked={searchType == "family"} onChange={queryTypeChange} />
-                                <InputOption value="genbank" displayText="GenBank" checked={searchType == "genbank"} onChange={queryTypeChange} />
-                                <InputOption value="run" displayText="SRA Run" checked={searchType == "run"} onChange={queryTypeChange} />
+                                <InputOption value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
+                                <InputOption value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
+                                <InputOption value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
                             </div>
                             <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
                             <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>

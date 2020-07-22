@@ -10,40 +10,41 @@ const dataSdk = new DataSdk();
 const QueryChart = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
+    const connectFauxDOM = props.connectFauxDOM;
 
-    async function renderByGenbank(genbankAccession) {
+    const renderByGenbank = React.useCallback(async (genbankAccession) => {
         if (!genbankAccession) {
             return;
         }
         let results = await dataSdk.fetchSraHitsByAccession(genbankAccession);
-        let hasResults = results && results.length != 0;
+        let hasResults = results && results.length !== 0;
         setHasResults(hasResults);
         if (hasResults) {
             results = results.slice(0, 20);
-            var faux = props.connectFauxDOM('div', 'chart');
+            var faux = connectFauxDOM('div', 'chart');
             var columns = ["cvgPct", "pctId", "aln"];
             drawQueryResults(d3, faux, results, columns);
         }
         setIsLoading(false);
-    }
+    }, [connectFauxDOM])
 
-    async function renderByFamily(family) {
+    const renderByFamily = React.useCallback(async (family) => {
         if (!family) {
             return;
         }
         let results = await dataSdk.fetchSraHitsByFamily(family);
-        let hasResults = results && results.length != 0;
+        let hasResults = results && results.length !== 0;
         setHasResults(hasResults);
         if (hasResults) {
             results = results.slice(0, 20);
-            var faux = props.connectFauxDOM('div', 'chart');
+            var faux = connectFauxDOM('div', 'chart');
             var columns = ["score", "pctId", "aln"];
             drawQueryResults(d3, faux, results, columns);
         }
         setIsLoading(false);
-    }
+    }, [connectFauxDOM]);
 
-    async function renderByRun(sraAccession) {
+    const renderByRun = React.useCallback(async (sraAccession) => {
         if (!sraAccession) {
             return;
         }
@@ -51,11 +52,11 @@ const QueryChart = (props) => {
         let hasResults = Boolean(results);
         setHasResults(hasResults);
         if (hasResults) {
-            var faux = props.connectFauxDOM('div', 'chart');
+            var faux = connectFauxDOM('div', 'chart');
             drawReport(d3, faux, results);
         }
         setIsLoading(false);
-    }
+    }, [connectFauxDOM]);
 
     React.useEffect(() => {
         setIsLoading(true);
@@ -69,8 +70,9 @@ const QueryChart = (props) => {
             case "run":
                 renderByRun(props.value);
                 break;
+            default:
         }
-    }, [props.type, props.value]);
+    }, [props.type, props.value, renderByFamily, renderByGenbank, renderByRun]);
 
     let loading = (
         <div className="text-center">
@@ -91,7 +93,7 @@ const QueryChart = (props) => {
 
     let noResults = (
         <div className="text-center">
-            {props.type == "run" ? 
+            {props.type === "run" ?
                 noResultsRun :
                 <span>Could not retrieve results for this query.</span>
             }
@@ -110,5 +112,5 @@ const QueryChart = (props) => {
     )
 }
 
- const FauxChart = withFauxDOM(QueryChart);
+const FauxChart = withFauxDOM(QueryChart);
 export default FauxChart;
