@@ -3,7 +3,7 @@ import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import { useLocation } from 'react-router-dom';
 import {
-    placeholderByQueryType,
+    getPlaceholder,
     getPageLinks,
     fetchTitle,
     getDataPromise,
@@ -33,7 +33,7 @@ const Query = (props) => {
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
     const [searchValue, setSearchValue] = React.useState("");
-    const [placeholderText, setPlaceholderText] = React.useState(placeholderByQueryType[searchType]);
+    const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
@@ -63,7 +63,7 @@ const Query = (props) => {
 
     function queryTypeChange(e) {
         let queryType = e.target.value;
-        setPlaceholderText(placeholderByQueryType[queryType]);
+        setPlaceholderText(getPlaceholder(queryType));
         setSearchType(queryType);
     }
 
