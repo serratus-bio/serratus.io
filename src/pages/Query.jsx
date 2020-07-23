@@ -87,13 +87,14 @@ const Query = (props) => {
     }, [queryTypeStatic, queryValueStatic]);
 
     return (
-        <div className="flex w-screen h-screen justify-center pb-24">
+        <div className="flex w-screen h-screen justify-center">
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="flex flex-col justify-center items-center w-full z-10 rounded-lg p-1
                 sm:shadow-2xl
                 lg:w-3/4 lg:mt-6 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600">
+                lg:w-3/4 lg:bg-blue-400 lg:bg-opacity-25 lg:border lg:border-gray-600 mt-6 mb-24">
                 <div className="w-full lg:w-5/6 bg-gray-400 border rounded-lg border-gray-600 sm:shadow-xl p-1 z-20 m-1">
-                    <div className="flex flex-col items-center z-10 mt-2">
+                    <div className="flex flex-col items-center z-10">
                         <div className="items-center z-10">
                             <div>
                                 <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
@@ -120,7 +121,7 @@ const Query = (props) => {
                     }
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
-                    <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">
+                    <div className="w-full flex flex-col overflow-y-auto ml-24" style={{ height: 475 }} id="style-2">
                         {queryValueStatic ?
                             <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> :
                             <QueryIntro />
