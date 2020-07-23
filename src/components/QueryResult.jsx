@@ -46,7 +46,7 @@ const QueryResult = (props) => {
                 });
                 break;
             case "run":
-                columns = ["score", "pctid", "aln"];
+                columns = ["score", "pctId", "aln"];
                 callback = getResultsCallback(drawRunResults, columns);
                 props.dataPromise.then((data) => {
                     let hasResults = Boolean(data);
