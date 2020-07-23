@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export default class DataSdk {
-    async getSraByName(sraName) {
-        const response = await axios.get(`https://db.serratus.io/api/runs/get-run/${sraName}`);
+    async fetchSraRun(sraAccession) {
+        const response = await axios.get(`https://db.serratus.io/api/runs/get-run/${sraAccession}`);
         return response.data
     }
 
@@ -13,16 +13,6 @@ export default class DataSdk {
 
     async fetchSraHitsByFamily(familyName) {
         const response = await axios.get(`https://db.serratus.io/api/runs/get-runs-by-family/${familyName}`);
-        return response.data;
-    }
-
-    async fetchSraRun(sraAccession) {
-        const response = await axios.get(`https://api.serratus.io/api/summary/${sraAccession}`);
-        return response.data;
-    }
-
-    async getSraHeatMapByName(sraName) {
-        const response = await axios.get(`https://api.serratus.io/api/summary/${sraName}/coverage_heatmap.png`, { responseType: 'blob' });
         return response.data;
     }
 

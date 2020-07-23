@@ -16,7 +16,7 @@ export function drawRunResults(d3, selector, summary, columns) {
             "domain": [0, 100],
             "fill": "#67c286"
         },
-        "pctid": {
+        "pctId": {
             "name": "Identity",
             "desc": "Average alignment identity",
             "size": 70,
@@ -463,7 +463,7 @@ export function drawRunResults(d3, selector, summary, columns) {
         .domain([0, 1]);
     var colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
-    var cvgLength = summary["families"][0]["cvg"].length;
+    var cvgLength = summary["familySections"][0]["cvg"].length;
     var genomeBins = [...Array(cvgLength).keys()];
 
     var chartSvg = d3.select(selector)
@@ -483,13 +483,13 @@ export function drawRunResults(d3, selector, summary, columns) {
 
     var accessionsByFamily = d3.nest()
         .key(d => d.fam)
-        .entries(summary["accessions"])
+        .entries(summary["accessionSections"])
         .reduce(function(obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
     var maxAccessions = 10;
-    summary["families"].forEach((family, i) => {
+    summary["familySections"].forEach((family, i) => {
         var familyCoverageData = getFamilyCoverageData(family);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
