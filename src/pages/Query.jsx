@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 import {
     getPlaceholder,
     getPageLinks,
-    fetchTitle,
+    getTitle,
     getDataPromise,
     InputOption
 } from "../helpers/QueryPageHelpers";
@@ -83,7 +83,7 @@ const Query = (props) => {
                 setQueryValueCorrected(valueCorrected);
             }
         }
-        fetchTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
+        getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
     }, [queryTypeStatic, queryValueStatic]);
 
     return (

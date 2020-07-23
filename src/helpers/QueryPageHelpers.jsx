@@ -69,7 +69,7 @@ const getPageLinks = (type, value) => {
     }
 }
 
-const fetchTitle = async (type, value, valueCorrected) => {
+const getTitle = async (type, value, valueCorrected) => {
     console.log("Fetching Entrez data...");
     console.log(value, valueCorrected);
     let title = null;
@@ -119,4 +119,4 @@ const InputOption = (props) => {
     )
 }
 
-export { getPlaceholder, getPageLinks, fetchTitle, getDataPromise, InputOption };
+export { getPlaceholder, getPageLinks, getTitle, getDataPromise, InputOption };
