@@ -87,7 +87,7 @@ const Query = (props) => {
     }, [queryTypeStatic, queryValueStatic]);
 
     return (
-        <div className="flex absolute w-screen h-screen justify-center">
+        <div className="flex w-screen h-screen justify-center pb-24">
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="flex flex-col justify-center items-center w-full z-10 rounded-lg p-1
                 sm:shadow-2xl
