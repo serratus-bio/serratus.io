@@ -56,7 +56,7 @@ const QueryResult = (props) => {
                 break;
             default:
         }
-    }, [props.type, props.value, props.dataPromise]);
+    }, [props.type, props.value, props.dataPromise, connectFauxDOM]);
 
     let loading = (
         <div className="text-center">

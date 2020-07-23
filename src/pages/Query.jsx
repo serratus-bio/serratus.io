@@ -75,7 +75,7 @@ const Query = (props) => {
         setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic));
         // check for AMR accession
         let valueCorrected = queryValueStatic;
-        if (queryTypeStatic == "genbank") {
+        if (queryTypeStatic === "genbank") {
             let patternForAMR = /.*_\d{7}/g;
             let isFromAMR = queryValueStatic.match(patternForAMR);
             if (isFromAMR) {
