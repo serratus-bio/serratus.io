@@ -1,10 +1,37 @@
 /* eslint-disable */
-export function drawReport(d3, selector, summary) {
+export function drawRunResults(d3, selector, summary, columns) {
     var cvgCartoonMap = {
         '_': 0,
         '.': 0.25,
         'o': 0.5,
         'O': 1
+    }
+
+    var colMap = {
+        "score": {
+            "name": "Score",
+            "desc": "Pan-genome coverage",
+            "valueSuffix": "%",
+            "size": 50,
+            "domain": [0, 100],
+            "fill": "#67c286"
+        },
+        "pctid": {
+            "name": "Identity",
+            "desc": "Average alignment identity",
+            "size": 70,
+            "valueSuffix": "%",
+            "domain": [75, 100],
+            "fill": "#fdb53c"
+        },
+        "aln": {
+            "name": "Reads",
+            "desc": "Number of alignments (bowtie2)",
+            "size": 70,
+            "valueSuffix": "",
+            "domain": [0, 1000],
+            "fill": "#658fc4"
+        }
     }
 
     function linspace(start, end, n) {
@@ -117,37 +144,10 @@ export function drawReport(d3, selector, summary) {
     function addColumns(gElement, summaryEntry=null) {
         var yShift = 15;
         var colHeight = sectionHeight;
-        var colMap = {
-            "score": {
-                "name": "Score",
-                "desc": "Pan-genome coverage",
-                "valueSuffix": "%",
-                "size": 50,
-                "domain": [0, 100],
-                "fill": "#67c286"
-            },
-            "pctid": {
-                "name": "Identity",
-                "desc": "Average alignment identity",
-                "size": 70,
-                "valueSuffix": "%",
-                "domain": [75, 100],
-                "fill": "#fdb53c"
-            },
-            "aln": {
-                "name": "Reads",
-                "desc": "Number of alignments (bowtie2)",
-                "size": 70,
-                "valueSuffix": "",
-                "domain": [0, 1000],
-                "fill": "#658fc4"
-            }
-        }
         var textG = gElement.append("g")
             .attr("transform",
                   `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
         var prevWidth = 0;
-        var columns = ["score", "pctid", "aln"];
         columns.forEach((column) => {
             var colAttrs = colMap[column];
             var colWidth = colAttrs["size"];
@@ -209,25 +209,6 @@ export function drawReport(d3, selector, summary) {
 
             prevWidth += colWidth;
         });
-    }
-
-    function getFamilyLink(familyName) {
-        if (familyName == "AMR") {
-            return "https://card.mcmaster.ca/";
-        }
-        else {
-            return `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${familyName}`;
-        }
-    }
-
-    function getAccessionLink(familyName, accessionName) {
-        if (familyName == "AMR") {
-            var genbankAcc = accessionName.slice(0, accessionName.lastIndexOf("_"))
-            return `https://www.ncbi.nlm.nih.gov/nuccore/${genbankAcc}`;
-        }
-        else {
-            return `https://www.ncbi.nlm.nih.gov/nuccore/${accessionName}`;
-        }
     }
 
     function addFamilyText(gElement, family) {
@@ -386,19 +367,17 @@ export function drawReport(d3, selector, summary) {
             .each( function(d, i){
                 var link;
                 if (rowType == "family") {
-                    link = getFamilyLink(name);
+                    link = `/query?family=${name}`;
                 }
                 else {
-                    var familyName = gElement.attr("family");
-                    link = getAccessionLink(familyName, name);
+                    link = `/query?genbank=${name}`
                 }
                 var textWidth = 100;
                 var textHeight = 14;
-                d3.select(this.parentNode)
+                var linkA = d3.select(this.parentNode)
                     .append("a")
                     .attr("xlink:href", link)
-                    .attr("target", "_blank")
-                .append("rect")
+                linkA.append("rect")
                     .attr("x", rowLabelShiftX - textWidth)
                     .attr("y", -8)
                     .attr("width", textWidth)

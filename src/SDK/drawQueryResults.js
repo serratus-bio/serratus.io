@@ -1,10 +1,45 @@
 /* eslint-disable */
-export function drawQueryResults(d3, selector, results) {
+export function drawQueryResults(d3, selector, results, columns) {
     var cvgCartoonMap = {
         '_': 0,
         '.': 0.25,
         'o': 0.5,
         'O': 1
+    }
+
+    var colMap = {
+        "score": {
+            "name": "Score",
+            "desc": "Sequence coverage (bins with at least 1 read)",
+            "valueSuffix": "%",
+            "size": 50,
+            "domain": [0, 100],
+            "fill": "#67c286"
+        },
+        "cvgPct": {
+            "name": "Coverage",
+            "desc": "Sequence coverage (bins with at least 1 read)",
+            "valueSuffix": "%",
+            "size": 70,
+            "domain": [0, 100],
+            "fill": "#67c286"
+        },
+        "pctId": {
+            "name": "Identity",
+            "desc": "Average alignment identity",
+            "size": 70,
+            "valueSuffix": "%",
+            "domain": [75, 100],
+            "fill": "#fdb53c"
+        },
+        "aln": {
+            "name": "Reads",
+            "desc": "Number of alignments (bowtie2)",
+            "size": 70,
+            "valueSuffix": "",
+            "domain": [0, 1000],
+            "fill": "#658fc4"
+        }
     }
 
     function linspace(start, end, n) {
@@ -105,37 +140,10 @@ export function drawQueryResults(d3, selector, results) {
     function addColumns(gElement, summaryEntry=null) {
         var yShift = 15;
         var colHeight = sectionHeight;
-        var colMap = {
-            "cvgPct": {
-                "name": "Coverage",
-                "desc": "Sequence coverage (bins with at least 1 read)",
-                "valueSuffix": "%",
-                "size": 70,
-                "domain": [0, 100],
-                "fill": "#67c286"
-            },
-            "pctId": {
-                "name": "Identity",
-                "desc": "Average alignment identity",
-                "size": 70,
-                "valueSuffix": "%",
-                "domain": [75, 100],
-                "fill": "#fdb53c"
-            },
-            "aln": {
-                "name": "Reads",
-                "desc": "Number of alignments (bowtie2)",
-                "size": 70,
-                "valueSuffix": "",
-                "domain": [0, 1000],
-                "fill": "#658fc4"
-            }
-        }
         var textG = gElement.append("g")
             .attr("transform",
                   `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
         var prevWidth = 0;
-        var columns = ["cvgPct", "pctId", "aln"];
         columns.forEach((column) => {
             var colAttrs = colMap[column];
             var colWidth = colAttrs["size"];
@@ -230,7 +238,7 @@ export function drawQueryResults(d3, selector, results) {
             .style("fill", "blue")
             .style('cursor', 'pointer')
             .each( function(d, i){
-                var link = `/report?accession=${name}`;
+                var link = `/query?run=${name}`;
                 var offsetX = 0
                 var textWidth = 80;
                 var textHeight = 14;
