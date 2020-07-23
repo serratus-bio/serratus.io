@@ -96,9 +96,9 @@ const Query = (props) => {
                     <div className="flex flex-col items-center z-10 mt-2">
                         <div className="items-center z-10">
                             <div>
-                                <InputOption value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
-                                <InputOption value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
-                                <InputOption value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
+                                <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
+                                <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
+                                <InputOption className="inline mx-2" value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
                             </div>
                             <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
                             <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
@@ -113,7 +113,11 @@ const Query = (props) => {
                             </div> : null
                         }
                     </div>
-                    {queryValueStatic ? getPageLinks(queryTypeStatic, queryValueCorrected) : null}
+                    {queryValueStatic ?
+                        <div className="flex justify-center items-center my-2">
+                            {getPageLinks(queryTypeStatic, queryValueCorrected)}
+                        </div> : null
+                    }
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     <div className="w-full flex flex-col overflow-y-auto" style={{ height: 600 }} id="style-2">

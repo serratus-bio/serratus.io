@@ -26,7 +26,7 @@ const getPageLinks = (type, value) => {
             text = "Database Website";
         }
         return (
-            <div className="flex justify-center items-center my-2">
+            <div>
                 <LinkButton
                     link={link}
                     text={text}
@@ -37,7 +37,7 @@ const getPageLinks = (type, value) => {
     }
     if (type === "genbank") {
         return (
-            <div className="flex justify-center items-center my-2">
+            <div>
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/nuccore/${value}`}
                     text="GenBank"
@@ -48,7 +48,7 @@ const getPageLinks = (type, value) => {
     }
     if (type === "run") {
         return (
-            <div className="flex justify-center items-center my-2">
+            <div>
                 <LinkButton
                     link={`https://www.ncbi.nlm.nih.gov/sra/?term=${value}`}
                     text="SRA"
@@ -110,7 +110,7 @@ const getDataPromise = (type, value) => {
 
 const InputOption = (props) => {
     return (
-        <div className="inline mx-2">
+        <div className={props.className}>
             <input type="radio" name="querytype" value={props.value} checked={props.checked}
                 onChange={props.onChange} />
             <span>{props.displayText}</span>
