@@ -71,7 +71,6 @@ const getPageLinks = (type, value) => {
 
 const getTitle = async (type, value, valueCorrected) => {
     console.log("Fetching Entrez data...");
-    console.log(value, valueCorrected);
     let title = null;
     switch (type) {
         case "family":

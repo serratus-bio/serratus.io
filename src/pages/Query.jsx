@@ -71,7 +71,7 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
-        console.log(`Loading query result page for ${queryValueStatic}.`);
+        console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
         setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic));
         // check for AMR accession
         let valueCorrected = queryValueStatic;
