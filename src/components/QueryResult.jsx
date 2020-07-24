@@ -67,9 +67,9 @@ const QueryResult = (props) => {
 
     let error = (
         <div className="text-center">
-            <span>Cannot retrieve results for this query.</span><br />
+            <span>Could not retrieve results for this query.</span><br />
             <span>If this is unexpected, please </span>
-            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+            <a href="https://github.com/serratus-bio/serratus.io/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
                 submit an issue on the the serratus.io GitHub
             </a>
             <span>.</span>
@@ -87,15 +87,6 @@ const QueryResult = (props) => {
         </div>
     )
 
-    let noResults = (
-        <div className="text-center">
-            {props.type === "run" ?
-                noResultsRun :
-                <span>Could not retrieve results for this query.</span>
-            }
-        </div>
-    )
-
     if (hasError) {
         return error
     }
@@ -103,7 +94,10 @@ const QueryResult = (props) => {
         return loading
     }
     if (!hasResults) {
-        return noResults
+        if (props.type == "run") {
+            return noResultsRun
+        }
+        return error
     }
     return (
         <div>
