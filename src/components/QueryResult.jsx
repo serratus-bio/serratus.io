@@ -6,6 +6,7 @@ import { drawRunResults } from '../SDK/drawRunResults.js';
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
+    const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
     const connectFauxDOM = props.connectFauxDOM;
 
@@ -34,7 +35,7 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                });
+                }).catch(setHasError(true));
                 break;
             case "genbank":
                 columns = ["cvgPct", "pctId", "aln"];
@@ -43,7 +44,7 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                });
+                }).catch(setHasError(true));
                 break;
             case "run":
                 columns = ["score", "pctId", "aln"];
@@ -52,7 +53,7 @@ const QueryResult = (props) => {
                     let hasResults = Boolean(data);
                     callback = getResultsCallback(drawRunResults, columns, hasResults);
                     callback(data);
-                });
+                }).catch(setHasError(true));
                 break;
             default:
         }
@@ -64,12 +65,23 @@ const QueryResult = (props) => {
         </div>
     )
 
+    let error = (
+        <div className="text-center">
+            <span>Cannot retrieve results for this query.</span><br />
+            <span>If this is unexpected, please </span>
+            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                submit an issue on the the serratus.io GitHub
+            </a>
+            <span>.</span>
+        </div>
+    )
+
     let noResultsRun = (
-        <div>
+        <div className="text-center">
             <span>This accession has not been processed... yet.</span><br />
             <span>To request this sample be processed, please </span>
             <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                submit an issue on GitHub
+                submit an issue on the Serratus project GitHub
             </a>
             <span>.</span>
         </div>
@@ -84,14 +96,18 @@ const QueryResult = (props) => {
         </div>
     )
 
+    if (hasError) {
+        return error
+    }
+    if (isLoading) {
+        return loading
+    }
+    if (!hasResults) {
+        return noResults
+    }
     return (
         <div>
-            {isLoading ?
-                loading :
-                hasResults ?
-                    props.chart :
-                    noResults
-            }
+            {props.chart}
         </div>
     )
 }
