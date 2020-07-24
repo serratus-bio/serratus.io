@@ -35,7 +35,10 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                }).catch(err => setHasError(true));
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
+                });
                 break;
             case "genbank":
                 columns = ["cvgPct", "pctId", "aln"];
@@ -44,7 +47,10 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                }).catch(err => setHasError(true));
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
+                });
                 break;
             case "run":
                 columns = ["score", "pctId", "aln"];
@@ -53,7 +59,10 @@ const QueryResult = (props) => {
                     let hasResults = Boolean(data);
                     callback = getResultsCallback(drawRunResults, columns, hasResults);
                     callback(data);
-                }).catch(err => setHasError(true));
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
+                });
                 break;
             default:
         }
@@ -70,9 +79,9 @@ const QueryResult = (props) => {
             <span>Could not retrieve results for this query.</span><br />
             <span>If this is unexpected, please </span>
             <a href="https://github.com/serratus-bio/serratus.io/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                submit an issue on the the serratus.io GitHub
+                submit an issue
             </a>
-            <span>.</span>
+            <span> on the the serratus.io GitHub.</span>
         </div>
     )
 
@@ -81,19 +90,16 @@ const QueryResult = (props) => {
             <span>This accession has not been processed... yet.</span><br />
             <span>To request this sample be processed, please </span>
             <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                submit an issue on the Serratus project GitHub
+                submit an issue
             </a>
-            <span>.</span>
+            <span> on the Serratus project GitHub.</span>
         </div>
     )
 
-    if (hasError) {
-        return error
-    }
     if (isLoading) {
         return loading
     }
-    if (!hasResults) {
+    if (hasError || !hasResults) {
         if (props.type == "run") {
             return noResultsRun
         }
