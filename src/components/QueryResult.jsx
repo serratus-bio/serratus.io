@@ -100,7 +100,7 @@ const QueryResult = (props) => {
         return loading
     }
     if (hasError || !hasResults) {
-        if (props.type == "run") {
+        if (props.type === "run") {
             return noResultsRun
         }
         return error
