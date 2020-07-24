@@ -35,7 +35,7 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                }).catch(setHasError(true));
+                }).catch(err => setHasError(true));
                 break;
             case "genbank":
                 columns = ["cvgPct", "pctId", "aln"];
@@ -44,7 +44,7 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
-                }).catch(setHasError(true));
+                }).catch(err => setHasError(true));
                 break;
             case "run":
                 columns = ["score", "pctId", "aln"];
@@ -53,7 +53,7 @@ const QueryResult = (props) => {
                     let hasResults = Boolean(data);
                     callback = getResultsCallback(drawRunResults, columns, hasResults);
                     callback(data);
-                }).catch(setHasError(true));
+                }).catch(err => setHasError(true));
                 break;
             default:
         }
