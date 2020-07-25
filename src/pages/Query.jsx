@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from 'react-helmet';
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import { useLocation } from 'react-router-dom';
@@ -86,8 +87,17 @@ const Query = (props) => {
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
     }, [queryTypeStatic, queryValueStatic]);
 
+    let headTags = (
+        <Helmet>
+            <title>
+                Serratus | {queryValueStatic ? `${queryValueStatic}` : "Query"}
+            </title>
+        </Helmet>
+    )
+
     return (
         <div className="flex absolute w-screen h-screen justify-center">
+            {headTags}
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="flex flex-col justify-center items-center w-full z-10 rounded-lg p-1
                 sm:shadow-2xl

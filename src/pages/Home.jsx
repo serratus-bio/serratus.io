@@ -1,8 +1,15 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
+    const headTags = (
+        <Helmet>
+            <title>Serratus | Home</title>
+        </Helmet>
+    )
     return (
         <div className="h-screen flex flex-col items-center justify-center">
+            {headTags}
             <img src="/serratus.jpg" alt="serratus mountain" className="fixed z-0" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="flex flex-col z-10 items-center text-white font-thin px-4">
                 <h1 className="text-5xl font-light text-center mt-16 z-10">Welcome to Serratus</h1>
