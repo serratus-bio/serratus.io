@@ -6,6 +6,7 @@ import { drawRunResults } from '../SDK/drawRunResults.js';
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
+    const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
     const connectFauxDOM = props.connectFauxDOM;
 
@@ -34,6 +35,9 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
                 });
                 break;
             case "genbank":
@@ -43,15 +47,21 @@ const QueryResult = (props) => {
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
                 });
                 break;
             case "run":
-                columns = ["score", "pctid", "aln"];
+                columns = ["score", "pctId", "aln"];
                 callback = getResultsCallback(drawRunResults, columns);
                 props.dataPromise.then((data) => {
                     let hasResults = Boolean(data);
                     callback = getResultsCallback(drawRunResults, columns, hasResults);
                     callback(data);
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
                 });
                 break;
             default:
@@ -64,34 +74,40 @@ const QueryResult = (props) => {
         </div>
     )
 
+    let error = (
+        <div className="text-center">
+            <span>Could not retrieve results for this query.</span><br />
+            <span>If this is unexpected, please </span>
+            <a href="https://github.com/serratus-bio/serratus.io/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+                submit an issue
+            </a>
+            <span> on the the serratus.io GitHub.</span>
+        </div>
+    )
+
     let noResultsRun = (
-        <div>
+        <div className="text-center">
             <span>This accession has not been processed... yet.</span><br />
             <span>To request this sample be processed, please </span>
             <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                submit an issue on GitHub
+                submit an issue
             </a>
-            <span>.</span>
+            <span> on the Serratus project GitHub.</span>
         </div>
     )
 
-    let noResults = (
-        <div className="text-center">
-            {props.type === "run" ?
-                noResultsRun :
-                <span>Could not retrieve results for this query.</span>
-            }
-        </div>
-    )
-
+    if (isLoading) {
+        return loading
+    }
+    if (hasError || !hasResults) {
+        if (props.type === "run") {
+            return noResultsRun
+        }
+        return error
+    }
     return (
         <div>
-            {isLoading ?
-                loading :
-                hasResults ?
-                    props.chart :
-                    noResults
-            }
+            {props.chart}
         </div>
     )
 }
