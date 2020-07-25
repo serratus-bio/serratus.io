@@ -1,6 +1,7 @@
 import React from "react";
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
+import Paginator from '../components/Paginator';
 import { useLocation } from 'react-router-dom';
 import {
     getPlaceholder,
@@ -35,6 +36,7 @@ const Query = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
+    const [pageNumber, setPageNumber] = React.useState(1);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
 
@@ -67,6 +69,9 @@ const Query = (props) => {
         setSearchType(queryType);
     }
 
+    function paginate() {
+        
+    }
     React.useEffect(() => {
         if (!queryValueStatic) {
             return;
@@ -120,9 +125,14 @@ const Query = (props) => {
                     }
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
+                    
                     <div className="w-full flex flex-col overflow-y-auto py-6" style={{ height: 600 }} id="style-2">
                         {queryValueStatic ?
-                            <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> :
+                            <div>
+                            <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber}/>
+                            <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                            </div>
+                             :
                             <QueryIntro />
                         }
                     </div>
