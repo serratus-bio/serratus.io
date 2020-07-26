@@ -6,8 +6,8 @@ export default class DataSdk {
         return response.data
     }
 
-    async fetchSraHitsByAccession(genbankAccession) {
-        const response = await axios.get(`https://db.serratus.io/api/runs/get-runs/${genbankAccession}`);
+    async fetchSraHitsByAccession(genbankAccession, page) {
+        const response = await axios.get(`https://db.serratus.io/api/runs/get-runs/${genbankAccession}?page=${page}`);
         return response.data;
     }
 

@@ -70,8 +70,9 @@ const Query = (props) => {
     }
 
     function paginate() {
-        
+        // pagination function goes here
     }
+
     React.useEffect(() => {
         if (!queryValueStatic) {
             return;
