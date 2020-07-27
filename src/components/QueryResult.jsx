@@ -106,7 +106,7 @@ const QueryResult = (props) => {
         return error
     }
     return (
-        <div>
+        <div className="pl-24">
             {props.chart}
         </div>
     )
