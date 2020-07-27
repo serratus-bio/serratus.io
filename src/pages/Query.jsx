@@ -10,6 +10,7 @@ import {
     getDataPromise,
     InputOption
 } from "../helpers/QueryPageHelpers";
+import { set } from "d3";
 
 const queryTypes = ["family", "genbank", "run"];
 
@@ -39,7 +40,7 @@ const Query = (props) => {
     const [pageNumber, setPageNumber] = React.useState(1);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-
+    
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
         loadQueryPage(null);
@@ -76,6 +77,7 @@ const Query = (props) => {
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
         setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber));
         // check for AMR accession
+        console.log(dataPromise);
         let valueCorrected = queryValueStatic;
         if (queryTypeStatic === "genbank") {
             let patternForAMR = /.*_\d{7}/g;
