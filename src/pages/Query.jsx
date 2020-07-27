@@ -69,16 +69,12 @@ const Query = (props) => {
         setSearchType(queryType);
     }
 
-    function paginate() {
-        // pagination function goes here
-    }
-
     React.useEffect(() => {
         if (!queryValueStatic) {
             return;
         }
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber));
         // check for AMR accession
         let valueCorrected = queryValueStatic;
         if (queryTypeStatic === "genbank") {
@@ -90,10 +86,10 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
-    }, [queryTypeStatic, queryValueStatic]);
+    }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     return (
-        <div className="flex absolute w-screen h-screen justify-center">
+        <div className="flex w-screen h-screen justify-center pb-24">
             <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
             <div className="flex flex-col justify-center items-center w-full z-10 rounded-lg p-1
                 sm:shadow-2xl
@@ -127,7 +123,7 @@ const Query = (props) => {
                 </div>
                 <div className="w-full lg:w-5/6 flex flex-col flex-1 justify-center items-center bg-gray-400 border rounded-lg border-gray-600 shadow-xl m-1 sm:px-12">
                     
-                    <div className="w-full flex flex-col overflow-y-auto py-6" style={{ height: 600 }} id="style-2">
+                    <div className="w-full flex flex-col overflow-y-auto py-6" style={{ height: 500 }} id="style-2">
                         {queryValueStatic ?
                             <div>
                             <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber}/>
@@ -137,6 +133,7 @@ const Query = (props) => {
                             <QueryIntro />
                         }
                     </div>
+                    
                 </div>
             </div>
         </div>
