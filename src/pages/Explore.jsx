@@ -18,6 +18,8 @@ var dataByZStack;
 var dataByZStackFiltered;
 var areaGen;
 
+const sliderStyle = { height: 30, position: "relative", backgroundColor: "#eeeef5" };
+
 export default (props) => {
     const [isLoaded, setIsLoaded] = React.useState(false);
     const [searchValue, setSearchValue] = React.useState("");
@@ -66,6 +68,10 @@ export default (props) => {
             </div>
             <div className="w-full p-6">
                 <h1 className="text-center">{family}</h1>
+                <div id="sliderX" style={sliderStyle}></div>
+                <div id="sliderX-label" className="text-center"></div>
+                <div id="sliderZ" style={sliderStyle}></div>
+                <div id="sliderZ-label" className="text-center"></div>
                 <div id={id} />
             </div>
         </div>
@@ -93,27 +99,10 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var mainDiv = d3.select(selector);
 
-    var sliderXDiv = mainDiv
-        .append("div")
-        .attr("id", "sliderX")
-        .attr("height", 30)
-        .attr("style", "position: relative;height:30px;background-color: #eeeef5;");
-
-    var sliderXLabel = mainDiv
-        .append("div")
-        .attr("id", "sliderX-label")
-        .attr("style", "text-align: center");
-
-    var sliderZDiv = mainDiv
-        .append("div")
-        .attr("id", "sliderZ")
-        .attr("height", 30)
-        .attr("style", "position: relative;height:30px;background-color: #eeeef5;");
-
-    var sliderZLabel = mainDiv
-        .append("div")
-        .attr("id", "sliderZ-label")
-        .attr("style", "text-align: center");
+    var sliderXDiv = d3.select("#sliderX");
+    var sliderXLabel = d3.select("#sliderX-label");
+    var sliderZDiv = d3.select("#sliderZ");
+    var sliderZLabel = d3.select("#sliderZ-label");
 
     var chartSvg = mainDiv
         .append("svg")
