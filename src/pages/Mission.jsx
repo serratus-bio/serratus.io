@@ -1,8 +1,15 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 
 const About = () => {
+  const headTags = (
+    <Helmet>
+      <title>Serratus | Mission</title>
+    </Helmet>
+  )
   return (
     <div className="h-screen flex flex-col items-center justify-center">
+      {headTags}
       <img src="/serratus.jpg" alt="serratus mountain" className="invisible sm:visible sm:fixed z-0 opacity-75" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
       <div className="w-screen flex flex-col justify-center items-center z-10">
         <h1 className="text-5xl text-black font-normal text-center bg-white p-6 rounded-lg shadow-2xl z-20">Why Serratus?</h1>
