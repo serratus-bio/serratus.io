@@ -162,6 +162,7 @@ const drawExploreFamilyChart = (selector, data) => {
         yLims = [0, maxDataY];
         yScale.domain(yLims).nice();
         yAxis.call(d3.axisLeft(yScale).ticks(5));
+        updateChart();
     }
 
     zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
@@ -173,7 +174,6 @@ const drawExploreFamilyChart = (selector, data) => {
     yAxis.call(d3.axisLeft(yScale).ticks(5));
 
     dataByZStackFiltered = getDataByZStack(data);
-    updateYLims();
 
     areaGen = d3.area()
         .x((d) => xScale(d.data.key))
