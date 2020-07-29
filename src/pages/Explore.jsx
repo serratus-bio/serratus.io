@@ -144,7 +144,7 @@ const drawExploreFamilyChart = (selector, data) => {
         .attr("style", "opacity: 0.5")
 
     function updateXLims(begin, end) {
-        sliderXLabel.text("Score: " + begin + " - " + end);
+        sliderXLabel.text("% Identity: " + begin + " - " + end);
         xLims = [begin, end];
         xScale.domain(xLims);
         xAxis.call(d3.axisBottom(xScale).ticks(10));
@@ -152,7 +152,7 @@ const drawExploreFamilyChart = (selector, data) => {
     }
 
     function updateZLims(begin, end) {
-        sliderZLabel.text("% Identity: " + begin + " - " + end);
+        sliderZLabel.text("Score: " + begin + " - " + end);
         zLims = [begin, end];
         updateChart();
     }
