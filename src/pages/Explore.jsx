@@ -6,7 +6,7 @@ import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 
 var chart;
-var xLims = [0, 100];
+var xLims = [75, 100];
 var yLims = [0, 6000];
 var zLims = [25, 100];
 var zDomain;
