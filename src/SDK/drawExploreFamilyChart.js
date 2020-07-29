@@ -25,7 +25,8 @@ export function drawExploreFamilyChart(d3, createD3RangeSlider, selector, data) 
     var sliderXDiv = mainDiv
         .append("div")
         .attr("id", "sliderX")
-        .attr("height", 30);
+        .attr("height", 30)
+        .attr("style", "position: relative;height:30px;background-color: #eeeef5;");
     
     var sliderXLabel = mainDiv
         .append("div")
@@ -35,7 +36,8 @@ export function drawExploreFamilyChart(d3, createD3RangeSlider, selector, data) 
     var sliderZDiv = mainDiv
         .append("div")
         .attr("id", "sliderZ")
-        .attr("height", 30);
+        .attr("height", 30)
+        .attr("style", "position: relative;height:30px;background-color: #eeeef5;");
     
     var sliderZLabel = mainDiv
         .append("div")
@@ -62,10 +64,11 @@ export function drawExploreFamilyChart(d3, createD3RangeSlider, selector, data) 
     var sliderX = createD3RangeSlider(d3, 0, 100, sliderXDiv);
     sliderX.onChange((range)=> updateXLims(range.begin, range.end));
 
-    var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]})`
+    var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
+    var newZSliderDivStyle = sliderZDiv.attr("style") + zGradient;
     var sliderZ = createD3RangeSlider(d3, 0, 100, sliderZDiv);
     sliderZ.onChange((range)=> updateZLims(range.begin, range.end));
-    sliderZDiv.attr("style", zGradient)
+    sliderZDiv.attr("style", newZSliderDivStyle)
     sliderZDiv.select(".slider-container")
         .attr("style", zGradient)
     sliderZDiv.select(".slider")
