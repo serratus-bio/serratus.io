@@ -66,13 +66,17 @@ export default (props) => {
                     })}
                 </ul>
             </div>
-            <div className="w-full p-6">
-                <h1 className="text-center">{family}</h1>
-                <div id="sliderX" style={sliderStyle}></div>
-                <div id="sliderX-label" className="text-center"></div>
-                <div id="sliderZ" style={sliderStyle}></div>
-                <div id="sliderZ-label" className="text-center"></div>
+            <div className="w-full p-6 lg:w-1/2">
+                <h1 className="text-center text-2xl">{family}</h1>
                 <div id={id} />
+                <div className="py-2">
+                    <div id="sliderX" style={sliderStyle}></div>
+                    <div id="sliderX-label" className="text-center"></div>
+                </div>
+                <div className="py-2">
+                    <div id="sliderZ" style={sliderStyle}></div>
+                    <div id="sliderZ-label" className="text-center"></div>
+                </div>
             </div>
         </div>
     )
@@ -84,7 +88,7 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var chartWidth = 200;
     var chartHeight = 100;
-    var margin = { top: 10, right: 0, bottom: 10, left: 60 };
+    var margin = { top: 10, right: 10, bottom: 20, left: 50 };
     var legendHeight = 50;
 
     var zColorLims = ["#3d5088", "#fce540"];
@@ -104,9 +108,11 @@ const drawExploreFamilyChart = (selector, data) => {
     var sliderZDiv = d3.select("#sliderZ");
     var sliderZLabel = d3.select("#sliderZ-label");
 
+    var svgWidth = chartWidth + margin.left + margin.right;
+    var svgHeight = chartHeight + margin.top + margin.bottom;
     var chartSvg = mainDiv
         .append("svg")
-        .attr("viewBox", `0 0 300 500`);
+        .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
     var entryG = chartSvg.append("g")
         .attr("width", chartWidth)
         .attr("height", chartHeight)
@@ -133,7 +139,7 @@ const drawExploreFamilyChart = (selector, data) => {
         .attr("style", "opacity: 0.5")
 
     function updateXLims(begin, end) {
-        sliderXLabel.text("% Identity: " + begin + " - " + end);
+        sliderXLabel.text("% Identity: " + begin + " – " + end);
         xLims = [begin, end];
         xScale.domain(xLims);
         xAxis.call(d3.axisBottom(xScale).ticks(10));
@@ -141,7 +147,7 @@ const drawExploreFamilyChart = (selector, data) => {
     }
 
     function updateZLims(begin, end) {
-        sliderZLabel.text("Score: " + begin + " - " + end);
+        sliderZLabel.text("Score: " + begin + " – " + end);
         zLims = [begin, end];
         updateChart();
     }
