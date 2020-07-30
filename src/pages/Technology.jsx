@@ -1,9 +1,16 @@
 import React from 'react'
+import { Helmet } from 'react-helmet';
 import TechnologyCard from '../components/TechnologyCard';
 
 const Technology = () => {
+  const headTags = (
+    <Helmet>
+      <title>Serratus | Technology</title>
+    </Helmet>
+  )
   return (
     <div>
+      {headTags}
       <div className="flex absolute w-full h-screen justify-center lg:items-center overflow-y-visible overflow-x-hidden">
         <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
         <div className="flex flex-col lg:flex-row absolute pb-12">
