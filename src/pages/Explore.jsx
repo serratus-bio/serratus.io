@@ -142,8 +142,10 @@ const drawExploreFamilyChart = (selector, data) => {
     function updateXLims(begin, end) {
         sliderXLabel.text("% Identity: " + begin + " – " + end);
         xLims = [begin, end];
+        var rangeLen = end - begin;
+        var nTicks = (rangeLen < 10) ? rangeLen : 10;
         xScale.domain(xLims);
-        xAxis.call(d3.axisBottom(xScale).ticks(10));
+        xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
         updateChart();
     }
 
