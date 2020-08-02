@@ -26,6 +26,7 @@ const selectOptions = Object.keys(allFamilyData).map((family) => { return { labe
 export default (props) => {
     const [isLoaded, setIsLoaded] = React.useState(false);
     const [family, setFamily] = React.useState("Coronaviridae");
+    const [selectValues, setSelectValues] = React.useState([]);
 
     const id = "test"
     const selector = `#${id}`
@@ -47,15 +48,24 @@ export default (props) => {
         </Helmet>
     )
 
+    var selectOnChange = (values) => {
+        setSelectValues(values);
+        if (values.length !== 0) {
+            setFamily(values[0].value);
+        }
+    }
+
     return (
         <div className="flex flex-col md:flex-row p-4">
             {headTags}
             <div className="w-full md:w-1/4">
                 <Select options={selectOptions}
-                    onChange={(values) => setFamily(values[0].value)}
+                    values={selectValues}
+                    onChange={selectOnChange}
+                    onDropdownOpen={() => setSelectValues([])}
                     placeholder="Search viral family" />
             </div>
-            <div className="w-full p-6 lg:w-1/2">
+            <div className="w-full p-6 md:w-3/4 lg:w-1/2">
                 <h1 className="text-center text-2xl">{family}</h1>
                 <div id={id} />
                 <div className="py-2">
