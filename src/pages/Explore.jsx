@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Select } from "react-dropdown-select";
 import * as d3 from 'd3';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
@@ -20,20 +21,11 @@ var areaGen;
 
 const sliderStyle = { height: 30, position: "relative", backgroundColor: "#eeeef5" };
 
+const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
+
 export default (props) => {
     const [isLoaded, setIsLoaded] = React.useState(false);
-    const [searchValue, setSearchValue] = React.useState("");
     const [family, setFamily] = React.useState("Coronaviridae");
-    const placeholderText = "family";
-
-    function searchOnKeyUp(e) {
-        if (e.keyCode === 13) {
-            setFamily(e.target.value);
-        }
-        else {
-            setSearchValue(e.target.value);
-        }
-    }
 
     const id = "test"
     const selector = `#${id}`
@@ -56,15 +48,12 @@ export default (props) => {
     )
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-col md:flex-row p-4">
             {headTags}
-            <div className="overflow-y-scroll">
-                <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                <ul>
-                    {Object.keys(allFamilyData).map((family, i) => {
-                        return (<li key={family}>{family}</li>)
-                    })}
-                </ul>
+            <div className="w-full md:w-1/4">
+                <Select options={selectOptions}
+                    onChange={(values) => setFamily(values[0].value)}
+                    placeholder="Search viral family" />
             </div>
             <div className="w-full p-6 lg:w-1/2">
                 <h1 className="text-center text-2xl">{family}</h1>
