@@ -1,4 +1,6 @@
 /* eslint-disable */
+
+// source: https://github.com/RasmusFonseca/d3RangeSlider
 export function createD3RangeSlider (d3, rangeMin, rangeMax, container, playButton) {
     "use strict";
 
