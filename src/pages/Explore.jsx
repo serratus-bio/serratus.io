@@ -81,7 +81,6 @@ export default (props) => {
                     <div id="sliderZ" style={sliderStyle}></div>
                     <div id="sliderZ-label" className="text-center"></div>
                 </div>
-                <button className="rounded bg-blue-500 hover:bg-blue-700 text-white py-1 px-4" onClick={updateYLims}>Adjust bounds to data</button>
             </div>
         </div>
     )
