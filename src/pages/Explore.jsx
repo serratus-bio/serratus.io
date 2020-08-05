@@ -132,11 +132,13 @@ const drawExploreFamilyChart = (selector, data) => {
 
     sliderX = createD3RangeSlider(d3, xLims[0], xLims[1], sliderXDiv);
     sliderX.onChange((range) => updateXLims(range.begin, range.end));
+    sliderX.onTouchEnd(() => updateYLims());
 
     var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
     var newZSliderDivStyle = sliderZDiv.attr("style") + zGradient;
     sliderZ = createD3RangeSlider(d3, zLims[0], zLims[1], sliderZDiv);
     sliderZ.onChange((range) => updateZLims(range.begin, range.end));
+    sliderZ.onTouchEnd(() => updateYLims());
     sliderZDiv.attr("style", newZSliderDivStyle)
     sliderZDiv.select(".slider-container")
         .attr("style", zGradient)
