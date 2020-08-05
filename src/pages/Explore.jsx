@@ -15,7 +15,6 @@ var xColumn = "pctid";
 var yColumn = "n";
 var zColumn = "score";
 var data;
-var dataByZStack;
 var dataByZStackFiltered;
 var areaGen;
 
@@ -31,19 +30,17 @@ export default (props) => {
     const [family, setFamily] = React.useState("Coronaviridae");
     const [selectValues, setSelectValues] = React.useState([]);
 
-    const id = "test"
-    const selector = `#${id}`
     React.useEffect(() => {
         data = allFamilyData[family];
         if (!isLoaded) {
-            drawExploreFamilyChart(selector, data);
+            drawExploreFamilyChart("#chart", data);
             setIsLoaded(true);
         }
         updateChart();
         sliderX.range(75, 100);
         sliderZ.range(25, 100);
         updateYLims();
-    }, [family]);
+    }, [family, isLoaded]);
 
     const headTags = (
         <Helmet>
@@ -72,7 +69,7 @@ export default (props) => {
             </div>
             <div className="w-full p-6 md:w-3/4 lg:w-1/2">
                 <h1 className="text-center text-2xl">{family}</h1>
-                <div id={id} />
+                <div id="chart" />
                 <div className="py-2">
                     <div id="sliderX" style={sliderStyle}></div>
                     <div id="sliderX-label" className="text-center"></div>
@@ -93,15 +90,12 @@ const drawExploreFamilyChart = (selector, data) => {
     var chartWidth = 200;
     var chartHeight = 100;
     var margin = { top: 10, right: 10, bottom: 20, left: 50 };
-    var legendHeight = 50;
 
     var zColorLims = ["#3d5088", "#fce540"];
     var xScale = d3.scaleLinear()
         .range([0, chartWidth]);
     var yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
-    var zScale = d3.scaleLinear()
-        .range([legendHeight, 0]);
     var colorScale = d3.scaleLinear()
         .range(zColorLims);
 
@@ -167,7 +161,6 @@ const drawExploreFamilyChart = (selector, data) => {
                 return innerD[1];
             });
         }));
-        console.log(maxDataY);
         yLims = [0, maxDataY];
         yScale.domain(yLims).nice();
         yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
@@ -177,7 +170,6 @@ const drawExploreFamilyChart = (selector, data) => {
     zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
     xScale.domain(xLims);
     yScale.domain(yLims).nice();
-    // zScale.domain(zLims);
     colorScale.domain(zLims);
     xAxis.call(d3.axisBottom(xScale).ticks(10));
     yAxis.call(d3.axisLeft(yScale).ticks(5));
@@ -203,7 +195,7 @@ function getDataByZStack(dataFiltered) {
     var dataByX = d3.nest()
         .key(function (d) { return d[xColumn]; })
         .entries(dataFiltered);
-    dataByX.map((d) => {
+    dataByX.forEach((d) => {
         d.values = d.values.reduce((collection, d) => {
             collection[d[zColumn]] = d[yColumn];
             return collection;
