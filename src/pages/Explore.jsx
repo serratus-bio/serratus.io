@@ -155,6 +155,7 @@ const drawExploreFamilyChart = (selector, data) => {
     }
 
     updateYLims = () => {
+        var transitionDuration = 500;
         var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
             return d3.max(d, function (innerD) {
                 return innerD[1];
@@ -163,8 +164,8 @@ const drawExploreFamilyChart = (selector, data) => {
         console.log(maxDataY);
         yLims = [0, maxDataY];
         yScale.domain(yLims).nice();
-        yAxis.call(d3.axisLeft(yScale).ticks(5));
-        updateChart();
+        yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
+        updateChart(transitionDuration);
     }
 
     zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
@@ -213,7 +214,7 @@ function getDataByZStack(dataFiltered) {
         .value((d, key) => d.ZtoY[key])(dataByX);
 }
 
-function updateChart() {
+function updateChart(transitionDuration=0) {
     var dataFiltered = data.filter((d) => {
         return (
             (d[xColumn] >= xLims[0]) &&
@@ -225,6 +226,12 @@ function updateChart() {
 
     dataByZStackFiltered = getDataByZStack(dataFiltered);
 
-    chart.data(dataByZStackFiltered)
-        .attr("d", areaGen);
+    if (transitionDuration === 0) {
+        chart.data(dataByZStackFiltered)
+            .attr("d", areaGen);
+    }
+    else {
+        chart.data(dataByZStackFiltered).transition().duration(transitionDuration)
+            .attr("d", areaGen);
+    }
 }
