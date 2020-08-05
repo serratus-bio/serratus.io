@@ -19,6 +19,9 @@ var dataByZStack;
 var dataByZStackFiltered;
 var areaGen;
 
+var sliderX;
+var sliderZ;
+
 const sliderStyle = { height: 30, position: "relative", backgroundColor: "#eeeef5" };
 
 const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
@@ -37,6 +40,8 @@ export default (props) => {
             setIsLoaded(true);
         }
         updateChart();
+        sliderX.range(75, 100);
+        sliderZ.range(25, 100);
         updateYLims();
     }, [family]);
 
@@ -125,12 +130,12 @@ const drawExploreFamilyChart = (selector, data) => {
     var yAxis = entryG.append("g")
         .attr("class", "y-axis");
 
-    var sliderX = createD3RangeSlider(d3, xLims[0], xLims[1], sliderXDiv);
+    sliderX = createD3RangeSlider(d3, xLims[0], xLims[1], sliderXDiv);
     sliderX.onChange((range) => updateXLims(range.begin, range.end));
 
     var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
     var newZSliderDivStyle = sliderZDiv.attr("style") + zGradient;
-    var sliderZ = createD3RangeSlider(d3, zLims[0], zLims[1], sliderZDiv);
+    sliderZ = createD3RangeSlider(d3, zLims[0], zLims[1], sliderZDiv);
     sliderZ.onChange((range) => updateZLims(range.begin, range.end));
     sliderZDiv.attr("style", newZSliderDivStyle)
     sliderZDiv.select(".slider-container")
