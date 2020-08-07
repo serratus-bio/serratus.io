@@ -57,11 +57,14 @@ export default (props) => {
         }
     }
 
+    var classesBox = " w-full m-auto md:w-3/4 lg:w-1/2 ";
+    var classesBoxBorder = " sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100 ";
+
     return (
-        <div className="flex flex-col md:flex-row p-4 justify-center">
+        <div className="p-4 sm:bg-gray-200">
             {headTags}
-            <div className="w-full md:w-1/4">
-                <div className="py-2 m-auto text-center">
+            <div className={"p-4" + classesBox + classesBoxBorder}>
+                <div className="pb-2 text-center">
                     Select a viral family to view the distribution of Serratus analysis results.
                 </div>
                 <Select options={selectOptions}
@@ -70,7 +73,8 @@ export default (props) => {
                     onDropdownOpen={() => setSelectValues([])}
                     placeholder="Search for family" />
             </div>
-            <div className="w-full p-6 md:w-3/4 lg:w-1/2">
+            <div className="sm:h-3"></div>
+            <div className={"p-6" + classesBox + classesBoxBorder}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <div id="chart" className="py-2" />
                 <div className="py-3 text-center">
@@ -190,7 +194,7 @@ const drawExploreFamilyChart = (selector, data) => {
         .attr("transform", "rotate(-90)")
         .attr("y", -(margin.left - 15))
         .attr("x", - chartHeight / 2)
-        .attr("font-size", "15px")
+        .attr("font-size", "12px")
         .attr("fill", "currentColor")
         .style("text-anchor", "middle")
         .attr("opacity", 1)
