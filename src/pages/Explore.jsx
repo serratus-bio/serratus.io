@@ -58,25 +58,28 @@ export default (props) => {
     }
 
     return (
-        <div className="flex flex-col md:flex-row p-4">
+        <div className="flex flex-col md:flex-row p-4 justify-center">
             {headTags}
             <div className="w-full md:w-1/4">
+                <div className="py-2 m-auto text-center">
+                    Select a viral family to view the distribution of Serratus analysis results.
+                </div>
                 <Select options={selectOptions}
                     values={selectValues}
                     onChange={selectOnChange}
                     onDropdownOpen={() => setSelectValues([])}
-                    placeholder="Search viral family" />
+                    placeholder="Search for family" />
             </div>
             <div className="w-full p-6 md:w-3/4 lg:w-1/2">
                 <h1 className="text-center text-2xl">{family}</h1>
-                <div id="chart" />
-                <div className="py-2">
+                <div id="chart" className="py-2" />
+                <div className="py-3 text-center">
+                    Average alignment identity (%)
                     <div id="sliderX" style={sliderStyle}></div>
-                    <div id="sliderX-label" className="text-center"></div>
                 </div>
-                <div className="py-2">
+                <div className="py-3 text-center">
+                    Genome sequence coverage (score)
                     <div id="sliderZ" style={sliderStyle}></div>
-                    <div id="sliderZ-label" className="text-center"></div>
                 </div>
             </div>
         </div>
@@ -87,9 +90,9 @@ var updateYLims;
 
 const drawExploreFamilyChart = (selector, data) => {
 
-    var chartWidth = 200;
-    var chartHeight = 100;
-    var margin = { top: 10, right: 10, bottom: 20, left: 50 };
+    var chartWidth = 300;
+    var chartHeight = 150;
+    var margin = { top: 10, right: 10, bottom: 20, left: 60 };
 
     var zColorLims = ["#3d5088", "#fce540"];
     var xScale = d3.scaleLinear()
@@ -102,7 +105,6 @@ const drawExploreFamilyChart = (selector, data) => {
     var mainDiv = d3.select(selector);
 
     var sliderXDiv = d3.select("#sliderX");
-    var sliderXLabel = d3.select("#sliderX-label");
     var sliderZDiv = d3.select("#sliderZ");
     var sliderZLabel = d3.select("#sliderZ-label");
 
@@ -136,10 +138,20 @@ const drawExploreFamilyChart = (selector, data) => {
     sliderZDiv.select(".slider-container")
         .attr("style", zGradient)
     sliderZDiv.select(".slider")
-        .attr("style", "opacity: 0.5")
+        .attr("style", "background: rgba(0,0,0, 0.2)")
+
+    var sliderXLabelL = sliderXDiv.select(".WW").append("span")
+        .attr("style", "float: left; transform: translate(0px,20px)");
+    var sliderXLabelR = sliderXDiv.select(".EE").append("text")
+        .attr("style", "float: left; transform: translate(-5px,20px)");
+    var sliderZLabelL = sliderZDiv.select(".WW").append("span")
+        .attr("style", "float: left; transform: translate(0px,20px)");
+    var sliderZLabelR = sliderZDiv.select(".EE").append("text")
+        .attr("style", "float: left; transform: translate(-5px,20px)");
 
     function updateXLims(begin, end) {
-        sliderXLabel.text("% Identity: " + begin + " – " + end);
+        sliderXLabelL.text(begin);
+        sliderXLabelR.text(end);
         xLims = [begin, end];
         var rangeLen = end - begin;
         var nTicks = (rangeLen < 10) ? rangeLen : 10;
@@ -149,7 +161,8 @@ const drawExploreFamilyChart = (selector, data) => {
     }
 
     function updateZLims(begin, end) {
-        sliderZLabel.text("Score: " + begin + " – " + end);
+        sliderZLabelL.text(begin);
+        sliderZLabelR.text(end);
         zLims = [begin, end];
         updateChart();
     }
@@ -173,6 +186,15 @@ const drawExploreFamilyChart = (selector, data) => {
     colorScale.domain(zLims);
     xAxis.call(d3.axisBottom(xScale).ticks(10));
     yAxis.call(d3.axisLeft(yScale).ticks(5));
+    entryG.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -(margin.left - 15))
+        .attr("x", - chartHeight / 2)
+        .attr("font-size", "15px")
+        .attr("fill", "currentColor")
+        .style("text-anchor", "middle")
+        .attr("opacity", 1)
+        .text("Count");
 
     dataByZStackFiltered = getDataByZStack(data);
 
