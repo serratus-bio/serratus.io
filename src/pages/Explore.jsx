@@ -61,7 +61,7 @@ export default (props) => {
     var classesBoxBorder = " sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100 ";
 
     return (
-        <div className="p-4 sm:bg-gray-200">
+        <div className="p-4 h-screen sm:bg-gray-200">
             {headTags}
             <div className={"p-4" + classesBox + classesBoxBorder}>
                 <div className="pb-2 text-center">
