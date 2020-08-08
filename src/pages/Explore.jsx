@@ -82,7 +82,7 @@ export default (props) => {
                     <div id="sliderX" style={sliderStyle}></div>
                 </div>
                 <div className="py-3 text-center">
-                    Genome sequence coverage (score)
+                    Score (pangenome coverage)
                     <div id="sliderZ" style={sliderStyle}></div>
                 </div>
             </div>
