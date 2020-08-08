@@ -1,10 +1,11 @@
 import React from 'react'
+import { classesBoxBorder } from '../helpers/common';
 
-const TechnologyCard = (props) => {
+// assumes 3 instances
+
+export default (props) => {
     return (
-        <div className="rounded-lg bg-white max-w-xl mt-40 py-4
-            md:shadow-2xl md:m-10 sm:py-10
-            lg:max-w-sm">
+        <div className={`m-4 sm:py-10 lg:w-1/3 ${classesBoxBorder}`}>
             <img className="h-24 w-24 mt-4 m-auto" src={props.imgTop} alt={props.imgTopAlt} />
             <div className="m-6">
                 <div className="font-bold text-xl mb-2 text-center">{props.title}</div>
@@ -19,5 +20,3 @@ const TechnologyCard = (props) => {
         </div>
     )
 }
-
-export default TechnologyCard;

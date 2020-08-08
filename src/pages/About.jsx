@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import TechnologyCard from '../components/TechnologyCard';
+import AboutCard from '../components/AboutCard';
+import { classesBoxBorder } from '../helpers/common';
 
 export default () => {
   const headTags = (
@@ -9,38 +10,42 @@ export default () => {
     </Helmet>
   )
   return (
-    <div>
+    <div className="min-h-screen w-full sm:bg-gray-200 py-4">
       {headTags}
-      <div className="flex absolute w-full h-screen justify-center lg:items-center overflow-y-visible overflow-x-hidden">
-        <img src="/serratus.jpg" alt="serratus mountain" className="hidden sm:block opacity-75 sm:fixed" style={{ objectFit: 'cover', minWidth: '100vh', minHeight: '100vh' }} />
-        <div className="flex flex-col lg:flex-row absolute pb-12">
-          <TechnologyCard
-            title="NCBI SRA Database"
-            text="The NCBI SRA database contains over 1 million RNA-seq libraries amounting to a whopping 5.72 petabytes (yes, that prefix is right, peta-bytes) of data. It is our goal to reanalyze all of these sequences utilizing our ultra-high throughput analysis pipeline hosted on Amazon Web Service's (AWS) Cloud Computing."
-            imgTop="/db.png"
-            imgTopAlt="database"
-            imgBottom="/ncbi.png"
-            imgBottomAlt="NCBI logo"
-            imgBottomLink="https://www.ncbi.nlm.nih.gov/sra" />
-          <hr className="block md:hidden" />
-          <TechnologyCard
-            title="Cloud Architecture"
-            text="Since there is a lot of data, we need a lot of computers. AWS allows us to spin up hundreds of them at a single time to process data in parallel, utilizing the same bioinformatics pipeline on each of them. Serratus is currently operational, scaling up to 250 nodes with real time tracking and cluster performance analysis, but we are not stopping there..."
-            imgTop="/cloud.png"
-            imgTopAlt="cloud"
-            imgBottom="/aws-logo.png"
-            imgBottomAlt="AWS logo"
-            imgBottomLink="https://github.com/ababaian/serratus/wiki/Architecture-and-Pipeline" />
-          <hr className="block md:hidden" />
-          <TechnologyCard
-            title="CoV Sequence Database"
-            text="Once serratus is done, all resulting alignment files will be stored in a free, immediate access public database. It is our goal to provide accurate, honest data in order to continue the collaborative effort in fighting COVID-19."
-            imgTop="/dbcloud.png"
-            imgTopAlt="cloud db icon"
-            imgBottom="/gh.png"
-            imgBottomAlt="GitHub logo"
-            imgBottomLink="https://github.com/ababaian/serratus/wiki/Access-Data-Release" />
-        </div>
+      <div className={`py-4 px-6 lg:w-3/4 mx-auto ${classesBoxBorder}`}>
+        <h1 className="text-3xl font-bold text-center">Background</h1>
+        <p className="my-3">We are in the midst a devestating pandemic. To help the global research community develop a vaccine and therapies as efficiently as possible, we are uncovering as many coronaviruses as possible.</p>
+        <p className="my-3">It is critically important to catalogue all coronaviruses and their animal reservoirs, since coronaviruses can mix RNA (recombine) resulting in new viral strains, and potentially new outbreaks. Since SARS-CoV-2 is a novel virus, it is of paramount importance to identify related viruses as they are potential sources for recombination.</p>
+        <p className="text-blue-600"><a href="https://www.youtube.com/watch?v=MtZk7JEOzus" target="_blank" rel="noopener noreferrer">Learn more</a></p>
+      </div>
+      <div className="flex flex-col lg:flex-row absolute">
+        <AboutCard
+          title="Re-analyzing public data"
+          text="The NCBI SRA database contains DNA and RNA sequencing data from millions of biologically diverse samples, collected over a decade from research labs across the world. We have undertaken a comprehensive re-analysis of the 10s of million gigabytes of data to catalogue every vertebrate virus in this data, especially rare or undiscovered coronaviruses."
+          imgTop="/db.png"
+          imgTopAlt="database"
+          imgBottom="/ncbi.png"
+          imgBottomAlt="NCBI logo"
+          imgBottomLink="https://www.ncbi.nlm.nih.gov/sra" />
+        <hr className="block md:hidden" />
+        <AboutCard
+          title="Cloud computing architecture"
+          text="Big data requires big computing. We've built a cloud architecture that allows us to access upto 22,250 CPU with Amazon Web Services. Using this method allows us to perform hundreds of years of computing in only a few hours and discovery these coronaviruses now."
+          imgTop="/cloud.png"
+          imgTopAlt="cloud"
+          imgBottom="/aws-logo.png"
+          imgBottomAlt="AWS logo"
+          imgBottomLink="https://github.com/ababaian/serratus/wiki/Architecture-and-Pipeline" />
+        <hr className="block md:hidden" />
+        <AboutCard
+          title="Viral Sequence Database"
+          text="Our primary goal is to generate the coronavirus data to accelerate the global research efforts in fighting SARS-CoV-2. This means sharing all data and tools immediately.
+          We adhere to the Bermuda Principles set out originally by the Human Genome Project, all data is freely and publicly available within 24 hours of generation. If there is a way CoV sequence data can assist your research, please reach out and we can work towards advancing COVID-19 related applications."
+          imgTop="/dbcloud.png"
+          imgTopAlt="cloud db icon"
+          imgBottom="/gh.png"
+          imgBottomAlt="GitHub logo"
+          imgBottomLink="https://github.com/ababaian/serratus/wiki/Access-Data-Release" />
       </div>
     </div>
   )
