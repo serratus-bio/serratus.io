@@ -95,7 +95,7 @@ const Query = (props) => {
         </Helmet>
     )
 
-    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100";
+    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
     var switchSize = "lg";
 
     return (
