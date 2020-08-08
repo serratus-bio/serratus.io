@@ -8,7 +8,6 @@
 @tailwind utilities;
 
 body {
-    overflow: hidden;
     font-family: 'Lato', Helvetica, sans-serif;
 }
 
