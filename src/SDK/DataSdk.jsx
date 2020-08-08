@@ -6,7 +6,7 @@ export default class DataSdk {
     ncbiUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=';
 
     async fetchSraRun(sraAccession) {
-        const response = await axios.get(`${this.baseUrl}/api/runs/get-runs/${sraAccession}`);
+        const response = await axios.get(`${this.baseUrl}/api/run/get-run/${sraAccession}`);
         return response.data
     }
 
