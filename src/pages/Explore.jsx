@@ -81,6 +81,9 @@ export default () => {
                                 <div className="pt-6 text-center">Score (pangenome coverage)</div>
                                 <div id="sliderZ" className="relative" style={{height: 30}}></div>
                             </div>
+                            <div className="h-10" />
+                            <button onClick={() => console.log(family, xLims, zLims)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
+                            (not implemented)
                         </div> : null }
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
