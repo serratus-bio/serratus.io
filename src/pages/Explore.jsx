@@ -99,7 +99,7 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var chartWidth = 300;
     var chartHeight = 150;
-    var margin = { top: 10, right: 10, bottom: 30, left: 60 };
+    var margin = { top: 10, right: 10, bottom: 33, left: 60 };
 
     var zColorLims = ["#3d5088", "#fce540"];
     var xScale = d3.scaleLinear()
@@ -202,13 +202,13 @@ const drawExploreFamilyChart = (selector, data) => {
         .attr("opacity", 1)
         .text("Count");
     entryG.append("text")
-        .attr("y", margin.bottom + chartHeight)
+        .attr("y", chartHeight + margin.bottom - 3)
         .attr("x", chartWidth / 2)
         .attr("font-size", "12px")
         .attr("fill", "currentColor")
         .style("text-anchor", "middle")
         .attr("opacity", 1)
-        .text("Score");
+        .text("% Identity");
 
     dataByZStackFiltered = getDataByZStack(data);
 
