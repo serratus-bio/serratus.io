@@ -4,10 +4,10 @@ import { Route, useLocation, Switch } from "react-router-dom";
 import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
-import Mission from './pages/Mission';
-import Technology from './pages/Technology';
 import Explore from './pages/Explore';
 import Query from './pages/Query';
+import About from './pages/About';
+import Team from './pages/Team';
 import Access from './pages/Access';
 
 const App = () => {
@@ -23,10 +23,10 @@ const App = () => {
       <Navbar></Navbar>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/mission" component={Mission} />
-        <Route exact path="/technology" component={Technology} />
         <Route exact path="/explore" component={Explore} />
         <Route exact path="/query" component={Query} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/team" component={Team} />
         <Route exact path="/access" component={Access} />
       </Switch>
     </div>

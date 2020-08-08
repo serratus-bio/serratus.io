@@ -1,0 +1,74 @@
+{
+  "teams": [
+    {
+      "name": "Serratus Alignment Team",
+      "members": [
+        {
+          "name": "Artem Babaian",
+          "affiliation": "University of British Columbia",
+          "email": "ababaian AT bccrc DOT com",
+          "github": "ababaian"
+        },
+        {
+          "name": "Robert C. Edgar",
+          "github": "rcedgar"
+        },
+        {
+          "name": "Jeff Taylor",
+          "github": "jefftaylor42"
+        }
+      ]
+    },
+    {
+      "name": "Serratus Assembly + Annotation Team",
+      "members": [
+        {
+          "name": "Tomer Altman",
+          "affiliation": "Altman Analytics LLC and University of British Columbia (BCB2)",
+          "email": "covid19 AT altmananalytics DOT com",
+          "github": "taltman"
+        },
+        {
+          "name": "Rayan Chikhi",
+          "affiliation": "Institut Pasteur & CNRS",
+          "email": "rayan.chikhi AT pasteur DOT fr"
+        },
+        {
+          "name": "Anton Korobeynikov",
+          "affiliation": "Center for Algorithmic Biotechnologies, Saint Petersburg State University",
+          "email": "a.korobeynikov AT spbu DOT ru"
+        },
+        {
+          "name": "Dmitry Meleshko",
+          "affiliation": "Center for Algorithmic Biotechnologies, Saint Petersburg State University",
+          "email": "d.meleshko AT spbu DOT ru"
+        },
+        {
+          "name": "Pierre Barbera",
+          "affiliation": "Computational Molecular Evolution Group, Heidelberg Institute for Theoretical Studies, Heidelberg, Germany"
+        }
+      ]
+    },
+    {
+      "name": "Serratus Web/Wiki Team",
+      "members": [
+        {
+          "name": "Victor Lin",
+          "email": "victor AT victorl DOT in",
+          "github": "victorlin"
+        },
+        {
+          "name": "Dan Lohr",
+          "email": "danlohra AT gmail DOT com",
+          "github": "lohrd"
+        },
+        {
+          "name": "",
+          "affiliation": "",
+          "email": "",
+          "github": ""
+        }
+      ]
+    }
+  ]
+}

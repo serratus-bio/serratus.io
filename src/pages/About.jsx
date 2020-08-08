@@ -2,10 +2,10 @@ import React from 'react'
 import { Helmet } from 'react-helmet';
 import TechnologyCard from '../components/TechnologyCard';
 
-const Technology = () => {
+export default () => {
   const headTags = (
     <Helmet>
-      <title>Serratus | Technology</title>
+      <title>Serratus | About</title>
     </Helmet>
   )
   return (
@@ -45,5 +45,3 @@ const Technology = () => {
     </div>
   )
 }
-
-export default Technology;
