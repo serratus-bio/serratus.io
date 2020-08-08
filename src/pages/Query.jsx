@@ -95,13 +95,13 @@ const Query = (props) => {
         </Helmet>
     )
 
-    var classesBox = " w-full m-auto md:w-3/4 lg:w-1/2 ";
-    var classesBoxBorder = " sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100 ";
+    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100";
+    var switchSize = "lg";
 
     return (
-        <div className="p-4 min-h-screen sm:bg-gray-200">
+        <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
-            <div className={"p-4" + classesBox + classesBoxBorder}>
+            <div className={`p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <div className="flex flex-col items-center z-10 mt-2">
                     <div className="items-center z-10">
                         <div>
@@ -109,27 +109,27 @@ const Query = (props) => {
                             <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
                             <InputOption className="inline mx-2" value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
                         </div>
-                        <input className="rounded border-2 border-gray-300 px-2 m-1 sm:w-64 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
+                        <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
                         <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                     </div>
                 </div>
-                <div className="w-full text-center">
-                    {queryValueStatic ?
-                        <div>
-                            <div className="text-xl font-bold">{queryValueStatic}</div>
-                            {pageTitle ?
-                                <div className="text-lg italic">{pageTitle}</div> : null}
-                        </div> : null
-                    }
-                </div>
-                {queryValueStatic ?
-                    <div className="flex justify-center items-center my-2">
-                        {getPageLinks(queryTypeStatic, queryValueCorrected)}
-                    </div> : null
-                }
             </div>
-            <div className="sm:h-3"></div>
-            <div className={"p-4" + classesBox + classesBoxBorder}>
+            <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
+            <hr className="sm:hidden" />
+            <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
+                {queryValueStatic ?
+                    <div>
+                        <div className="w-full text-center">
+                            <div>
+                                <div className="text-xl font-bold">{queryValueStatic}</div>
+                                {pageTitle ?
+                                    <div className="text-lg italic">{pageTitle}</div> : null}
+                            </div>
+                        </div>
+                        <div className="flex justify-center items-center my-2">
+                            {getPageLinks(queryTypeStatic, queryValueCorrected)}
+                        </div>
+                    </div> : null}
                 <div className="w-full flex flex-col p-6">
                     {queryValueStatic ?
                         <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> :
