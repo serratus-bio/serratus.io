@@ -110,7 +110,6 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var sliderXDiv = d3.select("#sliderX");
     var sliderZDiv = d3.select("#sliderZ");
-    var sliderZLabel = d3.select("#sliderZ-label");
 
     var svgWidth = chartWidth + margin.left + margin.right;
     var svgHeight = chartHeight + margin.top + margin.bottom;
