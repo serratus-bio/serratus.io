@@ -17,7 +17,7 @@ export default () => {
             <h1 className="text-2xl text-center">Serratus Contributors</h1>
             <div className="text-left md:text-center">
                 <div>Serratus is an Open-Science project. Our aim is to create a 100% reproducible study with 100% transparent and freely available data.</div>
-                <a href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600">We welcome all scientists and developers to contribute.</a>
+                <a href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600" target="_blank" rel="noopener noreferrer">We welcome all scientists and developers to contribute.</a>
             </div>
             {teamData.teams.map((team) => {
                 return (
@@ -33,7 +33,7 @@ export default () => {
                                         {member.email ?
                                             <div className="text-sm">{member.email}</div> : null}
                                         {member.github ?
-                                            <a href={`https://github.com/${member.github}`} className="text-sm text-blue-600">@{member.github}</a> : null}
+                                            <a href={`https://github.com/${member.github}`} className="text-sm text-blue-600" target="_blank" rel="noopener noreferrer">@{member.github}</a> : null}
                                     </div>
                                 )
                             })}
