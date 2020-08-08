@@ -284,7 +284,7 @@ export function drawQueryResults(d3, selector, results, columns) {
             .style("fill", "#000");
     }
 
-    var sectionMargin = {top: 2, right: 300, bottom: 2, left: 200};
+    var sectionMargin = {top: 2, right: 230, bottom: 2, left: 200};
     var sectionWidth = 750;
     var sectionHeight = 20;
     var tableShiftY = 40;
