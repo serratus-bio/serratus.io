@@ -1,5 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
+import { classesBoxBorder } from '../helpers/common';
 
 import teamData from '../data/teamData.json';
 
@@ -10,8 +11,6 @@ export default () => {
             <title>Serratus | Team</title>
         </Helmet>
     )
-
-    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
 
     return (
         <div className="p-4 lg:px-24 min-h-screen sm:bg-gray-200">

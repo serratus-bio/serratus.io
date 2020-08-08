@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
 import * as d3 from 'd3';
+import { switchSize, classesBoxBorder } from '../helpers/common';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
@@ -57,9 +58,6 @@ export default () => {
             setFamily(values[0].value);
         }
     }
-
-    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
-    var switchSize = "lg";
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>

@@ -10,6 +10,7 @@ import {
     getDataPromise,
     InputOption
 } from "../helpers/QueryPageHelpers";
+import { switchSize, classesBoxBorder } from '../helpers/common';
 
 const queryTypes = ["family", "genbank", "run"];
 
@@ -94,9 +95,6 @@ const Query = (props) => {
             </title>
         </Helmet>
     )
-
-    var classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
-    var switchSize = "lg";
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
