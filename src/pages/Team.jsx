@@ -30,10 +30,10 @@ export default () => {
                             <div className="flex flex-col md:flex-row md:flex-wrap mx-2 md:ml-6">
                                 {team.members.map((member) => {
                                     return (
-                                        <div key={member.name} className="w-full md:w-1/2 lg:w-1/4 md:px-2 my-1">
+                                        <div key={member.name} className="w-full md:w-1/2 lg:w-1/5 md:px-2 my-3">
                                             <h3 className="font-bold">{member.name}</h3>
                                             {member.affiliation ?
-                                                <div className="text-sm inverse-indent">{member.affiliation}</div> : null}
+                                                <div className="text-sm whitespace-pre-line">{member.affiliation}</div> : null}
                                             {member.email ?
                                                 <div className="text-sm">{member.email}</div> : null}
                                             {member.github ?

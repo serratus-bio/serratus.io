@@ -14,8 +14,3 @@ body {
 .font-montserrat {
     font-family: 'Montserrat', Helvetica, sans-serif;
 }
-
-.inverse-indent {
-    text-indent: -10px;
-    margin-left: 10px;
-}

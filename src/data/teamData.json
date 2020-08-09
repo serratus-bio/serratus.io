@@ -24,7 +24,7 @@
       "members": [
         {
           "name": "Tomer Altman",
-          "affiliation": "Altman Analytics LLC and University of British Columbia (BCB2)",
+          "affiliation": "Altman Analytics LLC and\nUniversity of British Columbia (BCB2)",
           "email": "covid19 AT altmananalytics DOT com",
           "github": "taltman"
         },
@@ -35,17 +35,17 @@
         },
         {
           "name": "Anton Korobeynikov",
-          "affiliation": "Center for Algorithmic Biotechnologies, Saint Petersburg State University",
+          "affiliation": "Center for Algorithmic Biotechnologies\nSaint Petersburg State University",
           "email": "a.korobeynikov AT spbu DOT ru"
         },
         {
           "name": "Dmitry Meleshko",
-          "affiliation": "Center for Algorithmic Biotechnologies, Saint Petersburg State University",
+          "affiliation": "Center for Algorithmic Biotechnologies\nSaint Petersburg State University",
           "email": "d.meleshko AT spbu DOT ru"
         },
         {
           "name": "Pierre Barbera",
-          "affiliation": "Computational Molecular Evolution Group, Heidelberg Institute for Theoretical Studies, Heidelberg, Germany"
+          "affiliation": "Computational Molecular Evolution Group\nHeidelberg Institute for Theoretical Studies\nHeidelberg, Germany"
         }
       ]
     },
