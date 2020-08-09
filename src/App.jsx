@@ -9,6 +9,7 @@ import Technology from './pages/Technology';
 import Explore from './pages/Explore';
 import Query from './pages/Query';
 import Access from './pages/Access';
+import Family from './pages/Family';
 
 const App = () => {
   const location = useLocation()
@@ -28,6 +29,7 @@ const App = () => {
         <Route exact path="/explore" component={Explore} />
         <Route exact path="/query" component={Query} />
         <Route exact path="/access" component={Access} />
+        <Route exact path="/family" component={Family} />
       </Switch>
     </div>
   );
