@@ -42,3 +42,7 @@ npm run start
 
 - Push your changes to a topic branch in your fork of the repository.
 - Submit a pull request to the repository in the `serratus-bio` organization.
+
+## Other Resources
+
+- [Wiki Reference](https://github.com/serratus-bio/serratus.io/wiki) : some further documentation that isn't necessary for contributing, but good to know.
