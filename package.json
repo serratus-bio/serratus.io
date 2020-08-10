@@ -12,6 +12,7 @@
     "react-dom": "^16.13.1",
     "react-dropdown-select": "4.4.2",
     "react-faux-dom": "^4.5.0",
+    "react-ga": "^3.1.2",
     "react-helmet": "6.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
