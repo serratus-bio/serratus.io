@@ -158,7 +158,7 @@ const Query = (props) => {
                 <div className="w-full flex flex-col p-6">
                     {queryValueStatic ?
                         <div>
-                        <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber}></Paginator>
+                        <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} />
                         <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> 
                         </div>
                         :
