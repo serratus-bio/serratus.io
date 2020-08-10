@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import { classesBoxBorder, ExternalLink } from '../helpers/common';
+import { classesBoxBorder, ExternalLink, githubIcon } from '../helpers/common';
 
 import teamData from '../data/teamData.json';
 
@@ -37,7 +37,10 @@ export default () => {
                                             {member.email ?
                                                 <div className="text-sm">{member.email}</div> : null}
                                             {member.github ?
-                                                <div><a href={`https://github.com/${member.github}`} className="text-sm text-blue-600" target="_blank" rel="noopener noreferrer">@{member.github}</a></div> : null}
+                                                <div>
+                                                    <span className="mr-1">{githubIcon}</span>
+                                                    <a href={`https://github.com/${member.github}`} className="text-sm text-blue-600" target="_blank" rel="noopener noreferrer">{member.github}</a>
+                                                </div> : null}
                                         </div>
                                     )
                                 })}
