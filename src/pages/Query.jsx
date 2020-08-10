@@ -1,5 +1,6 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
+import { Select } from "react-dropdown-select";
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import { useLocation } from 'react-router-dom';
@@ -11,6 +12,9 @@ import {
     InputOption
 } from "../helpers/QueryPageHelpers";
 import { switchSize, classesBoxBorder } from '../helpers/common';
+
+import allFamilyData from '../data/SerratusIO_scoreID.json';
+const familyDomain = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
 const queryTypes = ["family", "genbank", "run"];
 
@@ -33,6 +37,7 @@ const Query = (props) => {
     const pathNameStatic = useLocation().pathname;
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
+    const [selectValues, setSelectValues] = React.useState([]);
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
     const [searchValue, setSearchValue] = React.useState("");
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
@@ -51,6 +56,13 @@ const Query = (props) => {
         }
         else {
             setSearchValue(e.target.value);
+        }
+    }
+
+    function dropdownOnChange(values) {
+        setSelectValues(values);
+        if (values.length !== 0) {
+            loadQueryPage(values[0].value);
         }
     }
 
@@ -107,8 +119,17 @@ const Query = (props) => {
                             <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
                             <InputOption className="inline mx-2" value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
                         </div>
-                        <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                        <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                        {searchType === "family" ?
+                            <Select options={familyDomain}
+                                values={selectValues}
+                                onChange={dropdownOnChange}
+                                onDropdownOpen={() => setSelectValues([])}
+                                placeholder={placeholderText} /> :
+                            <div>
+                                <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
+                                <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
