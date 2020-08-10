@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
+import { ExternalLink } from "../helpers/common";
 
 
 const Navbar = () => {
@@ -15,7 +16,7 @@ const Navbar = () => {
           <NavLink exact to="/query" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Query</NavLink>
           <NavLink exact to="/about" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">About</NavLink>
           <NavLink exact to="/team" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Team</NavLink>
-          <a href="https://github.com/ababaian/serratus" className="ml-8 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <ExternalLink href="https://github.com/ababaian/serratus" className="ml-8 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600">GitHub</ExternalLink>
         </div>
       </div>
     </div>

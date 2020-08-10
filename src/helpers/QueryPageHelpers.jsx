@@ -1,7 +1,12 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import LinkButton from "../components/LinkButton";
-import { downloadIcon, externalLinkIcon, helpIcon } from '../helpers/common';
+import {
+    downloadIcon,
+    externalLinkIcon,
+    helpIcon,
+    ExternalLink
+} from '../helpers/common';
 
 const dataSdk = new DataSdk();
 
@@ -67,7 +72,7 @@ const getPageLinks = (type, value) => {
                     icon={downloadIcon}
                     download={true} />
                 <div className="inline-flex -ml-1">
-                    <a href="https://github.com/ababaian/serratus/wiki/.summary-Reports" target="_blank" rel="noopener noreferrer">{helpIcon}</a>
+                    <ExternalLink href="https://github.com/ababaian/serratus/wiki/.summary-Reports">{helpIcon}</ExternalLink>
                 </div>
             </div>
         )

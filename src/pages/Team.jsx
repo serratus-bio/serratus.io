@@ -1,6 +1,10 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import { classesBoxBorder, ExternalLink } from '../helpers/common';
+import {
+    classesBoxBorder,
+    ExternalLink,
+    githubIcon
+} from '../helpers/common';
 
 import teamData from '../data/teamData.json';
 
@@ -18,7 +22,7 @@ export default () => {
             <div className={`p-2 ${classesBoxBorder}`}>
                 <div className="text-left md:text-center">
                     <div>Serratus is an Open-Science project. Our aim is to create a 100% reproducible study with 100% transparent and freely available data.</div>
-                    <a href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600" target="_blank" rel="noopener noreferrer">We welcome all scientists and developers to contribute.</a>
+                    <ExternalLink href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600">We welcome all scientists and developers to contribute.</ExternalLink>
                 </div>
             </div>
             <div className="sm:h-3"></div>
@@ -37,7 +41,10 @@ export default () => {
                                             {member.email ?
                                                 <div className="text-sm">{member.email}</div> : null}
                                             {member.github ?
-                                                <div><a href={`https://github.com/${member.github}`} className="text-sm text-blue-600" target="_blank" rel="noopener noreferrer">@{member.github}</a></div> : null}
+                                                <div>
+                                                    <span className="mr-1">{githubIcon}</span>
+                                                    <ExternalLink href={`https://github.com/${member.github}`} className="text-sm text-blue-600">{member.github}</ExternalLink>
+                                                </div> : null}
                                         </div>
                                     )
                                 })}

@@ -11,7 +11,10 @@ import {
     getDataPromise,
     InputOption
 } from "../helpers/QueryPageHelpers";
-import { switchSize, classesBoxBorder } from '../helpers/common';
+import {
+    switchSize,
+    classesBoxBorder
+} from '../helpers/common';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 const familyDomain = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });

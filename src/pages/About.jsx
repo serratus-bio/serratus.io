@@ -1,7 +1,10 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
 import AboutCard from '../components/AboutCard';
-import { classesBoxBorder } from '../helpers/common';
+import {
+  classesBoxBorder,
+  ExternalLink
+} from '../helpers/common';
 
 export default () => {
   const headTags = (
@@ -16,7 +19,7 @@ export default () => {
         <h1 className="text-3xl font-bold text-center">Background</h1>
         <p className="my-3">We are in the midst a devestating pandemic. To help the global research community develop a vaccine and therapies as efficiently as possible, we are uncovering as many coronaviruses as possible.</p>
         <p className="my-3">It is critically important to catalogue all coronaviruses and their animal reservoirs, since coronaviruses can mix RNA (recombine) resulting in new viral strains, and potentially new outbreaks. Since SARS-CoV-2 is a novel virus, it is of paramount importance to identify related viruses as they are potential sources for recombination.</p>
-        <p className="text-blue-600"><a href="https://www.youtube.com/watch?v=MtZk7JEOzus" target="_blank" rel="noopener noreferrer">Learn more</a></p>
+        <p className="text-blue-600"><ExternalLink href="https://www.youtube.com/watch?v=MtZk7JEOzus">Learn more</ExternalLink></p>
       </div>
       <hr className="block sm:hidden" />
       <div className="flex flex-col lg:flex-row">
