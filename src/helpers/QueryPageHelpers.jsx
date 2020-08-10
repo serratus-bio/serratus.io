@@ -1,12 +1,14 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import LinkButton from "../components/LinkButton";
+import {
+    downloadIcon,
+    externalLinkIcon,
+    helpIcon,
+    ExternalLink
+} from '../helpers/common';
 
 const dataSdk = new DataSdk();
-
-const downloadIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>);
-
-const externalLinkIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,21H5c-1.1,0-2-0.9-2-2V5c0-1.1,0.9-2,2-2h7v2H5v14h14v-7h2v7C21,20.1,20.1,21,19,21z" /><path d="M21 10L19 10 19 5 14 5 14 3 21 3z" /><path d="M6.7 8.5H22.3V10.5H6.7z" transform="rotate(-45.001 14.5 9.5)" /></svg>);
 
 const getPlaceholder = (type) => {
     let typePlaceholderMap = {
@@ -64,6 +66,14 @@ const getPageLinks = (type, value) => {
                     text="BAM"
                     icon={downloadIcon}
                     download={true} />
+                <LinkButton
+                    link={`https://s3.amazonaws.com/lovelywater/summary/${value}.summary`}
+                    text=".summary"
+                    icon={downloadIcon}
+                    download={true} />
+                <div className="inline-flex -ml-1">
+                    <ExternalLink href="https://github.com/ababaian/serratus/wiki/.summary-Reports">{helpIcon}</ExternalLink>
+                </div>
             </div>
         )
     }
@@ -113,7 +123,7 @@ const InputOption = (props) => {
         <div className={props.className}>
             <input type="radio" name="querytype" value={props.value} checked={props.checked}
                 onChange={props.onChange} />
-            <span>{props.displayText}</span>
+            <span className="ml-1">{props.displayText}</span>
         </div>
     )
 }

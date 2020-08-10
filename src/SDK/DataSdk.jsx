@@ -1,28 +1,32 @@
 import axios from 'axios'
 
 export default class DataSdk {
+
+    baseUrl = process.env.REACT_APP_API_URL;
+    ncbiUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=';
+
     async fetchSraRun(sraAccession) {
-        const response = await axios.get(`https://db.serratus.io/api/runs/get-run/${sraAccession}`);
+        const response = await axios.get(`${this.baseUrl}/api/run/get-run/${sraAccession}`);
         return response.data
     }
 
-    async fetchSraHitsByAccession(genbankAccession, page) {
-        const response = await axios.get(`https://db.serratus.io/api/runs/get-runs/${genbankAccession}?page=${page}`);
+    async fetchSraHitsByAccession(genbankAccession) {
+        const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}`);
         return response.data;
     }
 
     async fetchSraHitsByFamily(familyName) {
-        const response = await axios.get(`https://db.serratus.io/api/runs/get-runs-by-family/${familyName}`);
+        const response = await axios.get(`${this.baseUrl}/api/family/get-runs/${familyName}`);
         return response.data;
     }
 
     async getEsearch(db, term) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
+        const response = await axios.get(`${this.ncbiUrl}${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
         return response.data;
     }
 
     async getEsummary(db, entrezId) {
-        const response = await axios.get(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=${db}&id=${entrezId}`, { responseType: 'text' });
+        const response = await axios.get(`${this.ncbiUrl}${db}&id=${entrezId}`, { responseType: 'text' });
         return response.data;
     }
 
