@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import { classesBoxBorder } from '../helpers/common';
+import { classesBoxBorder, ExternalLink } from '../helpers/common';
 
 import teamData from '../data/teamData.json';
 
@@ -48,8 +48,13 @@ export default () => {
                 <div className="my-3">
                     <h2 className="text-xl mb-1 text-center md:text-left">Special Thanks to:</h2>
                     <div className="mx-2 md:ml-6">
-                        <div>Nicole Pereyaslavsky. University of British Columbia.</div>
-                        <div>The many contributors along the way who helped get this project going.</div>
+                        <div>Nicole Pereyaslavsky, University of British Columbia.</div>
+                        <div>Bioinformatics contributors: E. Erhan, J. Chu, I. Birol, K. Wellman, C. Xu, M. Huss, K. Ha, E. Nawrocki, R. McLaughlin, C. Morgan-Lang, C. Blumberg, and the J. Brister lab.</div>
+                        <div>CIC Project Team: A. Rodrigues, S. McMillan, V. Wu, K. Chao, and. C. Kennett.</div>
+                        <div>Virological discussion: J. Joy lab, G. Mordecai, J. Taylor, S. Roux, L. Bergner, R. Orton, and D. Streicker.</div>
+                    </div>
+                    <div className="my-3">
+                        <div>Serratus is a <ExternalLink href="https://www.hackseq.com/" className="text-blue-600">hackseqRNA</ExternalLink> initiative. Project support provided kindly by the <ExternalLink href="https://cic.ubc.ca/projects/university-of-british-columbia-discovering-new-coronavirus-species-by-re-analyzing-all-public-rna-sequencing-data/" className="text-blue-600">UBC/AWS Cloud Innovation Center</ExternalLink>.</div>
                     </div>
                 </div>
             </div>
