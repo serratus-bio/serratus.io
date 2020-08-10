@@ -3,6 +3,7 @@ import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
 import { drawQueryResults } from '../SDK/drawQueryResults.js';
 import { drawRunResults } from '../SDK/drawRunResults.js';
+import { ExternalLink } from "../helpers/common";
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
@@ -78,9 +79,9 @@ const QueryResult = (props) => {
         <div className="text-center">
             <span>Could not retrieve results for this query.</span><br />
             <span>If this is unexpected, please </span>
-            <a href="https://github.com/serratus-bio/serratus.io/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+            <ExternalLink href="https://github.com/serratus-bio/serratus.io/issues/new" className="text-blue-600">
                 submit an issue
-            </a>
+            </ExternalLink>
             <span> on the the serratus.io GitHub.</span>
         </div>
     )
@@ -89,9 +90,9 @@ const QueryResult = (props) => {
         <div className="text-center">
             <span>This accession has not been processed... yet.</span><br />
             <span>To request this sample be processed, please </span>
-            <a href="https://github.com/ababaian/serratus/issues/new" target="_blank" rel="noopener noreferrer" className="text-blue-600">
+            <ExternalLink href="https://github.com/ababaian/serratus/issues/new" className="text-blue-600">
                 submit an issue
-            </a>
+            </ExternalLink>
             <span> on the Serratus project GitHub.</span>
         </div>
     )

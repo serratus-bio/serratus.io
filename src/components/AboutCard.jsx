@@ -1,5 +1,5 @@
 import React from 'react'
-import { classesBoxBorder } from '../helpers/common';
+import { classesBoxBorder, ExternalLink } from '../helpers/common';
 
 // assumes 3 instances
 
@@ -12,10 +12,10 @@ export default (props) => {
                 <p className="text-gray-700 text-base">{props.text}</p>
             </div>
             <div>
-                <a target="_blank" rel="noopener noreferrer" href={props.imgBottomLink} >
+                <ExternalLink href={props.imgBottomLink} >
                     <span className="inline-block align-middle h-full"></span>
                     <img className="align-middle m-auto h-20" src={props.imgBottom} alt={props.imgBottomAlt} />
-                </a>
+                </ExternalLink>
             </div>
         </div>
     )
