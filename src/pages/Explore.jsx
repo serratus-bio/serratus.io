@@ -2,13 +2,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
 import * as d3 from 'd3';
+import { switchSize, classesBoxBorder } from '../helpers/common';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 
 var chart;
 var xLims = [75, 100];
-var yLims = [0, 6000];
+var yLims = [0, 0]; // computed after family data loaded
 var zLims = [25, 100];
 var zDomain;
 var xColumn = "pctid";
@@ -21,26 +22,27 @@ var areaGen;
 var sliderX;
 var sliderZ;
 
-const sliderStyle = { height: 30, position: "relative", backgroundColor: "#eeeef5" };
-
 const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
-export default (props) => {
-    const [isLoaded, setIsLoaded] = React.useState(false);
+export default () => {
+    const [chartLoaded, setChartLoaded] = React.useState(false);
     const [family, setFamily] = React.useState("Coronaviridae");
     const [selectValues, setSelectValues] = React.useState([]);
 
     React.useEffect(() => {
+        if (family === "") {
+            return;
+        }
         data = allFamilyData[family];
-        if (!isLoaded) {
+        if (!chartLoaded) {
             drawExploreFamilyChart("#chart", data);
-            setIsLoaded(true);
+            setChartLoaded(true);
         }
         updateChart();
         sliderX.range(75, 100);
         sliderZ.range(25, 100);
         updateYLims();
-    }, [family, isLoaded]);
+    }, [family, chartLoaded]);
 
     const headTags = (
         <Helmet>
@@ -57,13 +59,10 @@ export default (props) => {
         }
     }
 
-    var classesBox = " w-full m-auto md:w-3/4 lg:w-1/2 ";
-    var classesBoxBorder = " sm:border sm:rounded sm:border-gray-400 sm:bg-gray-100 ";
-
     return (
-        <div className="p-4 sm:bg-gray-200">
+        <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
-            <div className={"p-4" + classesBox + classesBoxBorder}>
+            <div className={`p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <div className="pb-2 text-center">
                     Select a viral family to view the distribution of Serratus analysis results.
                 </div>
@@ -72,19 +71,26 @@ export default (props) => {
                     onChange={selectOnChange}
                     onDropdownOpen={() => setSelectValues([])}
                     placeholder="Search for family" />
+                    {family ?
+                        <div>
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">Average alignment identity (%)</div>
+                                <div id="sliderX" className="relative" style={{height: 30}}></div>
+                            </div>
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">Score (pangenome coverage)</div>
+                                <div id="sliderZ" className="relative" style={{height: 30}}></div>
+                            </div>
+                            <div className="h-10" />
+                            <button onClick={() => console.log(family, xLims, zLims)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
+                            (not implemented)
+                        </div> : null }
             </div>
-            <div className="sm:h-3"></div>
-            <div className={"p-6" + classesBox + classesBoxBorder}>
+            <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
+            <hr className="sm:hidden" />
+            <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <div id="chart" className="py-2" />
-                <div className="py-3 text-center">
-                    Average alignment identity (%)
-                    <div id="sliderX" style={sliderStyle}></div>
-                </div>
-                <div className="py-3 text-center">
-                    Genome sequence coverage (score)
-                    <div id="sliderZ" style={sliderStyle}></div>
-                </div>
             </div>
         </div>
     )
@@ -96,7 +102,7 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var chartWidth = 300;
     var chartHeight = 150;
-    var margin = { top: 10, right: 10, bottom: 20, left: 60 };
+    var margin = { top: 10, right: 10, bottom: 33, left: 60 };
 
     var zColorLims = ["#3d5088", "#fce540"];
     var xScale = d3.scaleLinear()
@@ -110,7 +116,6 @@ const drawExploreFamilyChart = (selector, data) => {
 
     var sliderXDiv = d3.select("#sliderX");
     var sliderZDiv = d3.select("#sliderZ");
-    var sliderZLabel = d3.select("#sliderZ-label");
 
     var svgWidth = chartWidth + margin.left + margin.right;
     var svgHeight = chartHeight + margin.top + margin.bottom;
@@ -199,6 +204,14 @@ const drawExploreFamilyChart = (selector, data) => {
         .style("text-anchor", "middle")
         .attr("opacity", 1)
         .text("Count");
+    entryG.append("text")
+        .attr("y", chartHeight + margin.bottom - 3)
+        .attr("x", chartWidth / 2)
+        .attr("font-size", "12px")
+        .attr("fill", "currentColor")
+        .style("text-anchor", "middle")
+        .attr("opacity", 1)
+        .text("% Identity");
 
     dataByZStackFiltered = getDataByZStack(data);
 

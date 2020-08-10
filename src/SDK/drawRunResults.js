@@ -450,7 +450,7 @@ export function drawRunResults(d3, selector, summary, columns) {
         return subsection
     }
 
-    var sectionMargin = {top: 2, right: 300, bottom: 2, left: 200};
+    var sectionMargin = {top: 2, right: 230, bottom: 2, left: 200};
     var sectionWidth = 750;
     var sectionHeight = 20;
     var tableShiftY = 40;
