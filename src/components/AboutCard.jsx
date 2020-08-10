@@ -1,5 +1,8 @@
 import React from 'react'
-import { classesBoxBorder, ExternalLink } from '../helpers/common';
+import {
+    classesBoxBorder,
+    ExternalLink
+} from '../helpers/common';
 
 // assumes 3 instances
 

@@ -1,6 +1,10 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import { classesBoxBorder, ExternalLink, githubIcon } from '../helpers/common';
+import {
+    classesBoxBorder,
+    ExternalLink,
+    githubIcon
+} from '../helpers/common';
 
 import teamData from '../data/teamData.json';
 

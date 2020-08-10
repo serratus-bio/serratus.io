@@ -1,7 +1,10 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
 import AboutCard from '../components/AboutCard';
-import { classesBoxBorder, ExternalLink } from '../helpers/common';
+import {
+  classesBoxBorder,
+  ExternalLink
+} from '../helpers/common';
 
 export default () => {
   const headTags = (

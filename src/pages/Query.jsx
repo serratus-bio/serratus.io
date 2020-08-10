@@ -10,7 +10,10 @@ import {
     getDataPromise,
     InputOption
 } from "../helpers/QueryPageHelpers";
-import { switchSize, classesBoxBorder } from '../helpers/common';
+import {
+    switchSize,
+    classesBoxBorder
+} from '../helpers/common';
 
 const queryTypes = ["family", "genbank", "run"];
 

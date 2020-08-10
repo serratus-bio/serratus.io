@@ -2,7 +2,10 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
 import * as d3 from 'd3';
-import { switchSize, classesBoxBorder } from '../helpers/common';
+import {
+    switchSize,
+    classesBoxBorder
+} from '../helpers/common';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';

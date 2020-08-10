@@ -1,7 +1,12 @@
 import React from "react";
 import DataSdk from '../SDK/DataSdk';
 import LinkButton from "../components/LinkButton";
-import { downloadIcon, externalLinkIcon, helpIcon, ExternalLink } from '../helpers/common';
+import {
+    downloadIcon,
+    externalLinkIcon,
+    helpIcon,
+    ExternalLink
+} from '../helpers/common';
 
 const dataSdk = new DataSdk();
 
