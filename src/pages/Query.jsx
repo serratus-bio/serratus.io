@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
+import Paginator from '../components/Paginator';
 import { useLocation } from 'react-router-dom';
 import {
     getPlaceholder,
@@ -45,9 +46,10 @@ const Query = (props) => {
     const [searchValue, setSearchValue] = React.useState("");
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
+    const [pageNumber, setPageNumber] = React.useState(1);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-
+    
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
         loadQueryPage(null);
@@ -82,6 +84,7 @@ const Query = (props) => {
         let queryType = e.target.value;
         setPlaceholderText(getPlaceholder(queryType));
         setSearchType(queryType);
+        setPageNumber(1);
     }
 
     React.useEffect(() => {
@@ -89,8 +92,9 @@ const Query = (props) => {
             return;
         }
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber));
         // check for AMR accession
+        console.log(dataPromise);
         let valueCorrected = queryValueStatic;
         if (queryTypeStatic === "genbank") {
             let patternForAMR = /.*_\d{7}/g;
@@ -101,7 +105,7 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
-    }, [queryTypeStatic, queryValueStatic]);
+    }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     let headTags = (
         <Helmet>
@@ -154,7 +158,17 @@ const Query = (props) => {
                     </div> : null}
                 <div className="w-full flex flex-col p-6">
                     {queryValueStatic ?
-                        <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} /> :
+                        <div>
+                            {searchType === 'run' ?
+                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                             :
+                             <div>
+                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} />
+                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                            </div>
+                            }
+                        </div>
+                        :
                         <QueryIntro />
                     }
                 </div>

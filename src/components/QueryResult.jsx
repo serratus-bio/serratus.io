@@ -18,7 +18,8 @@ const QueryResult = (props) => {
         setIsLoading(true);
         const getResultsCallback = (drawFunction, columns, hasResults) => {
             return (results) => {
-                var faux = connectFauxDOM('div', 'chart');
+                var discardNode = true;
+                var faux = connectFauxDOM('div', 'chart', discardNode);
                 if (hasResults) {
                     drawFunction(d3, faux, results, columns);
                 }
