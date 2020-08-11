@@ -3,7 +3,7 @@ import axios from 'axios'
 export default class DataSdk {
 
     baseUrl = process.env.REACT_APP_API_URL;
-    ncbiUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=';
+    eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
 
     async fetchSraRun(sraAccession) {
         const response = await axios.get(`${this.baseUrl}/api/run/get-run/${sraAccession}`);
@@ -21,12 +21,12 @@ export default class DataSdk {
     }
 
     async getEsearch(db, term) {
-        const response = await axios.get(`${this.ncbiUrl}${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
+        const response = await axios.get(`${this.eutilsUrl}/esearch.fcgi?db=${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
         return response.data;
     }
 
     async getEsummary(db, entrezId) {
-        const response = await axios.get(`${this.ncbiUrl}${db}&id=${entrezId}`, { responseType: 'text' });
+        const response = await axios.get(`${this.eutilsUrl}/esummary.fcgi?db=${db}&id=${entrezId}`, { responseType: 'text' });
         return response.data;
     }
 
