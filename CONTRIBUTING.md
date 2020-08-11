@@ -26,7 +26,7 @@ There are 3 repositories:
 ```sh
 cd path/to/serratus.io
 npm install
-npm run start
+npm start
 ```
 
 ## Making Changes
