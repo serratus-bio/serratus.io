@@ -11,7 +11,6 @@ export default class DataSdk {
     }
 
     async fetchSraHitsByAccession(genbankAccession, pageNumber, itemsPerPage) {
-
         const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}`);
         return response.data;
     }
