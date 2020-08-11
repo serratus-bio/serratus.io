@@ -13,17 +13,17 @@ const Paginator = ( {pageNumber, setPageNumber, numberOfPages, getNumberOfPages}
         {pageNumber == 1 
         ? <div>
             <button className={invisibleButton} onClick={() => setPageNumber(pageNumber - 1)}>prev</button>
-            {pageNumber}
+            Page {pageNumber} out of ...
             <button className={buttonClasses} onClick={() => setPageNumber(pageNumber + 1)}>next</button>
           </div> 
         : <div>
             <button className={buttonClasses} onClick={() => setPageNumber(pageNumber - 1)}>prev</button>
-            {pageNumber}
+            Page {pageNumber} out of {numberOfPages}
             <button className={buttonClasses} onClick={() => setPageNumber(pageNumber + 1)}>next</button>
           </div> 
           }
     </div>
-    )
+  )
 }
 
 export default Paginator;
