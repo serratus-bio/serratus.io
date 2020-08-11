@@ -112,6 +112,7 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
+        getNumberOfPages();
     }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     let headTags = (
