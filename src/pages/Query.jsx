@@ -87,6 +87,12 @@ const Query = (props) => {
         setPageNumber(1);
     }
 
+    async function getNumberOfPages() {
+        if (!dataPromise) return;
+        var data = await dataPromise;
+        setNumberOfPages(data.numberOfPages);
+    }
+
     React.useEffect(() => {
         if (!queryValueStatic) {
             return;
