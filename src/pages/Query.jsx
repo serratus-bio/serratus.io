@@ -47,6 +47,7 @@ const Query = (props) => {
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
+    const [numberOfPages, setNumberOfPages] = React.useState(0)
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
     
