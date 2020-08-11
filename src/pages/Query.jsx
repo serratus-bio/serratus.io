@@ -84,6 +84,7 @@ const Query = (props) => {
         let queryType = e.target.value;
         setPlaceholderText(getPlaceholder(queryType));
         setSearchType(queryType);
+        setPageNumber(1);
     }
 
     React.useEffect(() => {
