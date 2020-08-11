@@ -21,8 +21,8 @@ const Home = () => {
                         {searchIcon} Discover
                     </NavLink>
                     <h3 className="inline text-lg font-thin my-5">
-                        <text className="font-normal">3,837,755</text> runs processed<text className="border-l border-white mx-2" />
-                        <text className="font-normal">5,620,086,903,602,832</text> nucleotides
+                        <span className="font-normal">3,837,755</span> runs processed<span className="border-l border-white mx-2" />
+                        <span className="font-normal">5,620,086,903,602,832</span> nucleotides
                     </h3>
                 </div>
             </div>
