@@ -106,12 +106,12 @@ const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-const getDataPromise = (type, value, page) => {
+const getDataPromise = (type, value, page, itemsPerPage) => {
     switch (type) {
         case "family":
-            return dataSdk.fetchSraHitsByFamily(value, page);
+            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage);
         case "genbank":
-            return dataSdk.fetchSraHitsByAccession(value, page);
+            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage);
         case "run":
             return dataSdk.fetchSraRun(value, page);
         default:

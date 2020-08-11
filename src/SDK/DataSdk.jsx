@@ -10,13 +10,14 @@ export default class DataSdk {
         return response.data
     }
 
-    async fetchSraHitsByAccession(genbankAccession, pageNumber) {
-        const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}`);
+    async fetchSraHitsByAccession(genbankAccession, pageNumber, itemsPerPage) {
+
+        const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}`);
         return response.data;
     }
 
-    async fetchSraHitsByFamily(familyName, pageNumber) {
-        const response = await axios.get(`${this.baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}`);
+    async fetchSraHitsByFamily(familyName, pageNumber, itemsPerPage) {
+        const response = await axios.get(`${this.baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}&itemsPerPage=${itemsPerPage}`);
         return response.data;
     }
 
