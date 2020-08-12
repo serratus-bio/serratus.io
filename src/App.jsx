@@ -14,6 +14,7 @@ import Family from './pages/Family';
 
 const App = () => {
   React.useEffect(() => {
+    // track initial page load
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
