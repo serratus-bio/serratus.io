@@ -33,7 +33,7 @@ const QueryResult = (props) => {
             case "family":
                 columns = ["score", "pctId", "aln"];
                 props.dataPromise.then((data) => {
-                    data = data.slice(0, 20);
+                    data = data.items;
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);
@@ -45,7 +45,7 @@ const QueryResult = (props) => {
             case "genbank":
                 columns = ["cvgPct", "pctId", "aln"];
                 props.dataPromise.then((data) => {
-                    data = data.slice(0, 20);
+                    data = data.items;
                     let hasResults = data && data.length !== 0;
                     callback = getResultsCallback(drawQueryResults, columns, hasResults);
                     callback(data);

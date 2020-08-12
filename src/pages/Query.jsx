@@ -47,6 +47,8 @@ const Query = (props) => {
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
+    const [numberOfPages, setNumberOfPages] = React.useState(0);
+    const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
     
@@ -87,12 +89,18 @@ const Query = (props) => {
         setPageNumber(1);
     }
 
+    async function getNumberOfPages() {
+        if (!dataPromise) return;
+        var data = await dataPromise;
+        setNumberOfPages(data.numberOfPages);
+    }
+
     React.useEffect(() => {
         if (!queryValueStatic) {
             return;
         }
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage));
         // check for AMR accession
         console.log(dataPromise);
         let valueCorrected = queryValueStatic;
@@ -105,6 +113,7 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
+        setItemsPerPage(20);
     }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     let headTags = (
@@ -163,7 +172,7 @@ const Query = (props) => {
                                 <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
                              :
                              <div>
-                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} />
+                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} getNumberOfPages={getNumberOfPages}/>
                                 <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
                             </div>
                             }
