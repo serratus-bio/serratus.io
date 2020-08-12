@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar'
 import { Route, useLocation, Switch } from "react-router-dom";
+import ReactGA from 'react-ga';
 import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
@@ -12,6 +13,10 @@ import Access from './pages/Access';
 import Family from './pages/Family';
 
 const App = () => {
+  React.useEffect(() => {
+    ReactGA.pageview(window.location.href);
+  }, []);
+
   const location = useLocation()
   useTransition(location, location => location.pathname, {
     from: { opacity: 0, transform: "translate(100%, 0)" },
