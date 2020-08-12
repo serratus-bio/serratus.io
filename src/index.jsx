@@ -10,7 +10,7 @@ var history = createBrowserHistory();
 
 if (process.env.NODE_ENV === "production") {
   ReactGA.initialize('UA-175034803-1');
-  history.listen(() => ReactGA.pageview(window.location.href));
+  history.listen(() => ReactGA.pageview(window.location.pathname + window.location.search));
 }
 
 ReactDOM.render(

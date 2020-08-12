@@ -14,7 +14,7 @@ import Family from './pages/Family';
 
 const App = () => {
   React.useEffect(() => {
-    ReactGA.pageview(window.location.href);
+    ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
 
   const location = useLocation()
