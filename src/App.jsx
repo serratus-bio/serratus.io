@@ -11,6 +11,7 @@ import About from './pages/About';
 import Team from './pages/Team';
 import Access from './pages/Access';
 import Family from './pages/Family';
+import Footer from './components/Footer';
 
 const App = () => {
   React.useEffect(() => {
@@ -37,6 +38,8 @@ const App = () => {
         <Route exact path="/access" component={Access} />
         <Route exact path="/family" component={Family} />
       </Switch>
+      
+      <Footer />
     </div>
   );
 }

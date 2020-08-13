@@ -12,8 +12,10 @@ const Home = () => {
     return (
         <div>
             {headTags}
-            <img src="/serratus.jpg" alt="serratus mountain" className="object-cover h-screen w-screen fixed z-0" />
-            <div className="h-screen w-screen fixed flex flex-col items-center justify-center">
+            <div style={{position:"relative", textAlign:"center"}}>
+                <img src="/serratus.jpg" alt="serratus mountain" className="" />
+            </div>
+            <div style={{position:"absolute",top:"50%", left:"50%", transform:"translate(-50%,-50%)"}} className="">
                 <div className="flex flex-col z-10 items-center text-white px-4">
                     <h1 className="text-5xl font-montserrat font-light text-center mt-16 z-10">Welcome to Serratus</h1>
                     <h2 className="text-xl font-thin text-center z-10 mb-8">An open-science viral discovery platform</h2>
