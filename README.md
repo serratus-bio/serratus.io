@@ -5,7 +5,10 @@ This repository is home to the front-facing website of the project, and contains
 
 The website was bootstrapped with `create-react-app` and leverages D3.js for visualizations. If you are interested in contributing, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-The Database API is managed in a separate repository: [serratus-db](https://github.com/serratus-bio/serratus-db)
+This repository is just one of the main repositories involving Serratus:
+
+1. Repository for database-related development: [serratus-bio/serratus-db](https://github.com/serratus-bio/serratus-db)
+2. Repository for Serratus bioinformatics work: [ababaian/serratus](https://github.com/ababaian/serratus)
 
 ## Visualization Pages
 
