@@ -1,1 +1,12 @@
-{}
+{
+    "tracks": [
+      {
+        "urlTemplate" : "volvox-sorted.bam",
+        "storeClass"  : "JBrowse/Store/SeqFeature/BAM",
+        "type"        : "JBrowse/View/Track/Alignments2",
+        "label"       : "BAM_track",
+        "key"         : "My BAM track",
+        "style": { "color": "red" }
+      }
+    ]
+   }
