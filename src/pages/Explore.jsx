@@ -6,6 +6,7 @@ import {
     switchSize,
     classesBoxBorder
 } from '../helpers/common';
+import References from '../components/References';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
@@ -65,35 +66,43 @@ export default () => {
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
-            <div className={`p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
-                <div className="pb-2 text-center">
-                    Select a viral family to view the distribution of Serratus analysis results.
-                </div>
-                <Select options={selectOptions}
-                    values={selectValues}
-                    onChange={selectOnChange}
-                    onDropdownOpen={() => setSelectValues([])}
-                    placeholder="Search for family" />
+            <div className={`flex flex-col p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
+                <div className="flex-grow">
+                    <div className="pb-2 text-center">
+                        Select a viral family to view the distribution of Serratus analysis results.
+                    </div>
+                    <Select options={selectOptions}
+                        values={selectValues}
+                        onChange={selectOnChange}
+                        onDropdownOpen={() => setSelectValues([])}
+                        placeholder="Search for family" />
                     {family ?
                         <div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">Average alignment identity (%)</div>
-                                <div id="sliderX" className="relative" style={{height: 30}}></div>
+                                <div id="sliderX" className="relative" style={{ height: 30 }}></div>
                             </div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">Score (pangenome coverage)</div>
-                                <div id="sliderZ" className="relative" style={{height: 30}}></div>
+                                <div id="sliderZ" className="relative" style={{ height: 30 }}></div>
                             </div>
                             <div className="h-10" />
                             <button onClick={() => console.log(family, xLims, zLims)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
-                            (not implemented)
-                        </div> : null }
+                                (not implemented)
+                            </div> : null}
+                </div>
+                <div className={`hidden ${switchSize}:block mb-auto`}>
+                    <References />
+                </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
             <hr className="sm:hidden" />
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <div id="chart" className="py-2" />
+                <div className={`${switchSize}:hidden`}>
+                    <References />
+                </div>
             </div>
         </div>
     )

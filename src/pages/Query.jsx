@@ -4,6 +4,7 @@ import { Select } from "react-dropdown-select";
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
+import References from '../components/References';
 import { useLocation } from 'react-router-dom';
 import {
     getPlaceholder,
@@ -127,8 +128,8 @@ const Query = (props) => {
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
-            <div className={`p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
-                <div className="flex flex-col items-center z-10 mt-2">
+            <div className={`flex flex-col p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
+                <div className="flex flex-col flex-grow items-center z-10 mt-2">
                     <div className="items-center z-10">
                         <div>
                             <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
@@ -147,6 +148,9 @@ const Query = (props) => {
                             </div>
                         }
                     </div>
+                </div>
+                <div className={`hidden ${switchSize}:block mb-auto`}>
+                    <References />
                 </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
@@ -180,6 +184,9 @@ const Query = (props) => {
                         :
                         <QueryIntro />
                     }
+                    <div className={`${switchSize}:hidden`}>
+                        <References />
+                    </div>
                 </div>
             </div>
         </div>
