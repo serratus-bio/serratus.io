@@ -14,7 +14,8 @@ There are 3 repositories:
 
 ### Finding a task
 
-- See the [issues page](https://github.com/serratus-bio/serratus.io/issues) for tasks that could use some help.
+- See the [issues page](https://github.com/serratus-bio/serratus.io/issues) for tasks that could use some help. You can filter by the **good first issue** label.
+    - Alternatively, visit the [project board](https://github.com/orgs/serratus-bio/projects/1?fullscreen=true) which includes tasks from serratus-db.
 - Feel free to comment on any issue, even those you're not assigned to if you have a helpful suggestion.
 - If you'd like to work on a given task, simply add a comment saying this to the issue and it will be "Assigned" to you.
 
@@ -34,9 +35,10 @@ npm start
 - Make sure you have a [GitHub account](https://github.com/join).
 - Fork the repository on GitHub.
 - Create a topic branch from the `dev` branch. We use the following branch naming structure:
-    - `feature/<username>/<description>` (example: `feature/victorlin/add-explore-page`)
-    - `fix/<username>/<description>` (example: `fix/victorlin/query-page-floating`)
-- Make commits of logical and atomic units, with descriptive but concise messages.
+    - Features: `feature/<username>/<description>` (example: `feature/victorlin/add-explore-page`)
+    - Enhancements: `update/<username>/<description>` (example: `update/victorlin/add-dropdown-select`)
+    - Bug fixes: `fix/<username>/<description>` (example: `fix/victorlin/query-page-floating`)
+- Make commits of logical and atomic units, with meaningful messages.
 
 ## Submitting Changes
 
