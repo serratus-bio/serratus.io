@@ -8,6 +8,7 @@ import Explore from './pages/Explore';
 import Query from './pages/Query';
 import About from './pages/About';
 import Team from './pages/Team';
+import Jbrowse from './pages/Jbrowse';
 import Access from './pages/Access';
 import Family from './pages/Family';
 
@@ -28,6 +29,7 @@ const App = () => {
         <Route exact path="/query" component={Query} />
         <Route exact path="/about" component={About} />
         <Route exact path="/team" component={Team} />
+        <Route exact path="/jbrowse" component={Jbrowse} />
         <Route exact path="/access" component={Access} />
         <Route exact path="/family" component={Family} />
       </Switch>
