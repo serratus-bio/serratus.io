@@ -18,7 +18,7 @@ const App = () => {
 					"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
 			},
 			{
-				urlTemplate : "http://serratus-public.s3.amazonaws.com/tmp/web/ERR2756788.sort.bam",
+				urlTemplate : "https://serratus-public.s3.amazonaws.com/tmp/web/ERR2756788.sort.bam",
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
 				label : "ERR2756788",
 				type : "JBrowse/View/Track/Alignments2"
