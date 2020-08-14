@@ -35,7 +35,7 @@ const App = () => {
 	return (
 		<div className="App">
 			<h1>
-				The is the 
+				The is the test JBrowse Viewer for bam: ERR2756788
 			</h1>
 			<div
 				style={{ width: "100%", height: 800 }}
