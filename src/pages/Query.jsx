@@ -4,7 +4,7 @@ import { Select } from "react-dropdown-select";
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
-import References from '../components/References';
+import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
 import {
     getPlaceholder,
@@ -150,7 +150,7 @@ const Query = (props) => {
                     </div>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
-                    <References />
+                    <DataReference />
                 </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
@@ -185,7 +185,7 @@ const Query = (props) => {
                         <QueryIntro />
                     }
                     <div className={`${switchSize}:hidden`}>
-                        <References />
+                        <DataReference />
                     </div>
                 </div>
             </div>

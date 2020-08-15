@@ -6,7 +6,7 @@ import {
     switchSize,
     classesBoxBorder
 } from '../helpers/common';
-import References from '../components/References';
+import DataReference from '../components/DataReference';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
@@ -92,7 +92,7 @@ export default () => {
                             </div> : null}
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
-                    <References />
+                    <DataReference />
                 </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
@@ -101,7 +101,7 @@ export default () => {
                 <h1 className="text-center text-2xl">{family}</h1>
                 <div id="chart" className="py-2" />
                 <div className={`${switchSize}:hidden`}>
-                    <References />
+                    <DataReference />
                 </div>
             </div>
         </div>
