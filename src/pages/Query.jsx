@@ -1,6 +1,8 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
+import * as d3 from 'd3';
+import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 import QueryResult from '../components/QueryResult';
 import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
@@ -97,6 +99,9 @@ const Query = (props) => {
     }
 
     React.useEffect(() => {
+        drawSliders();
+        sliderPct.range(75, 100);
+        sliderCvg.range(25, 100);
         if (!queryValueStatic) {
             return;
         }
@@ -122,6 +127,7 @@ const Query = (props) => {
             <title>
                 Serratus | {queryValueStatic ? `${queryValueStatic}` : "Query"}
             </title>
+            <link href="https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css" rel="stylesheet"></link>
         </Helmet>
     )
 
@@ -147,6 +153,16 @@ const Query = (props) => {
                                 <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                             </div>
                         }
+                    </div>
+                    <div className="w-full">
+                        <div className="mx-2">
+                            <div className="pt-6 text-center">Alignment identity (%)</div>
+                            <div id="sliderPct" className="relative" style={{ height: 30 }}></div>
+                        </div>
+                        <div className="mx-2">
+                            <div className="pt-6 text-center">Coverage</div>
+                            <div id="sliderCvg" className="relative" style={{ height: 30 }}></div>
+                        </div>
                     </div>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
@@ -194,3 +210,49 @@ const Query = (props) => {
 }
 
 export default Query;
+
+var sliderPct;
+var sliderCvg;
+
+var xLims = [75, 100];
+var zLims = [25, 100];
+var zColorLims = ["#3d5088", "#fce540"];
+
+const drawSliders = () => {
+    var sliderPctDiv = d3.select("#sliderPct");
+    var sliderCvgDiv = d3.select("#sliderCvg");
+
+    sliderPct = createD3RangeSlider(d3, xLims[0], xLims[1], sliderPctDiv);
+    sliderPct.onChange((range) => updateXLims(range.begin, range.end));
+
+    var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
+    var newZSliderDivStyle = sliderCvgDiv.attr("style") + zGradient;
+    sliderCvg = createD3RangeSlider(d3, zLims[0], zLims[1], sliderCvgDiv);
+    sliderCvg.onChange((range) => updateZLims(range.begin, range.end));
+    sliderCvgDiv.attr("style", newZSliderDivStyle)
+    sliderCvgDiv.select(".slider-container")
+        .attr("style", zGradient)
+    sliderCvgDiv.select(".slider")
+        .attr("style", "background: rgba(0,0,0, 0.2)")
+
+    var sliderPctLabelL = sliderPctDiv.select(".WW").append("span")
+        .attr("style", "float: left; transform: translate(0px,20px)");
+    var sliderPctLabelR = sliderPctDiv.select(".EE").append("text")
+        .attr("style", "float: left; transform: translate(-5px,20px)");
+    var sliderCvgLabelL = sliderCvgDiv.select(".WW").append("span")
+        .attr("style", "float: left; transform: translate(0px,20px)");
+    var sliderCvgLabelR = sliderCvgDiv.select(".EE").append("text")
+        .attr("style", "float: left; transform: translate(-5px,20px)");
+
+    function updateXLims(begin, end) {
+        sliderPctLabelL.text(begin);
+        sliderPctLabelR.text(end);
+    };
+    function updateZLims(begin, end) {
+        sliderCvgLabelL.text(begin);
+        sliderCvgLabelR.text(end);
+    };
+
+    sliderPct.range(...xLims);
+    sliderCvg.range(...zLims);
+}
