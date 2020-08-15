@@ -2,6 +2,7 @@
   "name": "serratus-react",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@gmod/jbrowse": "^1.16.6",
     "@testing-library/jest-dom": "^4.2.4",

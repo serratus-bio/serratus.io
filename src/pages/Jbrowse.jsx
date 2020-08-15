@@ -5,7 +5,6 @@ const App = () => {
 	// Add some features
 	const config = {
 		containerID: "GenomeBrowser",
-		baseUrl: "../",
 		refSeqs: {
 			url:
 				"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa.fai",
