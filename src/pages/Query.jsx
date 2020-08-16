@@ -98,8 +98,14 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
-        console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
         setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage));
+    }, [queryTypeStatic, queryValueStatic, pageNumber]);
+
+    React.useEffect(() => {
+        if (!queryValueStatic) {
+            return;
+        }
+        console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
         // check for AMR accession
         console.log(dataPromise);
         let valueCorrected = queryValueStatic;
@@ -112,8 +118,7 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
-        setItemsPerPage(20);
-    }, [queryTypeStatic, queryValueStatic, pageNumber]);
+    }, [queryTypeStatic, queryValueStatic]);
 
     let headTags = (
         <Helmet>
