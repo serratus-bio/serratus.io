@@ -28,6 +28,9 @@ const familyDomain = Object.keys(allFamilyData).map((family) => { return { label
 
 const queryTypes = ["family", "genbank", "run"];
 
+const sliderIdentityElementId = "sliderIdentity";
+const sliderCoverageElementId = "sliderCoverage";
+
 const Query = (props) => {
     let queryTypeFromParam = null;
     let queryValueFromParam = null;
@@ -102,7 +105,7 @@ const Query = (props) => {
     }
 
     React.useEffect(() => {
-        drawSliders();
+        drawSliders(sliderIdentityElementId, sliderCoverageElementId);
         sliderIdentity.range(75, 100);
         sliderCoverage.range(25, 100);
         if (!queryValueStatic) {
@@ -160,11 +163,11 @@ const Query = (props) => {
                     <div className="w-full">
                         <div className="mx-2">
                             <div className="pt-6 text-center">Alignment identity (%)</div>
-                            <div id="sliderIdentity" className="relative" style={{ height: 30 }}></div>
+                            <div id={sliderIdentityElementId} className="relative" style={{ height: 30 }}></div>
                         </div>
                         <div className="mx-2">
                             <div className="pt-6 text-center">Coverage</div>
-                            <div id="sliderCoverage" className="relative" style={{ height: 30 }}></div>
+                            <div id={sliderCoverageElementId} className="relative" style={{ height: 30 }}></div>
                         </div>
                     </div>
                 </div>

@@ -13,9 +13,9 @@ var sliderIdentityLabelR;
 var sliderCoverageLabelL;
 var sliderCoverageLabelR;
 
-export const drawSliders = () => {
-    var sliderIdentityDiv = d3.select("#sliderIdentity");
-    var sliderCoverageDiv = d3.select("#sliderCoverage");
+export const drawSliders = (sliderIdentityElementId, sliderCoverageElementId) => {
+    var sliderIdentityDiv = d3.select(`#${sliderIdentityElementId}`);
+    var sliderCoverageDiv = d3.select(`#${sliderCoverageElementId}`);
 
     sliderIdentity = createD3RangeSlider(d3, identityLims[0], identityLims[1], sliderIdentityDiv);
     sliderIdentity.onChange((range) => updateIdentityLims(range.begin, range.end));
