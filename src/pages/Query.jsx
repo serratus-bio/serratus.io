@@ -100,8 +100,8 @@ const Query = (props) => {
 
     React.useEffect(() => {
         drawSliders();
-        sliderPct.range(75, 100);
-        sliderCvg.range(25, 100);
+        sliderIdentity.range(75, 100);
+        sliderCoverage.range(25, 100);
         if (!queryValueStatic) {
             return;
         }
@@ -157,11 +157,11 @@ const Query = (props) => {
                     <div className="w-full">
                         <div className="mx-2">
                             <div className="pt-6 text-center">Alignment identity (%)</div>
-                            <div id="sliderPct" className="relative" style={{ height: 30 }}></div>
+                            <div id="sliderIdentity" className="relative" style={{ height: 30 }}></div>
                         </div>
                         <div className="mx-2">
                             <div className="pt-6 text-center">Coverage</div>
-                            <div id="sliderCvg" className="relative" style={{ height: 30 }}></div>
+                            <div id="sliderCoverage" className="relative" style={{ height: 30 }}></div>
                         </div>
                     </div>
                 </div>
@@ -211,48 +211,48 @@ const Query = (props) => {
 
 export default Query;
 
-var sliderPct;
-var sliderCvg;
+var sliderIdentity;
+var sliderCoverage;
 
 var xLims = [75, 100];
 var zLims = [25, 100];
 var zColorLims = ["#3d5088", "#fce540"];
 
 const drawSliders = () => {
-    var sliderPctDiv = d3.select("#sliderPct");
-    var sliderCvgDiv = d3.select("#sliderCvg");
+    var sliderIdentityDiv = d3.select("#sliderIdentity");
+    var sliderCoverageDiv = d3.select("#sliderCoverage");
 
-    sliderPct = createD3RangeSlider(d3, xLims[0], xLims[1], sliderPctDiv);
-    sliderPct.onChange((range) => updateXLims(range.begin, range.end));
+    sliderIdentity = createD3RangeSlider(d3, xLims[0], xLims[1], sliderIdentityDiv);
+    sliderIdentity.onChange((range) => updateXLims(range.begin, range.end));
 
     var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
-    var newZSliderDivStyle = sliderCvgDiv.attr("style") + zGradient;
-    sliderCvg = createD3RangeSlider(d3, zLims[0], zLims[1], sliderCvgDiv);
-    sliderCvg.onChange((range) => updateZLims(range.begin, range.end));
-    sliderCvgDiv.attr("style", newZSliderDivStyle)
-    sliderCvgDiv.select(".slider-container")
+    var newZSliderDivStyle = sliderCoverageDiv.attr("style") + zGradient;
+    sliderCoverage = createD3RangeSlider(d3, zLims[0], zLims[1], sliderCoverageDiv);
+    sliderCoverage.onChange((range) => updateZLims(range.begin, range.end));
+    sliderCoverageDiv.attr("style", newZSliderDivStyle)
+    sliderCoverageDiv.select(".slider-container")
         .attr("style", zGradient)
-    sliderCvgDiv.select(".slider")
+    sliderCoverageDiv.select(".slider")
         .attr("style", "background: rgba(0,0,0, 0.2)")
 
-    var sliderPctLabelL = sliderPctDiv.select(".WW").append("span")
+    var sliderIdentityLabelL = sliderIdentityDiv.select(".WW").append("span")
         .attr("style", "float: left; transform: translate(0px,20px)");
-    var sliderPctLabelR = sliderPctDiv.select(".EE").append("text")
+    var sliderIdentityLabelR = sliderIdentityDiv.select(".EE").append("text")
         .attr("style", "float: left; transform: translate(-5px,20px)");
-    var sliderCvgLabelL = sliderCvgDiv.select(".WW").append("span")
+    var sliderCoverageLabelL = sliderCoverageDiv.select(".WW").append("span")
         .attr("style", "float: left; transform: translate(0px,20px)");
-    var sliderCvgLabelR = sliderCvgDiv.select(".EE").append("text")
+    var sliderCoverageLabelR = sliderCoverageDiv.select(".EE").append("text")
         .attr("style", "float: left; transform: translate(-5px,20px)");
 
     function updateXLims(begin, end) {
-        sliderPctLabelL.text(begin);
-        sliderPctLabelR.text(end);
+        sliderIdentityLabelL.text(begin);
+        sliderIdentityLabelR.text(end);
     };
     function updateZLims(begin, end) {
-        sliderCvgLabelL.text(begin);
-        sliderCvgLabelR.text(end);
+        sliderCoverageLabelL.text(begin);
+        sliderCoverageLabelR.text(end);
     };
 
-    sliderPct.range(...xLims);
-    sliderCvg.range(...zLims);
+    sliderIdentity.range(...xLims);
+    sliderCoverage.range(...zLims);
 }
