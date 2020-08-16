@@ -214,9 +214,9 @@ export default Query;
 var sliderIdentity;
 var sliderCoverage;
 
-var xLims = [75, 100];
-var zLims = [25, 100];
-var zColorLims = ["#3d5088", "#fce540"];
+var identityLims = [75, 100];
+var coverageLims = [25, 100];
+var coverageColorLims = ["#3d5088", "#fce540"];
 
 var sliderIdentityLabelL;
 var sliderIdentityLabelR;
@@ -227,16 +227,16 @@ const drawSliders = () => {
     var sliderIdentityDiv = d3.select("#sliderIdentity");
     var sliderCoverageDiv = d3.select("#sliderCoverage");
 
-    sliderIdentity = createD3RangeSlider(d3, xLims[0], xLims[1], sliderIdentityDiv);
-    sliderIdentity.onChange((range) => updateXLims(range.begin, range.end));
+    sliderIdentity = createD3RangeSlider(d3, identityLims[0], identityLims[1], sliderIdentityDiv);
+    sliderIdentity.onChange((range) => updateIdentityLims(range.begin, range.end));
 
-    var zGradient = `background-image: linear-gradient(to right, ${zColorLims[0]} , ${zColorLims[1]});`
-    var newZSliderDivStyle = sliderCoverageDiv.attr("style") + zGradient;
-    sliderCoverage = createD3RangeSlider(d3, zLims[0], zLims[1], sliderCoverageDiv);
-    sliderCoverage.onChange((range) => updateZLims(range.begin, range.end));
-    sliderCoverageDiv.attr("style", newZSliderDivStyle)
+    var coverageColorGradient = `background-image: linear-gradient(to right, ${coverageColorLims[0]} , ${coverageColorLims[1]});`
+    var newCoverageSliderDivStyle = sliderCoverageDiv.attr("style") + coverageColorGradient;
+    sliderCoverage = createD3RangeSlider(d3, coverageLims[0], coverageLims[1], sliderCoverageDiv);
+    sliderCoverage.onChange((range) => updateCoverageLims(range.begin, range.end));
+    sliderCoverageDiv.attr("style", newCoverageSliderDivStyle)
     sliderCoverageDiv.select(".slider-container")
-        .attr("style", zGradient)
+        .attr("style", coverageColorGradient)
     sliderCoverageDiv.select(".slider")
         .attr("style", "background: rgba(0,0,0, 0.2)")
 
@@ -250,11 +250,11 @@ const drawSliders = () => {
         .attr("style", "float: left; transform: translate(-5px,20px)");
 };
 
-const updateXLims = (begin, end) => {
+const updateIdentityLims = (begin, end) => {
     sliderIdentityLabelL.text(begin);
     sliderIdentityLabelR.text(end);
 };
-const updateZLims = (begin, end) => {
+const updateCoverageLims = (begin, end) => {
     sliderCoverageLabelL.text(begin);
     sliderCoverageLabelR.text(end);
 };
