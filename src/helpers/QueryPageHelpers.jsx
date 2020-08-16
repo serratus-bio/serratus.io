@@ -10,7 +10,7 @@ import {
 
 const dataSdk = new DataSdk();
 
-const getPlaceholder = (type) => {
+export const getPlaceholder = (type) => {
     let typePlaceholderMap = {
         family: "e.g. Coronaviridae",
         genbank: "e.g. EU769558.1",
@@ -19,7 +19,7 @@ const getPlaceholder = (type) => {
     return typePlaceholderMap[type];
 }
 
-const getPageLinks = (type, value) => {
+export const getPageLinks = (type, value) => {
     if (type === "family") {
         var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
         var text = "Taxonomy Browser"
@@ -79,7 +79,7 @@ const getPageLinks = (type, value) => {
     }
 }
 
-const getTitle = async (type, value, valueCorrected) => {
+export const getTitle = async (type, value, valueCorrected) => {
     console.log("Fetching Entrez data...");
     let title = null;
     switch (type) {
@@ -106,7 +106,7 @@ const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-const getDataPromise = (type, value, page, itemsPerPage) => {
+export const getDataPromise = (type, value, page, itemsPerPage) => {
     switch (type) {
         case "family":
             return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage);
@@ -118,7 +118,7 @@ const getDataPromise = (type, value, page, itemsPerPage) => {
     }
 }
 
-const InputOption = (props) => {
+export const InputOption = (props) => {
     return (
         <div className={props.className}>
             <input type="radio" name="querytype" value={props.value} checked={props.checked}
@@ -127,5 +127,3 @@ const InputOption = (props) => {
         </div>
     )
 }
-
-export { getPlaceholder, getPageLinks, getTitle, getDataPromise, InputOption };
