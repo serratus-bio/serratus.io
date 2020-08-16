@@ -91,15 +91,15 @@ const Query = (props) => {
             // TODO: display indicator "no query type selected"
             return;
         }
-        let newUrl = pathNameStatic;
+        let params = new URLSearchParams();
         if (searchValue.current) {
-            newUrl += `?${searchType}=${searchValue.current}`
+            params.set(searchType, searchValue.current)
         };
-        if (sliderIdentityLims != identityBounds) {
-            var identity = constructRangeStr(...sliderIdentityLims);
-            newUrl += `&identity=${identity}`;
-        }
-        window.location.href = newUrl;
+        var identity = constructRangeStr(...sliderIdentityLims);
+        params.set('identity', identity);
+        var coverage = constructRangeStr(...sliderCoverageLims);
+        params.set('coverage', coverage);
+        window.location.href = pathNameStatic + '?' + params.toString();
     }
 
     function queryTypeChange(e) {
