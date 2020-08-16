@@ -127,3 +127,9 @@ export const InputOption = (props) => {
         </div>
     )
 }
+
+// slider stuff
+export const sliderIdentityElementId = "sliderIdentity";
+export const sliderCoverageElementId = "sliderCoverage";
+export var identityLims = [75, 100];
+export var coverageLims = [25, 100];

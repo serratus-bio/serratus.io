@@ -16,7 +16,9 @@ import {
     getPageLinks,
     getTitle,
     getDataPromise,
-    InputOption
+    InputOption,
+    sliderIdentityElementId,
+    sliderCoverageElementId
 } from "../helpers/QueryPageHelpers";
 import {
     switchSize,
@@ -27,9 +29,6 @@ import allFamilyData from '../data/SerratusIO_scoreID.json';
 const familyDomain = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
 const queryTypes = ["family", "genbank", "run"];
-
-const sliderIdentityElementId = "sliderIdentity";
-const sliderCoverageElementId = "sliderCoverage";
 
 const Query = (props) => {
     let queryTypeFromParam = null;
@@ -100,7 +99,7 @@ const Query = (props) => {
     }
 
     React.useEffect(() => {
-        drawSliders(sliderIdentityElementId, sliderCoverageElementId);
+        drawSliders();
         sliderIdentity.range(75, 100);
         sliderCoverage.range(25, 100);
         if (!queryValueStatic) {

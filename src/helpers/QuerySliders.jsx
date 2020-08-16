@@ -1,11 +1,12 @@
 import * as d3 from 'd3';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
+import {
+    identityLims,
+    coverageLims,
+    sliderIdentityElementId,
+    sliderCoverageElementId
+} from './QueryPageHelpers';
 
-export var sliderIdentity;
-export var sliderCoverage;
-
-var identityLims = [75, 100];
-var coverageLims = [25, 100];
 var coverageColorLims = ["#3d5088", "#fce540"];
 
 var sliderIdentityLabelL;
@@ -13,7 +14,10 @@ var sliderIdentityLabelR;
 var sliderCoverageLabelL;
 var sliderCoverageLabelR;
 
-export const drawSliders = (sliderIdentityElementId, sliderCoverageElementId) => {
+export var sliderIdentity;
+export var sliderCoverage;
+
+export const drawSliders = () => {
     var sliderIdentityDiv = d3.select(`#${sliderIdentityElementId}`);
     var sliderCoverageDiv = d3.select(`#${sliderCoverageElementId}`);
 
