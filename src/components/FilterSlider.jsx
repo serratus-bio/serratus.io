@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Helmet } from 'react-helmet';
 import * as d3 from 'd3';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
@@ -7,46 +7,54 @@ export default (props) => {
     // required props: id, sliderLims, setSliderLims
     // optional props: colorGradientLims
 
-    var slider;
-    var sliderLabelL;
-    var sliderLabelR;
-    var sliderLims = props.sliderLims;
+    const slider = useRef(null);
+    const sliderLabelL = useRef(null);
+    const sliderLabelR = useRef(null);
+    const sliderLims = useRef(props.sliderLims);
 
-    const drawSlider = () => {
-        var sliderDiv = d3.select(`#${props.id}`);
-        slider = createD3RangeSlider(d3, sliderLims[0], sliderLims[1], sliderDiv);
-        slider.onChange((range) => updateLimLabels(range.begin, range.end));
-        slider.onTouchEnd(() => updateSliderLims());
-        if (props.colorGradientLims) {
-            var colorGradient = `background-image: linear-gradient(to right, ${props.colorGradientLims[0]} , ${props.colorGradientLims[1]});`;
-            var newSliderDivStyle = sliderDiv.attr("style") + colorGradient;
-            sliderDiv.attr("style", newSliderDivStyle)
-            sliderDiv.select(".slider-container")
-                .attr("style", colorGradient);
-            sliderDiv.select(".slider")
-                .attr("style", "background: rgba(0,0,0, 0.2)");
-        }
+    // directly fetch initial .current
+    const id = useRef(props.id).current;
+    const setSliderLims = useRef(props.setSliderLims).current;
+    const colorGradientLims = useRef(props.colorGradientLims).current;
 
-        sliderLabelL = sliderDiv.select(".WW").append("span")
-            .attr("style", "float: left; transform: translate(0px,20px)");
-        sliderLabelR = sliderDiv.select(".EE").append("text")
-            .attr("style", "float: left; transform: translate(-5px,20px)");
-    };
+    useEffect(() => {
+        const updateSliderLims = () => {
+            setSliderLims(sliderLims.current);
+        };
 
-    const updateLimLabels = (begin, end) => {
-        sliderLabelL.text(begin);
-        sliderLabelR.text(end);
-        sliderLims = [begin, end];
-    };
+        const updateLimLabels = (begin, end) => {
+            sliderLabelL.current.text(begin);
+            sliderLabelR.current.text(end);
+            sliderLims.current = [begin, end];
+        };
 
-    const updateSliderLims = () => {
-        props.setSliderLims(sliderLims);
-    };
+        const drawSlider = () => {
+            var sliderDiv = d3.select(`#${id}`);
+            slider.current = createD3RangeSlider(d3, sliderLims.current[0], sliderLims.current[1], sliderDiv);
+            slider.current.onChange((range) => updateLimLabels(range.begin, range.end));
+            slider.current.onTouchEnd(() => updateSliderLims());
+            if (colorGradientLims) {
+                var colorGradient = `background-image: linear-gradient(to right, ${colorGradientLims[0]} , ${colorGradientLims[1]});`;
+                var newSliderDivStyle = sliderDiv.attr("style") + colorGradient;
+                sliderDiv.attr("style", newSliderDivStyle)
+                sliderDiv.select(".slider-container")
+                    .attr("style", colorGradient);
+                sliderDiv.select(".slider")
+                    .attr("style", "background: rgba(0,0,0, 0.2)");
+            }
 
-    React.useEffect(() => {
+            sliderLabelL.current = sliderDiv.select(".WW").append("span")
+                .attr("style", "float: left; transform: translate(0px,20px)");
+            sliderLabelR.current = sliderDiv.select(".EE").append("text")
+                .attr("style", "float: left; transform: translate(-5px,20px)");
+        };
+
         drawSlider();
-        slider.range(...props.sliderLims);
-    }, []);
+    }, [id, colorGradientLims, setSliderLims]);
+
+    useEffect(() => {
+        slider.current && slider.current.range(...props.sliderLims);
+    }, [props.sliderLims]);
 
     return (
         <div>
