@@ -61,11 +61,6 @@ const Query = (props) => {
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
 
-    // clicked "Query" on navigation bar
-    if (queryValueStatic && !queryValueFromParam) {
-        loadQueryPage(null);
-    }
-
     function searchOnKeyUp(e) {
         if (e.keyCode === 13) {
             loadQueryPage(e.target.value);
