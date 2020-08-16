@@ -5,7 +5,7 @@ import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 export default (props) => {
     // required props: id, sliderLims, setSliderLims
-    // optional props: colorGradientLims
+    // optional props: colorGradientLims, instantUpdate:bool, onTouchEnd:callback
 
     var slider;
     var sliderLabelL;
@@ -15,8 +15,19 @@ export default (props) => {
     const drawSlider = () => {
         var sliderDiv = d3.select(`#${props.id}`);
         slider = createD3RangeSlider(d3, sliderLims[0], sliderLims[1], sliderDiv);
-        slider.onChange((range) => updateLimLabels(range.begin, range.end));
-        slider.onTouchEnd(() => updateSliderLims());
+        slider.onChange((range) => {
+            updateLimLabels(range.begin, range.end);
+            props.instantUpdate && updateSliderLims();
+        });
+        slider.onTouchEnd(() => {
+            !props.instantUpdate && updateSliderLims();
+            // TODO: call props.onTouchEnd() after slider update
+        });
+        // props.onTouchEnd && slider.onTouchEnd(props.onTouchEnd);
+        // props.instantUpdate ?
+        //     slider.onChange(updateSliderLims) :
+        //     slider.onTouchEnd(updateSliderLims)
+
         if (props.colorGradientLims) {
             var colorGradient = `background-image: linear-gradient(to right, ${props.colorGradientLims[0]} , ${props.colorGradientLims[1]});`;
             var newSliderDivStyle = sliderDiv.attr("style") + colorGradient;
