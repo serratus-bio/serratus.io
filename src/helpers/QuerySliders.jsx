@@ -20,15 +20,15 @@ export const drawSliders = (sliderIdentityElementId, sliderCoverageElementId) =>
     sliderIdentity = createD3RangeSlider(d3, identityLims[0], identityLims[1], sliderIdentityDiv);
     sliderIdentity.onChange((range) => updateIdentityLims(range.begin, range.end));
 
-    var coverageColorGradient = `background-image: linear-gradient(to right, ${coverageColorLims[0]} , ${coverageColorLims[1]});`
+    var coverageColorGradient = `background-image: linear-gradient(to right, ${coverageColorLims[0]} , ${coverageColorLims[1]});`;
     var newCoverageSliderDivStyle = sliderCoverageDiv.attr("style") + coverageColorGradient;
     sliderCoverage = createD3RangeSlider(d3, coverageLims[0], coverageLims[1], sliderCoverageDiv);
     sliderCoverage.onChange((range) => updateCoverageLims(range.begin, range.end));
     sliderCoverageDiv.attr("style", newCoverageSliderDivStyle)
     sliderCoverageDiv.select(".slider-container")
-        .attr("style", coverageColorGradient)
+        .attr("style", coverageColorGradient);
     sliderCoverageDiv.select(".slider")
-        .attr("style", "background: rgba(0,0,0, 0.2)")
+        .attr("style", "background: rgba(0,0,0, 0.2)");
 
     sliderIdentityLabelL = sliderIdentityDiv.select(".WW").append("span")
         .attr("style", "float: left; transform: translate(0px,20px)");

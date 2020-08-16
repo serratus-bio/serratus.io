@@ -60,7 +60,7 @@ const Query = (props) => {
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-    
+
     // clicked "Query" on navigation bar
     if (queryValueStatic && !queryValueFromParam) {
         loadQueryPage(null);
@@ -135,7 +135,7 @@ const Query = (props) => {
             </title>
             <link href="https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css" rel="stylesheet"></link>
         </Helmet>
-    )
+    );
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
@@ -196,11 +196,11 @@ const Query = (props) => {
                         <div>
                             {searchType === 'run' ?
                                 <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
-                             :
-                             <div>
-                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} getNumberOfPages={getNumberOfPages}/>
-                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
-                            </div>
+                                :
+                                <div>
+                                    <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} getNumberOfPages={getNumberOfPages} />
+                                    <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                                </div>
                             }
                         </div>
                         :
