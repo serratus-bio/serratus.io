@@ -6,19 +6,13 @@ import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
 import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
-import {
-    drawSliders,
-    sliderIdentity,
-    sliderCoverage
-} from '../helpers/QuerySliders';
+import FilterSlider from '../components/FilterSlider';
 import {
     getPlaceholder,
     getPageLinks,
     getTitle,
     getDataPromise,
-    InputOption,
-    sliderIdentityElementId,
-    sliderCoverageElementId
+    InputOption
 } from "../helpers/QueryPageHelpers";
 import {
     switchSize,
@@ -59,6 +53,8 @@ const Query = (props) => {
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
+    const [sliderIdentityLims, setSliderIdentityLims] = React.useState([75 ,100]);
+    const [sliderCoverageLims, setSliderCoverageLims] = React.useState([25 ,100]);
 
     function searchOnKeyUp(e) {
         if (e.keyCode === 13) {
@@ -99,9 +95,6 @@ const Query = (props) => {
     }
 
     React.useEffect(() => {
-        drawSliders();
-        sliderIdentity.range(75, 100);
-        sliderCoverage.range(25, 100);
         if (!queryValueStatic) {
             return;
         }
@@ -127,7 +120,6 @@ const Query = (props) => {
             <title>
                 Serratus | {queryValueStatic ? `${queryValueStatic}` : "Query"}
             </title>
-            <link href="https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css" rel="stylesheet"></link>
         </Helmet>
     );
 
@@ -157,11 +149,16 @@ const Query = (props) => {
                     <div className="w-full">
                         <div className="mx-2">
                             <div className="pt-6 text-center">Alignment identity (%)</div>
-                            <div id={sliderIdentityElementId} className="relative" style={{ height: 30 }}></div>
+                            <FilterSlider id="sliderIdentity"
+                                sliderLims={sliderIdentityLims}
+                                setSliderLims={setSliderIdentityLims} />
                         </div>
                         <div className="mx-2">
                             <div className="pt-6 text-center">Coverage</div>
-                            <div id={sliderCoverageElementId} className="relative" style={{ height: 30 }}></div>
+                            <FilterSlider id="sliderCoverage"
+                                sliderLims={sliderCoverageLims}
+                                setSliderLims={setSliderCoverageLims}
+                                colorGradientLims={["#3d5088", "#fce540"]} />
                         </div>
                     </div>
                 </div>
