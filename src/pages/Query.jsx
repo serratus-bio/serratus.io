@@ -9,6 +9,7 @@ import { useLocation } from 'react-router-dom';
 import FilterSlider from '../components/FilterSlider';
 import {
     parseRange,
+    constructRangeStr,
     getPlaceholder,
     getPageLinks,
     getTitle,
@@ -24,6 +25,9 @@ import allFamilyData from '../data/SerratusIO_scoreID.json';
 const familyDomain = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
 const queryTypes = ["family", "genbank", "run"];
+
+const identityRange = [75, 100];
+const coverageRange = [0, 100];
 
 const Query = (props) => {
     let queryTypeFromParam = null;
@@ -46,9 +50,9 @@ const Query = (props) => {
     const pathNameStatic = useLocation().pathname;
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
-    const [selectValues, setSelectValues] = React.useState([]);
+    const [selectValues, setSelectValues] = React.useState([{ label: queryValueStatic, value: queryValueStatic }]);
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
-    const [searchValue, setSearchValue] = React.useState("");
+    const searchValue = React.useRef(selectValues[0].value);
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
@@ -56,36 +60,45 @@ const Query = (props) => {
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-    const [sliderIdentityLims, setSliderIdentityLims] = React.useState([75 ,100]);
-    const [sliderCoverageLims, setSliderCoverageLims] = React.useState([25 ,100]);
+    const [sliderIdentityLims, setSliderIdentityLims] = React.useState(identityRange);
+    const [sliderCoverageLims, setSliderCoverageLims] = React.useState(coverageRange);
 
-    React.useEffect(() => {
-        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr));
-        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr));
-    }, []);
+    const willMount = React.useRef(true);
+    if (willMount.current) {
+        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr, identityRange));
+        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr, coverageRange));
+        willMount.current = false;
+    }
 
     function searchOnKeyUp(e) {
         if (e.keyCode === 13) {
             loadQueryPage(e.target.value);
         }
         else {
-            setSearchValue(e.target.value);
+            searchValue.current = e.target.value;
         }
     }
 
     function dropdownOnChange(values) {
         setSelectValues(values);
         if (values.length !== 0) {
-            loadQueryPage(values[0].value);
+            searchValue.current = values[0].value;
         }
     }
 
-    function loadQueryPage(searchValue) {
-        if (searchValue && !searchType) {
+    function loadQueryPage() {
+        if (searchValue.current && !searchType) {
             // TODO: display indicator "no query type selected"
             return;
         }
-        let newUrl = searchValue ? `${pathNameStatic}?${searchType}=${searchValue}` : pathNameStatic;
+        let newUrl = pathNameStatic;
+        if (searchValue.current) {
+            newUrl += `?${searchType}=${searchValue.current}`
+        };
+        if (sliderIdentityLims != identityRange) {
+            var identity = constructRangeStr(...sliderIdentityLims);
+            newUrl += `&identity=${identity}`;
+        }
         window.location.href = newUrl;
     }
 
@@ -106,7 +119,7 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLims));
     }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     React.useEffect(() => {
@@ -155,7 +168,7 @@ const Query = (props) => {
                                 placeholder={placeholderText} /> :
                             <div>
                                 <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                                <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                                <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                             </div>
                         }
                     </div>
@@ -163,17 +176,21 @@ const Query = (props) => {
                         <div className="mx-2">
                             <div className="pt-6 text-center">Alignment identity (%)</div>
                             <FilterSlider id="sliderIdentity"
+                                sliderRange={identityRange}
                                 sliderLims={sliderIdentityLims}
                                 setSliderLims={setSliderIdentityLims} />
                         </div>
                         <div className="mx-2">
                             <div className="pt-6 text-center">Coverage</div>
                             <FilterSlider id="sliderCoverage"
+                                sliderRange={coverageRange}
                                 sliderLims={sliderCoverageLims}
                                 setSliderLims={setSliderCoverageLims}
                                 colorGradientLims={["#3d5088", "#fce540"]} />
                         </div>
                     </div>
+                    <div className="h-10" />
+                    <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
                     <DataReference />

@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 export default (props) => {
-    // required props: id, sliderLims, setSliderLims
+    // required props: id, sliderRange, sliderLims, setSliderLims
     // optional props: colorGradientLims
 
     const slider = useRef(null);
@@ -14,6 +14,7 @@ export default (props) => {
 
     // directly fetch initial .current
     const id = useRef(props.id).current;
+    const sliderRange = useRef(props.sliderRange).current;
     const setSliderLims = useRef(props.setSliderLims).current;
     const colorGradientLims = useRef(props.colorGradientLims).current;
 
@@ -30,7 +31,7 @@ export default (props) => {
 
         const drawSlider = () => {
             var sliderDiv = d3.select(`#${id}`);
-            slider.current = createD3RangeSlider(d3, sliderLims.current[0], sliderLims.current[1], sliderDiv);
+            slider.current = createD3RangeSlider(d3, sliderRange[0], sliderRange[1], sliderDiv);
             slider.current.onChange((range) => updateLimLabels(range.begin, range.end));
             slider.current.onTouchEnd(() => updateSliderLims());
             if (colorGradientLims) {

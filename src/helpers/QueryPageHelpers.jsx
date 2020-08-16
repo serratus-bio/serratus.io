@@ -106,12 +106,12 @@ export const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-export const getDataPromise = (type, value, page, itemsPerPage) => {
+export const getDataPromise = (type, value, page, itemsPerPage, identityRange) => {
     switch (type) {
         case "family":
-            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage, identityRange);
         case "genbank":
-            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage, identityRange);
         case "run":
             return dataSdk.fetchSraRun(value, page);
         default:
@@ -130,13 +130,27 @@ export const InputOption = (props) => {
 
 // filtering
 
-export const parseRange = (rangeStr) => {
+export const parseRange = (rangeStr, bounds) => {
+    // parse
     rangeStr = rangeStr.slice(1, rangeStr.length - 1);
-    return rangeStr.split("-").map((s) => {
+    var [low, high] = rangeStr.split("-").map((s) => {
         var intVal = +s;
         if (!intVal) {
             throw "Invalid query parameter value"
         }
         return intVal;
     });
+
+    // constrict
+    var [min, max] = bounds;
+    if (low < min) low = min;
+    if (high > max) high = max;
+    if (low > max) low = max;
+    if (high < min) high = min;
+
+    return [low, high];
+}
+
+export const constructRangeStr = (begin, end) => {
+    return `[${begin}-${end}]`;
 }
