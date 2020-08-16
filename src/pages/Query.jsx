@@ -218,6 +218,11 @@ var xLims = [75, 100];
 var zLims = [25, 100];
 var zColorLims = ["#3d5088", "#fce540"];
 
+var sliderIdentityLabelL;
+var sliderIdentityLabelR;
+var sliderCoverageLabelL;
+var sliderCoverageLabelR;
+
 const drawSliders = () => {
     var sliderIdentityDiv = d3.select("#sliderIdentity");
     var sliderCoverageDiv = d3.select("#sliderCoverage");
@@ -235,24 +240,21 @@ const drawSliders = () => {
     sliderCoverageDiv.select(".slider")
         .attr("style", "background: rgba(0,0,0, 0.2)")
 
-    var sliderIdentityLabelL = sliderIdentityDiv.select(".WW").append("span")
+    sliderIdentityLabelL = sliderIdentityDiv.select(".WW").append("span")
         .attr("style", "float: left; transform: translate(0px,20px)");
-    var sliderIdentityLabelR = sliderIdentityDiv.select(".EE").append("text")
+    sliderIdentityLabelR = sliderIdentityDiv.select(".EE").append("text")
         .attr("style", "float: left; transform: translate(-5px,20px)");
-    var sliderCoverageLabelL = sliderCoverageDiv.select(".WW").append("span")
+    sliderCoverageLabelL = sliderCoverageDiv.select(".WW").append("span")
         .attr("style", "float: left; transform: translate(0px,20px)");
-    var sliderCoverageLabelR = sliderCoverageDiv.select(".EE").append("text")
+    sliderCoverageLabelR = sliderCoverageDiv.select(".EE").append("text")
         .attr("style", "float: left; transform: translate(-5px,20px)");
+};
 
-    function updateXLims(begin, end) {
-        sliderIdentityLabelL.text(begin);
-        sliderIdentityLabelR.text(end);
-    };
-    function updateZLims(begin, end) {
-        sliderCoverageLabelL.text(begin);
-        sliderCoverageLabelR.text(end);
-    };
-
-    sliderIdentity.range(...xLims);
-    sliderCoverage.range(...zLims);
-}
+const updateXLims = (begin, end) => {
+    sliderIdentityLabelL.text(begin);
+    sliderIdentityLabelR.text(end);
+};
+const updateZLims = (begin, end) => {
+    sliderCoverageLabelL.text(begin);
+    sliderCoverageLabelR.text(end);
+};
