@@ -127,3 +127,16 @@ export const InputOption = (props) => {
         </div>
     )
 }
+
+// filtering
+
+export const parseRange = (rangeStr) => {
+    rangeStr = rangeStr.slice(1, rangeStr.length - 1);
+    return rangeStr.split("-").map((s) => {
+        var intVal = +s;
+        if (!intVal) {
+            throw "Invalid query parameter value"
+        }
+        return intVal;
+    });
+}

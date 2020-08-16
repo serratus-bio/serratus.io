@@ -8,6 +8,7 @@ import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
 import FilterSlider from '../components/FilterSlider';
 import {
+    parseRange,
     getPlaceholder,
     getPageLinks,
     getTitle,
@@ -36,6 +37,8 @@ const Query = (props) => {
             queryValueFromParam = paramValue;
         }
     });
+    var identityParamStr = urlParams.get("identity");
+    var coverageParamStr = urlParams.get("coverage");
 
     // these values don't change until reload
     const queryTypeStatic = queryTypeFromParam;
@@ -55,6 +58,11 @@ const Query = (props) => {
     const [dataPromise, setDataPromise] = React.useState();
     const [sliderIdentityLims, setSliderIdentityLims] = React.useState([75 ,100]);
     const [sliderCoverageLims, setSliderCoverageLims] = React.useState([25 ,100]);
+
+    React.useEffect(() => {
+        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr));
+        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr));
+    }, []);
 
     function searchOnKeyUp(e) {
         if (e.keyCode === 13) {
