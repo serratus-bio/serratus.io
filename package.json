@@ -20,6 +20,7 @@
     "react-scripts": "^3.4.3",
     "react-scroll": "^1.7.16",
     "react-spring": "^8.0.27",
+    "serve": "^11.3.2",
     "typeface-league-spartan": "0.0.44"
   },
   "scripts": {
