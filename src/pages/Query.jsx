@@ -164,7 +164,7 @@ const Query = (props) => {
                             <Select options={familyDomain}
                                 values={selectValues}
                                 onChange={dropdownOnChange}
-                                onDropdownOpen={() => setSelectValues([])}
+                                onDropdownOpen={() => setSelectValues([{}])}
                                 placeholder={placeholderText} /> :
                             <div>
                                 <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
