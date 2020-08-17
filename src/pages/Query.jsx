@@ -119,7 +119,7 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLims));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLims, sliderCoverageLims));
     }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     React.useEffect(() => {

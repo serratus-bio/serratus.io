@@ -11,15 +11,17 @@ export default class DataSdk {
         return response.data
     }
 
-    async fetchSraHitsByAccession(genbankAccession, pageNumber, itemsPerPage, identityRange) {
+    async fetchSraHitsByAccession(genbankAccession, pageNumber, itemsPerPage, identityRange, coverageRange) {
         var identity = constructRangeStr(...identityRange);
-        const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}`);
+        var coverage = constructRangeStr(...coverageRange);
+        const response = await axios.get(`${this.baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&cvgPct=${coverage}`);
         return response.data;
     }
 
-    async fetchSraHitsByFamily(familyName, pageNumber, itemsPerPage, identityRange) {
+    async fetchSraHitsByFamily(familyName, pageNumber, itemsPerPage, identityRange, coverageRange) {
         var identity = constructRangeStr(...identityRange);
-        const response = await axios.get(`${this.baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}`);
+        var coverage = constructRangeStr(...coverageRange);
+        const response = await axios.get(`${this.baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&score=${coverage}`);
         return response.data;
     }
 
