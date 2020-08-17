@@ -195,6 +195,9 @@ const Query = (props) => {
                 <div className={`hidden ${switchSize}:block mb-auto`}>
                     <DataReference />
                 </div>
+                <div className={`hidden ${switchSize}:block mb-auto`}>
+                    <DataReference />
+                </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
             <hr className="sm:hidden" />
