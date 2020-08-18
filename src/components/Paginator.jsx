@@ -21,63 +21,6 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
       setNumPages(data);
     })
   }
-  
-  const OnePagePaginator = () => {
-    return (
-      <div>
-        <button className={invisibleButton}></button>
-          Page 1 out of 1
-        <button className={invisibleButton} onClick={nextPage}>next</button>
-    </div>
-    )
-  }
-
-  const FirstPagePaginator = () => {
-    return (
-      <div>
-        <button className={invisibleButton}></button>
-          Page {pageNumber} out of {numPages}
-        <button className={visibleButton} onClick={nextPage}>next</button>
-      </div>
-    )
-  }
-
-  const MiddlePagePaginator = () => {
-    return (
-      <div> 
-        <button className={visibleButton} onClick={prevPage}>prev</button>         
-          Page {pageNumber} out of {numPages}
-        <button className={visibleButton} onClick={nextPage}>next</button>
-      </div>
-    )
-  }
-
-  const LastPagePaginator = () => {
-    return ( 
-      <div> 
-        <button className={visibleButton} onClick={prevPage}>prev</button>
-          Page {pageNumber} out of {numPages}
-        <button className={invisibleButton}></button>
-      </div> 
-    )
-  }
-
-  const FullPaginator = () => {
-    return (
-      <div className={centerButtons}>
-      {pageNumber == 1 ? 
-        numPages == 1 ? 
-          <OnePagePaginator/> : 
-            <FirstPagePaginator/>
-          : <div className={centerButtons}>
-            {pageNumber == numPages ?
-              <LastPagePaginator/>
-            : <MiddlePagePaginator/>}
-        </div> 
-      }
-    </div>
-    )
-}
 
   React.useEffect(() => {
     if(!dataPromise) return;
@@ -85,10 +28,19 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
   }, [pageNumber, numPages, dataPromise]);
 
   return (
-    <div> 
-      {loading ? <div></div> : <FullPaginator/> }
-    </div>
-  )
+      !loading &&
+      <div className={centerButtons}>
+        {pageNumber === 1 ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={prevPage}>prev</button>
+        }
+            Page {pageNumber} out of {numPages}
+        {pageNumber === numPages ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={nextPage}>next</button>
+        }
+      </div>
+    )
 }
 
 export default Paginator;
