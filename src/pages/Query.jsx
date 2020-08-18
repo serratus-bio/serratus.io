@@ -11,6 +11,8 @@ import {
     parseRange,
     constructRangeStr,
     getPlaceholder,
+    getIdentitySliderLabel,
+    getCoverageSliderLabel,
     getPageLinks,
     getTitle,
     getDataPromise,
@@ -167,14 +169,14 @@ const Query = (props) => {
                     </div>
                     <div className="w-full">
                         <div className="mx-2">
-                            <div className="pt-6 text-center">Alignment identity (%)</div>
+                            <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
                             <FilterSlider id="sliderIdentity"
                                 sliderRange={identityBounds}
                                 sliderLims={sliderIdentityLims}
                                 setSliderLims={setSliderIdentityLims} />
                         </div>
                         <div className="mx-2">
-                            <div className="pt-6 text-center">Coverage</div>
+                            <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
                             <FilterSlider id="sliderCoverage"
                                 sliderRange={coverageBounds}
                                 sliderLims={sliderCoverageLims}

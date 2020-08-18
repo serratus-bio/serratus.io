@@ -19,6 +19,22 @@ export const getPlaceholder = (type) => {
     return typePlaceholderMap[type];
 }
 
+export const getIdentitySliderLabel = (type) => {
+    let typeMap = {
+        family: "Average alignment identity (%)",
+        genbank: "Alignment identity (%)"
+    };
+    return typeMap[type];
+}
+
+export const getCoverageSliderLabel = (type) => {
+    let typeMap = {
+        family: "Score (pangenome coverage)",
+        genbank: "Coverage"
+    };
+    return typeMap[type];
+}
+
 export const getPageLinks = (type, value) => {
     if (type === "family") {
         var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
