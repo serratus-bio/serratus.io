@@ -6,6 +6,7 @@ import {
     switchSize,
     classesBoxBorder
 } from '../helpers/common';
+import { constructRangeStr } from "../helpers/QueryPageHelpers";
 import DataReference from '../components/DataReference';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
@@ -63,6 +64,17 @@ export default () => {
         }
     }
 
+    const goToQuery = () => {
+        let params = new URLSearchParams();
+        params.set('family', family);
+        var identity = constructRangeStr(...xLims);
+        params.set('identity', identity);
+        var coverage = constructRangeStr(...zLims);
+        params.set('coverage', coverage);
+        var queryUrl = 'query?' + params.toString();
+        window.location.href = queryUrl;
+    }
+
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
@@ -87,8 +99,7 @@ export default () => {
                                 <div id="sliderZ" className="relative" style={{ height: 30 }}></div>
                             </div>
                             <div className="h-10" />
-                            <button onClick={() => console.log(family, xLims, zLims)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
-                                (not implemented)
+                            <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
                             </div> : null}
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
