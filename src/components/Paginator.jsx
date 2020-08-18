@@ -1,5 +1,4 @@
 import React from "react";
-import { data } from "autoprefixer";
 
 const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
   const [numPages, setNumPages] = React.useState();
