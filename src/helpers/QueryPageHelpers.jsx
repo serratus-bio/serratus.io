@@ -136,7 +136,7 @@ export const parseRange = (rangeStr, bounds) => {
     var [low, high] = rangeStr.split("-").map((s) => {
         var intVal = +s;
         if (isNaN(intVal)) {
-            throw "Invalid query parameter value"
+            throw new Error("Invalid query parameter value");
         }
         return intVal;
     });
