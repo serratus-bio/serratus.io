@@ -32,7 +32,7 @@ const selectOptions = Object.keys(allFamilyData).map((family) => { return { labe
 export default () => {
     const [chartLoaded, setChartLoaded] = React.useState(false);
     const [family, setFamily] = React.useState("Coronaviridae");
-    const [selectValues, setSelectValues] = React.useState([]);
+    const [selectValues, setSelectValues] = React.useState([{ label: family, value: family }]);
 
     React.useEffect(() => {
         if (family === "") {
