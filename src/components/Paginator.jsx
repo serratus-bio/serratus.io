@@ -22,6 +22,16 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
     })
   }
   
+  const OnePagePaginator = () => {
+    return (
+      <div>
+        <button className={invisibleButton}></button>
+          Page 1 out of 1
+        <button className={invisibleButton} onClick={nextPage}>next</button>
+    </div>
+    )
+  }
+
   const FirstPagePaginator = () => {
     return (
       <div>
@@ -56,10 +66,12 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
     return (
       <div className={centerButtons}>
       {pageNumber == 1 ? 
-        <FirstPagePaginator/>
-      : <div className={centerButtons}>
-          {pageNumber == numPages ?
-            <LastPagePaginator/>
+        numPages == 1 ? 
+          <OnePagePaginator/> : 
+            <FirstPagePaginator/>
+          : <div className={centerButtons}>
+            {pageNumber == numPages ?
+              <LastPagePaginator/>
             : <MiddlePagePaginator/>}
         </div> 
       }
