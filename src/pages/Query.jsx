@@ -56,7 +56,6 @@ const Query = (props) => {
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
-    const [numberOfPages, setNumberOfPages] = React.useState(0);
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
@@ -107,12 +106,6 @@ const Query = (props) => {
         setPlaceholderText(getPlaceholder(queryType));
         setSearchType(queryType);
         setPageNumber(1);
-    }
-
-    async function getNumberOfPages() {
-        if (!dataPromise) return;
-        var data = await dataPromise;
-        setNumberOfPages(data.numberOfPages);
     }
 
     React.useEffect(() => {
@@ -217,11 +210,11 @@ const Query = (props) => {
                         <div>
                             {searchType === 'run' ?
                                 <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
-                                :
-                                <div>
-                                    <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} getNumberOfPages={getNumberOfPages} />
-                                    <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
-                                </div>
+                             :
+                             <div>
+                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} dataPromise={dataPromise}/>
+                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                            </div>
                             }
                         </div>
                         :

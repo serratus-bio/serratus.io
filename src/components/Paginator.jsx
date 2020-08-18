@@ -1,6 +1,9 @@
 import React from "react";
 
-const Paginator = ( {pageNumber, setPageNumber, numberOfPages, getNumberOfPages} ) => {
+const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
+  const [numPages, setNumPages] = React.useState();
+  const [loading, setLoading] = React.useState(true);
+  
   const visibleButton = "bg-gray-300 hover:bg-gray-500 mx-2 py-1 px-4 rounded inline-flex items-center";
   const invisibleButton = "invisible" + visibleButton;
   const centerButtons = "flex flex-row justify-center items-center";
@@ -8,53 +11,35 @@ const Paginator = ( {pageNumber, setPageNumber, numberOfPages, getNumberOfPages}
   const nextPage = () => setPageNumber(pageNumber + 1);
   
   const prevPage = () => setPageNumber(pageNumber - 1);
-  
-  const FirstPagePaginator = () => {
-    return (
-      <div>
-        <button className={invisibleButton}></button>
-          Page {pageNumber} out of ...
-        <button className={visibleButton} onClick={nextPage}>next</button>
-      </div>
-    )
-  }
 
-  const MiddlePagePaginator = () => {
-    return (
-      <div> 
-        <button className={visibleButton} onClick={prevPage}>prev</button>         
-          Page {pageNumber} out of {numberOfPages}
-        <button className={visibleButton} onClick={nextPage}>next</button>
-      </div>
-    )
-  }
-
-  const LastPagePaginator = () => {
-    return ( 
-      <div> 
-        <button className={visibleButton} onClick={prevPage}>prev</button>
-          Page {pageNumber} out of {numberOfPages}
-        <button className={invisibleButton}></button>
-      </div> 
-    )
+  const readDataPromise = async (dataPromise) => {
+    if (!dataPromise) return;
+    dataPromise.then((data) => {
+      data = data.numberOfPages;
+      setLoading(false);
+      setNumPages(data);
+    })
   }
 
   React.useEffect(() => {
-    getNumberOfPages();
-  }, [pageNumber]);
+    if(!dataPromise) return;
+    readDataPromise(dataPromise);
+  }, [pageNumber, numPages, dataPromise]);
 
   return (
-    <div className={centerButtons}>
-      {pageNumber == 1 ? 
-        <FirstPagePaginator/>
-      : <div className={centerButtons}>
-          {pageNumber == numberOfPages ?
-            <LastPagePaginator/>
-            : <MiddlePagePaginator/>}
-        </div> 
-      }
-    </div>
-  )
+      !loading &&
+      <div className={centerButtons}>
+        {pageNumber === 1 ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={prevPage}>prev</button>
+        }
+            Page {pageNumber} out of {numPages}
+        {pageNumber === numPages ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={nextPage}>next</button>
+        }
+      </div>
+    )
 }
 
 export default Paginator;
