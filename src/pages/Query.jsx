@@ -167,23 +167,25 @@ const Query = (props) => {
                             </div>
                         }
                     </div>
-                    <div className="w-full">
-                        <div className="mx-2">
-                            <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
-                            <FilterSlider id="sliderIdentity"
-                                sliderRange={identityBounds}
-                                sliderLims={sliderIdentityLims}
-                                setSliderLims={setSliderIdentityLims} />
+                    {searchType != "run" &&
+                        <div className="w-full">
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
+                                <FilterSlider id="sliderIdentity"
+                                    sliderRange={identityBounds}
+                                    sliderLims={sliderIdentityLims}
+                                    setSliderLims={setSliderIdentityLims} />
+                            </div>
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
+                                <FilterSlider id="sliderCoverage"
+                                    sliderRange={coverageBounds}
+                                    sliderLims={sliderCoverageLims}
+                                    setSliderLims={setSliderCoverageLims}
+                                    colorGradientLims={["#3d5088", "#fce540"]} />
+                            </div>
                         </div>
-                        <div className="mx-2">
-                            <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
-                            <FilterSlider id="sliderCoverage"
-                                sliderRange={coverageBounds}
-                                sliderLims={sliderCoverageLims}
-                                setSliderLims={setSliderCoverageLims}
-                                colorGradientLims={["#3d5088", "#fce540"]} />
-                        </div>
-                    </div>
+                    }
                     <div className="h-10" />
                     <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                 </div>
