@@ -13,33 +13,33 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
   const prevPage = () => setPageNumber(pageNumber - 1);
 
   const readDataPromise = async (dataPromise) => {
-	if (!dataPromise) return;
-	dataPromise.then((data) => {
-	  data = data.numberOfPages;
-	  setLoading(false);
-	  setNumPages(data);
-	})
+    if (!dataPromise) return;
+    dataPromise.then((data) => {
+      data = data.numberOfPages;
+      setLoading(false);
+      setNumPages(data);
+    })
   }
 
   React.useEffect(() => {
-	if(!dataPromise) return;
-	readDataPromise(dataPromise);
+    if(!dataPromise) return;
+    readDataPromise(dataPromise);
   }, [pageNumber, numPages, dataPromise]);
 
   return (
-	!loading &&
-	<div className={centerButtons}>
-	  {pageNumber === 1 ?
-		<button className={invisibleButton}></button>
-		: <button className={visibleButton} onClick={prevPage}>prev</button>
-	  }
-		  Page {pageNumber} out of {numPages}
-	  {pageNumber === numPages ?
-		<button className={invisibleButton}></button>
-		: <button className={visibleButton} onClick={nextPage}>next</button>
-	  }
-	</div>
-  )
+      !loading &&
+      <div className={centerButtons}>
+        {pageNumber === 1 ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={prevPage}>prev</button>
+        }
+            Page {pageNumber} out of {numPages}
+        {pageNumber === numPages ?
+          <button className={invisibleButton}></button>
+          : <button className={visibleButton} onClick={nextPage}>next</button>
+        }
+      </div>
+    )
 }
 
 export default Paginator;
