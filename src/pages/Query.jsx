@@ -177,6 +177,7 @@ const Query = (props) => {
                              :
                              <div>
                                 <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} numberOfPages={numberOfPages} getNumberOfPages={getNumberOfPages}/>
+                                <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} dataPromise={dataPromise}/>
                                 <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
                             </div>
                             }
