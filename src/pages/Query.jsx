@@ -148,8 +148,8 @@ const Query = (props) => {
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
             <div className={`flex flex-col p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
-                <div className="flex flex-col flex-grow items-center z-10 mt-2">
-                    <div className="items-center z-10">
+                <div className="flex-grow items-center">
+                    <div>
                         <div>
                             <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
                             <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
@@ -162,8 +162,7 @@ const Query = (props) => {
                                 onDropdownOpen={() => setSelectValues([{}])}
                                 placeholder={placeholderText} /> :
                             <div>
-                                <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                                <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                                <input className="rounded border border-gray-400 h-8 w-full px-2 m-1 focus:border-blue-600 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
                             </div>
                         }
                     </div>
