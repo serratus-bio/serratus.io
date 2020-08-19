@@ -162,7 +162,7 @@ const Query = (props) => {
                                 onDropdownOpen={() => setSelectValues([{}])}
                                 placeholder={placeholderText} /> :
                             <div>
-                                <input className="rounded border border-gray-400 h-8 w-full px-2 m-1 focus:border-blue-600 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
+                                <input className="rounded border border-gray-400 h-8 w-full px-2 m-1 focus:border-blue-600 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} defaultValue={queryValueStatic} />
                             </div>
                         }
                     </div>
