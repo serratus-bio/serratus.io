@@ -19,6 +19,22 @@ export const getPlaceholder = (type) => {
     return typePlaceholderMap[type];
 }
 
+export const getIdentitySliderLabel = (type) => {
+    let typeMap = {
+        family: "Average alignment identity (%)",
+        genbank: "Alignment identity (%)"
+    };
+    return typeMap[type];
+}
+
+export const getCoverageSliderLabel = (type) => {
+    let typeMap = {
+        family: "Score (pangenome coverage)",
+        genbank: "Coverage"
+    };
+    return typeMap[type];
+}
+
 export const getPageLinks = (type, value) => {
     if (type === "family") {
         var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
@@ -106,12 +122,12 @@ export const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-export const getDataPromise = (type, value, page, itemsPerPage) => {
+export const getDataPromise = (type, value, page, itemsPerPage, identityRange, coverageRange) => {
     switch (type) {
         case "family":
-            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage, identityRange, coverageRange);
         case "genbank":
-            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage, identityRange, coverageRange);
         case "run":
             return dataSdk.fetchSraRun(value, page);
         default:
@@ -126,4 +142,31 @@ export const InputOption = (props) => {
             <span className="ml-1">{props.displayText}</span>
         </div>
     )
+}
+
+// filtering
+
+export const parseRange = (rangeStr, bounds) => {
+    // parse
+    rangeStr = rangeStr.slice(1, rangeStr.length - 1);
+    var [low, high] = rangeStr.split("-").map((s) => {
+        var intVal = +s;
+        if (isNaN(intVal)) {
+            throw new Error("Invalid query parameter value");
+        }
+        return intVal;
+    });
+
+    // constrict
+    var [min, max] = bounds;
+    if (low < min) low = min;
+    if (high > max) high = max;
+    if (low > max) low = max;
+    if (high < min) high = min;
+
+    return [low, high];
+}
+
+export const constructRangeStr = (begin, end) => {
+    return `[${begin}-${end}]`;
 }

@@ -1,63 +1,54 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Helmet } from 'react-helmet';
 import * as d3 from 'd3';
 import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 export default (props) => {
-    // required props: id, sliderLims, setSliderLims
-    // optional props: colorGradientLims, instantUpdate:bool, onTouchEnd:callback
+    // required props: id, sliderDomain, sliderLimsRef (mutable ref)
+    // optional props: colorGradientLims
 
-    var slider;
-    var sliderLabelL;
-    var sliderLabelR;
-    var sliderLims = props.sliderLims;
+    const slider = useRef(null);
+    const sliderLabelL = useRef(null);
+    const sliderLabelR = useRef(null);
 
-    const drawSlider = () => {
-        var sliderDiv = d3.select(`#${props.id}`);
-        slider = createD3RangeSlider(d3, sliderLims[0], sliderLims[1], sliderDiv);
-        slider.onChange((range) => {
-            updateLimLabels(range.begin, range.end);
-            props.instantUpdate && updateSliderLims();
-        });
-        slider.onTouchEnd(() => {
-            !props.instantUpdate && updateSliderLims();
-            // TODO: call props.onTouchEnd() after slider update
-        });
-        // props.onTouchEnd && slider.onTouchEnd(props.onTouchEnd);
-        // props.instantUpdate ?
-        //     slider.onChange(updateSliderLims) :
-        //     slider.onTouchEnd(updateSliderLims)
+    // directly fetch initial .current
+    const id = useRef(props.id).current;
+    const sliderDomain = useRef(props.sliderDomain).current;
+    const colorGradientLims = useRef(props.colorGradientLims).current;
 
-        if (props.colorGradientLims) {
-            var colorGradient = `background-image: linear-gradient(to right, ${props.colorGradientLims[0]} , ${props.colorGradientLims[1]});`;
-            var newSliderDivStyle = sliderDiv.attr("style") + colorGradient;
-            sliderDiv.attr("style", newSliderDivStyle)
-            sliderDiv.select(".slider-container")
-                .attr("style", colorGradient);
-            sliderDiv.select(".slider")
-                .attr("style", "background: rgba(0,0,0, 0.2)");
-        }
+    useEffect(() => {
+        const updateLims = (begin, end) => {
+            sliderLabelL.current.text(begin);
+            sliderLabelR.current.text(end);
+            props.sliderLimsRef.current = [begin, end];
+        };
 
-        sliderLabelL = sliderDiv.select(".WW").append("span")
-            .attr("style", "float: left; transform: translate(0px,20px)");
-        sliderLabelR = sliderDiv.select(".EE").append("text")
-            .attr("style", "float: left; transform: translate(-5px,20px)");
-    };
+        const drawSlider = () => {
+            var sliderDiv = d3.select(`#${id}`);
+            slider.current = createD3RangeSlider(d3, sliderDomain[0], sliderDomain[1], sliderDiv);
+            slider.current.onChange((range) => updateLims(range.begin, range.end));
+            if (colorGradientLims) {
+                var colorGradient = `background-image: linear-gradient(to right, ${colorGradientLims[0]} , ${colorGradientLims[1]});`;
+                var newSliderDivStyle = sliderDiv.attr("style") + colorGradient;
+                sliderDiv.attr("style", newSliderDivStyle)
+                sliderDiv.select(".slider-container")
+                    .attr("style", colorGradient);
+                sliderDiv.select(".slider")
+                    .attr("style", "background: rgba(0,0,0, 0.2)");
+            }
 
-    const updateLimLabels = (begin, end) => {
-        sliderLabelL.text(begin);
-        sliderLabelR.text(end);
-        sliderLims = [begin, end];
-    };
+            sliderLabelL.current = sliderDiv.select(".WW").append("span")
+                .attr("style", "float: left; transform: translate(0px,20px)");
+            sliderLabelR.current = sliderDiv.select(".EE").append("text")
+                .attr("style", "float: left; transform: translate(-5px,20px)");
+        };
 
-    const updateSliderLims = () => {
-        props.setSliderLims(sliderLims);
-    };
-
-    React.useEffect(() => {
         drawSlider();
-        slider.range(...props.sliderLims);
-    }, []);
+    }, [id, sliderDomain, colorGradientLims, props.sliderLimsRef]);
+
+    useEffect(() => {
+        slider.current && slider.current.range(...props.sliderLimsRef.current);
+    }, [props.sliderLimsRef]);
 
     return (
         <div>

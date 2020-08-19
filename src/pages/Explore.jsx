@@ -10,17 +10,23 @@ import FilterSlider from '../components/FilterSlider';
 import {
     ExploreChart,
     updateChart,
-    updateYLims
+    updateXLims,
+    updateYLims,
+    updateZLims
 } from '../components/ExploreChart';
+import { constructRangeStr } from "../helpers/QueryPageHelpers";
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
+const identityDomain = [75, 100];
+const coverageDomain = [0, 100];
+
 export default () => {
     const [family, setFamily] = React.useState("Coronaviridae");
     const [selectValues, setSelectValues] = React.useState([]);
-    const [sliderIdentityLims, setSliderIdentityLims] = React.useState([75 ,100]);
-    const [sliderCoverageLims, setSliderCoverageLims] = React.useState([25 ,100]);
+    const sliderIdentityLimsRef = React.useRef(identityDomain);
+    const sliderCoverageLimsRef = React.useRef([25, 100]);
 
     var data = allFamilyData[family];
 
@@ -39,6 +45,25 @@ export default () => {
         if (values.length !== 0) {
             setFamily(values[0].value);
         }
+    }
+
+    const goToQuery = () => {
+        let params = new URLSearchParams();
+        params.set('family', family);
+        var identity = constructRangeStr(...sliderIdentityLimsRef.current);
+        params.set('identity', identity);
+        var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
+        params.set('coverage', coverage);
+        var queryUrl = 'query?' + params.toString();
+        window.location.href = queryUrl;
+    }
+
+    const logInfo = () => {
+        console.log(sliderIdentityLimsRef.current);
+        updateChart();
+        updateXLims(...sliderIdentityLimsRef.current);
+        updateZLims(...sliderCoverageLimsRef.current);
+        updateYLims(500);
     }
 
     console.log("reloading Explore")
@@ -63,22 +88,19 @@ export default () => {
                             <div className="mx-2">
                                 <div className="pt-6 text-center">Average alignment identity (%)</div>
                                 <FilterSlider id="sliderIdentity"
-                                    sliderLims={sliderIdentityLims}
-                                    setSliderLims={setSliderIdentityLims}
-                                    instantUpdate={true}
-                                    onTouchEnd={() => updateYLims()} />
+                                    sliderDomain={identityDomain}
+                                    sliderLimsRef={sliderIdentityLimsRef} />
                             </div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">Score (pangenome coverage)</div>
                                 <FilterSlider id="sliderCoverage"
-                                    sliderLims={sliderCoverageLims}
-                                    setSliderLims={setSliderCoverageLims}
-                                    colorGradientLims={["#3d5088", "#fce540"]}
-                                    instantUpdate={true} />
+                                    sliderDomain={coverageDomain}
+                                    sliderLimsRef={sliderCoverageLimsRef}
+                                    colorGradientLims={["#3d5088", "#fce540"]} />
                             </div>
                             <div className="h-10" />
-                            <button onClick={() => console.log(family, sliderIdentityLims, sliderCoverageLims)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
-                                (not implemented)
+                            <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
+                            <button onClick={logInfo} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">log info</button>
                             </div> : null}
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
@@ -91,8 +113,8 @@ export default () => {
                 <h1 className="text-center text-2xl">{family}</h1>
                 <ExploreChart
                     data={data}
-                    sliderIdentityLims={sliderIdentityLims}
-                    sliderCoverageLims={sliderCoverageLims} />
+                    sliderIdentityLimsRef={sliderIdentityLimsRef}
+                    sliderCoverageLimsRef={sliderCoverageLimsRef} />
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />
                 </div>

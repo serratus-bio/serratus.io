@@ -17,8 +17,8 @@ const Home = () => {
                 <div className="flex flex-col z-10 items-center text-white px-4">
                     <h1 className="text-5xl font-montserrat font-light text-center mt-16 z-10">Welcome to Serratus</h1>
                     <h2 className="text-xl font-thin text-center z-10 mb-8">An open-science viral discovery platform</h2>
-                    <NavLink to="/query" className="border z-10 border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white">
-                        {searchIcon} Discover
+                    <NavLink to="/explore" className="border z-10 border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white">
+                        {searchIcon} Explore
                     </NavLink>
                     <h3 className="inline text-lg font-thin my-5">
                         <span className="font-normal">3,837,755</span> runs processed<span className="border-l border-white mx-2" />
