@@ -19,7 +19,6 @@ export const ExploreChart = (props) => {
     }, [chartLoaded, props.data]);
 
     updateChart = (transitionDuration = 0) => {
-        console.log("updateChart()");
         var dataFiltered = familyData.filter((d) => {
             return (
                 (d[xColumn] >= xLims[0]) &&
@@ -65,7 +64,6 @@ export var updateYLims;
 export var updateChart;
 
 export const drawExploreFamilyChart = (data) => {
-    console.log("drawExploreFamilyChart()");
 
     var chartWidth = 300;
     var chartHeight = 150;
@@ -101,7 +99,6 @@ export const drawExploreFamilyChart = (data) => {
         .attr("class", "y-axis");
 
     updateXLims = (begin, end) => {
-        console.log("updateXLims()");
         xLims = [begin, end];
         var rangeLen = end - begin;
         var nTicks = (rangeLen < 10) ? rangeLen : 10;
@@ -116,7 +113,6 @@ export const drawExploreFamilyChart = (data) => {
     }
 
     updateYLims = (transitionDuration = 0) => {
-        console.log("updateYLims()");
         var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
             return d3.max(d, function (innerD) {
                 return innerD[1];
@@ -166,7 +162,6 @@ export const drawExploreFamilyChart = (data) => {
 }
 
 function getDataByZStack(dataFiltered) {
-    console.log("getDataByZStack()");
     var dataByX = d3.nest()
         .key(function (d) { return d[xColumn]; })
         .entries(dataFiltered);

@@ -23,6 +23,7 @@ const identityDomain = [75, 100];
 const coverageDomain = [0, 100];
 
 export default () => {
+    // family is assumed to always have a valid value due to dropdown select
     const [family, setFamily] = React.useState("Coronaviridae");
     const [selectValues, setSelectValues] = React.useState([{ label: family, value: family }]);
     const sliderIdentityLimsRef = React.useRef(identityDomain);
@@ -31,9 +32,6 @@ export default () => {
     var data = allFamilyData[family];
 
     React.useEffect(() => {
-        if (family === "") {
-            return;
-        }
         data = allFamilyData[family];
         updateChart();
         updateYLims();
@@ -46,6 +44,10 @@ export default () => {
         }
     }
 
+    const updateX = () => { updateXLims(...sliderIdentityLimsRef.current) }
+    const updateZ = () => { updateZLims(...sliderCoverageLimsRef.current) }
+    const updateY = () => { updateYLims(500) }
+
     const goToQuery = () => {
         let params = new URLSearchParams();
         params.set('family', family);
@@ -55,18 +57,6 @@ export default () => {
         params.set('coverage', coverage);
         var queryUrl = 'query?' + params.toString();
         window.location.href = queryUrl;
-    }
-
-    const updateX = () => {
-        updateXLims(...sliderIdentityLimsRef.current);
-    }
-
-    const updateZ = () => {
-        updateZLims(...sliderCoverageLimsRef.current);
-    }
-
-    const updateAll = () => {
-        updateYLims(500);
     }
 
     return (
@@ -84,28 +74,25 @@ export default () => {
                         onChange={selectOnChange}
                         onDropdownOpen={() => setSelectValues([])}
                         placeholder="Search for family" />
-                    {family ?
-                        <div>
-                            <div className="mx-2">
-                                <div className="pt-6 text-center">Average alignment identity (%)</div>
-                                <FilterSlider id="sliderIdentity"
-                                    sliderDomain={identityDomain}
-                                    sliderLimsRef={sliderIdentityLimsRef}
-                                    onChange={updateX}
-                                    onTouchEnd={updateAll} />
-                            </div>
-                            <div className="mx-2">
-                                <div className="pt-6 text-center">Score (pangenome coverage)</div>
-                                <FilterSlider id="sliderCoverage"
-                                    sliderDomain={coverageDomain}
-                                    sliderLimsRef={sliderCoverageLimsRef}
-                                    colorGradientLims={["#3d5088", "#fce540"]}
-                                    onChange={updateZ}
-                                    onTouchEnd={updateAll} />
-                            </div>
-                            <div className="h-10" />
-                            <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
-                            </div> : null}
+                    <div className="mx-2">
+                        <div className="pt-6 text-center">Average alignment identity (%)</div>
+                        <FilterSlider id="sliderIdentity"
+                            sliderDomain={identityDomain}
+                            sliderLimsRef={sliderIdentityLimsRef}
+                            onChange={updateX}
+                            onTouchEnd={updateY} />
+                    </div>
+                    <div className="mx-2">
+                        <div className="pt-6 text-center">Score (pangenome coverage)</div>
+                        <FilterSlider id="sliderCoverage"
+                            sliderDomain={coverageDomain}
+                            sliderLimsRef={sliderCoverageLimsRef}
+                            colorGradientLims={["#3d5088", "#fce540"]}
+                            onChange={updateZ}
+                            onTouchEnd={updateY} />
+                    </div>
+                    <div className="h-10" />
+                    <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
                     <DataReference />
