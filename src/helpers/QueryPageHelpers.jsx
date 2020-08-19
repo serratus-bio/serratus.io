@@ -10,7 +10,7 @@ import {
 
 const dataSdk = new DataSdk();
 
-const getPlaceholder = (type) => {
+export const getPlaceholder = (type) => {
     let typePlaceholderMap = {
         family: "e.g. Coronaviridae",
         genbank: "e.g. EU769558.1",
@@ -19,7 +19,23 @@ const getPlaceholder = (type) => {
     return typePlaceholderMap[type];
 }
 
-const getPageLinks = (type, value) => {
+export const getIdentitySliderLabel = (type) => {
+    let typeMap = {
+        family: "Average alignment identity (%)",
+        genbank: "Alignment identity (%)"
+    };
+    return typeMap[type];
+}
+
+export const getCoverageSliderLabel = (type) => {
+    let typeMap = {
+        family: "Score (pangenome coverage)",
+        genbank: "Coverage"
+    };
+    return typeMap[type];
+}
+
+export const getPageLinks = (type, value) => {
     if (type === "family") {
         var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
         var text = "Taxonomy Browser"
@@ -79,7 +95,7 @@ const getPageLinks = (type, value) => {
     }
 }
 
-const getTitle = async (type, value, valueCorrected) => {
+export const getTitle = async (type, value, valueCorrected) => {
     console.log("Fetching Entrez data...");
     let title = null;
     switch (type) {
@@ -106,19 +122,19 @@ const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-const getDataPromise = (type, value, page, itemsPerPage) => {
+export const getDataPromise = (type, value, page, itemsPerPage, identityRange, coverageRange) => {
     switch (type) {
         case "family":
-            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByFamily(value, page, itemsPerPage, identityRange, coverageRange);
         case "genbank":
-            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage);
+            return dataSdk.fetchSraHitsByAccession(value, page, itemsPerPage, identityRange, coverageRange);
         case "run":
             return dataSdk.fetchSraRun(value, page);
         default:
     }
 }
 
-const InputOption = (props) => {
+export const InputOption = (props) => {
     return (
         <div className={props.className}>
             <input type="radio" name="querytype" value={props.value} checked={props.checked}
@@ -128,4 +144,29 @@ const InputOption = (props) => {
     )
 }
 
-export { getPlaceholder, getPageLinks, getTitle, getDataPromise, InputOption };
+// filtering
+
+export const parseRange = (rangeStr, bounds) => {
+    // parse
+    rangeStr = rangeStr.slice(1, rangeStr.length - 1);
+    var [low, high] = rangeStr.split("-").map((s) => {
+        var intVal = +s;
+        if (isNaN(intVal)) {
+            throw new Error("Invalid query parameter value");
+        }
+        return intVal;
+    });
+
+    // constrict
+    var [min, max] = bounds;
+    if (low < min) low = min;
+    if (high > max) high = max;
+    if (low > max) low = max;
+    if (high < min) high = min;
+
+    return [low, high];
+}
+
+export const constructRangeStr = (begin, end) => {
+    return `[${begin}-${end}]`;
+}
