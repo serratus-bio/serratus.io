@@ -15,7 +15,7 @@ import allFamilyData from '../data/SerratusIO_scoreID.json';
 var chart;
 var xLims = [75, 100];
 var yLims = [0, 0]; // computed after family data loaded
-var zLims = [25, 100];
+var zLims = [0, 100];
 var zDomain;
 var xColumn = "pctid";
 var yColumn = "n";
