@@ -51,7 +51,7 @@ export default (props) => {
         };
 
         drawSlider();
-    }, [id, colorGradientLims, setSliderLims]);
+    }, [id, sliderRange, colorGradientLims, setSliderLims]);
 
     useEffect(() => {
         slider.current && slider.current.range(...props.sliderLims);
