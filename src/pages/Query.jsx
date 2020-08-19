@@ -61,13 +61,13 @@ const Query = (props) => {
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-    const [sliderIdentityLims, setSliderIdentityLims] = React.useState(identityDomain);
-    const [sliderCoverageLims, setSliderCoverageLims] = React.useState(coverageDomain);
+    const sliderIdentityLimsRef = React.useRef(identityDomain);
+    const sliderCoverageLimsRef = React.useRef(coverageDomain);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
-        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr, identityDomain));
-        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr, coverageDomain));
+        if (identityParamStr) sliderIdentityLimsRef.current = parseRange(identityParamStr, identityDomain);
+        if (coverageParamStr) sliderCoverageLimsRef.current = parseRange(coverageParamStr, coverageDomain);
         willMount.current = false;
     }
 
@@ -96,9 +96,9 @@ const Query = (props) => {
         if (searchValue.current) {
             params.set(searchType, searchValue.current)
         };
-        var identity = constructRangeStr(...sliderIdentityLims);
+        var identity = constructRangeStr(...sliderIdentityLimsRef.current);
         params.set('identity', identity);
-        var coverage = constructRangeStr(...sliderCoverageLims);
+        var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
         params.set('coverage', coverage);
         window.location.href = pathNameStatic + '?' + params.toString();
     }
@@ -114,7 +114,7 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLims, sliderCoverageLims));
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLimsRef.current, sliderCoverageLimsRef.current));
     }, [queryTypeStatic, queryValueStatic, pageNumber]);
 
     React.useEffect(() => {
@@ -172,15 +172,13 @@ const Query = (props) => {
                                 <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
                                 <FilterSlider id="sliderIdentity"
                                     sliderDomain={identityDomain}
-                                    sliderLims={sliderIdentityLims}
-                                    setSliderLims={setSliderIdentityLims} />
+                                    sliderLimsRef={sliderIdentityLimsRef} />
                             </div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
                                 <FilterSlider id="sliderCoverage"
                                     sliderDomain={coverageDomain}
-                                    sliderLims={sliderCoverageLims}
-                                    setSliderLims={setSliderCoverageLims}
+                                    sliderLimsRef={sliderCoverageLimsRef}
                                     colorGradientLims={["#3d5088", "#fce540"]} />
                             </div>
                         </div>
