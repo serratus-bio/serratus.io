@@ -28,8 +28,8 @@ const familyDomain = Object.keys(allFamilyData).map((family) => { return { label
 
 const queryTypes = ["family", "genbank", "run"];
 
-const identityBounds = [75, 100];
-const coverageBounds = [0, 100];
+const identityDomain = [75, 100];
+const coverageDomain = [0, 100];
 
 const Query = (props) => {
     let queryTypeFromParam = null;
@@ -61,13 +61,13 @@ const Query = (props) => {
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-    const [sliderIdentityLims, setSliderIdentityLims] = React.useState(identityBounds);
-    const [sliderCoverageLims, setSliderCoverageLims] = React.useState(coverageBounds);
+    const [sliderIdentityLims, setSliderIdentityLims] = React.useState(identityDomain);
+    const [sliderCoverageLims, setSliderCoverageLims] = React.useState(coverageDomain);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
-        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr, identityBounds));
-        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr, coverageBounds));
+        identityParamStr && setSliderIdentityLims(parseRange(identityParamStr, identityDomain));
+        coverageParamStr && setSliderCoverageLims(parseRange(coverageParamStr, coverageDomain));
         willMount.current = false;
     }
 
@@ -171,14 +171,14 @@ const Query = (props) => {
                             <div className="mx-2">
                                 <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
                                 <FilterSlider id="sliderIdentity"
-                                    sliderRange={identityBounds}
+                                    sliderDomain={identityDomain}
                                     sliderLims={sliderIdentityLims}
                                     setSliderLims={setSliderIdentityLims} />
                             </div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
                                 <FilterSlider id="sliderCoverage"
-                                    sliderRange={coverageBounds}
+                                    sliderDomain={coverageDomain}
                                     sliderLims={sliderCoverageLims}
                                     setSliderLims={setSliderCoverageLims}
                                     colorGradientLims={["#3d5088", "#fce540"]} />
