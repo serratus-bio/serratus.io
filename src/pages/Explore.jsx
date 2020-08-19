@@ -24,7 +24,7 @@ const coverageDomain = [0, 100];
 
 export default () => {
     const [family, setFamily] = React.useState("Coronaviridae");
-    const [selectValues, setSelectValues] = React.useState([]);
+    const [selectValues, setSelectValues] = React.useState([{ label: family, value: family }]);
     const sliderIdentityLimsRef = React.useRef(identityDomain);
     const sliderCoverageLimsRef = React.useRef([25, 100]);
 
@@ -37,7 +37,6 @@ export default () => {
         data = allFamilyData[family];
         updateChart();
         updateYLims();
-        // setSliderIdentityLims([75, 100]);
     }, [family]);
 
     var selectOnChange = (values) => {
@@ -58,15 +57,17 @@ export default () => {
         window.location.href = queryUrl;
     }
 
-    const logInfo = () => {
-        console.log(sliderIdentityLimsRef.current);
-        updateChart();
+    const updateX = () => {
         updateXLims(...sliderIdentityLimsRef.current);
-        updateZLims(...sliderCoverageLimsRef.current);
-        updateYLims(500);
     }
 
-    console.log("reloading Explore")
+    const updateZ = () => {
+        updateZLims(...sliderCoverageLimsRef.current);
+    }
+
+    const updateAll = () => {
+        updateYLims(500);
+    }
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
@@ -89,18 +90,21 @@ export default () => {
                                 <div className="pt-6 text-center">Average alignment identity (%)</div>
                                 <FilterSlider id="sliderIdentity"
                                     sliderDomain={identityDomain}
-                                    sliderLimsRef={sliderIdentityLimsRef} />
+                                    sliderLimsRef={sliderIdentityLimsRef}
+                                    onChange={updateX}
+                                    onTouchEnd={updateAll} />
                             </div>
                             <div className="mx-2">
                                 <div className="pt-6 text-center">Score (pangenome coverage)</div>
                                 <FilterSlider id="sliderCoverage"
                                     sliderDomain={coverageDomain}
                                     sliderLimsRef={sliderCoverageLimsRef}
-                                    colorGradientLims={["#3d5088", "#fce540"]} />
+                                    colorGradientLims={["#3d5088", "#fce540"]}
+                                    onChange={updateZ}
+                                    onTouchEnd={updateAll} />
                             </div>
                             <div className="h-10" />
                             <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
-                            <button onClick={logInfo} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">log info</button>
                             </div> : null}
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
