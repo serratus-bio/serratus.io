@@ -4,9 +4,11 @@ import * as d3 from 'd3';
 export const ExploreChart = (props) => {
     const [chartLoaded, setChartLoaded] = React.useState(false);
 
-    data = props.data;
-    sliderIdentityLims = props.sliderIdentityLims;
-    sliderCoverageLims = props.sliderCoverageLims;
+    familyData = props.data;
+    // initial values from .current
+    xLims = props.sliderIdentityLimsRef.current;
+    zLims = props.sliderCoverageLimsRef.current;
+    zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
 
     React.useEffect(() => {
         if (!chartLoaded) {
@@ -16,22 +18,14 @@ export const ExploreChart = (props) => {
         }
     }, [chartLoaded, props.data]);
 
-    React.useEffect(() => {
-        updateXLims(...props.sliderIdentityLims);
-    }, [props.sliderIdentityLims]);
-
-    React.useEffect(() => {
-        updateZLims(...props.sliderCoverageLims);
-    }, [props.sliderCoverageLims]);
-
     updateChart = (transitionDuration = 0) => {
         console.log("updateChart()");
-        var dataFiltered = data.filter((d) => {
+        var dataFiltered = familyData.filter((d) => {
             return (
-                (d[xColumn] >= sliderIdentityLims[0]) &&
-                (d[xColumn] <= sliderIdentityLims[1]) &&
-                (d[zColumn] >= sliderCoverageLims[0]) &&
-                (d[zColumn] <= sliderCoverageLims[1])
+                (d[xColumn] >= xLims[0]) &&
+                (d[xColumn] <= xLims[1]) &&
+                (d[zColumn] >= zLims[0]) &&
+                (d[zColumn] <= zLims[1])
             );
         });
     
@@ -52,21 +46,21 @@ export const ExploreChart = (props) => {
     )
 }
 
+const xColumn = "pctid";
+const yColumn = "n";
+const zColumn = "score";
+
 var chart;
-var yLims = [0, 0]; // computed after family data loaded
-var zDomain;
-var xColumn = "pctid";
-var yColumn = "n";
-var zColumn = "score";
 var dataByZStackFiltered;
 var areaGen;
 
-var data;
-var sliderIdentityLims;
-var sliderCoverageLims;
+var familyData;
+var xLims;
+var zLims;
+var zDomain;
 
-var updateXLims;
-var updateZLims;
+export var updateXLims;
+export var updateZLims;
 export var updateYLims;
 export var updateChart;
 
@@ -76,6 +70,8 @@ export const drawExploreFamilyChart = (data) => {
     var chartWidth = 300;
     var chartHeight = 150;
     var margin = { top: 10, right: 10, bottom: 33, left: 60 };
+
+    var yLims = [0, 0]; // computed after family data loaded
 
     var zColorLims = ["#3d5088", "#fce540"];
     var xScale = d3.scaleLinear()
@@ -106,22 +102,21 @@ export const drawExploreFamilyChart = (data) => {
 
     updateXLims = (begin, end) => {
         console.log("updateXLims()");
-        sliderIdentityLims = [begin, end];
+        xLims = [begin, end];
         var rangeLen = end - begin;
         var nTicks = (rangeLen < 10) ? rangeLen : 10;
-        xScale.domain(sliderIdentityLims);
+        xScale.domain(xLims);
         xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
         updateChart();
     }
 
     updateZLims = (begin, end) => {
-        sliderCoverageLims = [begin, end];
+        zLims = [begin, end];
         updateChart();
     }
 
-    updateYLims = () => {
+    updateYLims = (transitionDuration = 0) => {
         console.log("updateYLims()");
-        var transitionDuration = 500;
         var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
             return d3.max(d, function (innerD) {
                 return innerD[1];
@@ -133,10 +128,9 @@ export const drawExploreFamilyChart = (data) => {
         updateChart(transitionDuration);
     }
 
-    zDomain = Array(sliderCoverageLims[1] - sliderCoverageLims[0] + 1).fill(sliderCoverageLims[0]).map((x, y) => x + y);
-    xScale.domain(sliderIdentityLims);
+    xScale.domain(xLims);
     yScale.domain(yLims).nice();
-    colorScale.domain(sliderCoverageLims);
+    colorScale.domain(zLims);
     xAxis.call(d3.axisBottom(xScale).ticks(10));
     yAxis.call(d3.axisLeft(yScale).ticks(5));
     entryG.append("text")
