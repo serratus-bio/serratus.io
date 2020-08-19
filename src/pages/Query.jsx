@@ -52,7 +52,7 @@ const Query = (props) => {
     const pathNameStatic = useLocation().pathname;
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
-    const [selectValues, setSelectValues] = React.useState([{ label: queryValueStatic, value: queryValueStatic }]);
+    const [selectValues, setSelectValues] = React.useState([queryTypeFromParam === "family" ? { label: queryValueStatic, value: queryValueStatic } : {}]);
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
     const searchValue = React.useRef(selectValues[0].value);
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
