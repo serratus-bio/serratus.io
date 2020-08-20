@@ -14,7 +14,7 @@ const App = (props) => {
 		},
 		tracks: [
 			{
-				key: "Covid Reference Sequence",
+				key: "Cov3ma Reference Sequence",
 				label: "GRCH38 Reference Sequence",
 				urlTemplate:
 					"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
