@@ -1,6 +1,9 @@
 import React from "react";
 
-const App = () => {
+const App = (props) => {
+	var urlParams = new URLSearchParams(props.location.search);
+	var bam = urlParams.get("bam")
+
 	const features = [];
 	// Add some features
 	const config = {
