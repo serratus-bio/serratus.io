@@ -6,8 +6,13 @@ import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
 import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
+import FilterSlider from '../components/FilterSlider';
 import {
+    parseRange,
+    constructRangeStr,
     getPlaceholder,
+    getIdentitySliderLabel,
+    getCoverageSliderLabel,
     getPageLinks,
     getTitle,
     getDataPromise,
@@ -23,6 +28,9 @@ const familyDomain = Object.keys(allFamilyData).map((family) => { return { label
 
 const queryTypes = ["family", "genbank", "run"];
 
+const identityDomain = [75, 100];
+const coverageDomain = [0, 100];
+
 const Query = (props) => {
     let queryTypeFromParam = null;
     let queryValueFromParam = null;
@@ -35,6 +43,8 @@ const Query = (props) => {
             queryValueFromParam = paramValue;
         }
     });
+    var identityParamStr = urlParams.get("identity");
+    var coverageParamStr = urlParams.get("coverage");
 
     // these values don't change until reload
     const queryTypeStatic = queryTypeFromParam;
@@ -42,19 +52,23 @@ const Query = (props) => {
     const pathNameStatic = useLocation().pathname;
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
-    const [selectValues, setSelectValues] = React.useState([]);
+    const [selectValues, setSelectValues] = React.useState([queryTypeFromParam === "family" ? { label: queryValueStatic, value: queryValueStatic } : {}]);
     const [searchType, setSearchType] = React.useState(queryTypeFromParam);
-    const [searchValue, setSearchValue] = React.useState("");
+    const searchValue = React.useRef(selectValues[0].value);
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
     const [itemsPerPage, setItemsPerPage] = React.useState(20);
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
-    
-    // clicked "Query" on navigation bar
-    if (queryValueStatic && !queryValueFromParam) {
-        loadQueryPage(null);
+    const sliderIdentityLimsRef = React.useRef(identityDomain);
+    const sliderCoverageLimsRef = React.useRef(coverageDomain);
+
+    const willMount = React.useRef(true);
+    if (willMount.current) {
+        if (identityParamStr) sliderIdentityLimsRef.current = parseRange(identityParamStr, identityDomain);
+        if (coverageParamStr) sliderCoverageLimsRef.current = parseRange(coverageParamStr, coverageDomain);
+        willMount.current = false;
     }
 
     function searchOnKeyUp(e) {
@@ -62,24 +76,31 @@ const Query = (props) => {
             loadQueryPage(e.target.value);
         }
         else {
-            setSearchValue(e.target.value);
+            searchValue.current = e.target.value;
         }
     }
 
     function dropdownOnChange(values) {
         setSelectValues(values);
         if (values.length !== 0) {
-            loadQueryPage(values[0].value);
+            searchValue.current = values[0].value;
         }
     }
 
-    function loadQueryPage(searchValue) {
-        if (searchValue && !searchType) {
+    function loadQueryPage() {
+        if (searchValue.current && !searchType) {
             // TODO: display indicator "no query type selected"
             return;
         }
-        let newUrl = searchValue ? `${pathNameStatic}?${searchType}=${searchValue}` : pathNameStatic;
-        window.location.href = newUrl;
+        let params = new URLSearchParams();
+        if (searchValue.current) {
+            params.set(searchType, searchValue.current)
+        };
+        var identity = constructRangeStr(...sliderIdentityLimsRef.current);
+        params.set('identity', identity);
+        var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
+        params.set('coverage', coverage);
+        window.location.href = pathNameStatic + '?' + params.toString();
     }
 
     function queryTypeChange(e) {
@@ -93,8 +114,14 @@ const Query = (props) => {
         if (!queryValueStatic) {
             return;
         }
+        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage, sliderIdentityLimsRef.current, sliderCoverageLimsRef.current));
+    }, [queryTypeStatic, queryValueStatic, pageNumber]);
+
+    React.useEffect(() => {
+        if (!queryValueStatic) {
+            return;
+        }
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
-        setDataPromise(getDataPromise(queryTypeStatic, queryValueStatic, pageNumber, itemsPerPage));
         // check for AMR accession
         console.log(dataPromise);
         let valueCorrected = queryValueStatic;
@@ -107,8 +134,7 @@ const Query = (props) => {
             }
         }
         getTitle(queryTypeStatic, queryValueStatic, valueCorrected).then(setPageTitle);
-        setItemsPerPage(20);
-    }, [queryTypeStatic, queryValueStatic, pageNumber]);
+    }, [queryTypeStatic, queryValueStatic]);
 
     let headTags = (
         <Helmet>
@@ -116,14 +142,14 @@ const Query = (props) => {
                 Serratus | {queryValueStatic ? `${queryValueStatic}` : "Query"}
             </title>
         </Helmet>
-    )
+    );
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             {headTags}
             <div className={`flex flex-col p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
-                <div className="flex flex-col flex-grow items-center z-10 mt-2">
-                    <div className="items-center z-10">
+                <div className="flex-grow items-center">
+                    <div>
                         <div>
                             <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
                             <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
@@ -133,14 +159,32 @@ const Query = (props) => {
                             <Select options={familyDomain}
                                 values={selectValues}
                                 onChange={dropdownOnChange}
-                                onDropdownOpen={() => setSelectValues([])}
+                                onDropdownOpen={() => setSelectValues([{}])}
                                 placeholder={placeholderText} /> :
                             <div>
-                                <input className="rounded border-2 border-gray-300 px-2 m-1 focus:border-blue-300 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} />
-                                <button onClick={() => loadQueryPage(searchValue)} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
+                                <input className="rounded border border-gray-400 h-8 w-full px-2 m-1 focus:border-blue-600 focus:outline-none" type="text" placeholder={placeholderText} onKeyUp={searchOnKeyUp} defaultValue={queryValueStatic} />
                             </div>
                         }
                     </div>
+                    {searchType != "run" &&
+                        <div className="w-full">
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
+                                <FilterSlider id="sliderIdentity"
+                                    sliderDomain={identityDomain}
+                                    sliderLimsRef={sliderIdentityLimsRef} />
+                            </div>
+                            <div className="mx-2">
+                                <div className="pt-6 text-center">{getCoverageSliderLabel(searchType)}</div>
+                                <FilterSlider id="sliderCoverage"
+                                    sliderDomain={coverageDomain}
+                                    sliderLimsRef={sliderCoverageLimsRef}
+                                    colorGradientLims={["#3d5088", "#fce540"]} />
+                            </div>
+                        </div>
+                    }
+                    <div className="h-10" />
+                    <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
                     <DataReference />
