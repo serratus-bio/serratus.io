@@ -2,79 +2,56 @@ import React from "react";
 import * as d3 from 'd3';
 
 export const ExploreChart = (props) => {
-    const [chartLoaded, setChartLoaded] = React.useState(false);
-
-    familyData = props.data;
     // initial values from .current
     xLims = props.sliderIdentityLimsRef.current;
     zLims = props.sliderCoverageLimsRef.current;
-    zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
 
     React.useEffect(() => {
-        if (!chartLoaded) {
-            drawExploreFamilyChart(props.data);
-            updateYLims();
-            setChartLoaded(true);
-        }
-    }, [chartLoaded, props.data]);
-
-    updateChart = (transitionDuration = 0) => {
-        var dataFiltered = familyData.filter((d) => {
-            return (
-                (d[xColumn] >= xLims[0]) &&
-                (d[xColumn] <= xLims[1]) &&
-                (d[zColumn] >= zLims[0]) &&
-                (d[zColumn] <= zLims[1])
-            );
-        });
-    
-        dataByZStackFiltered = getDataByZStack(dataFiltered);
-    
-        if (transitionDuration === 0) {
-            chart.data(dataByZStackFiltered)
-                .attr("d", areaGen);
-        }
-        else {
-            chart.data(dataByZStackFiltered).transition().duration(transitionDuration)
-                .attr("d", areaGen);
-        }
-    }
+        zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
+    }, []);
 
     return (
         <div id="chart" className="py-2" />
     )
 }
 
+
+// D3 CODE BELOW
+
+// data-specific
 const xColumn = "pctid";
 const yColumn = "n";
 const zColumn = "score";
+const zColorLims = ["#3d5088", "#fce540"];
 
+// initial value determined by props, then updated by functions
+var xLims;
+var zLims;
+
+// auto-computed
+var yLims = [0, 0];  // computed after family data loaded
+var zDomain;  // all possible z values
+var familyData;  // data set by renderChart
+
+// D3 objects
+var xScale;
+var yScale;
+var xAxis;
+var yAxis;
 var chart;
 var dataByZStackFiltered;
 var areaGen;
 
-var familyData;
-var xLims;
-var zLims;
-var zDomain;
-
-export var updateXLims;
-export var updateZLims;
-export var updateYLims;
-export var updateChart;
-
-export const drawExploreFamilyChart = (data) => {
+export const renderChart = (data) => {
+    familyData = data;
 
     var chartWidth = 300;
     var chartHeight = 150;
     var margin = { top: 10, right: 10, bottom: 33, left: 60 };
 
-    var yLims = [0, 0]; // computed after family data loaded
-
-    var zColorLims = ["#3d5088", "#fce540"];
-    var xScale = d3.scaleLinear()
+    xScale = d3.scaleLinear()
         .range([0, chartWidth]);
-    var yScale = d3.scaleLinear()
+    yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
     var colorScale = d3.scaleLinear()
         .range(zColorLims);
@@ -92,37 +69,11 @@ export const drawExploreFamilyChart = (data) => {
         .attr("transform",
             `translate(${margin.left}, ${margin.top})`);
 
-    var xAxis = entryG.append("g")
+    xAxis = entryG.append("g")
         .attr("transform", `translate(0, ${chartHeight})`)
         .attr("class", "x-axis");
-    var yAxis = entryG.append("g")
+    yAxis = entryG.append("g")
         .attr("class", "y-axis");
-
-    updateXLims = (begin, end) => {
-        xLims = [begin, end];
-        var rangeLen = end - begin;
-        var nTicks = (rangeLen < 10) ? rangeLen : 10;
-        xScale.domain(xLims);
-        xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
-        updateChart();
-    }
-
-    updateZLims = (begin, end) => {
-        zLims = [begin, end];
-        updateChart();
-    }
-
-    updateYLims = (transitionDuration = 0) => {
-        var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
-            return d3.max(d, function (innerD) {
-                return innerD[1];
-            });
-        }));
-        yLims = [0, maxDataY];
-        yScale.domain(yLims).nice();
-        yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
-        updateChart(transitionDuration);
-    }
 
     xScale.domain(xLims);
     yScale.domain(yLims).nice();
@@ -161,7 +112,55 @@ export const drawExploreFamilyChart = (data) => {
         .attr("fill", (d) => colorScale(d.key));
 }
 
-function getDataByZStack(dataFiltered) {
+export const updateXLims = (begin, end) => {
+    xLims = [begin, end];
+    xScale.domain(xLims);
+    var rangeLen = end - begin;
+    var nTicks = (rangeLen < 10) ? rangeLen : 10;  // limit to whole numbers
+    xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
+    updateChart();
+}
+
+export const updateZLims = (begin, end) => {
+    zLims = [begin, end];
+    updateChart();
+}
+
+export const updateYLims = (transitionDuration = 0) => {
+    var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
+        return d3.max(d, function (innerD) {
+            return innerD[1];
+        });
+    }));
+    yLims = [0, maxDataY];
+    yScale.domain(yLims).nice();
+    yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
+    updateChart(transitionDuration);
+}
+
+const updateChart = (transitionDuration = 0) => {
+    var dataFiltered = familyData.filter((d) => {
+        return (
+            (d[xColumn] >= xLims[0]) &&
+            (d[xColumn] <= xLims[1]) &&
+            (d[zColumn] >= zLims[0]) &&
+            (d[zColumn] <= zLims[1])
+        );
+    });
+
+    dataByZStackFiltered = getDataByZStack(dataFiltered);
+
+    if (transitionDuration === 0) {
+        chart.data(dataByZStackFiltered)
+            .attr("d", areaGen);
+    }
+    else {
+        chart.data(dataByZStackFiltered).transition().duration(transitionDuration)
+            .attr("d", areaGen);
+    }
+}
+
+const getDataByZStack = (dataFiltered) => {
     var dataByX = d3.nest()
         .key(function (d) { return d[xColumn]; })
         .entries(dataFiltered);

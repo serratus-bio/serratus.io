@@ -9,7 +9,7 @@ import DataReference from '../components/DataReference';
 import FilterSlider from '../components/FilterSlider';
 import {
     ExploreChart,
-    updateChart,
+    renderChart,
     updateXLims,
     updateYLims,
     updateZLims
@@ -29,11 +29,8 @@ export default () => {
     const sliderIdentityLimsRef = React.useRef(identityDomain);
     const sliderCoverageLimsRef = React.useRef([25, 100]);
 
-    var data = allFamilyData[family];
-
     React.useEffect(() => {
-        data = allFamilyData[family];
-        updateChart();
+        renderChart(allFamilyData[family]);
         updateYLims();
     }, [family]);
 
@@ -103,7 +100,6 @@ export default () => {
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <ExploreChart
-                    data={data}
                     sliderIdentityLimsRef={sliderIdentityLimsRef}
                     sliderCoverageLimsRef={sliderCoverageLimsRef} />
                 <div className={`${switchSize}:hidden`}>
