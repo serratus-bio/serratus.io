@@ -36,8 +36,8 @@ const App = (props) => {
 
 	return (
 		<div className="App">
-			<h1>
-				The is the test JBrowse Viewer for bam: ERR2756788
+			<h1 className="text-center">
+				JBrowse viewing SRA: {bam}
 			</h1>
 			<div
 				style={{ width: "100%", height: 800 }}
