@@ -39,6 +39,7 @@ export default () => {
         else {
             updateData(data);
         }
+        updateZ();
         updateYLims();
     }, [family]);
 
@@ -108,8 +109,8 @@ export default () => {
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <ExploreChart
-                    sliderIdentityLimsRef={sliderIdentityLimsRef}
-                    sliderCoverageLimsRef={sliderCoverageLimsRef} />
+                    identityDomain={identityDomain}
+                    coverageDomain={coverageDomain} />
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />
                 </div>

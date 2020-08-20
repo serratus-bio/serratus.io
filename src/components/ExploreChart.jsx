@@ -4,10 +4,9 @@ import * as d3 from 'd3';
 const chartId = "chart"
 
 export default (props) => {
-    // initial values from .current
-    xLims = props.sliderIdentityLimsRef.current;
-    zLims = props.sliderCoverageLimsRef.current;
-    zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
+    xLims = props.identityDomain;
+    zLims = props.coverageDomain;
+    zDomainValues = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
     return <div id={chartId} className="py-2" />
 }
 
@@ -28,7 +27,7 @@ var zLims;
 
 // auto-computed
 var yLims = [0, 0];  // computed after family data loaded
-var zDomain;  // all possible z values
+var zDomainValues;  // all possible z values
 var familyData;  // data set by renderChart
 
 // D3 objects
@@ -172,13 +171,13 @@ const getDataByZStack = (dataFiltered) => {
             return collection;
         }, {});
         d.ZtoY = {}
-        zDomain.forEach(z => {
+        zDomainValues.forEach(z => {
             d.ZtoY[z] = d.values[z] ? d.values[z] : 0;
         })
     });
 
     return d3.stack()
-        .keys(zDomain)
+        .keys(zDomainValues)
         .order(d3.stackOrderReverse)
         .value((d, key) => d.ZtoY[key])(dataByX);
 }
