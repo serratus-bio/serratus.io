@@ -9,6 +9,7 @@ import DataReference from '../components/DataReference';
 import FilterSlider from '../components/FilterSlider';
 import ExploreChart, {
     renderChart,
+    updateData,
     updateXLims,
     updateYLims,
     updateZLims
@@ -27,9 +28,17 @@ export default () => {
     const [selectValues, setSelectValues] = React.useState([{ label: family, value: family }]);
     const sliderIdentityLimsRef = React.useRef(identityDomain);
     const sliderCoverageLimsRef = React.useRef([25, 100]);
+    const chartRendered = React.useRef(false);
 
     React.useEffect(() => {
-        renderChart(allFamilyData[family]);
+        var data = allFamilyData[family];
+        if (!chartRendered.current) {
+            renderChart(data);
+            chartRendered.current = true;
+        }
+        else {
+            updateData(data);
+        }
         updateYLims();
     }, [family]);
 

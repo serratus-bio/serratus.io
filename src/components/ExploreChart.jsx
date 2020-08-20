@@ -109,18 +109,23 @@ export const renderChart = (data) => {
         .attr("fill", (d) => colorScale(d.key));
 }
 
+export const updateData = (data) => {
+    familyData = data;
+    dataByZStackFiltered = getDataByZStack(data);
+}
+
 export const updateXLims = (begin, end) => {
     xLims = [begin, end];
     xScale.domain(xLims);
     var rangeLen = end - begin;
     var nTicks = (rangeLen < 10) ? rangeLen : 10;  // limit to whole numbers
     xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
-    updateChart();
+    updateStacks();
 }
 
 export const updateZLims = (begin, end) => {
     zLims = [begin, end];
-    updateChart();
+    updateStacks();
 }
 
 export const updateYLims = (transitionDuration = 0) => {
@@ -132,10 +137,10 @@ export const updateYLims = (transitionDuration = 0) => {
     yLims = [0, maxDataY];
     yScale.domain(yLims).nice();
     yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
-    updateChart(transitionDuration);
+    updateStacks(transitionDuration);
 }
 
-const updateChart = (transitionDuration = 0) => {
+const updateStacks = (transitionDuration = 0) => {
     var dataFiltered = familyData.filter((d) => {
         return (
             (d[xColumn] >= xLims[0]) &&
