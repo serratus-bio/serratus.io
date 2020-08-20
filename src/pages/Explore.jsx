@@ -98,7 +98,6 @@ export default () => {
                             onTouchEnd={updateY} />
                     </div>
                     <div className="h-10" />
-                    <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go to Query</button>
                 </div>
                 <div className={`hidden ${switchSize}:block mb-auto`}>
                     <DataReference />
@@ -109,6 +108,9 @@ export default () => {
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
                 <ExploreChart />
+                <div className="flex justify-center my-10">
+                    <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Query for details</button>
+                </div>
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />
                 </div>
