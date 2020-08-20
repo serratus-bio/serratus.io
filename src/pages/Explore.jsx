@@ -1,10 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
-import {
-    switchSize,
-    classesBoxBorder
-} from '../helpers/common';
 import DataReference from '../components/DataReference';
 import FilterSlider from '../components/FilterSlider';
 import ExploreChart, {
@@ -14,6 +10,10 @@ import ExploreChart, {
     updateYLims,
     updateZLims
 } from '../components/ExploreChart';
+import {
+    switchSize,
+    classesBoxBorder
+} from '../helpers/common';
 import { constructRangeStr } from "../helpers/QueryPageHelpers";
 
 import allFamilyData from '../data/SerratusIO_scoreID.json';

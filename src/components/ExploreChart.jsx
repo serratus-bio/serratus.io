@@ -129,8 +129,8 @@ export const updateZLims = (begin, end) => {
 }
 
 export const updateYLims = (transitionDuration = 0) => {
-    var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map(function (d) {
-        return d3.max(d, function (innerD) {
+    var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map((d) => {
+        return d3.max(d, (innerD) => {
             return innerD[1];
         });
     }));
@@ -164,7 +164,7 @@ const updateStacks = (transitionDuration = 0) => {
 
 const getDataByZStack = (dataFiltered) => {
     var dataByX = d3.nest()
-        .key(function (d) { return d[xColumn]; })
+        .key((d) => d[xColumn])
         .entries(dataFiltered);
     dataByX.forEach((d) => {
         d.values = d.values.reduce((collection, d) => {
