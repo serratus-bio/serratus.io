@@ -62,7 +62,7 @@ const getPageLinks = (type, value) => {
                     icon={externalLinkIcon}
                     newTab={true} />
                 <LinkButton
-                    link={`http://localhost:3000/Jbrowse?bam=${value}`}
+                    link={`${window.location.origin}/Jbrowse?bam=${value}`}
                     text="JBrowse"
                     icon={externalLinkIcon}
                     newTab={true} />
