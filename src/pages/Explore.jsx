@@ -7,8 +7,7 @@ import {
 } from '../helpers/common';
 import DataReference from '../components/DataReference';
 import FilterSlider from '../components/FilterSlider';
-import {
-    ExploreChart,
+import ExploreChart, {
     renderChart,
     updateXLims,
     updateYLims,

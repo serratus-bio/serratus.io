@@ -1,18 +1,14 @@
 import React from "react";
 import * as d3 from 'd3';
 
-export const ExploreChart = (props) => {
+const chartId = "chart"
+
+export default (props) => {
     // initial values from .current
     xLims = props.sliderIdentityLimsRef.current;
     zLims = props.sliderCoverageLimsRef.current;
-
-    React.useEffect(() => {
-        zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
-    }, []);
-
-    return (
-        <div id="chart" className="py-2" />
-    )
+    zDomain = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
+    return <div id={chartId} className="py-2" />
 }
 
 
@@ -23,6 +19,8 @@ const xColumn = "pctid";
 const yColumn = "n";
 const zColumn = "score";
 const zColorLims = ["#3d5088", "#fce540"];
+const xLabel = "% Identity";
+const zLabel = "Count";
 
 // initial value determined by props, then updated by functions
 var xLims;
@@ -48,39 +46,38 @@ export const renderChart = (data) => {
     var chartWidth = 300;
     var chartHeight = 150;
     var margin = { top: 10, right: 10, bottom: 33, left: 60 };
-
-    xScale = d3.scaleLinear()
-        .range([0, chartWidth]);
-    yScale = d3.scaleLinear()
-        .range([chartHeight, 0]);
-    var colorScale = d3.scaleLinear()
-        .range(zColorLims);
-
-    var mainDiv = d3.select("#chart");
-
     var svgWidth = chartWidth + margin.left + margin.right;
     var svgHeight = chartHeight + margin.top + margin.bottom;
-    var chartSvg = mainDiv
+
+    var mainDiv = d3.select(`#${chartId}`);
+    var mainSvg = mainDiv
         .append("svg")
         .attr("viewBox", `0 0 ${svgWidth} ${svgHeight}`);
-    var entryG = chartSvg.append("g")
+    var chartG = mainSvg.append("g")
         .attr("width", chartWidth)
         .attr("height", chartHeight)
         .attr("transform",
             `translate(${margin.left}, ${margin.top})`);
 
-    xAxis = entryG.append("g")
+    xScale = d3.scaleLinear()
+        .range([0, chartWidth]);
+    xScale.domain(xLims);
+    yScale = d3.scaleLinear()
+        .range([chartHeight, 0]);
+    yScale.domain(yLims).nice();
+    var colorScale = d3.scaleLinear()
+        .range(zColorLims);
+    colorScale.domain(zLims);
+
+    xAxis = chartG.append("g")
         .attr("transform", `translate(0, ${chartHeight})`)
         .attr("class", "x-axis");
-    yAxis = entryG.append("g")
+    xAxis.call(d3.axisBottom(xScale).ticks(10));
+
+    yAxis = chartG.append("g")
         .attr("class", "y-axis");
 
-    xScale.domain(xLims);
-    yScale.domain(yLims).nice();
-    colorScale.domain(zLims);
-    xAxis.call(d3.axisBottom(xScale).ticks(10));
-    yAxis.call(d3.axisLeft(yScale).ticks(5));
-    entryG.append("text")
+    chartG.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", -(margin.left - 15))
         .attr("x", - chartHeight / 2)
@@ -88,15 +85,15 @@ export const renderChart = (data) => {
         .attr("fill", "currentColor")
         .style("text-anchor", "middle")
         .attr("opacity", 1)
-        .text("Count");
-    entryG.append("text")
+        .text(zLabel);
+    chartG.append("text")
         .attr("y", chartHeight + margin.bottom - 3)
         .attr("x", chartWidth / 2)
         .attr("font-size", "12px")
         .attr("fill", "currentColor")
         .style("text-anchor", "middle")
         .attr("opacity", 1)
-        .text("% Identity");
+        .text(xLabel);
 
     dataByZStackFiltered = getDataByZStack(data);
 
@@ -105,7 +102,7 @@ export const renderChart = (data) => {
         .y0((d) => yScale(d[0]))
         .y1((d) => yScale(d[1]));
 
-    chart = entryG.selectAll(".areas")
+    chart = chartG.selectAll(".areas")
         .data(dataByZStackFiltered)
         .join("path")
         .attr("d", areaGen)
