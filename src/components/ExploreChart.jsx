@@ -16,7 +16,7 @@ const yColumn = "n";
 const zColumn = "score";
 const zColorLims = ["#3d5088", "#fce540"];
 const xLabel = "% Identity";
-const zLabel = "Count";
+const zLabel = "Hit count";
 
 // initial value determined by renderChart, then updated by functions
 var xLims;
