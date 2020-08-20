@@ -33,7 +33,7 @@ export default () => {
     React.useEffect(() => {
         var data = allFamilyData[family];
         if (!chartRendered.current) {
-            renderChart(data);
+            renderChart(data, identityDomain, coverageDomain);
             chartRendered.current = true;
         }
         else {
@@ -108,9 +108,7 @@ export default () => {
             <hr className="sm:hidden" />
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <h1 className="text-center text-2xl">{family}</h1>
-                <ExploreChart
-                    identityDomain={identityDomain}
-                    coverageDomain={coverageDomain} />
+                <ExploreChart />
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />
                 </div>

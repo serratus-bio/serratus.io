@@ -3,10 +3,7 @@ import * as d3 from 'd3';
 
 const chartId = "chart"
 
-export default (props) => {
-    xLims = props.identityDomain;
-    zLims = props.coverageDomain;
-    zDomainValues = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
+export default () => {
     return <div id={chartId} className="py-2" />
 }
 
@@ -21,7 +18,7 @@ const zColorLims = ["#3d5088", "#fce540"];
 const xLabel = "% Identity";
 const zLabel = "Count";
 
-// initial value determined by props, then updated by functions
+// initial value determined by renderChart, then updated by functions
 var xLims;
 var zLims;
 
@@ -39,8 +36,11 @@ var chart;
 var dataByZStackFiltered;
 var areaGen;
 
-export const renderChart = (data) => {
+export const renderChart = (data, xDomain, zDomain) => {
     familyData = data;
+    xLims = xDomain;
+    zLims = zDomain;
+    zDomainValues = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
 
     var chartWidth = 300;
     var chartHeight = 150;
@@ -60,13 +60,13 @@ export const renderChart = (data) => {
 
     xScale = d3.scaleLinear()
         .range([0, chartWidth]);
-    xScale.domain(xLims);
+    xScale.domain(xDomain);
     yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
     yScale.domain(yLims).nice();
     var colorScale = d3.scaleLinear()
         .range(zColorLims);
-    colorScale.domain(zLims);
+    colorScale.domain(zDomain);
 
     xAxis = chartG.append("g")
         .attr("transform", `translate(0, ${chartHeight})`)
