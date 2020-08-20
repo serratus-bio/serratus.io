@@ -20,9 +20,9 @@ const App = (props) => {
 					"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
 			},
 			{
-				urlTemplate : "https://serratus-public.s3.amazonaws.com/tmp/web/ERR2756788.sort.bam",
+				urlTemplate : `https://serratus-bio.s3.amazonaws.com/bam/${bam}.bam`,
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
-				label : "ERR2756788",
+				label : `${bam}`,
 				type : "JBrowse/View/Track/Alignments2"
 			}
 		],
