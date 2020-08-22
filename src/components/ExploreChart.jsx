@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 const chartId = "chart"
 
 export default () => {
-    return <div id={chartId} className="py-2" />
+    return <div id={chartId} />
 }
 
 
