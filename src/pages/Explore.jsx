@@ -103,7 +103,7 @@ export default () => {
                     <DataReference />
                 </div>
             </div>
-            <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
+            <div className={`h-0 sm:h-3 ${switchSize}:w-3`} />
             <hr className="sm:hidden" />
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 <div className="m-auto" style={{maxWidth: 800}}>
