@@ -106,9 +106,11 @@ export default () => {
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`}></div>
             <hr className="sm:hidden" />
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
-                <h1 className="text-center text-2xl">{family}</h1>
-                <ExploreChart />
-                <div className="flex justify-center my-10">
+                <div className="m-auto" style={{maxWidth: 800}}>
+                    <h1 className="text-center text-2xl">{family}</h1>
+                    <ExploreChart />
+                </div>
+                <div className="flex justify-center my-8">
                     <button onClick={goToQuery} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Convert to Query</button>
                 </div>
                 <div className={`${switchSize}:hidden`}>
