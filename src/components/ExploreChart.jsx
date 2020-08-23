@@ -21,11 +21,12 @@ const zLabel = "Hit count";
 // initial value determined by renderChart, then updated by functions
 var xLims;
 var zLims;
+var familyData;
 
 // auto-computed
-var yLims = [0, 0];  // computed after family data loaded
+var yLims = [0, 6000];  // computed after family data loaded
+var xLimValues; // all x values
 var zDomainValues;  // all possible z values
-var familyData;  // data set by renderChart
 
 // D3 objects
 var xScale;
@@ -34,13 +35,14 @@ var xAxis;
 var yAxis;
 var chart;
 var dataByZStackFiltered;
-var areaGen;
+// var areaGen;
+var chartRects;
 
 export const renderChart = (data, xDomain, zDomain) => {
     familyData = data;
-    xLims = xDomain;
+    setXLims(xDomain);
     zLims = zDomain;
-    zDomainValues = Array(zLims[1] - zLims[0] + 1).fill(zLims[0]).map((x, y) => x + y);
+    zDomainValues = getAllValues(...zLims);
 
     var chartWidth = 300;
     var chartHeight = 150;
@@ -58,9 +60,9 @@ export const renderChart = (data, xDomain, zDomain) => {
         .attr("transform",
             `translate(${margin.left}, ${margin.top})`);
 
-    xScale = d3.scaleLinear()
+    xScale = d3.scaleBand()
         .range([0, chartWidth]);
-    xScale.domain(xDomain);
+    xScale.domain(xLimValues);
     yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
     yScale.domain(yLims).nice();
@@ -71,7 +73,7 @@ export const renderChart = (data, xDomain, zDomain) => {
     xAxis = chartG.append("g")
         .attr("transform", `translate(0, ${chartHeight})`)
         .attr("class", "x-axis");
-    xAxis.call(d3.axisBottom(xScale).ticks(10));
+    xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()));
 
     yAxis = chartG.append("g")
         .attr("class", "y-axis");
@@ -96,16 +98,40 @@ export const renderChart = (data, xDomain, zDomain) => {
 
     dataByZStackFiltered = getDataByZStack(data);
 
-    areaGen = d3.area()
-        .x((d) => xScale(d.data.key))
-        .y0((d) => yScale(d[0]))
-        .y1((d) => yScale(d[1]));
+    // var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map((d) => {
+    //     return d3.max(d, (innerD) => {
+    //         return innerD[1];
+    //     });
+    // }));
 
-    chart = chartG.selectAll(".areas")
+    // yLims = [0, maxDataY];
+    // yScale.domain(yLims).nice();
+    // yAxis.call(d3.axisLeft(yScale).ticks(5));
+
+    // areaGen = d3.area()
+    //     .x((d) => xScale(d.data.key))
+    //     .y0((d) => yScale(d[0]))
+    //     .y1((d) => yScale(d[1]));
+
+    // chart = chartG.selectAll(".areas")
+    //     .data(dataByZStackFiltered)
+    //     .join("path")
+    //     .attr("d", areaGen)
+    //     .attr("fill", (d) => colorScale(d.key));
+
+    chartRects = chartG.selectAll("g")
         .data(dataByZStackFiltered)
-        .join("path")
-        .attr("d", areaGen)
-        .attr("fill", (d) => colorScale(d.key));
+        .enter()
+        .append("g")
+        .attr("fill", d => colorScale(d.key));
+
+    chart = chartRects.selectAll("rect")
+        .data(d => d)
+        .join("rect")
+        .attr("x", (d, i) => xScale(d.data.key))
+        .attr("y", d => yScale(d[1]))
+        .attr("height", d => yScale(d[0]) - yScale(d[1]))
+        .attr("width", xScale.bandwidth());
 }
 
 export const updateData = (data) => {
@@ -114,11 +140,9 @@ export const updateData = (data) => {
 }
 
 export const updateXLims = (begin, end) => {
-    xLims = [begin, end];
-    xScale.domain(xLims);
-    var rangeLen = end - begin;
-    var nTicks = (rangeLen < 10) ? rangeLen : 10;  // limit to whole numbers
-    xAxis.call(d3.axisBottom(xScale).ticks(nTicks));
+    setXLims([begin, end]);
+    xScale.domain(xLimValues);
+    xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()));
     updateStacks();
 }
 
@@ -151,14 +175,21 @@ const updateStacks = (transitionDuration = 0) => {
 
     dataByZStackFiltered = getDataByZStack(dataFiltered);
 
-    if (transitionDuration === 0) {
-        chart.data(dataByZStackFiltered)
-            .attr("d", areaGen);
-    }
-    else {
-        chart.data(dataByZStackFiltered).transition().duration(transitionDuration)
-            .attr("d", areaGen);
-    }
+    chartRects.data(dataByZStackFiltered);
+
+    chart.attr("x", (d, i) => xScale(d.data.key))
+        .attr("y", d => yScale(d[1]))
+        .attr("height", d => yScale(d[0]) - yScale(d[1]))
+        .attr("width", xScale.bandwidth());
+
+    // if (transitionDuration === 0) {
+    //     chart.data(dataByZStackFiltered)
+    //         .attr("d", areaGen);
+    // }
+    // else {
+    //     chart.data(dataByZStackFiltered).transition().duration(transitionDuration)
+    //         .attr("d", areaGen);
+    // }
 }
 
 const getDataByZStack = (dataFiltered) => {
@@ -180,4 +211,25 @@ const getDataByZStack = (dataFiltered) => {
         .keys(zDomainValues)
         .order(d3.stackOrderReverse)
         .value((d, key) => d.ZtoY[key])(dataByX);
+}
+
+const getAllValues = (begin, end) => {
+    return Array(end - begin + 1).fill(begin).map((x, y) => x + y);
+}
+
+const setXLims = (newXLims) => {
+    xLims = newXLims;
+    xLimValues = getAllValues(...newXLims);
+}
+
+const getXTicks = () => {
+    if (xLimValues.length < 10) {
+        return xLimValues;
+    }
+    return xLimValues.filter((d, i) => {
+        if ((xLimValues[0] + i) % 2 === 0) {
+            return true;
+        }
+        return false;
+    });
 }
