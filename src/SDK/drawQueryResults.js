@@ -54,16 +54,16 @@ export function drawQueryResults(d3, selector, results, columns) {
         return out;
     }
 
-    function getCoverageData(hit) {
-        var hitCoverageData = [];
-        [...hit.cvg].forEach(function(bit, i) {
-            hitCoverageData.push({
-                sra: hit.sra,
+    function getCoverageData(match) {
+        var matchCoverageData = [];
+        [...match.cvg].forEach(function(bit, i) {
+            matchCoverageData.push({
+                sra: match.sra,
                 bin: i,
                 cartoonChar: bit
             })
         });
-        return hitCoverageData;
+        return matchCoverageData;
     }
 
     // adapted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d
@@ -119,7 +119,7 @@ export function drawQueryResults(d3, selector, results, columns) {
     function addHeaders(gElement) {
         var yShift = 15;
 
-        var colText = "Hit";
+        var colText = "Match";
         var xShift = sectionMargin.left + rowLabelShiftX;
         var textG = gElement.append("g")
         var text = textG.append("text")
@@ -303,10 +303,10 @@ export function drawQueryResults(d3, selector, results, columns) {
     var chartSvg = d3.select(selector)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);
-    var hitSvg = chartSvg.append("svg")
+    var matchSvg = chartSvg.append("svg")
         .attr("y", tableShiftY);
 
-    drawLegend(hitSvg);
+    drawLegend(matchSvg);
 
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
@@ -314,12 +314,12 @@ export function drawQueryResults(d3, selector, results, columns) {
     addHeaders(columnHeadersG);
     addColumns(columnHeadersG);
 
-    results.forEach((hit, i) => {
-        var coverageData = getCoverageData(hit);
-        var hitG = hitSvg.append("g")
+    results.forEach((match, i) => {
+        var coverageData = getCoverageData(match);
+        var matchG = matchSvg.append("g")
             .attr("class", "sra")
-            .attr("rowid", `${hit.sra}`);
-        var hitSubGroup = drawExpandableRow(hitG, hit.sra, "hit", coverageData, i);
-        addColumns(hitG.select("svg"), hit);
+            .attr("rowid", `${match.sra}`);
+        var matchSubGroup = drawExpandableRow(matchG, match.sra, "match", coverageData, i);
+        addColumns(matchG.select("svg"), match);
     });
 }

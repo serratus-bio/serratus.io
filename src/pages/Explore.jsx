@@ -73,7 +73,7 @@ export default () => {
             <div className={`flex flex-col p-4 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <div className="flex-grow">
                     <div className="pb-2 text-center">
-                        Select a viral family to view the distribution of Serratus analysis results.
+                        Select a viral family to view the distribution of Serratus matches.
                     </div>
                     <Select options={selectOptions}
                         values={selectValues}
