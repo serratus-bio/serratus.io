@@ -111,7 +111,9 @@ export const renderChart = (data, xDomain, zDomain) => {
         .enter()
         .append("g")
         .attr("label", d => `z-${d.key}`)
-        .attr("fill", d => colorScale(d.key));
+        .attr("fill", d => colorScale(d.key))
+        .attr("stroke", d => colorScale(d.key))
+        .attr("stroke-width", "0.1");
 
     chartZRects.selectAll("rect")
         .data(d => d)
