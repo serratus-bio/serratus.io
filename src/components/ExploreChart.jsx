@@ -26,7 +26,6 @@ var familyData;
 // auto-computed
 var yLims = [0, 0];  // computed after family data loaded
 var xLimValues; // all x values
-var zLimValues;
 var zDomainValues;  // all possible z values
 
 // D3 objects
@@ -41,8 +40,7 @@ export const renderChart = (data, xDomain, zDomain) => {
     familyData = data;
     setXLims(xDomain);
     zLims = zDomain;
-    zDomainValues = getAllValues(...zLims);
-    zLimValues = getAllValues(...zLims);
+    zDomainValues = getAllValues(...zDomain);
 
     var chartWidth = 300;
     var chartHeight = 150;
@@ -148,7 +146,6 @@ export const updateZLims = (begin, end) => {
     }
     console.log(`updateZLims(${begin},${end})`);
     zLims = [begin, end];
-    zLimValues = getAllValues(...zLims);
     updateStacks();
 }
 
