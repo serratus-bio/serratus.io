@@ -5,7 +5,7 @@ import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
 
 export default (props) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)
-    // optional props: colorGradientLims
+    // optional props: colorGradientLims, onChange:callback, onTouchEnd:callback
 
     const slider = useRef(null);
     const sliderLabelL = useRef(null);
@@ -48,6 +48,8 @@ export default (props) => {
 
     useEffect(() => {
         slider.current && slider.current.range(...props.sliderLimsRef.current);
+        props.onChange && slider.current.onChange(() => props.onChange());
+        props.onTouchEnd && slider.current.onTouchEnd(props.onTouchEnd);
     }, [props.sliderLimsRef]);
 
     return (
