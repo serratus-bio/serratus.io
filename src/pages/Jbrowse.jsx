@@ -28,9 +28,7 @@ const App = (props) => {
 		includes: null,
 	};
 
-	// Instantiate JBrowse
-
-
+	// Instatiate JBrowse
 	React.useEffect(() => {
 		window.addEventListener("load", () => {
 			window.JBrowse = new window.Browser(config);
