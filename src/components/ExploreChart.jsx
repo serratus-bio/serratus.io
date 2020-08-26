@@ -14,7 +14,6 @@ export default () => {
 const xColumn = "pctid";
 const yColumn = "n";
 const zColumn = "score";
-const zColorLims = ["#3d5088", "#fce540"];
 const xLabel = "% Identity";
 const zLabel = "Hit count";
 
@@ -122,7 +121,7 @@ export const updateData = (data) => {
 }
 
 export const updateXLims = (begin, end) => {
-    if (xLims[0] == begin && xLims[1] == end) {
+    if (xLims[0] === begin && xLims[1] === end) {
         return;
     }
     setXLims([begin, end]);
@@ -132,7 +131,7 @@ export const updateXLims = (begin, end) => {
 }
 
 export const updateZLims = (begin, end) => {
-    if (zLims[0] == begin && zLims[1] == end) {
+    if (zLims[0] === begin && zLims[1] === end) {
         return;
     }
     zLims = [begin, end];
