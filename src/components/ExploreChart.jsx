@@ -118,7 +118,6 @@ export const renderChart = (data, xDomain, zDomain) => {
 }
 
 export const updateData = (data) => {
-    console.log('updateData()');
     familyData = data;
     filterAndSetStackData(data);
 }
@@ -127,7 +126,6 @@ export const updateXLims = (begin, end) => {
     if (xLims[0] == begin && xLims[1] == end) {
         return;
     }
-    console.log(`updateXLims(${begin},${end})`);
     setXLims([begin, end]);
     xScale.domain(xLimValues);
     xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()));
@@ -138,13 +136,11 @@ export const updateZLims = (begin, end) => {
     if (zLims[0] == begin && zLims[1] == end) {
         return;
     }
-    console.log(`updateZLims(${begin},${end})`);
     zLims = [begin, end];
     updateStacks();
 }
 
 export const updateYLims = (transitionDuration = 0) => {
-    console.log('updateYLims()');
     var maxDataY = 1.2 * d3.max(dataByZStackFiltered.map((d) => {
         return d3.max(d, (innerD) => {
             return innerD[1];
@@ -158,7 +154,6 @@ export const updateYLims = (transitionDuration = 0) => {
 }
 
 const updateStacks = (transitionDuration = 0) => {
-    console.log('updateStacks()');
     filterAndSetStackData();
     chartZRects.data(dataByZStackFiltered);
     chartZRects.selectAll("rect").data(d => d).transition().duration(transitionDuration)
