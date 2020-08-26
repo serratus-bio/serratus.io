@@ -370,7 +370,7 @@ export function drawRunResults(d3, selector, summary, columns) {
                     link = `/query?family=${name}`;
                 }
                 else {
-                    link = `/query?genbank=${name}`
+                    link = `/jbrowse?bam=${summary.sra}&loc=${name}`
                 }
                 var textWidth = 100;
                 var textHeight = 14;
