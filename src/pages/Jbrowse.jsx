@@ -10,20 +10,18 @@ const App = (props) => {
 	const config = {
 		containerID: "GenomeBrowser",
 		refSeqs: {
-			url:
-				"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa.fai",
+			url: "https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa.fai",
 		},
 		tracks: [
 			{
 				key: "Cov3ma Reference Sequence",
-				label: "GRCH38 Reference Sequence",
-				urlTemplate:
-					"https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
+				label: "Cov3ma Reference Sequence",
+				urlTemplate: "https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
 			},
 			{
 				urlTemplate : `https://serratus-bio.s3.amazonaws.com/bam/${bam}.bam`,
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
-				label : `${bam}`,
+				label : bam,
 				type : "JBrowse/View/Track/Alignments2"
 			}
 		],
