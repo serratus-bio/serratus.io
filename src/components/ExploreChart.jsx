@@ -94,15 +94,7 @@ export const renderChart = (data, xDomain, zDomain) => {
         .attr("opacity", 1)
         .text(xLabel);
 
-    var dataFiltered = familyData.filter((d) => {
-        return (
-            (d[xColumn] >= xDomain[0]) &&
-            (d[xColumn] <= xDomain[1]) &&
-            (d[zColumn] >= zDomain[0]) &&
-            (d[zColumn] <= zDomain[1])
-        );
-    });
-    setDataByZStackFiltered(dataFiltered);
+    filterAndSetStackData();
 
     var rectsG = chartG.append("g").attr("label", "stack-rects");
 
@@ -128,7 +120,7 @@ export const renderChart = (data, xDomain, zDomain) => {
 export const updateData = (data) => {
     console.log('updateData()');
     familyData = data;
-    setDataByZStackFiltered(data);
+    filterAndSetStackData(data);
 }
 
 export const updateXLims = (begin, end) => {
@@ -167,26 +159,7 @@ export const updateYLims = (transitionDuration = 0) => {
 
 const updateStacks = (transitionDuration = 0) => {
     console.log('updateStacks()');
-    var dataFiltered = familyData.filter((d) => {
-        return (
-            (d[xColumn] >= xLims[0]) &&
-            (d[xColumn] <= xLims[1]) &&
-            (d[zColumn] >= zLims[0]) &&
-            (d[zColumn] <= zLims[1])
-        );
-    });
-
-    setDataByZStackFiltered(dataFiltered);
-
-    // chartRects.remove()
-
-    // chartRects = chartG.selectAll("g")
-    //     .data(dataByZStackFiltered)
-    //     .enter()
-    //     .append("g")
-    //     .attr("id", d => d.key)
-    //     .attr("fill", d => "black");
-
+    filterAndSetStackData();
     chartZRects.data(dataByZStackFiltered);
     chartZRects.selectAll("rect").data(d => d).transition().duration(transitionDuration)
         .attr("x", (d, i) => xScale(d.data.key))
@@ -195,7 +168,15 @@ const updateStacks = (transitionDuration = 0) => {
         .attr("width", xScale.bandwidth());
 }
 
-const setDataByZStackFiltered = (dataFiltered) => {
+const filterAndSetStackData = () => {
+    var dataFiltered = familyData.filter((d) => {
+        return (
+            (d[xColumn] >= xLims[0]) &&
+            (d[xColumn] <= xLims[1]) &&
+            (d[zColumn] >= zLims[0]) &&
+            (d[zColumn] <= zLims[1])
+        );
+    });
     var dataByX = d3.nest()
         .key((d) => d[xColumn])
         .entries(dataFiltered);
