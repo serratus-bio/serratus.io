@@ -180,6 +180,15 @@ const filterAndSetStackData = () => {
     var dataByX = d3.nest()
         .key((d) => d[xColumn])
         .entries(dataFiltered);
+    // make entry for each x
+    var xKeys = dataByX.reduce((set, d) => { set.add(d.key); return set; }, new Set());
+    xLimValues.forEach(xVal => {
+        var xValString = xVal.toString();
+        if (!xKeys.has(xValString)) {
+            dataByX.push({key: xValString, values: []})
+        }
+    });
+    // make entry for each z
     dataByX.forEach((d) => {
         d.values = d.values.reduce((collection, d) => {
             collection[d[zColumn]] = d[yColumn];
