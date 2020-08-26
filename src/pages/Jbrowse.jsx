@@ -33,6 +33,14 @@ const App = (props) => {
 		window.JBrowse = new window.Browser(config);
 	});
 
+
+	React.useEffect(() => {
+		window.addEventListener("load", () => {
+			window.JBrowse = new window.Browser(config);
+			window.JBrowse.navigateTo(loc);
+		});
+	}, [])
+
 	return (
 		<div className="App">
 			<h1 className="text-center">
@@ -41,7 +49,8 @@ const App = (props) => {
 			<div
 				style={{ width: "100%", height: 800 }}
 				className="jbrowse"
-				id="GenomeBrowser" data-config='"allowCrossOriginDataRoot": true, "cacheBuster": true'>
+				id="GenomeBrowser"
+				data-config='"updateBrowserURL": true'>
 				<div id="LoadingScreen">
 					<h1>Loading...</h1>
 				</div>
