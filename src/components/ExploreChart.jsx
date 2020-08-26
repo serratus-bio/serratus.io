@@ -104,7 +104,9 @@ export const renderChart = (data, xDomain, zDomain) => {
     });
     setDataByZStackFiltered(dataFiltered);
 
-    chartZRects = chartG.selectAll("g")
+    var rectsG = chartG.append("g").attr("label", "stack-rects");
+
+    chartZRects = rectsG.selectAll("g")
         .data(dataByZStackFiltered)
         .enter()
         .append("g")
