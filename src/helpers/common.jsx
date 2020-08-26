@@ -13,3 +13,6 @@ export const githubIcon = (<svg className="inline fill-current w-4 h-4 mb-1" xml
 
 // components
 export const ExternalLink = (props) => {return (<a {...props} target="_blank" rel="noopener noreferrer">{props.children}</a>)}
+
+// color palettes
+export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414487, #355f8d, #2a788e, #21908d, #22a884, #42be71, #7ad151, #bddf26, #fce640)" // slight modification of https://bennettfeely.com/cssscales/#viridis

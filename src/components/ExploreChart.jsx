@@ -64,8 +64,7 @@ export const renderChart = (data, xDomain, zDomain) => {
     yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
     yScale.domain(yLims).nice();
-    var colorScale = d3.scaleLinear()
-        .range(zColorLims);
+    var colorScale = d3.scaleSequential(d3.interpolateViridis);
     colorScale.domain(zDomain);
 
     xAxis = chartG.append("g")

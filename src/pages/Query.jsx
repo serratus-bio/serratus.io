@@ -19,6 +19,7 @@ import {
     InputOption
 } from "../helpers/QueryPageHelpers";
 import {
+    viridisCssGradient,
     switchSize,
     classesBoxBorder
 } from '../helpers/common';
@@ -179,7 +180,7 @@ const Query = (props) => {
                                 <FilterSlider id="sliderCoverage"
                                     sliderDomain={coverageDomain}
                                     sliderLimsRef={sliderCoverageLimsRef}
-                                    colorGradientLims={["#3d5088", "#fce540"]} />
+                                    linearGradientString={viridisCssGradient} />
                             </div>
                         </div>
                     }
