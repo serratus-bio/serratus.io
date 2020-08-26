@@ -34,12 +34,12 @@ export default () => {
         var data = allFamilyData[family];
         if (!chartRendered.current) {
             renderChart(data, identityDomain, coverageDomain);
+            updateZ();
             chartRendered.current = true;
         }
         else {
             updateData(data);
         }
-        updateZ();
         updateYLims();
     }, [family]);
 
