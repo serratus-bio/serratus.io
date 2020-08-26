@@ -29,15 +29,14 @@ const App = (props) => {
 	};
 
 	// Instantiate JBrowse
-	window.addEventListener("load", () => {
-		window.JBrowse = new window.Browser(config);
-	});
 
 
 	React.useEffect(() => {
 		window.addEventListener("load", () => {
 			window.JBrowse = new window.Browser(config);
 			window.JBrowse.navigateTo(loc);
+			window.localStorage.setItem('GenomeBrowser-refseq-', loc);
+			window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`);
 		});
 	}, [])
 
