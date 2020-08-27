@@ -4,7 +4,6 @@ const App = (props) => {
 	var urlParams = new URLSearchParams(props.location.search);
 	var bam = urlParams.get("bam");
 	var loc = urlParams.get("loc");
-	const [rev, setRev] = React.useState(true);
 
 	const features = [];
 	// Add some features
@@ -39,7 +38,7 @@ const App = (props) => {
 			window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`);
 			console.log(window.JBrowse)
 		});
-	}, [rev])
+	}, [])
 
 	return (
 		<div className="App">
