@@ -28,15 +28,16 @@ const App = (props) => {
 				urlTemplate : `https://serratus-bio.s3.amazonaws.com/bam/${bam}.bam`,
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
 				label : bam,
-				type : "JBrowse/View/Track/Alignments2"
+				type : "JBrowse/View/Track/Alignments2",
+				hideReverseStrand: rev
 			}
 		],
 		includes: null,
-		hideReverseStrand: true
 	};
 
 	// Instatiate JBrowse
 	React.useEffect(() => {
+		console.log("reload")
 		window.addEventListener("load", () => {
 			window.JBrowse = new window.Browser(config);
 			window.JBrowse.navigateTo(loc);
@@ -51,7 +52,7 @@ const App = (props) => {
 			<h1 className="text-center">
 				JBrowse viewing SRA: {bam}
 			</h1>
-			{/* <button onClick={() => toggleRevView()}>Toggle</button> */}
+			<button onClick={() => toggleRevView()}>Toggle</button>
 			<div
 				style={{ width: "100%", height: 800 }}
 				className="jbrowse"
