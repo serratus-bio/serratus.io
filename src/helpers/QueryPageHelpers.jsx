@@ -19,7 +19,7 @@ const getPlaceholder = (type) => {
     return typePlaceholderMap[type];
 }
 
-const getPageLinks = (type, value, loc) => {
+const getPageLinks = (type, value) => {
     if (type === "family") {
         var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
         var text = "Taxonomy Browser"
