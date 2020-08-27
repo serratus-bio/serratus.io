@@ -6,11 +6,6 @@ const App = (props) => {
 	var loc = urlParams.get("loc");
 	const [rev, setRev] = React.useState(true);
 
-	const toggleRevView = () => {
-		setRev(!rev);
-		console.log(rev);
-	}
-
 	const features = [];
 	// Add some features
 	const config = {
@@ -29,7 +24,6 @@ const App = (props) => {
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
 				label : bam,
 				type : "JBrowse/View/Track/Alignments2",
-				hideReverseStrand: rev
 			}
 		],
 		includes: null,
@@ -52,7 +46,6 @@ const App = (props) => {
 			<h1 className="text-center">
 				JBrowse viewing SRA: {bam}
 			</h1>
-			<button onClick={() => toggleRevView()}>Toggle</button>
 			<div
 				style={{ width: "100%", height: 800 }}
 				className="jbrowse"
