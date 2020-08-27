@@ -4,6 +4,12 @@ const App = (props) => {
 	var urlParams = new URLSearchParams(props.location.search);
 	var bam = urlParams.get("bam");
 	var loc = urlParams.get("loc");
+	const [rev, setRev] = React.useState(true);
+
+	const toggleRevView = () => {
+		setRev(!rev);
+		console.log(rev);
+	}
 
 	const features = [];
 	// Add some features
@@ -26,6 +32,7 @@ const App = (props) => {
 			}
 		],
 		includes: null,
+		hideReverseStrand: true
 	};
 
 	// Instatiate JBrowse
@@ -35,14 +42,16 @@ const App = (props) => {
 			window.JBrowse.navigateTo(loc);
 			window.localStorage.setItem('GenomeBrowser-refseq-', loc);
 			window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`);
+			console.log(window.JBrowse)
 		});
-	}, [])
+	}, [rev])
 
 	return (
 		<div className="App">
 			<h1 className="text-center">
 				JBrowse viewing SRA: {bam}
 			</h1>
+			{/* <button onClick={() => toggleRevView()}>Toggle</button> */}
 			<div
 				style={{ width: "100%", height: 800 }}
 				className="jbrowse"
