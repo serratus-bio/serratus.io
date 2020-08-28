@@ -42,8 +42,8 @@ const App = (props) => {
 
 	return (
 		<div className="App">
-			<h1 className="text-center">
-				JBrowse viewing SRA: {bam}
+			<h1 className="text-center text-2xl">
+				SRA: {bam} 
 			</h1>
 			<div
 				style={{ width: "100%", height: 800 }}
