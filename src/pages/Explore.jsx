@@ -99,7 +99,7 @@ export default () => {
                     </div>
                     <div className="h-10" />
                 </div>
-                <div className={`hidden ${switchSize}:block mb-auto`}>
+                <div className={`hidden ${switchSize}:block mb-auto text-center`}>
                     <DataReference />
                 </div>
             </div>
