@@ -186,7 +186,7 @@ const Query = (props) => {
                     <div className="h-10" />
                     <button onClick={() => loadQueryPage()} className="rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4" type="submit">Go</button>
                 </div>
-                <div className={`hidden ${switchSize}:block mb-auto`}>
+                <div className={`hidden ${switchSize}:block mb-auto text-center`}>
                     <DataReference />
                 </div>
             </div>
