@@ -144,7 +144,7 @@ export const updateYLims = (transitionDuration = 0) => {
             return innerD[1];
         });
     }));
-    if (isNaN(maxDataY)) maxDataY = 10;  // set limits even if no data
+    if (isNaN(maxDataY) || maxDataY < 10) maxDataY = 10;  // set min upper limit of 10
     yLims = [0, maxDataY];
     yScale.domain(yLims).nice();
     yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5));
