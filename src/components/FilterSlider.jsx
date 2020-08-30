@@ -11,6 +11,8 @@ export default (props) => {
     const sliderLabelL = useRef(null);
     const sliderLabelR = useRef(null);
 
+    const onChange = props.onChange;
+    const onTouchEnd = props.onTouchEnd;
     // directly fetch initial .current
     const id = useRef(props.id).current;
     const sliderDomain = useRef(props.sliderDomain).current;
@@ -48,9 +50,9 @@ export default (props) => {
 
     useEffect(() => {
         slider.current && slider.current.range(...props.sliderLimsRef.current);
-        props.onChange && slider.current.onChange(() => props.onChange());
-        props.onTouchEnd && slider.current.onTouchEnd(props.onTouchEnd);
-    }, [props.sliderLimsRef]);
+        onChange && slider.current.onChange(() => onChange());
+        onTouchEnd && slider.current.onTouchEnd(onTouchEnd);
+    }, [props.sliderLimsRef, onChange, onTouchEnd]);
 
     return (
         <div>
