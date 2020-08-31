@@ -11,6 +11,7 @@ import ExploreChart, {
     updateZLims
 } from '../components/ExploreChart';
 import {
+    viridisCssGradient,
     switchSize,
     classesBoxBorder
 } from '../helpers/common';
@@ -34,12 +35,12 @@ export default () => {
         var data = allFamilyData[family];
         if (!chartRendered.current) {
             renderChart(data, identityDomain, coverageDomain);
+            updateZ();
             chartRendered.current = true;
         }
         else {
             updateData(data);
         }
-        updateZ();
         updateYLims();
     }, [family]);
 
@@ -93,7 +94,7 @@ export default () => {
                         <FilterSlider id="sliderCoverage"
                             sliderDomain={coverageDomain}
                             sliderLimsRef={sliderCoverageLimsRef}
-                            colorGradientLims={["#3d5088", "#fce540"]}
+                            linearGradientString={viridisCssGradient}
                             onChange={updateZ}
                             onTouchEnd={updateY} />
                     </div>
