@@ -58,7 +58,7 @@ const Query = (props) => {
     const [placeholderText, setPlaceholderText] = React.useState(getPlaceholder(queryTypeFromParam));
     const [pageTitle, setPageTitle] = React.useState();
     const [pageNumber, setPageNumber] = React.useState(1);
-    const [itemsPerPage, setItemsPerPage] = React.useState(20);
+    const itemsPerPage = 20;
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValueStatic);
     const [dataPromise, setDataPromise] = React.useState();
     const sliderIdentityLimsRef = React.useRef(identityDomain);
@@ -123,7 +123,6 @@ const Query = (props) => {
         }
         console.log(`Loading query result page for ${queryTypeStatic}=${queryValueStatic}.`);
         // check for AMR accession
-        console.log(dataPromise);
         let valueCorrected = queryValueStatic;
         if (queryTypeStatic === "genbank") {
             let patternForAMR = /.*_\d{7}/g;
@@ -166,7 +165,7 @@ const Query = (props) => {
                             </div>
                         }
                     </div>
-                    {searchType != "run" &&
+                    {searchType !== "run" &&
                         <div className="w-full">
                             <div className="mx-2">
                                 <div className="pt-6 text-center">{getIdentitySliderLabel(searchType)}</div>
