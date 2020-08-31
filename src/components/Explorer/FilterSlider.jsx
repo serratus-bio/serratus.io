@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Helmet } from 'react-helmet';
 import * as d3 from 'd3';
-import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
+import { createD3RangeSlider } from '../../SDK/d3RangeSlider.js';
 
 export default (props) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)

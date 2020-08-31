@@ -6,7 +6,7 @@ import QueryIntro from "../components/QueryIntro";
 import Paginator from '../components/Paginator';
 import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
-import FilterSlider from '../components/FilterSlider';
+import FilterSlider from '../components/Explorer/FilterSlider';
 import {
     parseRange,
     constructRangeStr,

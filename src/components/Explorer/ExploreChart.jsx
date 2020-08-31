@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 const chartId = "chart"
 
-export default () => {
+export default (props) => {
     return <div id={chartId} />
 }
 
@@ -15,7 +15,7 @@ const xColumn = "pctid";
 const yColumn = "n";
 const zColumn = "score";
 const xLabel = "% Identity";
-const zLabel = "Matches";
+const yLabel = "Matches";
 
 // initial value determined by renderChart, then updated by functions
 var xLims;
@@ -70,19 +70,9 @@ export const renderChart = (data, xDomain, zDomain) => {
         .attr("transform", `translate(0, ${chartHeight})`)
         .attr("class", "x-axis");
     xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()));
-
     yAxis = chartG.append("g")
         .attr("class", "y-axis");
 
-    chartG.append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -(margin.left - 15))
-        .attr("x", - chartHeight / 2)
-        .attr("font-size", "12px")
-        .attr("fill", "currentColor")
-        .style("text-anchor", "middle")
-        .attr("opacity", 1)
-        .text(zLabel);
     chartG.append("text")
         .attr("y", chartHeight + margin.bottom - 3)
         .attr("x", chartWidth / 2)
@@ -91,6 +81,15 @@ export const renderChart = (data, xDomain, zDomain) => {
         .style("text-anchor", "middle")
         .attr("opacity", 1)
         .text(xLabel);
+    chartG.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", -(margin.left - 15))
+        .attr("x", - chartHeight / 2)
+        .attr("font-size", "12px")
+        .attr("fill", "currentColor")
+        .style("text-anchor", "middle")
+        .attr("opacity", 1)
+        .text(yLabel);
 
     filterAndSetStackData();
 
