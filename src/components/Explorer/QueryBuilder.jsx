@@ -14,39 +14,39 @@ import ExploreChart, {
 import {
     viridisCssGradient
 } from '../../helpers/common';
-import { constructRangeStr } from "../../helpers/QueryPageHelpers";
+import { constructRangeStr } from "../../helpers/ExplorerHelpers";
 import allFamilyData from '../../data/SerratusIO_scoreID.json';
 
 const identityDomain = [75, 100];
 const coverageDomain = [0, 100];
 
-const queryTypes = ["family", "genbank", "run"];
+export default (props) => {
+    // set family to valid value for initial chart render
+    const [initialFamily] = React.useState('Coronaviridae');
+    const [initialCoverageLims] = React.useState(props.coverageLimsRef.current);
 
-export default () => {
-    const [searchType, setSearchType] = React.useState(queryTypes[0]);
-
-    // family is assumed to always have a valid value due to dropdown select
-    const [family, setFamily] = React.useState("Coronaviridae");
+    const [family, setFamily] = React.useState(initialFamily);
     const [genbank, setGenbank] = React.useState();
     const [run, setRun] = React.useState();
 
-    const sliderIdentityLimsRef = React.useRef(identityDomain);
-    const sliderCoverageLimsRef = React.useRef([25, 100]);
-    const chartRendered = React.useRef(false);
+    const sliderIdentityLimsRef = props.identityLimsRef;
+    const sliderCoverageLimsRef = props.coverageLimsRef;
+    const queryType = props.queryType;
+    const setQueryType = props.setQueryType;
+    const queryValueRef = props.queryValueRef;
 
+    // initial chart render
     React.useEffect(() => {
-        if (!family) {
-            return;
-        }
+        var data = allFamilyData[initialFamily];
+        renderChart(data, identityDomain, coverageDomain);
+        updateZLims(...initialCoverageLims);
+        updateYLims();
+    }, [initialFamily, initialCoverageLims]);
+
+    // update chart for subsequent family changes
+    React.useEffect(() => {
         var data = allFamilyData[family];
-        if (!chartRendered.current) {
-            renderChart(data, identityDomain, coverageDomain);
-            updateZ();
-            chartRendered.current = true;
-        }
-        else {
-            updateData(data);
-        }
+        updateData(data);
         updateYLims();
     }, [family]);
 
@@ -55,68 +55,84 @@ export default () => {
     const updateZ = () => { updateZLims(...sliderCoverageLimsRef.current) }
     const updateY = () => { updateYLims(500) }
 
+    // update query value
+    React.useEffect(() => {
+        switch (queryType) {
+            case "family": queryValueRef.current = family; break;
+            case "genbank": queryValueRef.current = genbank; break;
+            case "run": queryValueRef.current = run; break;
+            default:
+        }
+    }, [family, genbank, run, queryType, queryValueRef]);
+
     const queryTypeChange = (e) => {
-        setSearchType(e.target.value);
+        setQueryType(e.target.value);
     }
 
     const goToQuery = () => {
         let params = new URLSearchParams();
-        params.set('family', family);
-        var identity = constructRangeStr(...sliderIdentityLimsRef.current);
-        params.set('identity', identity);
-        var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
-        params.set('coverage', coverage);
-        var queryUrl = 'query?' + params.toString();
+        params.set(queryType, queryValueRef.current);
+        if (queryType !== 'run') {
+            var identity = constructRangeStr(...sliderIdentityLimsRef.current);
+            params.set('identity', identity);
+            var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
+            params.set('coverage', coverage);
+        }
+        var queryUrl = 'explorer?' + params.toString();
         window.location.href = queryUrl;
     }
 
+    const chartVisibility = (queryType === "family" ? "visible" : "hidden");
+    const slidersVisibility = (queryType !== "run" ? "visible" : "hidden");
+
     return (
         <div className="flex-grow">
-            <div>
-                <InputOption className="inline mx-2" value="family" displayText="Family" checked={searchType === "family"} onChange={queryTypeChange} />
-                <InputOption className="inline mx-2" value="genbank" displayText="GenBank" checked={searchType === "genbank"} onChange={queryTypeChange} />
-                <InputOption className="inline mx-2" value="run" displayText="SRA Run" checked={searchType === "run"} onChange={queryTypeChange} />
+            <div className="flex flex-row justify-center">
+                <InputOption className="mx-2" value="family" displayText="Family" checked={queryType === "family"} onChange={queryTypeChange} />
+                <InputOption className="mx-2" value="genbank" displayText="GenBank" checked={queryType === "genbank"} onChange={queryTypeChange} />
+                <InputOption className="mx-2" value="run" displayText="SRA Run" checked={queryType === "run"} onChange={queryTypeChange} />
             </div>
             <div label="inputs">
-                <div>
-                    Family
-                <SelectFamily
+                <div className={queryType === "family" ? "visible" : "hidden"}>
+                    <SelectFamily
                         family={family}
                         setFamily={setFamily} />
                 </div>
-                <div className="my-4">
-                    GenBank Accession
-                <SelectGenbank
+                <div className={queryType === "genbank" ? "visible" : "hidden"}>
+                    <SelectGenbank
                         genbank={genbank}
                         setGenbank={setGenbank} />
                 </div>
-                <div>
-                    SRA Run Accession
-                <SearchRun
+                <div className={queryType === "run" ? "visible" : "hidden"}>
+                    <SearchRun
                         run={run}
                         setRun={setRun}
-                        onEnter={(run) => console.log(run)} />
+                        onEnter={goToQuery} />
                 </div>
             </div>
-            <div className="mx-2">
-                <div className="pt-6 text-center">Average alignment identity (%)</div>
-                <FilterSlider id="sliderIdentity"
-                    sliderDomain={identityDomain}
-                    sliderLimsRef={sliderIdentityLimsRef}
-                    onChange={updateX}
-                    onTouchEnd={updateY} />
-            </div>
-            <div className="mx-2">
-                <div className="pt-6 text-center">Score (pangenome coverage)</div>
-                <FilterSlider id="sliderCoverage"
-                    sliderDomain={coverageDomain}
-                    sliderLimsRef={sliderCoverageLimsRef}
-                    linearGradientString={viridisCssGradient}
-                    onChange={updateZ}
-                    onTouchEnd={updateY} />
+            <div className={slidersVisibility}>
+                <div className="mx-2">
+                    <div className="pt-6 text-center">Average alignment identity (%)</div>
+                    <FilterSlider id="sliderIdentity"
+                        sliderDomain={identityDomain}
+                        sliderLimsRef={sliderIdentityLimsRef}
+                        onChange={updateX}
+                        onTouchEnd={updateY} />
+                </div>
+                <div className="mx-2">
+                    <div className="pt-6 text-center">Score (pangenome coverage)</div>
+                    <FilterSlider id="sliderCoverage"
+                        sliderDomain={coverageDomain}
+                        sliderLimsRef={sliderCoverageLimsRef}
+                        linearGradientString={viridisCssGradient}
+                        onChange={updateZ}
+                        onTouchEnd={updateY} />
+                </div>
             </div>
             <div className="h-10" />
-            <ExploreChart />
+            <div className={chartVisibility}>
+                <ExploreChart />
+            </div>
             <button onClick={goToQuery} className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4" type="submit">View Matches</button>
         </div>
     )

@@ -1,8 +1,8 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
-import QueryResult from '../components/QueryResult';
-import QueryIntro from "../components/QueryIntro";
+import QueryResultPage from '../components/QueryResultPage';
+import Intro from "../components/Explorer/Intro";
 import Paginator from '../components/Paginator';
 import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
@@ -17,7 +17,7 @@ import {
     getTitle,
     getDataPromise,
     InputOption
-} from "../helpers/QueryPageHelpers";
+} from "../helpers/ExplorerHelpers";
 import {
     viridisCssGradient,
     switchSize,
@@ -210,16 +210,16 @@ const Query = (props) => {
                     {queryValueStatic ?
                         <div>
                             {searchType === 'run' ?
-                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                                <QueryResultPage type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
                              :
                              <div>
                                 <Paginator pageNumber={pageNumber} setPageNumber={setPageNumber} dataPromise={dataPromise}/>
-                                <QueryResult type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
+                                <QueryResultPage type={queryTypeStatic} value={queryValueStatic} dataPromise={dataPromise} />
                             </div>
                             }
                         </div>
                         :
-                        <QueryIntro />
+                        <Intro />
                     }
                     <div className={`${switchSize}:hidden`}>
                         <DataReference />

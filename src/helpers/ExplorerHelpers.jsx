@@ -6,7 +6,7 @@ import {
     externalLinkIcon,
     helpIcon,
     ExternalLink
-} from '../helpers/common';
+} from './common';
 
 const dataSdk = new DataSdk();
 

@@ -1,5 +1,8 @@
 import React from 'react';
 
+// definitions
+export const queryTypes = ["family", "genbank", "run"];
+
 // common styling
 export const classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
 export const switchSize = "lg";
