@@ -7,6 +7,8 @@ import {
 export default (props) => {
     const queryType = props.queryType;
     const queryValue = props.queryValue;
+    const identityLims = props.identityLims;
+    const coverageLims = props.coverageLims;
     const [pageTitle, setPageTitle] = React.useState();
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValue);
     const links = getPageLinks(queryType, queryValueCorrected);
@@ -42,6 +44,8 @@ export default (props) => {
                     {links}
                 </div>
             </div>
+            <div>identity: {identityLims}</div>
+            <div>coverage: {coverageLims}</div>
         </div>
     )
 }
