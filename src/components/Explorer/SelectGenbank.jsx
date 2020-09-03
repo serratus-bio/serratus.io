@@ -6,13 +6,19 @@ import genbankAccessions from '../../data/cov3ma.genbank.json';
 const genbankSelectDomain = genbankAccessions.map((genbank) => { return { label: genbank, value: genbank } });
 
 export default (props) => {
+    const genbank = props.genbank;
+    const setGenbank = props.setGenbank;
     const maxDropdownSize = 200;
-    const [selectValue, setSelectValue] = React.useState(props.genbank && { label: props.genbank, value: props.genbank });
+    const [selectValue, setSelectValue] = React.useState();
+
+    React.useEffect(() => {
+        setSelectValue(genbank && { label: genbank, value: genbank })
+    }, [genbank])
 
     const dropdownOnChange = (selected) => {
         setSelectValue(selected);
         if (selected.length !== 0) {
-            props.setGenbank(selected.value);
+            setGenbank(selected.value);
         }
     }
 

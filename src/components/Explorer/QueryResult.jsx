@@ -59,10 +59,11 @@ export default (props) => {
                 </div>
             </div>
             <div className="p-6">
-                <Paginator
-                    pageNumber={pageNumber}
-                    setPageNumber={setPageNumber}
-                    dataPromise={dataPromise} />
+                {queryType !== 'run' &&
+                    <Paginator
+                        pageNumber={pageNumber}
+                        setPageNumber={setPageNumber}
+                        dataPromise={dataPromise} />}
                 <QueryResultPage
                     type={queryType}
                     value={queryValue}

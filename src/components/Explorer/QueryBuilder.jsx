@@ -21,21 +21,33 @@ const identityDomain = [75, 100];
 const coverageDomain = [0, 100];
 
 export default (props) => {
+    const sliderIdentityLimsRef = props.identityLimsRef;
+    const sliderCoverageLimsRef = props.coverageLimsRef;
+    const queryType = props.queryType;
+    const setQueryType = props.setQueryType;
+    const queryValue = props.queryValue;
+    const setQueryValue = props.setQueryValue;
+
     // set family to valid value for initial chart render
     const [initialFamily] = React.useState('Coronaviridae');
     const [initialCoverageLims] = React.useState(props.coverageLimsRef.current);
+    const [initialQueryType] = React.useState(props.queryType);
+    const [initialQueryValue] = React.useState(props.queryValue);
 
     const [family, setFamily] = React.useState(initialFamily);
     const [genbank, setGenbank] = React.useState();
     const [run, setRun] = React.useState();
 
-    const sliderIdentityLimsRef = props.identityLimsRef;
-    const sliderCoverageLimsRef = props.coverageLimsRef;
-    const queryType = props.queryType;
-    const setQueryType = props.setQueryType;
-    const queryValueRef = props.queryValueRef;
-
     const [errorMessage, setErrorMessage] = React.useState("");
+
+    React.useEffect(() => {
+        switch (initialQueryType) {
+            case "family": setFamily(initialQueryValue); break;
+            case "genbank": setGenbank(initialQueryValue); break;
+            case "run": setRun(initialQueryValue); break;
+            default:
+        }
+    }, [initialQueryType, initialQueryValue])
 
     // initial chart render
     React.useEffect(() => {
@@ -61,24 +73,24 @@ export default (props) => {
     React.useEffect(() => {
         setErrorMessage("");
         switch (queryType) {
-            case "family": queryValueRef.current = family; break;
-            case "genbank": queryValueRef.current = genbank; break;
-            case "run": queryValueRef.current = run; break;
+            case "family": setQueryValue(family); break;
+            case "genbank": setQueryValue(genbank); break;
+            case "run": setQueryValue(run); break;
             default:
         }
-    }, [family, genbank, run, queryType, queryValueRef]);
+    }, [family, genbank, run, queryType, setQueryValue]);
 
     const queryTypeChange = (e) => {
         setQueryType(e.target.value);
     }
 
     const goToQuery = () => {
-        if (!queryValueRef.current) {
+        if (!queryValue) {
             setErrorMessage("Enter a query value.");
             return;
         }
         let params = new URLSearchParams();
-        params.set(queryType, queryValueRef.current);
+        params.set(queryType, queryValue);
         if (queryType !== 'run') {
             var identity = constructRangeStr(...sliderIdentityLimsRef.current);
             params.set('identity', identity);

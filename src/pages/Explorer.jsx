@@ -19,48 +19,58 @@ const identityDomain = [75, 100];
 const coverageDomain = [0, 100];
 
 export default (props) => {
-    let queryTypeFromParam = null;
-    let queryValueFromParam = null;
-    let identityLimsFromParam = null;
-    let coverageLimsFromParam = null;
+    const queryTypeStaticRef = React.useRef();
+    const queryValueStaticRef = React.useRef();
+    const identityLimsStaticRef = React.useRef();
+    const coverageLimsStaticRef = React.useRef();
+
+    var queryTypeFromParam = null;
+    var queryValueFromParam = null;
+    var identityLimsFromParam = null;
+    var coverageLimsFromParam = null;
+    var urlParams = new URLSearchParams(props.location.search);
+    queryTypes.forEach(queryType => {
+        var queryValue = urlParams.get(queryType);
+        // assuming mutually exclusive parameters
+        if (queryValue) {
+            queryTypeFromParam = queryType;
+            queryValueFromParam = queryValue;
+        }
+    });
+    var queryPresent = queryTypeFromParam !== null;
+    var identityParamStr = urlParams.get("identity");
+    if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, identityDomain);
+    var coverageParamStr = urlParams.get("coverage");
+    if (coverageParamStr) coverageLimsFromParam = parseRange(coverageParamStr, coverageDomain);
+
     const willMount = React.useRef(true);
     if (willMount.current) {
-        var urlParams = new URLSearchParams(props.location.search);
-        queryTypes.forEach(queryType => {
-            var queryValue = urlParams.get(queryType);
-            // assuming mutually exclusive parameters
-            if (queryValue) {
-                queryTypeFromParam = queryType;
-                queryValueFromParam = queryValue;
-            }
-        });
-        var identityParamStr = urlParams.get("identity");
-        if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, identityDomain);
-        var coverageParamStr = urlParams.get("coverage");
-        if (coverageParamStr) coverageLimsFromParam = parseRange(coverageParamStr, coverageDomain);
+        // set defaults
+        if (!identityLimsFromParam) { identityLimsFromParam = [0, 100] }
+        if (!coverageLimsFromParam && !queryTypeFromParam) { coverageLimsFromParam = [25, 100] }
+        if (!coverageLimsFromParam && queryTypeFromParam) { coverageLimsFromParam = [0, 100] }
+        // family must be valid for initial chart render
+        if (!queryTypeFromParam) { queryTypeFromParam = "family" }
+        if (!queryValueFromParam) { queryValueFromParam = "Coronaviridae" }
+
+        queryTypeStaticRef.current = (queryTypeFromParam);
+        queryValueStaticRef.current = (queryValueFromParam);
+        identityLimsStaticRef.current = (identityLimsFromParam);
+        coverageLimsStaticRef.current = (coverageLimsFromParam);
+
         willMount.current = false;
     }
-    const queryPresent = Boolean(queryTypeFromParam);
-    const queryTypeStatic = queryTypeFromParam;
-    const queryValueStatic = queryValueFromParam;
-
-    // set defaults
-    if (!queryTypeFromParam) { queryTypeFromParam = "family" }
-    if (!identityLimsFromParam) { identityLimsFromParam = [0, 100] }
-    if (!coverageLimsFromParam) { coverageLimsFromParam = [25, 100] }
-    const identityLimsStatic = identityLimsFromParam;
-    const coverageLimsStatic = coverageLimsFromParam;
 
     // values that change with user input (QueryBuilder)
-    const [queryType, setQueryType] = React.useState(queryTypeFromParam);
-    const queryValueRef = React.useRef();
-    const identityLimsRef = React.useRef(identityLimsFromParam);
-    const coverageLimsRef = React.useRef(coverageLimsFromParam);
+    const [queryType, setQueryType] = React.useState(queryTypeStaticRef.current);
+    const [queryValue, setQueryValue] = React.useState(queryValueStaticRef.current);
+    const identityLimsRef = React.useRef(identityLimsStaticRef.current);
+    const coverageLimsRef = React.useRef(coverageLimsStaticRef.current);
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             <Helmet>
-                <title>Serratus | {queryValueStatic ? `${queryValueStatic}` : "Explorer"}</title>
+                <title>Serratus | {queryValueStaticRef.current ? `${queryValueStaticRef.current}` : "Explorer"}</title>
             </Helmet>
             <div className={`flex flex-col px-4 py-2 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <QueryBuilder
@@ -68,7 +78,8 @@ export default (props) => {
                     coverageLimsRef={coverageLimsRef}
                     queryType={queryType}
                     setQueryType={setQueryType}
-                    queryValueRef={queryValueRef} />
+                    queryValue={queryValue}
+                    setQueryValue={setQueryValue} />
                 <div className={`hidden ${switchSize}:block mb-auto text-center`}>
                     <DataReference />
                 </div>
@@ -79,10 +90,10 @@ export default (props) => {
                 {!queryPresent ?
                     <Intro /> :
                     <QueryResult
-                        queryType={queryTypeStatic}
-                        queryValue={queryValueStatic}
-                        identityLims={identityLimsStatic}
-                        coverageLims={coverageLimsStatic} />
+                        queryType={queryTypeStaticRef.current}
+                        queryValue={queryValueStaticRef.current}
+                        identityLims={identityLimsStaticRef.current}
+                        coverageLims={coverageLimsStaticRef.current} />
                 }
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />

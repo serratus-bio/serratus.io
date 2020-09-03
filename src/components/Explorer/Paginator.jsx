@@ -27,7 +27,7 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
   }, [pageNumber, numPages, dataPromise]);
 
   return (
-      !loading &&
+      (!loading && numPages !== 0) &&
       <div className={centerButtons}>
         {pageNumber === 1 ?
           <button className={invisibleButton}></button>

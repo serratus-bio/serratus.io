@@ -367,10 +367,10 @@ export function drawRunResults(d3, selector, summary, columns) {
             .each( function(d, i){
                 var link;
                 if (rowType == "family") {
-                    link = `/query?family=${name}`;
+                    link = `/explorer?family=${name}`;
                 }
                 else {
-                    link = `/query?genbank=${name}`
+                    link = `/explorer?genbank=${name}`
                 }
                 var textWidth = 100;
                 var textHeight = 14;
