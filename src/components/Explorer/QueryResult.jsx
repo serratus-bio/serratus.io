@@ -1,5 +1,8 @@
 import React from 'react';
+import Paginator from './Paginator';
+import QueryResultPage from './QueryResultPage';
 import {
+    getDataPromise,
     getPageLinks,
     getTitle,
 } from "../../helpers/ExplorerHelpers";
@@ -9,6 +12,10 @@ export default (props) => {
     const queryValue = props.queryValue;
     const identityLims = props.identityLims;
     const coverageLims = props.coverageLims;
+
+    const itemsPerPage = 20;
+    const [pageNumber, setPageNumber] = React.useState(1);
+    const [dataPromise, setDataPromise] = React.useState();
     const [pageTitle, setPageTitle] = React.useState();
     const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValue);
     const links = getPageLinks(queryType, queryValueCorrected);
@@ -31,6 +38,13 @@ export default (props) => {
         getTitle(queryType, queryValue, valueCorrected).then(setPageTitle);
     }, [queryType, queryValue]);
 
+    React.useEffect(() => {
+        if (!queryValue) {
+            return;
+        }
+        setDataPromise(getDataPromise(queryType, queryValue, pageNumber, itemsPerPage, identityLims, coverageLims));
+    }, [queryType, queryValue, pageNumber, identityLims, coverageLims]);
+
     return (
         <div>
             <div>
@@ -44,8 +58,16 @@ export default (props) => {
                     {links}
                 </div>
             </div>
-            <div>identity: {identityLims}</div>
-            <div>coverage: {coverageLims}</div>
+            <div className="p-6">
+                <Paginator
+                    pageNumber={pageNumber}
+                    setPageNumber={setPageNumber}
+                    dataPromise={dataPromise} />
+                <QueryResultPage
+                    type={queryType}
+                    value={queryValue}
+                    dataPromise={dataPromise} />
+            </div>
         </div>
     )
 }

@@ -1,9 +1,9 @@
 import React from 'react';
 import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
-import { drawQueryResults } from '../SDK/drawQueryResults.js';
-import { drawRunResults } from '../SDK/drawRunResults.js';
-import { ExternalLink } from "../helpers/common";
+import { drawQueryResults } from '../../SDK/drawQueryResults.js';
+import { drawRunResults } from '../../SDK/drawRunResults.js';
+import { ExternalLink } from "../../helpers/common";
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);

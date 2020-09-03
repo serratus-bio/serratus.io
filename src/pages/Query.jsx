@@ -1,9 +1,9 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
 import { Select } from "react-dropdown-select";
-import QueryResultPage from '../components/QueryResultPage';
+import QueryResultPage from '../components/Explorer/QueryResultPage';
 import Intro from "../components/Explorer/Intro";
-import Paginator from '../components/Paginator';
+import Paginator from '../components/Explorer/Paginator';
 import DataReference from '../components/DataReference';
 import { useLocation } from 'react-router-dom';
 import FilterSlider from '../components/Explorer/FilterSlider';
@@ -51,6 +51,7 @@ const Query = (props) => {
     const queryTypeStatic = queryTypeFromParam;
     const queryValueStatic = queryValueFromParam;
     const pathNameStatic = useLocation().pathname;
+    console.log('querytype:', queryTypeStatic);
 
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [selectValues, setSelectValues] = React.useState([queryTypeFromParam === "family" ? { label: queryValueStatic, value: queryValueStatic } : {}]);

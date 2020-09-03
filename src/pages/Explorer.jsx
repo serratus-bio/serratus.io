@@ -43,13 +43,13 @@ export default (props) => {
     const queryPresent = Boolean(queryTypeFromParam);
     const queryTypeStatic = queryTypeFromParam;
     const queryValueStatic = queryValueFromParam;
-    const identityLimsStatic = identityLimsFromParam;
-    const coverageLimsStatic = coverageLimsFromParam;
 
     // set defaults
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }
     if (!identityLimsFromParam) { identityLimsFromParam = [0, 100] }
     if (!coverageLimsFromParam) { coverageLimsFromParam = [25, 100] }
+    const identityLimsStatic = identityLimsFromParam;
+    const coverageLimsStatic = coverageLimsFromParam;
 
     // values that change with user input (QueryBuilder)
     const [queryType, setQueryType] = React.useState(queryTypeFromParam);
