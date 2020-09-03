@@ -5,7 +5,6 @@ const App = (props) => {
 	var bam = urlParams.get("bam");
 	var loc = urlParams.get("loc");
 
-	const features = [];
 	// Add some features
 	const config = {
 		containerID: "GenomeBrowser",
@@ -38,7 +37,7 @@ const App = (props) => {
 			window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`);
 			console.log(window.JBrowse)
 		});
-	}, [])
+	}, [config, bam, loc])
 
 	return (
 		<div className="App">
