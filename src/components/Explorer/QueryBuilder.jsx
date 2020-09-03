@@ -35,6 +35,8 @@ export default (props) => {
     const setQueryType = props.setQueryType;
     const queryValueRef = props.queryValueRef;
 
+    const [errorMessage, setErrorMessage] = React.useState("");
+
     // initial chart render
     React.useEffect(() => {
         var data = allFamilyData[initialFamily];
@@ -57,6 +59,7 @@ export default (props) => {
 
     // update query value
     React.useEffect(() => {
+        setErrorMessage("");
         switch (queryType) {
             case "family": queryValueRef.current = family; break;
             case "genbank": queryValueRef.current = genbank; break;
@@ -70,6 +73,10 @@ export default (props) => {
     }
 
     const goToQuery = () => {
+        if (!queryValueRef.current) {
+            setErrorMessage("Enter a query value.");
+            return;
+        }
         let params = new URLSearchParams();
         params.set(queryType, queryValueRef.current);
         if (queryType !== 'run') {
@@ -133,7 +140,11 @@ export default (props) => {
             <div className={chartVisibility}>
                 <ExploreChart />
             </div>
-            <button onClick={goToQuery} className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4" type="submit">View Matches</button>
+            <button className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4"
+                onClick={goToQuery}>
+                View Matches
+            </button>
+            <div className="mt-1 text-center text-red-700">{errorMessage}</div>
         </div>
     )
 }
