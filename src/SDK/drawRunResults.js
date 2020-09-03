@@ -224,21 +224,31 @@ export function drawRunResults(d3, selector, summary, columns) {
     }
 
     function addAccessionText(gElement, family, accession) {
-        var linkText = "GenBank";
-        var linkWidth = barWidth;
-        var linkHeight = 20;
+        // GenBank title
         var textGroup = gElement.append("g")
             .attr("transform",
-                  `translate(${sectionMargin.left}, ${sectionMargin.top})`);
-        var linkSvg = textGroup.append("svg")
-            .attr("width", linkWidth)
-            .attr("height", linkHeight)
-            .attr("x", 10);
-        var text = linkSvg.append("text")
+                  `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
+        var genbankTitle = textGroup.append("text")
             .text("Name: " + accession.name)
-            .style("font-size", 10)
+            .style("font-size", 10);
+
+        // JBrowse link
+        var jBrowseG = textGroup.append("g")
             .attr("transform",
-                  `translate(0, ${sectionMargin.top + 14})`);
+                `translate(0, 20)`);
+        var jBrowseLink = `/jbrowse?bam=${summary.sra}&loc=${accession.acc}`
+        var jBrowseTitle = jBrowseG.append("text")
+            .text("View Alignment")
+            .style("fill", "blue")
+        var jBrowseA = jBrowseG.append("a")
+                    .attr("xlink:href", jBrowseLink)
+        jBrowseA.append("rect")
+            .attr("x", 0)
+            .attr("y", -15)
+            .attr("width", 120)
+            .attr("height", 20)
+            .attr("fill", "black")
+            .style("opacity", 0)
     }
 
     function toggleVisibilityValue(currentValue) {

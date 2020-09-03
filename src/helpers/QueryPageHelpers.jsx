@@ -78,6 +78,11 @@ export const getPageLinks = (type, value) => {
                     icon={externalLinkIcon}
                     newTab={true} />
                 <LinkButton
+                    link={`${window.location.origin}/jbrowse?bam=${value}`}
+                    text="JBrowse"
+                    icon={externalLinkIcon}
+                    newTab={true} />
+                <LinkButton
                     link={`https://s3.amazonaws.com/lovelywater/bam/${value}.bam`}
                     text="BAM"
                     icon={downloadIcon}
