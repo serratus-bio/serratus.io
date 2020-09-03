@@ -14,7 +14,11 @@ import ExploreChart, {
 import {
     viridisCssGradient
 } from '../../helpers/common';
-import { constructRangeStr } from "../../helpers/ExplorerHelpers";
+import {
+    constructRangeStr,
+    getIdentitySliderLabel,
+    getCoverageSliderLabel
+} from "../../helpers/ExplorerHelpers";
 import allFamilyData from '../../data/SerratusIO_scoreID.json';
 
 const identityDomain = [75, 100];
@@ -131,7 +135,7 @@ export default (props) => {
             </div>
             <div className={slidersVisibility}>
                 <div className="mx-2">
-                    <div className="pt-6 text-center">Average alignment identity (%)</div>
+                    <div className="pt-6 text-center">{getIdentitySliderLabel(queryType)}</div>
                     <FilterSlider id="sliderIdentity"
                         sliderDomain={identityDomain}
                         sliderLimsRef={sliderIdentityLimsRef}
@@ -139,7 +143,7 @@ export default (props) => {
                         onTouchEnd={updateY} />
                 </div>
                 <div className="mx-2">
-                    <div className="pt-6 text-center">Score (pangenome coverage)</div>
+                    <div className="pt-6 text-center">{getCoverageSliderLabel(queryType)}</div>
                     <FilterSlider id="sliderCoverage"
                         sliderDomain={coverageDomain}
                         sliderLimsRef={sliderCoverageLimsRef}

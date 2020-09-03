@@ -46,9 +46,9 @@ export default (props) => {
     const willMount = React.useRef(true);
     if (willMount.current) {
         // set defaults
-        if (!identityLimsFromParam) { identityLimsFromParam = [0, 100] }
+        if (!identityLimsFromParam) { identityLimsFromParam = identityDomain }
         if (!coverageLimsFromParam && !queryTypeFromParam) { coverageLimsFromParam = [25, 100] }
-        if (!coverageLimsFromParam && queryTypeFromParam) { coverageLimsFromParam = [0, 100] }
+        if (!coverageLimsFromParam && queryTypeFromParam) { coverageLimsFromParam = coverageDomain }
         // family must be valid for initial chart render
         if (!queryTypeFromParam) { queryTypeFromParam = "family" }
         if (!queryValueFromParam) { queryValueFromParam = "Coronaviridae" }
