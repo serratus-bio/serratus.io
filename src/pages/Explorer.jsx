@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import QueryBuilder from '../components/Explorer/QueryBuilder';
 import Intro from '../components/Explorer/Intro';
+import QueryResult from '../components/Explorer/QueryResult';
 import DataReference from '../components/DataReference';
 
 import {
@@ -40,6 +41,12 @@ export default (props) => {
         if (coverageParamStr) coverageLimsRef.current = parseRange(coverageParamStr, coverageDomain);
         willMount.current = false;
     }
+    const queryPresent = Boolean(queryTypeFromParam);
+    const queryTypeStatic = queryTypeFromParam;
+    const queryValueStatic = queryValueFromParam;
+    const [identityLimsStatic] = React.useState(identityLimsRef.current);
+    const [coverageLimsStatic] = React.useState(coverageLimsRef.current);
+
     if (!queryTypeFromParam) { queryTypeFromParam = "family" }  // set default
     const [queryType, setQueryType] = React.useState(queryTypeFromParam);
     const queryValueRef = React.useRef();
@@ -63,8 +70,14 @@ export default (props) => {
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`} />
             <hr className="sm:hidden" />
             <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
-                <Intro />
-                <button onClick={() => console.log(queryValueRef.current)} className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4" type="submit">Log</button>
+                {!queryPresent ?
+                    <Intro /> :
+                    <QueryResult
+                        queryType={queryTypeStatic}
+                        queryValue={queryValueStatic}
+                        identityLims={identityLimsStatic}
+                        coverageLims={coverageLimsStatic} />
+                }
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />
                 </div>
