@@ -41,14 +41,14 @@ const Paginator = ( {pageNumber, setPageNumber, numberOfPages, getNumberOfPages}
 
   React.useEffect(() => {
     getNumberOfPages();
-  }, [pageNumber]);
+  }, [pageNumber, getNumberOfPages]);
 
   return (
     <div className={centerButtons}>
-      {pageNumber == 1 ? 
+      {pageNumber === 1 ? 
         <FirstPagePaginator/>
       : <div className={centerButtons}>
-          {pageNumber == numberOfPages ?
+          {pageNumber === numberOfPages ?
             <LastPagePaginator/>
             : <MiddlePagePaginator/>}
         </div> 
