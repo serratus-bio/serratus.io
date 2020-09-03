@@ -5,7 +5,6 @@ const App = (props) => {
 	var bam = urlParams.get("bam");
 	var loc = urlParams.get("loc");
 
-	// const features = [];
 	// Add some features
 	const config = {
 		containerID: "GenomeBrowser",
