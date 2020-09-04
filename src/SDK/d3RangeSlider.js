@@ -12,7 +12,7 @@ export function createD3RangeSlider (d3, rangeMin, rangeMax, container, playButt
     var playing = false;
     var resumePlaying = false; // Used by drag-events to resume playing on release
     var playingRate = 100;
-    var containerHeight = container.node().offsetHeight;
+    var containerHeight = parseInt(container.style("height"));
 
     // Set up play button if requested
     if (playButton) {
