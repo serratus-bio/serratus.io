@@ -6,14 +6,13 @@ import QueryResult from './QueryResult';
 import DataReference from './DataReference';
 import { classesBoxBorder } from '../../helpers/common';
 import {
+    identityDomain,
+    coverageDomain,
     parseRange,
     queryTypes,
 } from "./ExplorerHelpers";
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
-
-const identityDomain = [75, 100];
-const coverageDomain = [0, 100];
 
 export default (props) => {
     const queryTypeStaticRef = React.useRef();

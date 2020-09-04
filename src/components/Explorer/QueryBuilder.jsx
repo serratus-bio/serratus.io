@@ -12,15 +12,14 @@ import ExploreChart, {
     updateZLims
 } from './ExploreChart';
 import {
+    identityDomain,
+    coverageDomain,
     viridisCssGradient,
     constructRangeStr,
     getIdentitySliderLabel,
     getCoverageSliderLabel
 } from "./ExplorerHelpers";
 import allFamilyData from './data/SerratusIO_scoreID.json';
-
-const identityDomain = [75, 100];
-const coverageDomain = [0, 100];
 
 export default (props) => {
     const sliderIdentityLimsRef = props.identityLimsRef;

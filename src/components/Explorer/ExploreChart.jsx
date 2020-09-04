@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 const chartId = "chart"
 
-export default (props) => {
+export default () => {
     return <div id={chartId} />
 }
 
