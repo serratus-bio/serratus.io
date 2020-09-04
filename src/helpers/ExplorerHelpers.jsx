@@ -8,16 +8,16 @@ import {
     ExternalLink
 } from './common';
 
-const dataSdk = new DataSdk();
+// definitions
+export const queryTypes = ["family", "genbank", "run"];
 
-export const getPlaceholder = (type) => {
-    let typePlaceholderMap = {
-        family: "e.g. Coronaviridae",
-        genbank: "e.g. EU769558.1",
-        run: "e.g. ERR2756788"
-    };
-    return typePlaceholderMap[type];
-}
+// color palettes
+export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414487, #355f8d, #2a788e, #21908d, #22a884, #42be71, #7ad151, #bddf26, #fce640)" // slight modification of https://bennettfeely.com/cssscales/#viridis
+
+
+// functions
+
+const dataSdk = new DataSdk();
 
 export const getIdentitySliderLabel = (type) => {
     let typeMap = {

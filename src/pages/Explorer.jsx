@@ -4,16 +4,13 @@ import QueryBuilder from '../components/Explorer/QueryBuilder';
 import Intro from '../components/Explorer/Intro';
 import QueryResult from '../components/Explorer/QueryResult';
 import DataReference from '../components/DataReference';
-
+import { classesBoxBorder } from '../helpers/common';
 import {
-    parseRange
+    parseRange,
+    queryTypes,
 } from "../helpers/ExplorerHelpers";
 
-import {
-    switchSize,
-    queryTypes,
-    classesBoxBorder
-} from '../helpers/common';
+const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
 const identityDomain = [75, 100];
 const coverageDomain = [0, 100];

@@ -12,9 +12,7 @@ import ExploreChart, {
     updateZLims
 } from './ExploreChart';
 import {
-    viridisCssGradient
-} from '../../helpers/common';
-import {
+    viridisCssGradient,
     constructRangeStr,
     getIdentitySliderLabel,
     getCoverageSliderLabel
