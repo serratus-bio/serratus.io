@@ -16,8 +16,8 @@ import {
     constructRangeStr,
     getIdentitySliderLabel,
     getCoverageSliderLabel
-} from "../../helpers/ExplorerHelpers";
-import allFamilyData from '../../data/SerratusIO_scoreID.json';
+} from "./ExplorerHelpers";
+import allFamilyData from './data/SerratusIO_scoreID.json';
 
 const identityDomain = [75, 100];
 const coverageDomain = [0, 100];

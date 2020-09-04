@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { constructRangeStr } from '../helpers/ExplorerHelpers';
+import { constructRangeStr } from '../ExplorerHelpers';
 
 export default class DataSdk {
 

@@ -1,12 +1,12 @@
 import React from "react";
-import DataSdk from '../SDK/DataSdk';
-import LinkButton from "../components/LinkButton";
+import DataSdk from './SDK/DataSdk';
+import LinkButton from "./LinkButton";
 import {
     downloadIcon,
     externalLinkIcon,
     helpIcon,
     ExternalLink
-} from './common';
+} from '../../helpers/common';
 
 // definitions
 export const queryTypes = ["family", "genbank", "run"];

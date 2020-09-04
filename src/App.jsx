@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
-import Explorer from './pages/Explorer';
+import Explorer from './components/Explorer';
 import About from './pages/About';
 import Team from './pages/Team';
 import Access from './pages/Access';

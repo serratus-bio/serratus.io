@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
-import genbankAccessions from '../../data/cov3ma.genbank.json';
+import genbankAccessions from './data/cov3ma.genbank.json';
 // TODO: make data with genbank titles
 
 const genbankSelectDomain = genbankAccessions.map((genbank) => { return { label: genbank, value: genbank } });

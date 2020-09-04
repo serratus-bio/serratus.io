@@ -1,14 +1,14 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import QueryBuilder from '../components/Explorer/QueryBuilder';
-import Intro from '../components/Explorer/Intro';
-import QueryResult from '../components/Explorer/QueryResult';
-import DataReference from '../components/DataReference';
-import { classesBoxBorder } from '../helpers/common';
+import QueryBuilder from './QueryBuilder';
+import Intro from './Intro';
+import QueryResult from './QueryResult';
+import DataReference from './DataReference';
+import { classesBoxBorder } from '../../helpers/common';
 import {
     parseRange,
     queryTypes,
-} from "../helpers/ExplorerHelpers";
+} from "./ExplorerHelpers";
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
