@@ -1,9 +1,16 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
-import genbankAccessions from './data/cov3ma.genbank.json';
-// TODO: make data with genbank titles
+import genbankEntries from './data/cov3ma.genbank.json';
 
-const genbankSelectDomain = genbankAccessions.map((genbank) => { return { label: genbank, value: genbank } });
+
+const getLabel = (genbank) => {
+    var info = genbankEntries[genbank];
+    return `[${genbank}] ${info.title}`;
+}
+
+const genbankSelectDomain = Object.keys(genbankEntries).map((genbank) => {
+    return { label: getLabel(genbank), value: genbank };
+});
 
 export default (props) => {
     const genbank = props.genbank;
@@ -12,7 +19,7 @@ export default (props) => {
     const [selectValue, setSelectValue] = React.useState();
 
     React.useEffect(() => {
-        setSelectValue(genbank && { label: genbank, value: genbank })
+        setSelectValue(genbank && { label: getLabel(genbank), value: genbank })
     }, [genbank])
 
     const dropdownOnChange = (selected) => {
