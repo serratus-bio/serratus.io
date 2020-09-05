@@ -17,7 +17,8 @@ import {
     viridisCssGradient,
     constructRangeStr,
     getIdentitySliderLabel,
-    getCoverageSliderLabel
+    getCoverageSliderLabel,
+    resultSectionId
 } from "./ExplorerHelpers";
 import allFamilyData from './data/SerratusIO_scoreID.json';
 
@@ -98,7 +99,7 @@ export default (props) => {
             var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
             params.set('coverage', coverage);
         }
-        var queryUrl = 'explorer?' + params.toString();
+        var queryUrl = `explorer?${params.toString()}#${resultSectionId}`;
         window.location.href = queryUrl;
     }
 
@@ -130,33 +131,34 @@ export default (props) => {
                         onEnter={goToQuery} />
                 </div>
             </div>
-            <div className={slidersVisibility}>
-                <div className="mx-2">
-                    <div className="pt-6 text-center">{getIdentitySliderLabel(queryType)}</div>
-                    <FilterSlider id="sliderIdentity"
-                        sliderDomain={identityDomain}
-                        sliderLimsRef={sliderIdentityLimsRef}
-                        onChange={updateX}
-                        onTouchEnd={updateY} />
+            <div className="max-w-xl m-auto">
+                <div className={`${slidersVisibility} mb-10`}>
+                    <div className="mx-2">
+                        <div className="pt-6 text-center">{getIdentitySliderLabel(queryType)}</div>
+                        <FilterSlider id="sliderIdentity"
+                            sliderDomain={identityDomain}
+                            sliderLimsRef={sliderIdentityLimsRef}
+                            onChange={updateX}
+                            onTouchEnd={updateY} />
+                    </div>
+                    <div className="mx-2">
+                        <div className="pt-6 text-center">{getCoverageSliderLabel(queryType)}</div>
+                        <FilterSlider id="sliderCoverage"
+                            sliderDomain={coverageDomain}
+                            sliderLimsRef={sliderCoverageLimsRef}
+                            linearGradientString={viridisCssGradient}
+                            onChange={updateZ}
+                            onTouchEnd={updateY} />
+                    </div>
                 </div>
-                <div className="mx-2">
-                    <div className="pt-6 text-center">{getCoverageSliderLabel(queryType)}</div>
-                    <FilterSlider id="sliderCoverage"
-                        sliderDomain={coverageDomain}
-                        sliderLimsRef={sliderCoverageLimsRef}
-                        linearGradientString={viridisCssGradient}
-                        onChange={updateZ}
-                        onTouchEnd={updateY} />
+                <div className={chartVisibility}>
+                    <ExploreChart />
                 </div>
+                <button className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4"
+                    onClick={goToQuery}>
+                    View Matches
+                </button>
             </div>
-            <div className="h-10" />
-            <div className={chartVisibility}>
-                <ExploreChart />
-            </div>
-            <button className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4"
-                onClick={goToQuery}>
-                View Matches
-            </button>
             <div className="mt-1 text-center text-red-700">{errorMessage}</div>
         </div>
     )

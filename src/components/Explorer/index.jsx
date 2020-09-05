@@ -10,6 +10,7 @@ import {
     coverageDomain,
     parseRange,
     queryTypes,
+    resultSectionId
 } from "./ExplorerHelpers";
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
@@ -82,7 +83,7 @@ export default (props) => {
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`} />
             <hr className="sm:hidden" />
-            <div className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
+            <div id={resultSectionId} className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 {!queryPresent ?
                     <Intro /> :
                     <QueryResult

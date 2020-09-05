@@ -46,7 +46,7 @@ export default (props) => {
     }, [queryType, queryValue, pageNumber, identityLims, coverageLims]);
 
     return (
-        <div>
+        <div className="max-w-4xl m-auto">
             <div>
                 <div className="w-full text-center">
                     <div>
