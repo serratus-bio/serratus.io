@@ -35,6 +35,10 @@ export default (props) => {
         ).slice(0, maxDropdownSize);
     };
 
+    const onMenuOpen = () => {
+        setSelectValue(null);
+    }
+
     const loadOptions = (inputValue, callback) => {
         callback(filterGenbank(inputValue));
     }
@@ -42,9 +46,11 @@ export default (props) => {
     return (
         <AsyncSelect
             cacheOptions
+            defaultOptions
             value={selectValue}
             loadOptions={loadOptions}
             onChange={dropdownOnChange}
-            placeholder="Type to search" />
+            onMenuOpen={onMenuOpen}
+            placeholder={`Type to search (first ${maxDropdownSize} options displayed)`} />
     )
 }
