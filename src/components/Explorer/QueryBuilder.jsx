@@ -32,6 +32,7 @@ export default (props) => {
 
     // set family to valid value for initial chart render
     const [initialFamily] = React.useState('Coronaviridae');
+    const [initialIdentityLims] = React.useState(props.identityLimsRef.current);
     const [initialCoverageLims] = React.useState(props.coverageLimsRef.current);
     const [initialQueryType] = React.useState(props.queryType);
     const [initialQueryValue] = React.useState(props.queryValue);
@@ -55,9 +56,10 @@ export default (props) => {
     React.useEffect(() => {
         var data = allFamilyData[initialFamily];
         renderChart(data, identityDomain, coverageDomain);
+        updateXLims(...initialIdentityLims);
         updateZLims(...initialCoverageLims);
         updateYLims();
-    }, [initialFamily, initialCoverageLims]);
+    }, [initialFamily, initialIdentityLims, initialCoverageLims]);
 
     // update chart for subsequent family changes
     React.useEffect(() => {
