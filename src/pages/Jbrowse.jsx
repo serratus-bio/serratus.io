@@ -22,6 +22,7 @@ const App = (props) => {
 				storeClass : "JBrowse/Store/SeqFeature/BAM",
 				label : bam,
 				type : "JBrowse/View/Track/Alignments2",
+				chunkSizeLimit: 40000000
 			}
 		],
 		includes: null,
