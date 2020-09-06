@@ -1,9 +1,9 @@
 import React from 'react';
 import { withFauxDOM } from 'react-faux-dom'
 import * as d3 from 'd3';
-import { drawQueryResults } from '../SDK/drawQueryResults.js';
-import { drawRunResults } from '../SDK/drawRunResults.js';
-import { ExternalLink } from "../helpers/common";
+import { drawQueryResults } from './SDK/drawQueryResults.js';
+import { drawRunResults } from './SDK/drawRunResults.js';
+import { ExternalLink } from "../../helpers/common";
 
 const QueryResult = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
@@ -78,7 +78,7 @@ const QueryResult = (props) => {
 
     let error = (
         <div className="text-center">
-            <span>Could not retrieve results for this query.</span><br />
+            <span>This query did not return any results.</span><br />
             <span>If this is unexpected, please </span>
             <ExternalLink href="https://github.com/serratus-bio/serratus.io/issues/new" className="text-blue-600">
                 submit an issue

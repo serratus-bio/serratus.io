@@ -1,11 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Helmet } from 'react-helmet';
 import * as d3 from 'd3';
-import { createD3RangeSlider } from '../SDK/d3RangeSlider.js';
+import { createD3RangeSlider } from './SDK/d3RangeSlider.js';
 
 export default (props) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)
-    // optional props: colorGradientLims, onChange:callback, onTouchEnd:callback
+    // optional props: linearGradientString, onChange:callback, onTouchEnd:callback
 
     const slider = useRef(null);
     const sliderLabelL = useRef(null);
@@ -13,16 +13,17 @@ export default (props) => {
 
     const onChange = props.onChange;
     const onTouchEnd = props.onTouchEnd;
-    // directly fetch initial .current
-    const id = useRef(props.id).current;
-    const sliderDomain = useRef(props.sliderDomain).current;
-    const linearGradientString = useRef(props.linearGradientString).current;
+    const sliderLimsRef = props.sliderLimsRef;
+    // immutables
+    const [id] = useState(props.id);
+    const [sliderDomain] = useState(props.sliderDomain);
+    const [linearGradientString] = useState(props.linearGradientString);
 
     useEffect(() => {
         const updateLims = (begin, end) => {
             sliderLabelL.current.text(begin);
             sliderLabelR.current.text(end);
-            props.sliderLimsRef.current = [begin, end];
+            sliderLimsRef.current = [begin, end];
         };
 
         const drawSlider = () => {
@@ -46,13 +47,13 @@ export default (props) => {
         };
 
         drawSlider();
-    }, [id, sliderDomain, linearGradientString, props.sliderLimsRef]);
+    }, [id, sliderDomain, linearGradientString, sliderLimsRef]);
 
     useEffect(() => {
-        slider.current && slider.current.range(...props.sliderLimsRef.current);
+        slider.current && slider.current.range(...sliderLimsRef.current);
         onChange && slider.current.onChange(() => onChange());
         onTouchEnd && slider.current.onTouchEnd(onTouchEnd);
-    }, [props.sliderLimsRef, onChange, onTouchEnd]);
+    }, [sliderLimsRef, onChange, onTouchEnd]);
 
     return (
         <div>

@@ -7,27 +7,16 @@ The website was bootstrapped with `create-react-app` and leverages D3.js for vis
 
 This repository is just one of the main repositories involving Serratus:
 
-1. Repository for database-related development: [serratus-bio/serratus-db](https://github.com/serratus-bio/serratus-db)
-2. Repository for Serratus bioinformatics work: [ababaian/serratus](https://github.com/ababaian/serratus)
+1. Repository for Serratus database-related development: [serratus-bio/serratus-db](https://github.com/serratus-bio/serratus-db)
+2. Repository for Serratus data exploration R package: [ababaian/serratus](https://github.com/serratus-bio/tantalus)
+3. Repository for Serratus bioinformatics work: [ababaian/serratus](https://github.com/ababaian/serratus)
 
-## Visualization Pages
+## Serratus Explorer
 
-### Explore
+This page allows users to explore Serratus data on 3 different levels:
 
-This page allows users to explore a family-level overview of the data processed by Serratus.
+1. Taxonomy family
+2. GenBank accession
+3. SRA Run accession
 
-<img src="doc/explore-coronaviridae.png" width="700" alt="Explore page for Coronaviridae with filters applied">
-
-In the near future, users will be able to click a button to view the respective Query page for applied filters.
-
-### Query
-
-The Query page allows users to view a visual summary report of any SRA run analyzed by Serratus.
-
-Example: [Frank (ERR2756788)](https://serratus.io/query?run=ERR2756788)
-
-<img src="doc/query-frank.png" width="500" alt="Query page for Frank (ERR2756788)">
-
-Users can also query for all SRA runs matching a given viral family or GenBank accession:
-
-<img src="doc/query-genbank.png" width="500" alt="Query page for EU769558.1">
+<img src="doc/serratus-explorer-demo.gif" width="700" alt="Serratus Explorer demo">

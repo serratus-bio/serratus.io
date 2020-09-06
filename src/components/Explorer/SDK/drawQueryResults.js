@@ -238,7 +238,7 @@ export function drawQueryResults(d3, selector, results, columns) {
             .style("fill", "blue")
             .style('cursor', 'pointer')
             .each( function(d, i){
-                var link = `/query?run=${name}`;
+                var link = `/explorer?run=${name}`;
                 var offsetX = 0
                 var textWidth = 80;
                 var textHeight = 14;
