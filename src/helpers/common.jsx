@@ -2,7 +2,6 @@ import React from 'react';
 
 // common styling
 export const classesBoxBorder = "sm:border sm:rounded sm:border-gray-400 sm:bg-white";
-export const switchSize = "lg";
 
 // SVG icons
 export const downloadIcon = (<svg className="inline fill-current w-4 h-4 ml-1 mb-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" /></svg>);
