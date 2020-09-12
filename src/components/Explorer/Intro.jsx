@@ -3,6 +3,12 @@ import React from 'react';
 export default () => {
     return (
         <div className="text-center">
+       
+            <button className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4"
+              onClick=" location.href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer' ">
+              How To: Using Serratus Explorer
+            </button><br />
+           
             Explore Serratus SRA run matches for a family name or GenBank accession.<br />
             Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a><br />
             GenBank: <a className="text-blue-600" href="?genbank=EU769558.1">EU769558.1</a><br />
@@ -12,7 +18,7 @@ export default () => {
             Example 1: Frank the Bat (<a className="text-blue-600" href="?run=ERR2756788">ERR2756788</a>)<br />
             Example 2: Ginger the Cat (<a className="text-blue-600" href="?run=SRR7287110">SRR7287110</a>)
             <img className="m-auto h-64" src="/Frank_Ginger.png" alt="Frank and Ginger, the Serratus mascots"></img>
-            Frank and Ginger, the Serratus mascots.
+            <i>Frank and Ginger, the Serratus mascots.</i>
         </div>
     )
 }
