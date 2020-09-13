@@ -20,6 +20,10 @@ import {
     getCoverageSliderLabel,
     resultSectionId
 } from "./ExplorerHelpers";
+import {
+    ExternalLink,
+    helpIcon
+} from '../../helpers/common';
 import allFamilyData from './data/SerratusIO_scoreID.json';
 
 export default (props) => {
@@ -156,10 +160,13 @@ export default (props) => {
                 <div className={chartVisibility}>
                     <ExploreChart />
                 </div>
-                <button className="w-full rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 mt-4"
-                    onClick={goToQuery}>
-                    View Matches
-                </button>
+                <div className="flex flex-row justify-center items-center mt-4">
+                    <button className="w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4"
+                        onClick={goToQuery}>
+                        View Matches
+                    </button>
+                    <ExternalLink className='ml-2 mb-1' title='Go to tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>{helpIcon}</ExternalLink>
+                </div>
             </div>
             <div className="mt-1 text-center text-red-700">{errorMessage}</div>
         </div>
