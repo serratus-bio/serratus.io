@@ -165,7 +165,7 @@ export default (props) => {
                         onClick={goToQuery}>
                         View Matches
                     </button>
-                    <ExternalLink className='ml-2 mb-1' title='Go to tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>{helpIcon}</ExternalLink>
+                    <ExternalLink className='ml-2 mb-1' title='Open tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>{helpIcon}</ExternalLink>
                 </div>
             </div>
             <div className="mt-1 text-center text-red-700">{errorMessage}</div>
