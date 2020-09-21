@@ -1,7 +1,11 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { NavLink } from "react-router-dom";
-import { searchIcon } from '../helpers/common';
+import {
+    searchIcon,
+    externalLinkIcon,
+    ExternalLink,
+} from '../helpers/common';
 
 const Home = () => {
     const headTags = (
@@ -20,6 +24,7 @@ const Home = () => {
                     <NavLink to="/explorer" className="border z-10 border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white">
                         {searchIcon} Explore
                     </NavLink>
+                    <ExternalLink className="mt-2" title='Open tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>Tutorial {externalLinkIcon}</ExternalLink>
                     <h3 className="inline text-lg font-thin my-5">
                         <span className="font-normal">3,837,755</span> runs processed<span className="border-l border-white mx-2" />
                         <span className="font-normal">5,620,086,903,602,832</span> nucleotides
