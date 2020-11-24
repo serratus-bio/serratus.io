@@ -49,7 +49,7 @@ var colMap = {
     }
 }
 
-var columns = ["score", "pctId", "aln"];
+var columns;
 var cvgLength = 25;
 var genomeBins = [...Array(cvgLength).keys()];
 
@@ -68,7 +68,8 @@ var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
 var barBorder = {size: 1, color: '#999'};
 var rowLabelShiftX = -25;
 
-export const renderChart = (results) => {
+export const renderChart = (results, columnsParam) => {
+    columns = columnsParam;
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);

@@ -1,8 +1,11 @@
 import React from 'react';
 import { ExternalLink } from "../../helpers/common";
-import Chart, {
-    renderChart
+import QueryChart, {
+    renderChart as renderQueryChart
 } from './QueryResultChart';
+// import RunChart, {
+//     renderChart as renderRunChart
+// } from './RunResultChart';
 
 export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);
@@ -14,17 +17,49 @@ export default (props) => {
             return;
         }
         setIsLoading(true);
-        props.dataPromise.then((data) => {
-            data = data.items;
-            let hasResults = data && data.length !== 0;
-            setHasResults(hasResults);
-            setIsLoading(false);
-            renderChart(data);
-        }).catch(err => {
-            console.error(err);
-            setHasError(true);
-            setIsLoading(false);
-        });
+
+        var columns;
+        switch (props.type) {
+            case "family":
+                columns = ["score", "pctId", "aln"];
+                props.dataPromise.then((data) => {
+                    data = data.items;
+                    let hasResults = data && data.length !== 0;
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderQueryChart(data, columns);
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
+                });
+                break;
+            case "genbank":
+                columns = ["cvgPct", "pctId", "aln"];
+                props.dataPromise.then((data) => {
+                    data = data.items;
+                    let hasResults = data && data.length !== 0;
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderQueryChart(data, columns);
+                }).catch(err => {
+                    setHasError(true);
+                    setIsLoading(false);
+                });
+                break;
+            // case "run":
+            //     columns = ["score", "pctId", "aln"];
+            //     callback = getResultsCallback(drawRunResults, columns);
+            //     props.dataPromise.then((data) => {
+            //         let hasResults = Boolean(data);
+            //         setHasResults(hasResults);
+            //         setIsLoading(false);
+            //         renderRunChart(data);
+            //     }).catch(err => {
+            //         setHasError(true);
+            //         setIsLoading(false);
+            //     });
+            //     break;
+        }
     }, [props.dataPromise]);
 
     let loading = (
@@ -65,6 +100,6 @@ export default (props) => {
         return error
     }
     return (
-        <Chart />
+        <QueryChart />
     )
 }
