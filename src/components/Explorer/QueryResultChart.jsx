@@ -49,28 +49,27 @@ var colMap = {
     }
 }
 
-// D3 objects
-var barWidth;
-var barHeight;
+var columns = ["score", "pctId", "aln"];
+var cvgLength = 25;
+var genomeBins = [...Array(cvgLength).keys()];
+
+var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
+        .domain([0, 1]);
+
+var colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
+
+var sectionMargin = {top: 2, right: 230, bottom: 2, left: 200};
+var sectionWidth = 750;
+var sectionHeight = 20;
+var tableShiftY = 40;
+var barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
+var barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
+
 var barBorder = {size: 1, color: '#999'};
 var rowLabelShiftX = -25;
 
-export const renderChart = (data, selector, results, columns) => {
-    var sectionMargin = {top: 2, right: 230, bottom: 2, left: 200};
-    var sectionWidth = 750;
-    var sectionHeight = 20;
-    var tableShiftY = 40;
-    barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
-    barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
-
-    var colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
-        .domain([0, 1]);
-    var colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
-
-    var cvgLength = results[0]["cvg"].length;
-    var genomeBins = [...Array(cvgLength).keys()];
-
-    var chartSvg = d3.select(selector)
+export const renderChart = (results) => {
+    var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);
     var matchSvg = chartSvg.append("svg")
@@ -92,48 +91,6 @@ export const renderChart = (data, selector, results, columns) => {
         var matchSubGroup = drawExpandableRow(matchG, match.sra, "match", coverageData, i);
         addColumns(matchG.select("svg"), match);
     });
-}
-
-var cvgCartoonMap = {
-    '_': 0,
-    '.': 0.25,
-    'o': 0.5,
-    'O': 1
-}
-
-var colMap = {
-    "score": {
-        "name": "Score",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 50,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "cvgPct": {
-        "name": "Coverage",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 70,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "pctId": {
-        "name": "Identity",
-        "desc": "Average alignment identity",
-        "size": 70,
-        "valueSuffix": "%",
-        "domain": [75, 100],
-        "fill": "#fdb53c"
-    },
-    "aln": {
-        "name": "Reads",
-        "desc": "Number of alignments (bowtie2)",
-        "size": 70,
-        "valueSuffix": "",
-        "domain": [0, 1000],
-        "fill": "#658fc4"
-    }
 }
 
 function linspace(start, end, n) {
@@ -222,9 +179,9 @@ function addHeaders(gElement) {
         .attr("transform",
               `translate(${xShift}, ${yShift})`);
 
-    var colText = "Coverage Heatmap";
-    var xShift = sectionMargin.left + (barWidth / 2);
-    var text = textG.append("text")
+    colText = "Coverage Heatmap";
+    xShift = sectionMargin.left + (barWidth / 2);
+    text = textG.append("text")
         .text(colText)
         .style("text-anchor", "middle")
         .attr("transform",
@@ -302,7 +259,7 @@ function addColumns(gElement, summaryEntry=null) {
 }
 
 function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
-    y = rowIndex * sectionHeight;
+    var y = rowIndex * sectionHeight;
     var entrySvg = gElement.append("svg")
         .attr("y", y)
         .attr("width", sectionWidth)
@@ -319,7 +276,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .domain(genomeBins)
         .padding(0.01);
 
-    var y = d3.scaleBand()
+    y = d3.scaleBand()
         .range([ 0, barHeight ])
         .domain([name])
         .padding(0.01);
