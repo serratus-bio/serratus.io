@@ -47,9 +47,8 @@ export default (props) => {
                 });
                 break;
             case "run":
-                columns = ["cvgPct", "pctId", "aln"];
+                columns = ["score", "pctId", "aln"];
                 props.dataPromise.then((data) => {
-                    data = data.items;
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);

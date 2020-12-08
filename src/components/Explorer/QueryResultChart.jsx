@@ -304,7 +304,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
                 .attr("height", textHeight)
                 .attr("fill", "black")
                 .style("opacity", 0)
-        });;
+        });
 
     var heatBar = entryG.append("g")
         .attr("class", "heatbar");
