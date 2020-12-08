@@ -1,7 +1,7 @@
 import React from "react";
 import * as d3 from 'd3';
 
-const chartId = "queryResultChart"
+const chartId = "runResultChart"
 
 export default () => {
     return <div id={chartId} />

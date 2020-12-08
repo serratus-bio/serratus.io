@@ -3,9 +3,9 @@ import { ExternalLink } from "../../helpers/common";
 import QueryChart, {
     renderChart as renderQueryChart
 } from './QueryResultChart';
-// import RunChart, {
-//     renderChart as renderRunChart
-// } from './RunResultChart';
+import RunChart, {
+    renderChart as renderRunChart
+} from './RunResultChart';
 
 export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);
@@ -46,19 +46,20 @@ export default (props) => {
                     setIsLoading(false);
                 });
                 break;
-            // case "run":
-            //     columns = ["score", "pctId", "aln"];
-            //     callback = getResultsCallback(drawRunResults, columns);
-            //     props.dataPromise.then((data) => {
-            //         let hasResults = Boolean(data);
-            //         setHasResults(hasResults);
-            //         setIsLoading(false);
-            //         renderRunChart(data);
-            //     }).catch(err => {
-            //         setHasError(true);
-            //         setIsLoading(false);
-            //     });
-            //     break;
+            case "run":
+                columns = ["cvgPct", "pctId", "aln"];
+                props.dataPromise.then((data) => {
+                    data = data.items;
+                    let hasResults = data && data.length !== 0;
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderRunChart(data, columns);
+                }).catch(err => {
+                    console.log(err);
+                    setHasError(true);
+                    setIsLoading(false);
+                });
+                break;
         }
     }, [props.dataPromise]);
 
@@ -99,7 +100,10 @@ export default (props) => {
         }
         return error
     }
-    return (
-        <QueryChart />
-    )
+    if (props.type === "run") {
+        return <RunChart />
+    }
+    else {
+        return <QueryChart />
+    }
 }
