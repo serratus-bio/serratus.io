@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */ 
 import React from "react";
 import * as d3 from 'd3';
 
@@ -182,7 +183,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .style('cursor', 'pointer')
         .each( function(d, i){
             var link;
-            if (rowType == "family") {
+            if (rowType === "family") {
                 link = `/explorer?family=${name}`;
             }
             else {
@@ -248,7 +249,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .attr("height", barHeight)
         .style("opacity", 0)
         .style('cursor', 'pointer').on("click", function() {
-            if (rowType == "family") {
+            if (rowType === "family") {
                 toggleFamilyRow(name);
             }
             else {
@@ -267,13 +268,13 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
 }
 
 function toggleVisibilityValue(currentValue) {
-    return (currentValue == "visible" ? "hidden" : "visible");
+    return (currentValue === "visible" ? "hidden" : "visible");
 }
 
 function toggleIRow(allRows, currentRow, subsectionHeight) {
     var subsectionG = currentRow.select("g.subsection");
     var subsectionVisibility = subsectionG.attr("visibility");
-    var subSectionVisible = subsectionVisibility == "visible";
+    var subSectionVisible = subsectionVisibility === "visible";
     var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
     var caretRotate = subSectionVisible ? -30 : 60;
     var fadeTime = 500;
@@ -283,7 +284,7 @@ function toggleIRow(allRows, currentRow, subsectionHeight) {
             var currentY = parseInt(d3.select(this).select("svg").attr("y"));
             d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
         }
-        if (d3.select(this).attr("rowid") == currentRow.attr("rowid")) {
+        if (d3.select(this).attr("rowid") === currentRow.attr("rowid")) {
             shift = true;
             subsectionG.attr("visibility", toggleVisibilityValue(subsectionVisibility));
             var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
@@ -337,7 +338,7 @@ function shiftLowerFamilies(familyName, shiftY) {
             var currentY = parseInt(d3.select(this).select("svg").attr("y"));
             d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
         }
-        if (d3.select(this).attr("rowid") == familyName) {
+        if (d3.select(this).attr("rowid") === familyName) {
             shift = true;
             var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
             d3.select(this).select("svg").transition().duration(fadeTime).attr("height", currentHeight + shiftY);
@@ -349,14 +350,14 @@ function toggleAccessionRow(familyName, accessionName) {
     var allRows = d3.selectAll(".accession");
     var currentRow = d3.select(`.accession[rowid="${accessionName}"]`);
     var subsectionVisibility = currentRow.select("g.subsection").attr("visibility");
-    var subSectionVisible = subsectionVisibility == "visible";
+    var subSectionVisible = subsectionVisibility === "visible";
     var subsectionHeight = 100;
     var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
     toggleIRow(allRows, currentRow, subsectionHeight);
     shiftLowerFamilies(familyName, shiftY);
 }
 
-function addFamilyText(gElement, family) {
+function addFamilyText(gElement) {
     var textGroup = gElement.append("g")
         .attr("transform",
               `translate(${sectionMargin.left}, ${sectionMargin.top})`);
@@ -368,7 +369,7 @@ function addFamilyText(gElement, family) {
         .text(`Top ${maxAccessions} accessions by coverage:`);
 }
 
-function addAccessionText(gElement, family, accession) {
+function addAccessionText(gElement, accession) {
     // GenBank title
     var textGroup = gElement.append("g")
         .attr("transform",
