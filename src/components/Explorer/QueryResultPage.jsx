@@ -59,8 +59,9 @@ export default (props) => {
                     setIsLoading(false);
                 });
                 break;
+            default:
         }
-    }, [props.dataPromise]);
+    }, [props.type, props.dataPromise]);
 
     let loading = (
         <div className="text-center">
