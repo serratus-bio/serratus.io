@@ -26,10 +26,7 @@ export default () => {
     return <div id={chartId} />
 }
 
-var columns;
-
-export const renderChart = (results, columnsParam) => {
-    columns = columnsParam;
+export const renderChart = (results, columns) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);

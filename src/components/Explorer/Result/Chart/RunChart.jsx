@@ -27,13 +27,9 @@ export default () => {
     return <div id={chartId} />
 }
 
-var columns;
-var summary;
 var maxAccessions = 10;
 
-export const renderChart = (summaryParam, columnsParam) => {
-    summary = summaryParam;
-    columns = columnsParam;
+export const renderChart = (summary, columns) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);
@@ -325,7 +321,7 @@ function addAccessionText(gElement, accession) {
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${summary.sra}&loc=${accession.acc}`
+    var jBrowseLink = `/jbrowse?bam=${accession.sra}&loc=${accession.acc}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")
