@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */ 
+/* eslint-disable no-unused-vars */
 import React from "react";
 import * as d3 from 'd3';
 
@@ -49,7 +49,7 @@ export const renderChart = (summary, columns) => {
     var accessionsByFamily = d3.nest()
         .key(d => d.fam)
         .entries(summary["accessionSections"])
-        .reduce(function(obj, x) {
+        .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
@@ -100,15 +100,15 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
 
     var entryG = entrySvg.append("g")
         .attr("transform",
-              `translate(${sectionMargin.left}, ${sectionMargin.top})`);
+            `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
     var x = d3.scaleBand()
-        .range([ 0, barWidth ])
+        .range([0, barWidth])
         .domain(genomeBins)
         .padding(0.01);
 
     y = d3.scaleBand()
-        .range([ 0, barHeight ])
+        .range([0, barHeight])
         .domain([name])
         .padding(0.01);
     var yAxis = entryG.append("g")
@@ -120,7 +120,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .style("font-size", 12)
         .style("fill", "blue")
         .style('cursor', 'pointer')
-        .each( function(d, i){
+        .each(function (d, i) {
             var link;
             if (rowType === "family") {
                 link = `/explorer?family=${name}`;
@@ -157,11 +157,11 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .data(heatSquareData)
         .enter()
         .append("rect")
-        .attr("x", d => x(d.bin) )
-        .attr("y", d => y(d[dataBin]) )
-        .attr("width", x.bandwidth() )
-        .attr("height", y.bandwidth() )
-        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]) )
+        .attr("x", d => x(d.bin))
+        .attr("y", d => y(d[dataBin]))
+        .attr("width", x.bandwidth())
+        .attr("height", y.bandwidth())
+        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))
 
     var barBorderPath = entryG
         .append("rect")
@@ -187,7 +187,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .attr("width", barWidth + clickExpandShiftX)
         .attr("height", barHeight)
         .style("opacity", 0)
-        .style('cursor', 'pointer').on("click", function() {
+        .style('cursor', 'pointer').on("click", function () {
             if (rowType === "family") {
                 toggleFamilyRow(name);
             }
@@ -202,7 +202,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .attr("class", "subsection")
         .attr("visibility", "hidden")
         .attr("transform",
-              `translate(0, ${sectionMargin.top + barHeight})`);
+            `translate(0, ${sectionMargin.top + barHeight})`);
     return subsection
 }
 
@@ -218,7 +218,7 @@ function toggleIRow(allRows, currentRow, subsectionHeight) {
     var caretRotate = subSectionVisible ? -30 : 60;
     var fadeTime = 500;
     var shift = false;
-    allRows.each(function(d, i) {
+    allRows.each(function (d, i) {
         if (shift) {
             var currentY = parseInt(d3.select(this).select("svg").attr("y"));
             d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
@@ -257,7 +257,7 @@ function toggleFamilyRow(familyName) {
     var currentRow = d3.select(`.family[rowid="${familyName}"]`);
     var subsectionHeight = 300;
     var waitForAccession = false;
-    currentRow.selectAll(".accession").each(function(d, i) {
+    currentRow.selectAll(".accession").each(function (d, i) {
         var accessionName = d3.select(this).attr("rowid");
         var isExpanded = !d3.select(this).select(`.subsection[visibility="visible"]`).empty();
         if (isExpanded) {
@@ -266,13 +266,13 @@ function toggleFamilyRow(familyName) {
         }
     });
     var timeout = waitForAccession ? 500 : 0;  // hacky fix for family+acc collapse
-    setTimeout(() => {toggleIRow(allRows, currentRow, subsectionHeight)}, timeout);
+    setTimeout(() => { toggleIRow(allRows, currentRow, subsectionHeight) }, timeout);
 }
 
 function shiftLowerFamilies(familyName, shiftY) {
     var fadeTime = 500;
     var shift = false;
-    d3.selectAll(".family").each(function(d, i) {
+    d3.selectAll(".family").each(function (d, i) {
         if (shift) {
             var currentY = parseInt(d3.select(this).select("svg").attr("y"));
             d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
@@ -299,12 +299,12 @@ function toggleAccessionRow(familyName, accessionName) {
 function addFamilyText(gElement) {
     var textGroup = gElement.append("g")
         .attr("transform",
-              `translate(${sectionMargin.left}, ${sectionMargin.top})`);
+            `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
     var accessionsHeaderY = 40;
     var textEntry = textGroup.append("text")
         .attr("transform",
-              `translate(0, ${accessionsHeaderY})`)
+            `translate(0, ${accessionsHeaderY})`)
         .text(`Top ${maxAccessions} accessions by coverage:`);
 }
 
@@ -312,7 +312,7 @@ function addAccessionText(gElement, accession) {
     // GenBank title
     var textGroup = gElement.append("g")
         .attr("transform",
-              `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
+            `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
     var genbankTitle = textGroup.append("text")
         .text("Name: " + accession.name)
         .style("font-size", 10);
@@ -326,7 +326,7 @@ function addAccessionText(gElement, accession) {
         .text("View Alignment")
         .style("fill", "blue")
     var jBrowseA = jBrowseG.append("a")
-                .attr("xlink:href", jBrowseLink)
+        .attr("xlink:href", jBrowseLink)
     jBrowseA.append("rect")
         .attr("x", 0)
         .attr("y", -15)

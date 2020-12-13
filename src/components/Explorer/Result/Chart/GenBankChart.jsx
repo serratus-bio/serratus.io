@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */ 
+/* eslint-disable no-unused-vars */
 import React from "react";
 import * as d3 from 'd3';
 
@@ -62,15 +62,15 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
 
     var entryG = entrySvg.append("g")
         .attr("transform",
-              `translate(${sectionMargin.left}, ${sectionMargin.top})`);
+            `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
     var x = d3.scaleBand()
-        .range([ 0, barWidth ])
+        .range([0, barWidth])
         .domain(genomeBins)
         .padding(0.01);
 
     y = d3.scaleBand()
-        .range([ 0, barHeight ])
+        .range([0, barHeight])
         .domain([name])
         .padding(0.01);
     var yAxis = entryG.append("g")
@@ -81,7 +81,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .style("font-size", 12)
         .style("fill", "blue")
         .style('cursor', 'pointer')
-        .each( function(d, i){
+        .each(function (d, i) {
             var link = `/explorer?run=${name}`;
             var offsetX = 0
             var textWidth = 80;
@@ -89,7 +89,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
             d3.select(this.parentNode)
                 .append("a")
                 .attr("xlink:href", link)
-            .append("rect")
+                .append("rect")
                 .attr("x", offsetX - textWidth)
                 .attr("y", -8)
                 .attr("width", textWidth)
@@ -105,11 +105,11 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .data(heatSquareData)
         .enter()
         .append("rect")
-        .attr("x", d => x(d.bin) )
-        .attr("y", d => y(d[dataBin]) )
-        .attr("width", x.bandwidth() )
-        .attr("height", y.bandwidth() )
-        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]) )
+        .attr("x", d => x(d.bin))
+        .attr("y", d => y(d[dataBin]))
+        .attr("width", x.bandwidth())
+        .attr("height", y.bandwidth())
+        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))
 
     var barBorderPath = entryG
         .append("rect")

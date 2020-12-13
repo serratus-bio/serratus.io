@@ -1,4 +1,4 @@
-/* eslint-disable no-unused-vars */ 
+/* eslint-disable no-unused-vars */
 import * as d3 from 'd3';
 
 export const cvgCartoonMap = {
@@ -46,24 +46,24 @@ export const colMap = {
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
 export const colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
-        .domain([0, 1]);
+    .domain([0, 1]);
 const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
-export const sectionMargin = {top: 2, right: 230, bottom: 2, left: 200};
+export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
 export const sectionWidth = 750;
 export const sectionHeight = 20;
 export const tableShiftY = 40;
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
 export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
 
-export const barBorder = {size: 1, color: '#999'};
+export const barBorder = { size: 1, color: '#999' };
 export const caretWidth = 25;
 
 function linspace(start, end, n) {
     var out = [];
     var delta = (end - start) / (n - 1);
     var i = 0;
-    while(i < (n - 1)) {
+    while (i < (n - 1)) {
         out.push(start + (i * delta));
         i++;
     }
@@ -75,7 +75,7 @@ function linspace(start, end, n) {
 export function drawLegend(svgElement) {
     var legendWidth = 80,
         legendHeight = 200,
-        margin = {top: 10, right: 60, bottom: 10, left: 2};
+        margin = { top: 10, right: 60, bottom: 10, left: 2 };
 
     var legendSvg = svgElement.append("svg")
         .attr("width", legendWidth)
@@ -90,12 +90,12 @@ export function drawLegend(svgElement) {
         .attr('y2', '0%')
         .attr('spreadMethod', 'pad');
 
-    var pct = linspace(0, 100, colorScale.length).map(function(d) {
+    var pct = linspace(0, 100, colorScale.length).map(function (d) {
         return Math.round(d) + '%';
     });
 
     var colourPct = d3.zip(pct, colorScale);
-    colourPct.forEach(function(d) {
+    colourPct.forEach(function (d) {
         gradient.append('stop')
             .attr('offset', d[0])
             .attr('stop-color', d[1])
@@ -131,7 +131,7 @@ export function addHeaders(gElement) {
         .text(colText)
         .style("text-anchor", "end")
         .attr("transform",
-              `translate(${xShift}, ${yShift})`);
+            `translate(${xShift}, ${yShift})`);
 
     colText = "Coverage Heatmap";
     xShift = sectionMargin.left + (barWidth / 2);
@@ -139,15 +139,15 @@ export function addHeaders(gElement) {
         .text(colText)
         .style("text-anchor", "middle")
         .attr("transform",
-              `translate(${xShift}, ${yShift})`);
+            `translate(${xShift}, ${yShift})`);
 }
 
-export function addColumns(gElement, columns, colMap, summaryEntry=null) {
+export function addColumns(gElement, columns, colMap, summaryEntry = null) {
     var yShift = 15;
     var colHeight = sectionHeight;
     var textG = gElement.append("g")
         .attr("transform",
-              `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
+            `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
     var prevWidth = 0;
     columns.forEach((column) => {
         var colAttrs = colMap[column];
@@ -214,7 +214,7 @@ export function addColumns(gElement, columns, colMap, summaryEntry=null) {
 
 export function getCoverageData(match) {
     var matchCoverageData = [];
-    [...match.cvg].forEach(function(bit, i) {
+    [...match.cvg].forEach(function (bit, i) {
         matchCoverageData.push({
             bin: i,
             cartoonChar: bit
