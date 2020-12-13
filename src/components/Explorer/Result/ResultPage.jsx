@@ -1,8 +1,11 @@
 import React from 'react';
 import { ExternalLink } from "../../../CommonHelpers";
-import QueryChart, {
-    renderChart as renderQueryChart
-} from './Chart/QueryResultChart';
+import FamilyChart, {
+    renderChart as renderFamilyChart
+} from './Chart/FamilyChart';
+import GenBankChart, {
+    renderChart as renderGenBankChart
+} from './Chart/GenBankChart';
 import RunChart, {
     renderChart as renderRunChart
 } from './Chart/RunChart';
@@ -27,7 +30,7 @@ export default (props) => {
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);
-                    renderQueryChart(data, columns);
+                    renderFamilyChart(data, columns);
                 }).catch(err => {
                     setHasError(true);
                     setIsLoading(false);
@@ -40,7 +43,7 @@ export default (props) => {
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);
-                    renderQueryChart(data, columns);
+                    renderGenBankChart(data, columns);
                 }).catch(err => {
                     setHasError(true);
                     setIsLoading(false);
@@ -100,10 +103,13 @@ export default (props) => {
         }
         return error
     }
-    if (props.type === "run") {
-        return <RunChart />
-    }
-    else {
-        return <QueryChart />
+    switch (props.type) {
+        case "family":
+            return <FamilyChart />
+        case "genbank":
+            return <GenBankChart />
+        case "run":
+            return <RunChart />
+        default:
     }
 }

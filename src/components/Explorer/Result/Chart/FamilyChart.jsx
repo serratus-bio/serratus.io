@@ -6,6 +6,7 @@ import {
     cvgCartoonMap,
     genomeBins,
     colorMap,
+    colMap,
     sectionMargin,
     sectionWidth,
     sectionHeight,
@@ -15,48 +16,14 @@ import {
     barBorder,
     drawLegend,
     addHeaders,
-    addColumns
+    addColumns,
+    getCoverageData,
 } from './ChartHelpers';
 
-const chartId = "queryResultChart"
+const chartId = "familyChart"
 
 export default () => {
     return <div id={chartId} />
-}
-
-var colMap = {
-    "score": {
-        "name": "Score",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 50,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "cvgPct": {
-        "name": "Coverage",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 70,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "pctId": {
-        "name": "Identity",
-        "desc": "Average alignment identity",
-        "size": 70,
-        "valueSuffix": "%",
-        "domain": [75, 100],
-        "fill": "#fdb53c"
-    },
-    "aln": {
-        "name": "Reads",
-        "desc": "Number of alignments (bowtie2)",
-        "size": 70,
-        "valueSuffix": "",
-        "domain": [0, 1000],
-        "fill": "#658fc4"
-    }
 }
 
 var columns;
@@ -85,18 +52,6 @@ export const renderChart = (results, columnsParam) => {
         var matchSubGroup = drawExpandableRow(matchG, match.sra, "match", coverageData, i);
         addColumns(matchG.select("svg"), columns, colMap, match);
     });
-}
-
-function getCoverageData(match) {
-    var matchCoverageData = [];
-    [...match.cvg].forEach(function(bit, i) {
-        matchCoverageData.push({
-            sra: match.sra,
-            bin: i,
-            cartoonChar: bit
-        })
-    });
-    return matchCoverageData;
 }
 
 function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {

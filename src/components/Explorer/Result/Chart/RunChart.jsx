@@ -6,6 +6,7 @@ import {
     cvgCartoonMap,
     genomeBins,
     colorMap,
+    colMap,
     sectionMargin,
     sectionWidth,
     sectionHeight,
@@ -16,48 +17,14 @@ import {
     caretWidth,
     drawLegend,
     addHeaders,
-    addColumns
+    addColumns,
+    getCoverageData,
 } from './ChartHelpers';
 
-const chartId = "runResultChart"
+const chartId = "runChart"
 
 export default () => {
     return <div id={chartId} />
-}
-
-var colMap = {
-    "score": {
-        "name": "Score",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 50,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "cvgPct": {
-        "name": "Coverage",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 70,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "pctId": {
-        "name": "Identity",
-        "desc": "Average alignment identity",
-        "size": 70,
-        "valueSuffix": "%",
-        "domain": [75, 100],
-        "fill": "#fdb53c"
-    },
-    "aln": {
-        "name": "Reads",
-        "desc": "Number of alignments (bowtie2)",
-        "size": 70,
-        "valueSuffix": "",
-        "domain": [0, 1000],
-        "fill": "#658fc4"
-    }
 }
 
 var columns;
@@ -92,7 +59,7 @@ export const renderChart = (summaryParam, columnsParam) => {
         }, {});
     var maxAccessions = 10;
     summary["familySections"].forEach((family, i) => {
-        var familyCoverageData = getFamilyCoverageData(family);
+        var familyCoverageData = getCoverageData(family);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
             .attr("rowid", `${family.family}`);
@@ -110,7 +77,7 @@ export const renderChart = (summaryParam, columnsParam) => {
             accessions = accessions.slice(0, maxAccessions);
         }
         accessions.forEach((accession, i) => {
-            var accessionCoverageData = getAccessionCoverageData(accession);
+            var accessionCoverageData = getCoverageData(accession);
             var accessionG = familyAccessionsG.append("g")
                 .attr("class", "accession")
                 .attr("rowid", `${accession.acc}`)
@@ -122,30 +89,6 @@ export const renderChart = (summaryParam, columnsParam) => {
             addAccessionText(accessionSubGroup, family, accession);
         });
     });
-}
-
-function getFamilyCoverageData(family) {
-    var familyCoverageData = [];
-    [...family.cvg].forEach(function(bit, i) {
-        familyCoverageData.push({
-            family: family.family,
-            bin: i,
-            cartoonChar: bit
-        })
-    });
-    return familyCoverageData;
-}
-
-function getAccessionCoverageData(accession) {
-    var coverageData = [];
-    [...accession.cvg].forEach(function(bit, i) {
-        coverageData.push({
-            accession: accession.acc,
-            bin: i,
-            cartoonChar: bit
-        })
-    });
-    return coverageData;
 }
 
 function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {

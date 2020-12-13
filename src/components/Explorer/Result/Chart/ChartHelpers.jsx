@@ -8,6 +8,41 @@ export const cvgCartoonMap = {
     'O': 1
 }
 
+export const colMap = {
+    "score": {
+        "name": "Score",
+        "desc": "Sequence coverage (bins with at least 1 read)",
+        "valueSuffix": "%",
+        "size": 50,
+        "domain": [0, 100],
+        "fill": "#67c286"
+    },
+    "cvgPct": {
+        "name": "Coverage",
+        "desc": "Sequence coverage (bins with at least 1 read)",
+        "valueSuffix": "%",
+        "size": 70,
+        "domain": [0, 100],
+        "fill": "#67c286"
+    },
+    "pctId": {
+        "name": "Identity",
+        "desc": "Average alignment identity",
+        "size": 70,
+        "valueSuffix": "%",
+        "domain": [75, 100],
+        "fill": "#fdb53c"
+    },
+    "aln": {
+        "name": "Reads",
+        "desc": "Number of alignments (bowtie2)",
+        "size": 70,
+        "valueSuffix": "",
+        "domain": [0, 1000],
+        "fill": "#658fc4"
+    }
+}
+
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
 export const colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
@@ -175,4 +210,15 @@ export function addColumns(gElement, columns, colMap, summaryEntry=null) {
 
         prevWidth += colWidth;
     });
+}
+
+export function getCoverageData(match) {
+    var matchCoverageData = [];
+    [...match.cvg].forEach(function(bit, i) {
+        matchCoverageData.push({
+            bin: i,
+            cartoonChar: bit
+        })
+    });
+    return matchCoverageData;
 }
