@@ -19,12 +19,12 @@ import {
     getIdentitySliderLabel,
     getCoverageSliderLabel,
     resultSectionId
-} from "./ExplorerHelpers";
+} from "../ExplorerHelpers";
 import {
     ExternalLink,
     helpIcon
-} from '../../helpers/common';
-import allFamilyData from './data/SerratusIO_scoreID.json';
+} from '../../../CommonHelpers';
+import allFamilyData from '../data/SerratusIO_scoreID.json';
 
 export default (props) => {
     const sliderIdentityLimsRef = props.identityLimsRef;

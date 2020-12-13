@@ -4,7 +4,7 @@ import AboutCard from '../components/AboutCard';
 import {
   classesBoxBorder,
   ExternalLink
-} from '../helpers/common';
+} from '../CommonHelpers';
 
 export default () => {
   const headTags = (

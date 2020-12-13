@@ -2,9 +2,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import QueryBuilder from './QueryBuilder';
 import Intro from './Intro';
-import QueryResult from './QueryResult';
+import Result from './Result';
 import DataReference from './DataReference';
-import { classesBoxBorder } from '../../helpers/common';
+import { classesBoxBorder } from '../../CommonHelpers';
 import {
     identityDomain,
     coverageDomain,
@@ -86,7 +86,7 @@ export default (props) => {
             <div id={resultSectionId} className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 {!queryPresent ?
                     <Intro /> :
-                    <QueryResult
+                    <Result
                         queryType={queryTypeStaticRef.current}
                         queryValue={queryValueStaticRef.current}
                         identityLims={identityLimsStaticRef.current}

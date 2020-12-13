@@ -1,6 +1,6 @@
 import React from "react";
 
-const LinkButton = (props) => {
+export default (props) => {
     let aAttrs = {};
     if (props.newTab) {
         aAttrs = {
@@ -18,5 +18,3 @@ const LinkButton = (props) => {
         </button>
     )
 }
-
-export default LinkButton;

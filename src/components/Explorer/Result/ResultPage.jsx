@@ -1,42 +1,36 @@
 import React from 'react';
-import { withFauxDOM } from 'react-faux-dom'
-import * as d3 from 'd3';
-import { drawQueryResults } from './SDK/drawQueryResults.js';
-import { drawRunResults } from './SDK/drawRunResults.js';
-import { ExternalLink } from "../../helpers/common";
+import { ExternalLink } from "../../../CommonHelpers";
+import FamilyChart, {
+    renderChart as renderFamilyChart
+} from './Chart/FamilyChart';
+import GenBankChart, {
+    renderChart as renderGenBankChart
+} from './Chart/GenBankChart';
+import RunChart, {
+    renderChart as renderRunChart
+} from './Chart/RunChart';
 
-const QueryResult = (props) => {
+export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
-    const connectFauxDOM = props.connectFauxDOM;
 
     React.useEffect(() => {
         if(!props.dataPromise) {
             return;
         }
         setIsLoading(true);
-        const getResultsCallback = (drawFunction, columns, hasResults) => {
-            return (results) => {
-                var discardNode = true;
-                var faux = connectFauxDOM('div', 'chart', discardNode);
-                if (hasResults) {
-                    drawFunction(d3, faux, results, columns);
-                }
-                setHasResults(hasResults);
-                setIsLoading(false);
-            }
-        }
+
         var columns;
-        var callback;
         switch (props.type) {
             case "family":
                 columns = ["score", "pctId", "aln"];
                 props.dataPromise.then((data) => {
                     data = data.items;
                     let hasResults = data && data.length !== 0;
-                    callback = getResultsCallback(drawQueryResults, columns, hasResults);
-                    callback(data);
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderFamilyChart(data, columns);
                 }).catch(err => {
                     setHasError(true);
                     setIsLoading(false);
@@ -47,8 +41,9 @@ const QueryResult = (props) => {
                 props.dataPromise.then((data) => {
                     data = data.items;
                     let hasResults = data && data.length !== 0;
-                    callback = getResultsCallback(drawQueryResults, columns, hasResults);
-                    callback(data);
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderGenBankChart(data, columns);
                 }).catch(err => {
                     setHasError(true);
                     setIsLoading(false);
@@ -56,19 +51,20 @@ const QueryResult = (props) => {
                 break;
             case "run":
                 columns = ["score", "pctId", "aln"];
-                callback = getResultsCallback(drawRunResults, columns);
                 props.dataPromise.then((data) => {
-                    let hasResults = Boolean(data);
-                    callback = getResultsCallback(drawRunResults, columns, hasResults);
-                    callback(data);
+                    let hasResults = data && data.length !== 0;
+                    setHasResults(hasResults);
+                    setIsLoading(false);
+                    renderRunChart(data, columns);
                 }).catch(err => {
+                    console.log(err);
                     setHasError(true);
                     setIsLoading(false);
                 });
                 break;
             default:
         }
-    }, [props.type, props.value, props.dataPromise, connectFauxDOM]);
+    }, [props.type, props.dataPromise]);
 
     let loading = (
         <div className="text-center">
@@ -107,12 +103,13 @@ const QueryResult = (props) => {
         }
         return error
     }
-    return (
-        <div>
-            {props.chart}
-        </div>
-    )
+    switch (props.type) {
+        case "family":
+            return <FamilyChart />
+        case "genbank":
+            return <GenBankChart />
+        case "run":
+            return <RunChart />
+        default:
+    }
 }
-
-const FauxChart = withFauxDOM(QueryResult);
-export default FauxChart;

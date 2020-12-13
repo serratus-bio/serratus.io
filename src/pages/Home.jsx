@@ -5,9 +5,9 @@ import {
     searchIcon,
     externalLinkIcon,
     ExternalLink,
-} from '../helpers/common';
+} from '../CommonHelpers';
 
-const Home = () => {
+export default () => {
     const headTags = (
         <Helmet>
             <title>Serratus | Home</title>
@@ -34,5 +34,3 @@ const Home = () => {
         </div>
     )
 }
-
-export default Home;

@@ -1,11 +1,11 @@
 import React from 'react';
 import Paginator from './Paginator';
-import QueryResultPage from './QueryResultPage';
+import ResultPage from './ResultPage';
 import {
     getDataPromise,
     getPageLinks,
     getTitle,
-} from "./ExplorerHelpers";
+} from './ResultHelpers';
 
 export default (props) => {
     const queryType = props.queryType;
@@ -64,7 +64,7 @@ export default (props) => {
                         pageNumber={pageNumber}
                         setPageNumber={setPageNumber}
                         dataPromise={dataPromise} />}
-                <QueryResultPage
+                <ResultPage
                     type={queryType}
                     value={queryValue}
                     dataPromise={dataPromise} />

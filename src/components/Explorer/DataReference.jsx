@@ -1,5 +1,5 @@
 import React from 'react'
-import { ExternalLink } from '../../helpers/common';
+import { ExternalLink } from '../../CommonHelpers';
 
 export default () => {
     return (

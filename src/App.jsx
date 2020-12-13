@@ -11,7 +11,7 @@ import Team from './pages/Team';
 import Jbrowse from './pages/Jbrowse';
 import Access from './pages/Access';
 
-const App = () => {
+export default () => {
   React.useEffect(() => {
     // track initial page load
     ReactGA.pageview(window.location.pathname + window.location.search);
@@ -41,5 +41,3 @@ const App = () => {
     </div>
   );
 }
-
-export default App;
