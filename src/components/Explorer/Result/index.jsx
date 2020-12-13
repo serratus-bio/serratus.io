@@ -5,7 +5,7 @@ import {
     getDataPromise,
     getPageLinks,
     getTitle,
-} from './helpers';
+} from './ResultHelpers';
 
 export default (props) => {
     const queryType = props.queryType;
