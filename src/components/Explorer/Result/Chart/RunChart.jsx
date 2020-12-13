@@ -86,7 +86,7 @@ export const renderChart = (summaryParam, columnsParam) => {
                 accessionG, accession.acc, "accession",
                 accessionCoverageData, i);
             addColumns(accessionG.select("svg"), columns, colMap, accession);
-            addAccessionText(accessionSubGroup, family, accession);
+            addAccessionText(accessionSubGroup, accession);
         });
     });
 }
