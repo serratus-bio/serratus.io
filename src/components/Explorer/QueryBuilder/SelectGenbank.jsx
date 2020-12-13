@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
-import genbankEntries from './data/cov3ma.genbank.json';
+import genbankEntries from '../data/cov3ma.genbank.json';
 
 
 const getLabel = (genbank) => {

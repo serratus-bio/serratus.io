@@ -1,11 +1,11 @@
 import React from 'react';
 import Paginator from './Paginator';
-import QueryResultPage from './QueryResultPage';
+import QueryResultPage from './ResultPage';
 import {
     getDataPromise,
     getPageLinks,
     getTitle,
-} from "./ExplorerHelpers";
+} from './helpers';
 
 export default (props) => {
     const queryType = props.queryType;

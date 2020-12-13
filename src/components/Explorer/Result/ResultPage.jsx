@@ -1,11 +1,11 @@
 import React from 'react';
-import { ExternalLink } from "../../helpers/common";
+import { ExternalLink } from "../../../CommonHelpers";
 import QueryChart, {
     renderChart as renderQueryChart
-} from './QueryResultChart';
+} from './Chart/QueryResultChart';
 import RunChart, {
     renderChart as renderRunChart
-} from './RunResultChart';
+} from './Chart/RunChart';
 
 export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);

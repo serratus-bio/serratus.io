@@ -1,10 +1,10 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import QueryBuilder from './QueryBuilder';
+import QueryBuilder from './QueryBuilder/QueryBuilder';
 import Intro from './Intro';
-import QueryResult from './QueryResult';
+import QueryResult from './Result/QueryResult';
 import DataReference from './DataReference';
-import { classesBoxBorder } from '../../helpers/common';
+import { classesBoxBorder } from '../../CommonHelpers';
 import {
     identityDomain,
     coverageDomain,

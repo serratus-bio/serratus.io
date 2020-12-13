@@ -1,6 +1,6 @@
 import React from "react";
 
-const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
+export default ( {pageNumber, setPageNumber, dataPromise} ) => {
   const [numPages, setNumPages] = React.useState();
   const [loading, setLoading] = React.useState(true);
   
@@ -41,5 +41,3 @@ const Paginator = ( {pageNumber, setPageNumber, dataPromise} ) => {
       </div>
     )
 }
-
-export default Paginator;

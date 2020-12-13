@@ -4,7 +4,7 @@ import {
     classesBoxBorder,
     ExternalLink,
     githubIcon
-} from '../helpers/common';
+} from '../CommonHelpers';
 
 import teamData from '../data/teamData.json';
 

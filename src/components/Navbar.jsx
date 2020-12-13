@@ -1,9 +1,8 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
-import { ExternalLink } from "../helpers/common";
+import { ExternalLink } from "../CommonHelpers";
 
-
-const Navbar = () => {
+export default () => {
   return (
     <div className="flex font-montserrat font-medium">
       <div className="flex sm:hidden w-full justify-center items-center text-center h-16 bg-gray-100 border-b-2 border-gray-300">
@@ -22,5 +21,3 @@ const Navbar = () => {
     </div>
   )
 }
-
-export default Navbar;

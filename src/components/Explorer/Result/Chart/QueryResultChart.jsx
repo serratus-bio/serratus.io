@@ -16,7 +16,7 @@ import {
     drawLegend,
     addHeaders,
     addColumns
-} from './ResultChartHelpers';
+} from './ChartHelpers';
 
 const chartId = "queryResultChart"
 

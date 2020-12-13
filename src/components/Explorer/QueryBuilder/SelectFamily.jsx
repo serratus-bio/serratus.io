@@ -1,6 +1,6 @@
 import React from 'react';
 import Select from 'react-select';
-import allFamilyData from './data/SerratusIO_scoreID.json';
+import allFamilyData from '../data/SerratusIO_scoreID.json';
 const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
 export default (props) => {
