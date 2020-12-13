@@ -27,7 +27,7 @@ export default () => {
     return <div id={chartId} />
 }
 
-var maxAccessions = 10;
+var maxGenbanks = 10;
 
 export const renderChart = (summary, columns) => {
     var chartSvg = d3.select(`#${chartId}`)
@@ -46,14 +46,13 @@ export const renderChart = (summary, columns) => {
 
     var familyTextHeight = 50;
 
-    var accessionsByFamily = d3.nest()
+    var genbanksByFamily = d3.nest()
         .key(d => d.fam)
         .entries(summary["accessionSections"])
         .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
-    var maxAccessions = 10;
     summary["familySections"].forEach((family, i) => {
         var familyCoverageData = getCoverageData(family);
         var familyG = familiesSvg.append("g")
@@ -63,36 +62,33 @@ export const renderChart = (summary, columns) => {
         addColumns(familyG.select("svg"), columns, colMap, family);
         addFamilyText(familySubGroup, family);
 
-        var familyAccessionsG = familySubGroup.append("g")
-            .attr("class", "family-accessions")
+        var familyGenbanksG = familySubGroup.append("g")
+            .attr("class", "family-genbanks")
             .attr("transform", `translate(0, ${familyTextHeight})`)
 
-        var accessions = accessionsByFamily[family.family]
+        var genbanks = genbanksByFamily[family.family]
             .sort((a, b) => parseFloat(a.cvgpct) < parseFloat(b.cvgpct));
-        if (accessions.length > maxAccessions) {
-            accessions = accessions.slice(0, maxAccessions);
+        if (genbanks.length > maxGenbanks) {
+            genbanks = genbanks.slice(0, maxGenbanks);
         }
-        accessions.forEach((accession, i) => {
-            var accessionCoverageData = getCoverageData(accession);
-            var accessionG = familyAccessionsG.append("g")
-                .attr("class", "accession")
-                .attr("rowid", `${accession.acc}`)
+        genbanks.forEach((genbank, i) => {
+            var genbankCoverageData = getCoverageData(genbank);
+            var genbankG = familyGenbanksG.append("g")
+                .attr("class", "genbank")
+                .attr("rowid", `${genbank.acc}`)
                 .attr("family", `${family.family}`);
-            var accessionSubGroup = drawExpandableRow(
-                accessionG, accession.acc, "accession",
-                accessionCoverageData, i);
-            addColumns(accessionG.select("svg"), columns, colMap, accession);
-            addAccessionText(accessionSubGroup, accession);
+            var genbankSubGroup = drawExpandableRow(
+                genbankG, genbank.acc, "genbank",
+                genbankCoverageData, i);
+            addColumns(genbankG.select("svg"), columns, colMap, genbank);
+            addGenbankText(genbankSubGroup, genbank);
         });
     });
 }
 
-function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
-    var rowType = dataBin;
-
-    var y = rowIndex * sectionHeight;
+function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
     var entrySvg = gElement.append("svg")
-        .attr("y", y)
+        .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
         .attr("height", sectionHeight)
         .attr("border", barBorder.size)
@@ -107,7 +103,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .domain(genomeBins)
         .padding(0.01);
 
-    y = d3.scaleBand()
+    var y = d3.scaleBand()
         .range([0, barHeight])
         .domain([name])
         .padding(0.01);
@@ -121,13 +117,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .style("fill", "blue")
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link;
-            if (rowType === "family") {
-                link = `/explorer?family=${name}`;
-            }
-            else {
-                link = `/explorer?genbank=${name}`
-            }
+            var link = `/explorer?${rowType}=${name}`;
             var textWidth = 100;
             var textHeight = 14;
             var linkA = d3.select(this.parentNode)
@@ -154,11 +144,10 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .attr("class", "heatbar");
 
     var heatSquares = heatBar.selectAll()
-        .data(heatSquareData)
+        .data(coverageData)
         .enter()
         .append("rect")
         .attr("x", d => x(d.bin))
-        .attr("y", d => y(d[dataBin]))
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
         .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))
@@ -193,7 +182,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
             }
             else {
                 var familyName = gElement.attr("family");
-                toggleAccessionRow(familyName, name);
+                toggleGenbankRow(familyName, name);
             }
         });
 
@@ -256,16 +245,16 @@ function toggleFamilyRow(familyName) {
     var allRows = d3.selectAll(".family");
     var currentRow = d3.select(`.family[rowid="${familyName}"]`);
     var subsectionHeight = 300;
-    var waitForAccession = false;
-    currentRow.selectAll(".accession").each(function (d, i) {
-        var accessionName = d3.select(this).attr("rowid");
+    var waitForGenbank = false;
+    currentRow.selectAll(".genbank").each(function (d, i) {
+        var genbankName = d3.select(this).attr("rowid");
         var isExpanded = !d3.select(this).select(`.subsection[visibility="visible"]`).empty();
         if (isExpanded) {
-            toggleAccessionRow(familyName, accessionName);
-            waitForAccession = true;
+            toggleGenbankRow(familyName, genbankName);
+            waitForGenbank = true;
         }
     });
-    var timeout = waitForAccession ? 500 : 0;  // hacky fix for family+acc collapse
+    var timeout = waitForGenbank ? 500 : 0;  // hacky fix for family+acc collapse
     setTimeout(() => { toggleIRow(allRows, currentRow, subsectionHeight) }, timeout);
 }
 
@@ -285,9 +274,9 @@ function shiftLowerFamilies(familyName, shiftY) {
     });
 }
 
-function toggleAccessionRow(familyName, accessionName) {
-    var allRows = d3.selectAll(".accession");
-    var currentRow = d3.select(`.accession[rowid="${accessionName}"]`);
+function toggleGenbankRow(familyName, genbankName) {
+    var allRows = d3.selectAll(".genbank");
+    var currentRow = d3.select(`.genbank[rowid="${genbankName}"]`);
     var subsectionVisibility = currentRow.select("g.subsection").attr("visibility");
     var subSectionVisible = subsectionVisibility === "visible";
     var subsectionHeight = 100;
@@ -301,27 +290,27 @@ function addFamilyText(gElement) {
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
-    var accessionsHeaderY = 40;
+    var genbankHeaderY = 40;
     var textEntry = textGroup.append("text")
         .attr("transform",
-            `translate(0, ${accessionsHeaderY})`)
-        .text(`Top ${maxAccessions} accessions by coverage:`);
+            `translate(0, ${genbankHeaderY})`)
+        .text(`Top ${maxGenbanks} GenBank accessions by coverage:`);
 }
 
-function addAccessionText(gElement, accession) {
+function addGenbankText(gElement, genbank) {
     // GenBank title
     var textGroup = gElement.append("g")
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
     var genbankTitle = textGroup.append("text")
-        .text("Name: " + accession.name)
+        .text("Name: " + genbank.name)
         .style("font-size", 10);
 
     // JBrowse link
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${accession.sra}&loc=${accession.acc}`
+    var jBrowseLink = `/jbrowse?bam=${genbank.sra}&loc=${genbank.acc}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")
