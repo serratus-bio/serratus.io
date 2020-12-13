@@ -124,7 +124,7 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
                 .append("a")
                 .attr("xlink:href", link)
             linkA.append("rect")
-                .attr("x", caretWidth - textWidth)
+                .attr("x", -(caretWidth + textWidth))
                 .attr("y", -8)
                 .attr("width", textWidth)
                 .attr("height", textHeight)
