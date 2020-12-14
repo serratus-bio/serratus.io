@@ -27,7 +27,7 @@ export const colMap = {
     "score": {
         "name": "Score",
         "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
+        "valueSuffix": "",
         "size": 50,
         "domain": [0, 100],
         "fill": "#67c286"
