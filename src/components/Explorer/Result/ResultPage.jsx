@@ -10,6 +10,8 @@ import RunChart, {
     renderChart as renderRunChart
 } from './Chart/RunChart';
 
+import summaryData from '../data/ERR2756788.json';
+
 export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
@@ -50,12 +52,12 @@ export default (props) => {
                 });
                 break;
             case "run":
-                columns = ["score", "pctId", "aln"];
+                columns = ["score", "pctid", "aln"];
                 props.dataPromise.then((data) => {
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);
-                    renderRunChart(data, columns);
+                    renderRunChart(summaryData, columns);
                 }).catch(err => {
                     console.log(err);
                     setHasError(true);

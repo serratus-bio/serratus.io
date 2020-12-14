@@ -1,11 +1,26 @@
 /* eslint-disable no-unused-vars */
 import * as d3 from 'd3';
 
+// var cvgSymbols = "_.:uwaomUWAOM^";
+// [...cvgSymbols].forEach((x, i) => console.log('"' + x + '": ' + 2**i))
+// var result = {};
+// [...cvgSymbols].forEach((symbol,i) => result[symbol] = 2**i)
+
 export const cvgCartoonMap = {
-    '_': 0,
-    '.': 0.25,
-    'o': 0.5,
-    'O': 1
+    "_": 0,
+    ".": 1,
+    ":": 2,
+    "u": 4,
+    "w": 8,
+    "a": 16,
+    "o": 32,
+    "m": 64,
+    "U": 128,
+    "W": 256,
+    "A": 512,
+    "O": 1024,
+    "M": 2048,
+    "^": 4096,
 }
 
 export const colMap = {
@@ -25,7 +40,7 @@ export const colMap = {
         "domain": [0, 100],
         "fill": "#67c286"
     },
-    "pctId": {
+    "pctid": {
         "name": "Identity",
         "desc": "Average alignment identity",
         "size": 70,
@@ -43,10 +58,11 @@ export const colMap = {
     }
 }
 
+var cvgLims = [0, 4096];
+
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
-export const colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
-    .domain([0, 1]);
+export const colorMap = d3.scaleSequentialSymlog(d3.interpolateYlOrRd).domain(cvgLims);
 const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
@@ -114,7 +130,7 @@ export function drawLegend(svgElement) {
 
     // create a scale and axis for the legend
     var legendScale = d3.scaleLinear()
-        .domain([0, 1])
+        .domain(cvgLims)
         .range([legendHeight - margin.top - margin.bottom, 0]);
     var legendAxis = legendSvg.append("g")
         .attr("transform", `translate(${legendWidth - margin.left - margin.right}, ${margin.top - 0.5})`)
@@ -212,9 +228,9 @@ export function addColumns(gElement, columns, colMap, summaryEntry = null) {
     });
 }
 
-export function getCoverageData(match) {
+export function getCoverageData(match, cvgKey = "cvg") {
     var matchCoverageData = [];
-    [...match.cvg].forEach(function (bit, i) {
+    [...match[cvgKey]].forEach(function (bit, i) {
         matchCoverageData.push({
             bin: i,
             cartoonChar: bit

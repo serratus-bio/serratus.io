@@ -27,7 +27,14 @@ export default () => {
     return <div id={chartId} />
 }
 
-var maxGenbanks = 10;
+const familyNameKey = "fam"
+const maxGenbanks = 10;
+const genbankSortKey = "score"
+const genbankNameKey = "seq"
+const genbankFamilyNameKey = "family"
+const genbankTitleKey = "name"
+const genbankCoverageKey = "seqcvg"
+const familyCoverageKey = "famcvg"
 
 export const renderChart = (summary, columns) => {
     var chartSvg = d3.select(`#${chartId}`)
@@ -47,38 +54,38 @@ export const renderChart = (summary, columns) => {
     var familyTextHeight = 50;
 
     var genbanksByFamily = d3.nest()
-        .key(d => d.fam)
-        .entries(summary["accessionSections"])
+        .key(d => d[genbankFamilyNameKey])
+        .entries(summary["sequences"])
         .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
-    summary["familySections"].forEach((family, i) => {
-        var familyCoverageData = getCoverageData(family);
+    summary["families"].forEach((family, i) => {
+        var familyCoverageData = getCoverageData(family, familyCoverageKey);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
-            .attr("rowid", `${family.family}`);
-        var familySubGroup = drawExpandableRow(familyG, family.family, "family", familyCoverageData, i);
+            .attr("rowid", `${family[familyNameKey]}`);
+        var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i);
         addColumns(familyG.select("svg"), columns, colMap, family);
-        addFamilyText(familySubGroup, family);
+        addFamilyText(familySubGroup);
 
         var familyGenbanksG = familySubGroup.append("g")
             .attr("class", "family-genbanks")
             .attr("transform", `translate(0, ${familyTextHeight})`)
 
-        var genbanks = genbanksByFamily[family.family]
-            .sort((a, b) => parseFloat(a.cvgpct) < parseFloat(b.cvgpct));
+        var genbanks = genbanksByFamily[family[familyNameKey]]
+            .sort((a, b) => parseFloat(a[genbankSortKey]) < parseFloat(b[genbankSortKey]));
         if (genbanks.length > maxGenbanks) {
             genbanks = genbanks.slice(0, maxGenbanks);
         }
         genbanks.forEach((genbank, i) => {
-            var genbankCoverageData = getCoverageData(genbank);
+            var genbankCoverageData = getCoverageData(genbank, genbankCoverageKey);
             var genbankG = familyGenbanksG.append("g")
                 .attr("class", "genbank")
-                .attr("rowid", `${genbank.acc}`)
-                .attr("family", `${family.family}`);
+                .attr("rowid", `${genbank[genbankNameKey]}`)
+                .attr("family", `${family[familyNameKey]}`);
             var genbankSubGroup = drawExpandableRow(
-                genbankG, genbank.acc, "genbank",
+                genbankG, genbank[genbankNameKey], "genbank",
                 genbankCoverageData, i);
             addColumns(genbankG.select("svg"), columns, colMap, genbank);
             addGenbankText(genbankSubGroup, genbank);
@@ -303,14 +310,14 @@ function addGenbankText(gElement, genbank) {
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
     var genbankTitle = textGroup.append("text")
-        .text("Name: " + genbank.name)
+        .text("Name: " + genbank[genbankTitleKey])
         .style("font-size", 10);
 
     // JBrowse link
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${genbank.sra}&loc=${genbank.acc}`
+    var jBrowseLink = `/jbrowse?bam=${genbank.sra}&loc=${genbank[genbankNameKey]}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")
