@@ -67,7 +67,7 @@ export const getPageLinks = (type, value) => {
                     icon={downloadIcon}
                     download={true} />
                 <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/summary/${value}.summary`}
+                    link={`https://s3.amazonaws.com/lovelywater/summary2/${value}.summary`}
                     text=".summary"
                     icon={downloadIcon}
                     download={true} />
