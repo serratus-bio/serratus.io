@@ -63,7 +63,7 @@ export const getPageLinks = (type, value) => {
                     newTab={true} />
                 <LinkButton
                     link={`https://s3.amazonaws.com/lovelywater/bam/${value}.bam`}
-                    text="BAM"
+                    text=".bam"
                     icon={downloadIcon}
                     download={true} />
                 <LinkButton
