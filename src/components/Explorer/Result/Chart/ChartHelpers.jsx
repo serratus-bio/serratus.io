@@ -62,7 +62,11 @@ var cvgLims = [0, 4096];
 
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
-export const colorMap = d3.scaleSequentialSymlog(d3.interpolateYlOrRd).domain(cvgLims);
+const defaultColorMap = d3.scaleSequentialSymlog(d3.interpolateYlOrRd).domain(cvgLims);
+export function colorMap(value) {
+    if (value === 0) return "rgb(255, 255, 255)";
+    return defaultColorMap(value);
+}
 const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
