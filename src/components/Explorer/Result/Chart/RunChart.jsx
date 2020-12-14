@@ -29,7 +29,7 @@ export default () => {
 
 const familyNameKey = "fam"
 const maxGenbanks = 10;
-const genbankSortKey = "score"
+const genbankSortKey = "aln"
 const genbankNameKey = "seq"
 const genbankFamilyNameKey = "family"
 const genbankTitleKey = "name"
@@ -301,7 +301,7 @@ function addFamilyText(gElement) {
     var textEntry = textGroup.append("text")
         .attr("transform",
             `translate(0, ${genbankHeaderY})`)
-        .text(`Top ${maxGenbanks} GenBank accessions by coverage:`);
+        .text(`Top ${maxGenbanks} GenBank accessions by read count:`);
 }
 
 function addGenbankText(gElement, genbank) {
