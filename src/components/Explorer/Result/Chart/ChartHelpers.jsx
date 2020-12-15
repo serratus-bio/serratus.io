@@ -26,7 +26,7 @@ export const cvgCartoonMap = {
 export const colMap = {
     "score": {
         "name": "Score",
-        "desc": "Sequence coverage (bins with at least 1 read)",
+        "desc": "Assembly-prediction score",
         "valueSuffix": "",
         "size": 50,
         "domain": [0, 100],
