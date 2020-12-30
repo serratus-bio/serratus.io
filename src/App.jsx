@@ -1,19 +1,18 @@
 import React from 'react';
 import Navbar from './components/Navbar'
-import { Route, useLocation, Switch } from "react-router-dom";
+import { Route, useLocation, Switch, Redirect } from "react-router-dom";
 import ReactGA from 'react-ga';
 import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
-import Explore from './pages/Explore';
-import Query from './pages/Query';
+import Explorer from './components/Explorer';
 import About from './pages/About';
 import Team from './pages/Team';
+import Jbrowse from './pages/Jbrowse';
 import Access from './pages/Access';
-import Family from './pages/Family';
 import Footer from './components/Footer';
 
-const App = () => {
+export default () => {
   React.useEffect(() => {
     // track initial page load
     ReactGA.pageview(window.location.pathname + window.location.search);
@@ -31,17 +30,17 @@ const App = () => {
       <Navbar></Navbar>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/explore" component={Explore} />
-        <Route exact path="/query" component={Query} />
+        <Route exact path="/explorer" component={Explorer} />
         <Route exact path="/about" component={About} />
         <Route exact path="/team" component={Team} />
+        <Route exact path="/jbrowse" component={Jbrowse} />
         <Route exact path="/access" component={Access} />
-        <Route exact path="/family" component={Family} />
+        <Route exact path="/family" component={() => {return <Redirect to="/explorer" />}} />
+        <Route exact path="/explore" component={() => {return <Redirect to="/explorer" />}} />
+        <Route exact path="/query" component={() => {return <Redirect to="/explorer" />}} />
       </Switch>
       
       <Footer />
     </div>
   );
 }
-
-export default App;
