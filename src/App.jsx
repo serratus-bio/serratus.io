@@ -39,8 +39,7 @@ export default () => {
         <Route exact path="/explore" component={() => {return <Redirect to="/explorer" />}} />
         <Route exact path="/query" component={() => {return <Redirect to="/explorer" />}} />
       </Switch>
-      
-      <Footer />
+      {window.location.pathname !== "/" && <Footer />}
     </div>
   );
 }
