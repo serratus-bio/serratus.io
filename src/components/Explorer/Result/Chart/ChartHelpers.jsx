@@ -224,7 +224,7 @@ export function addColumns(gElement, columns, colMap, summaryEntry = null) {
     });
 }
 
-export function getCoverageData(match, cvgKey = "cvg") {
+export function getCoverageData(match, cvgKey = "coverage_bins") {
     var matchCoverageData = [];
     [...match[cvgKey]].forEach(function (bit, i) {
         matchCoverageData.push({

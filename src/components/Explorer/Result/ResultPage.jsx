@@ -10,6 +10,8 @@ import RunChart, {
     renderChart as renderRunChart
 } from './Chart/RunChart';
 
+const resultItemsKey = "result";
+
 export default (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
@@ -24,9 +26,9 @@ export default (props) => {
         var columns;
         switch (props.type) {
             case "family":
-                columns = ["score", "pctId", "aln"];
+                columns = ["score", "percent_identity", "n_reads"];
                 props.dataPromise.then((data) => {
-                    data = data.items;
+                    data = data[resultItemsKey];
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);
@@ -37,9 +39,9 @@ export default (props) => {
                 });
                 break;
             case "genbank":
-                columns = ["cvgPct", "pctId", "aln"];
+                columns = ["score", "percent_identity", "n_reads"];
                 props.dataPromise.then((data) => {
-                    data = data.items;
+                    data = data[resultItemsKey];
                     let hasResults = data && data.length !== 0;
                     setHasResults(hasResults);
                     setIsLoading(false);

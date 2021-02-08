@@ -9,17 +9,31 @@ export const fetchSraRun = async (sraAccession) => {
     return response.data
 }
 
-export const fetchSraMatchesByAccession = async (genbankAccession, pageNumber, itemsPerPage, identityRange, coverageRange) => {
-    var identity = constructRangeStr(...identityRange);
-    var coverage = constructRangeStr(...coverageRange);
-    const response = await axios.get(`${baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&cvgPct=${coverage}`);
+export const fetchSraMatchesByAccession = async (genbankAccession, pageNumber, itemsPerPage, identityRange, scoreRange) => {
+    var [identityMin, identityMax] = identityRange;
+    var [scoreMin, scoreMax] = scoreRange;
+    var params = {
+        page: pageNumber,
+        scoreMin: scoreMin,
+        scoreMax: scoreMax,
+        identityMin: identityMin,
+        identityMax: identityMax
+    }
+    const response = await axios.get(`${baseUrl}/api/nucleotide/genbank=${genbankAccession}`, {params: params});
     return response.data;
 }
 
-export const fetchSraMatchesByFamily = async (familyName, pageNumber, itemsPerPage, identityRange, coverageRange) => {
-    var identity = constructRangeStr(...identityRange);
-    var coverage = constructRangeStr(...coverageRange);
-    const response = await axios.get(`${baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&score=${coverage}`);
+export const fetchSraMatchesByFamily = async (familyName, pageNumber, itemsPerPage, identityRange, scoreRange) => {
+    var [identityMin, identityMax] = identityRange;
+    var [scoreMin, scoreMax] = scoreRange;
+    var params = {
+        page: pageNumber,
+        scoreMin: scoreMin,
+        scoreMax: scoreMax,
+        identityMin: identityMin,
+        identityMax: identityMax
+    }
+    const response = await axios.get(`${baseUrl}/api/nucleotide/family=${familyName}`, {params: params});
     return response.data;
 }
 

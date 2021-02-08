@@ -22,6 +22,8 @@ import {
 
 const chartId = "familyChart"
 
+const sraKey = "sra_id"
+
 export default () => {
     return <div id={chartId} />
 }
@@ -45,8 +47,8 @@ export const renderChart = (results, columns) => {
         var coverageData = getCoverageData(match);
         var matchG = matchSvg.append("g")
             .attr("class", "sra")
-            .attr("rowid", `${match.sra}`);
-        var matchSubGroup = drawExpandableRow(matchG, match.sra, "match", coverageData, i);
+            .attr("rowid", `${match[sraKey]}`);
+        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], "match", coverageData, i);
         addColumns(matchG.select("svg"), columns, colMap, match);
     });
 }

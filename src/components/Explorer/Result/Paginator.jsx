@@ -1,6 +1,8 @@
 import React from "react";
 
-export default ( {pageNumber, setPageNumber, dataPromise} ) => {
+const resultTotalKey = "total";
+
+export default ( {pageNumber, itemsPerPage, setPageNumber, dataPromise} ) => {
   const [numPages, setNumPages] = React.useState();
   const [loading, setLoading] = React.useState(true);
   
@@ -15,9 +17,9 @@ export default ( {pageNumber, setPageNumber, dataPromise} ) => {
   const readDataPromise = async (dataPromise) => {
     if (!dataPromise) return;
     dataPromise.then((data) => {
-      data = data.numberOfPages;
+      var total = data[resultTotalKey];
       setLoading(false);
-      setNumPages(data);
+      setNumPages(Math.ceil(total / itemsPerPage));
     })
   }
 

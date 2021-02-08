@@ -62,6 +62,7 @@ export default (props) => {
                 {queryType !== 'run' &&
                     <Paginator
                         pageNumber={pageNumber}
+                        itemsPerPage={itemsPerPage}
                         setPageNumber={setPageNumber}
                         dataPromise={dataPromise} />}
                 <ResultPage
