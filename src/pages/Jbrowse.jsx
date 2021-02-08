@@ -2,7 +2,7 @@ import React from "react";
 
 const bamBucket = "lovelywater";
 const faFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa";
-const faiFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fai";
+const faiFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai";
 
 export default (props) => {
     var urlParams = new URLSearchParams(props.location.search);
