@@ -14,7 +14,7 @@ export default ( {pageNumber, itemsPerPage, setPageNumber, dataPromise} ) => {
   
   const prevPage = () => setPageNumber(pageNumber - 1);
 
-  const readDataPromise = async (dataPromise) => {
+  const readDataPromise = async (dataPromise, itemsPerPage) => {
     if (!dataPromise) return;
     dataPromise.then((data) => {
       var total = data[resultTotalKey];

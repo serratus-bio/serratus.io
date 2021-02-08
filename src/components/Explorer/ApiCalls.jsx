@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { constructRangeStr } from './ExplorerHelpers';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
