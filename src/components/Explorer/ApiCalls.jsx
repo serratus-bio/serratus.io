@@ -5,7 +5,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
 const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
 
 export const fetchSraRun = async (sraAccession) => {
-    const response = await axios.get(`${baseUrl}/api/run/get-run/${sraAccession}`);
+    const response = await axios.get(`${baseUrl}/api/nucleotide/sra=${sraAccession}`);
     return response.data
 }
 

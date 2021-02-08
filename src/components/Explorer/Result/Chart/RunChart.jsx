@@ -27,14 +27,14 @@ export default () => {
     return <div id={chartId} />
 }
 
-const familyNameKey = "fam"
+const familyNameKey = "family_name"
 const maxGenbanks = 10;
-const genbankSortKey = "aln"
-const genbankNameKey = "seq"
-const genbankFamilyNameKey = "family"
-const genbankTitleKey = "name"
-const genbankCoverageKey = "seqcvg"
-const familyCoverageKey = "famcvg"
+const genbankSortKey = "n_reads"
+const genbankNameKey = "genbank_id"
+const genbankFamilyNameKey = "family_name"
+const genbankTitleKey = "genbank_name"
+const genbankCoverageKey = "coverage_bins"
+const familyCoverageKey = "coverage_bins"
 
 export const renderChart = (summary, columns) => {
     var chartSvg = d3.select(`#${chartId}`)

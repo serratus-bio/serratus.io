@@ -32,15 +32,7 @@ export const colMap = {
         "domain": [0, 100],
         "fill": "#67c286"
     },
-    "cvgPct": {
-        "name": "Coverage",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 70,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "pctid": {
+    "percent_identity": {
         "name": "Identity",
         "desc": "Average alignment identity",
         "size": 70,
@@ -48,7 +40,7 @@ export const colMap = {
         "domain": [75, 100],
         "fill": "#fdb53c"
     },
-    "aln": {
+    "n_reads": {
         "name": "Reads",
         "desc": "Number of alignments (bowtie2)",
         "size": 70,
