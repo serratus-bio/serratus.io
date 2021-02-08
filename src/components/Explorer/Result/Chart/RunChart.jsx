@@ -27,6 +27,9 @@ export default () => {
     return <div id={chartId} />
 }
 
+const familySectionKey = "families"
+const genbankSectionKey = "sequences"
+
 const familyNameKey = "family_name"
 const maxGenbanks = 10;
 const genbankSortKey = "n_reads"
@@ -55,12 +58,12 @@ export const renderChart = (summary, columns) => {
 
     var genbanksByFamily = d3.nest()
         .key(d => d[genbankFamilyNameKey])
-        .entries(summary["sequences"])
+        .entries(summary[genbankSectionKey])
         .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
-    summary["families"].forEach((family, i) => {
+    summary[familySectionKey].forEach((family, i) => {
         var familyCoverageData = getCoverageData(family, familyCoverageKey);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
