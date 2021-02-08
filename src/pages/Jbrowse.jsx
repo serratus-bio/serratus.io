@@ -1,5 +1,7 @@
 import React from "react";
 
+const bamBucket = "lovelywater";
+
 export default (props) => {
     var urlParams = new URLSearchParams(props.location.search);
     var bam = urlParams.get("bam");
@@ -18,7 +20,7 @@ export default (props) => {
                 urlTemplate: "https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
             },
             {
-                urlTemplate : `https://serratus-bio.s3.amazonaws.com/bam/${bam}.bam`,
+                urlTemplate : `https://${bamBucket}.s3.amazonaws.com/bam/${bam}.bam`,
                 storeClass : "JBrowse/Store/SeqFeature/BAM",
                 label : bam,
                 type : "JBrowse/View/Track/Alignments2",
