@@ -18,15 +18,16 @@ export default ( {pageNumber, itemsPerPage, setPageNumber, dataPromise} ) => {
     if (!dataPromise) return;
     dataPromise.then((data) => {
       var total = data[resultTotalKey];
+      var numPages = Math.ceil(total / itemsPerPage);
       setLoading(false);
-      setNumPages(Math.ceil(total / itemsPerPage));
+      setNumPages(numPages);
     })
   }
 
   React.useEffect(() => {
     if(!dataPromise) return;
-    readDataPromise(dataPromise);
-  }, [pageNumber, numPages, dataPromise]);
+    readDataPromise(dataPromise, itemsPerPage);
+  }, [pageNumber, numPages, dataPromise, itemsPerPage]);
 
   return (
       (!loading && numPages !== 0) &&
