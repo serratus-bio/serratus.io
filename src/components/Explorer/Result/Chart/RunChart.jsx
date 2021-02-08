@@ -30,6 +30,7 @@ export default () => {
 const familySectionKey = "families"
 const genbankSectionKey = "sequences"
 
+const sraIdKey = "sra_id"
 const familyNameKey = "family_name"
 const maxGenbanks = 10;
 const genbankSortKey = "n_reads"
@@ -320,7 +321,7 @@ function addGenbankText(gElement, genbank) {
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${genbank.sra}&loc=${genbank[genbankNameKey]}`
+    var jBrowseLink = `/jbrowse?bam=${genbank[sraIdKey]}&loc=${genbank[genbankNameKey]}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")
