@@ -1,6 +1,8 @@
 import React from "react";
 
 const bamBucket = "lovelywater";
+const faFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa";
+const faiFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fai";
 
 export default (props) => {
     var urlParams = new URLSearchParams(props.location.search);
@@ -11,13 +13,13 @@ export default (props) => {
     const config = {
         containerID: "GenomeBrowser",
         refSeqs: {
-            url: "https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa.fai",
+            url: faiFile,
         },
         tracks: [
             {
                 key: "Cov3ma Reference Sequence",
                 label: "Cov3ma Reference Sequence",
-                urlTemplate: "https://serratus-public.s3.amazonaws.com/tmp/web/cov3ma.fa",
+                urlTemplate: faFile,
             },
             {
                 urlTemplate : `https://${bamBucket}.s3.amazonaws.com/bam/${bam}.bam`,
