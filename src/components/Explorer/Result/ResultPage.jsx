@@ -32,8 +32,10 @@ export default (props) => {
                 renderGenericChart(data[resultItemsKey], columns);
             }
         }).catch(err => {
-            console.log(err)
             setHasError(true);
+            if ("response" in err && err.response.status === 500) {
+                setHasError(false);
+            }
             setIsLoading(false);
         });
     }, [props.type, props.dataPromise]);
@@ -69,11 +71,11 @@ export default (props) => {
     if (isLoading) {
         return loading
     }
-    if (hasError || !hasResults) {
-        if (props.type === "run") {
-            return noResultsRun
-        }
+    if (hasError) {
         return error
+    }
+    if (props.type === "run" && !hasResults) {
+        return noResultsRun
     }
     if (props.type === "run") {
         return <RunChart />
