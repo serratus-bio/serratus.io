@@ -22,13 +22,13 @@ export default (props) => {
 
         var columns = ["score", "percent_identity", "n_reads"];
         props.dataPromise.then((data) => {
-            let hasResults = data && data.length !== 0;
-            setHasResults(hasResults);
             setIsLoading(false);
             if (props.type === "run") {
+                setHasResults(data && data.length !== 0);
                 renderRunChart(data, columns);
             }
             else {
+                setHasResults(data && data[resultItemsKey].length !== 0);
                 renderGenericChart(data[resultItemsKey], columns);
             }
         }).catch(err => {
@@ -71,14 +71,14 @@ export default (props) => {
     if (isLoading) {
         return loading
     }
-    if (hasError) {
-        return error
-    }
-    if (props.type === "run" && !hasResults) {
-        return noResultsRun
-    }
     if (props.type === "run") {
+        if (!hasResults) {
+            return noResultsRun
+        }
         return <RunChart />
+    }
+    if (hasError || !hasResults) {
+        return error
     }
     return <GenericChart />
 }
