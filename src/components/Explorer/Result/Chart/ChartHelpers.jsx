@@ -128,13 +128,22 @@ export function drawLegend(svgElement) {
         .call(d3.axisRight(legendScale));
 };
 
+// TODO: combine with addColumns
 export function addHeaders(gElement) {
     var yShift = 15;
 
-    var colText = "Match";
-    var xShift = sectionMargin.left - caretWidth;
+    var colText = "Count";
+    var xShift = 45;
     var textG = gElement.append("g")
     var text = textG.append("text")
+        .text(colText)
+        .style("text-anchor", "end")
+        .attr("transform",
+            `translate(${xShift}, ${yShift})`);
+
+    colText = "Match";
+    xShift = sectionMargin.left - caretWidth;
+    text = textG.append("text")
         .text(colText)
         .style("text-anchor", "end")
         .attr("transform",
