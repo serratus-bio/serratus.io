@@ -1,11 +1,8 @@
 import React from 'react';
 import { ExternalLink } from "../../../CommonHelpers";
-import FamilyChart, {
-    renderChart as renderFamilyChart
-} from './Chart/FamilyChart';
-import GenBankChart, {
-    renderChart as renderGenBankChart
-} from './Chart/GenBankChart';
+import GenericChart, {
+    renderChart as renderGenericChart
+} from './Chart/GenericChart';
 import RunChart, {
     renderChart as renderRunChart
 } from './Chart/RunChart';
@@ -23,49 +20,22 @@ export default (props) => {
         }
         setIsLoading(true);
 
-        var columns;
-        switch (props.type) {
-            case "family":
-                columns = ["score", "percent_identity", "n_reads"];
-                props.dataPromise.then((data) => {
-                    data = data[resultItemsKey];
-                    let hasResults = data && data.length !== 0;
-                    setHasResults(hasResults);
-                    setIsLoading(false);
-                    renderFamilyChart(data, columns);
-                }).catch(err => {
-                    setHasError(true);
-                    setIsLoading(false);
-                });
-                break;
-            case "genbank":
-                columns = ["score", "percent_identity", "n_reads"];
-                props.dataPromise.then((data) => {
-                    data = data[resultItemsKey];
-                    let hasResults = data && data.length !== 0;
-                    setHasResults(hasResults);
-                    setIsLoading(false);
-                    renderGenBankChart(data, columns);
-                }).catch(err => {
-                    setHasError(true);
-                    setIsLoading(false);
-                });
-                break;
-            case "run":
-                columns = ["score", "percent_identity", "n_reads"];
-                props.dataPromise.then((data) => {
-                    let hasResults = data && data.length !== 0;
-                    setHasResults(hasResults);
-                    setIsLoading(false);
-                    renderRunChart(data, columns);
-                }).catch(err => {
-                    console.log(err);
-                    setHasError(true);
-                    setIsLoading(false);
-                });
-                break;
-            default:
-        }
+        var columns = ["score", "percent_identity", "n_reads"];
+        props.dataPromise.then((data) => {
+            let hasResults = data && data.length !== 0;
+            setHasResults(hasResults);
+            setIsLoading(false);
+            if (props.type === "run") {
+                renderRunChart(data, columns);
+            }
+            else {
+                renderGenericChart(data[resultItemsKey], columns);
+            }
+        }).catch(err => {
+            console.log(err)
+            setHasError(true);
+            setIsLoading(false);
+        });
     }, [props.type, props.dataPromise]);
 
     let loading = (
@@ -105,13 +75,8 @@ export default (props) => {
         }
         return error
     }
-    switch (props.type) {
-        case "family":
-            return <FamilyChart />
-        case "genbank":
-            return <GenBankChart />
-        case "run":
-            return <RunChart />
-        default:
+    if (props.type === "run") {
+        return <RunChart />
     }
+    return <GenericChart />
 }

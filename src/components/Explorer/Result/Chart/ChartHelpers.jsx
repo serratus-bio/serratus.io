@@ -1,11 +1,6 @@
 /* eslint-disable no-unused-vars */
 import * as d3 from 'd3';
 
-// var cvgSymbols = "_.:uwaomUWAOM^";
-// [...cvgSymbols].forEach((x, i) => console.log('"' + x + '": ' + 2**i))
-// var result = {};
-// [...cvgSymbols].forEach((symbol,i) => result[symbol] = 2**i)
-
 export const cvgCartoonMap = {
     "_": 0,
     ".": 1,
