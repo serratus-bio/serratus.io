@@ -10,6 +10,7 @@ import About from './pages/About';
 import Team from './pages/Team';
 import Jbrowse from './pages/Jbrowse';
 import Access from './pages/Access';
+import Footer from './components/Footer';
 
 export default () => {
   React.useEffect(() => {
@@ -38,6 +39,7 @@ export default () => {
         <Route exact path="/explore" component={() => {return <Redirect to="/explorer" />}} />
         <Route exact path="/query" component={() => {return <Redirect to="/explorer" />}} />
       </Switch>
+      {window.location.pathname !== "/" && <Footer />}
     </div>
   );
 }
