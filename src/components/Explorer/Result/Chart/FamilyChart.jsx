@@ -48,15 +48,14 @@ export const renderChart = (results, columns) => {
         var matchG = matchSvg.append("g")
             .attr("class", "sra")
             .attr("rowid", `${match[sraKey]}`);
-        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], "match", coverageData, i);
+        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i);
         addColumns(matchG.select("svg"), columns, colMap, match);
     });
 }
 
-function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
-    var y = rowIndex * sectionHeight;
+function drawExpandableRow(gElement, name, heatSquareData, rowIndex) {
     var entrySvg = gElement.append("svg")
-        .attr("y", y)
+        .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
         .attr("height", sectionHeight)
         .attr("border", barBorder.size)
@@ -71,7 +70,7 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .domain(genomeBins)
         .padding(0.01);
 
-    y = d3.scaleBand()
+    var y = d3.scaleBand()
         .range([0, barHeight])
         .domain([name])
         .padding(0.01);
@@ -108,7 +107,6 @@ function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
         .enter()
         .append("rect")
         .attr("x", d => x(d.bin))
-        .attr("y", d => y(d[dataBin]))
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
         .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))

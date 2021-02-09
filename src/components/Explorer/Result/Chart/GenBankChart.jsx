@@ -48,12 +48,12 @@ export const renderChart = (results, columns) => {
         var matchG = matchSvg.append("g")
             .attr("class", "sra")
             .attr("rowid", `${match[sraKey]}`);
-        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], "match", coverageData, i);
+        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i);
         addColumns(matchG.select("svg"), columns, colMap, match);
     });
 }
 
-function drawExpandableRow(gElement, name, dataBin, heatSquareData, rowIndex) {
+function drawExpandableRow(gElement, name, heatSquareData, rowIndex) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
