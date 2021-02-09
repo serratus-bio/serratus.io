@@ -44,8 +44,7 @@ export default (props) => {
     if (willMount.current) {
         // set defaults
         if (!identityLimsFromParam) { identityLimsFromParam = identityDomain }
-        if (!coverageLimsFromParam && !queryTypeFromParam) { coverageLimsFromParam = [25, 100] }
-        if (!coverageLimsFromParam && queryTypeFromParam) { coverageLimsFromParam = coverageDomain }
+        if (!coverageLimsFromParam) { coverageLimsFromParam = [50, 100] }
         // family must be valid for initial chart render
         if (!queryTypeFromParam) { queryTypeFromParam = "family" }
         if (!queryValueFromParam) { queryValueFromParam = "Coronaviridae" }
