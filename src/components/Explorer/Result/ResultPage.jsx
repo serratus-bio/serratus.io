@@ -33,7 +33,7 @@ export default (props) => {
             }
         }).catch(err => {
             setHasError(true);
-            if ("response" in err && err.response.status === 500) {
+            if (props.type === "run" && err.toString().includes(500)) {
                 setHasError(false);
             }
             setIsLoading(false);
