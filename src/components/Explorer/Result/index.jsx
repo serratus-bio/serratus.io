@@ -13,7 +13,7 @@ export default (props) => {
     const identityLims = props.identityLims;
     const coverageLims = props.coverageLims;
 
-    const itemsPerPage = 20;
+    const perPage = 20;
     const [pageNumber, setPageNumber] = React.useState(1);
     const [dataPromise, setDataPromise] = React.useState();
     const [pageTitle, setPageTitle] = React.useState();
@@ -42,7 +42,7 @@ export default (props) => {
         if (!queryValue) {
             return;
         }
-        setDataPromise(getDataPromise(queryType, queryValue, pageNumber, itemsPerPage, identityLims, coverageLims));
+        setDataPromise(getDataPromise(queryType, queryValue, pageNumber, perPage, identityLims, coverageLims));
     }, [queryType, queryValue, pageNumber, identityLims, coverageLims]);
 
     return (
@@ -62,7 +62,7 @@ export default (props) => {
                 {queryType !== 'run' &&
                     <Paginator
                         pageNumber={pageNumber}
-                        itemsPerPage={itemsPerPage}
+                        perPage={perPage}
                         setPageNumber={setPageNumber}
                         dataPromise={dataPromise} />}
                 <ResultPage
