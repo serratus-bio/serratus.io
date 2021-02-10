@@ -1,25 +1,40 @@
 import axios from 'axios'
-import { constructRangeStr } from './ExplorerHelpers';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
 
 export const fetchSraRun = async (sraAccession) => {
-    const response = await axios.get(`${baseUrl}/api/run/get-run/${sraAccession}`);
+    const response = await axios.get(`${baseUrl}/nucleotide/sra=${sraAccession}`);
     return response.data
 }
 
-export const fetchSraMatchesByAccession = async (genbankAccession, pageNumber, itemsPerPage, identityRange, coverageRange) => {
-    var identity = constructRangeStr(...identityRange);
-    var coverage = constructRangeStr(...coverageRange);
-    const response = await axios.get(`${baseUrl}/api/genbank/get-runs/${genbankAccession}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&cvgPct=${coverage}`);
+export const fetchSraMatchesByAccession = async (genbankAccession, page, perPage, identityRange, scoreRange) => {
+    var [identityMin, identityMax] = identityRange;
+    var [scoreMin, scoreMax] = scoreRange;
+    var params = {
+        page: page,
+        perPage: perPage,
+        scoreMin: scoreMin,
+        scoreMax: scoreMax,
+        identityMin: identityMin,
+        identityMax: identityMax
+    }
+    const response = await axios.get(`${baseUrl}/nucleotide/genbank=${genbankAccession}`, {params: params});
     return response.data;
 }
 
-export const fetchSraMatchesByFamily = async (familyName, pageNumber, itemsPerPage, identityRange, coverageRange) => {
-    var identity = constructRangeStr(...identityRange);
-    var coverage = constructRangeStr(...coverageRange);
-    const response = await axios.get(`${baseUrl}/api/family/get-runs/${familyName}?page=${pageNumber}&itemsPerPage=${itemsPerPage}&pctId=${identity}&score=${coverage}`);
+export const fetchSraMatchesByFamily = async (familyName, page, perPage, identityRange, scoreRange) => {
+    var [identityMin, identityMax] = identityRange;
+    var [scoreMin, scoreMax] = scoreRange;
+    var params = {
+        page: page,
+        perPage: perPage,
+        scoreMin: scoreMin,
+        scoreMax: scoreMax,
+        identityMin: identityMin,
+        identityMax: identityMax
+    }
+    const response = await axios.get(`${baseUrl}/nucleotide/family=${familyName}`, {params: params});
     return response.data;
 }
 

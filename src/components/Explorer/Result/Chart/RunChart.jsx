@@ -27,7 +27,18 @@ export default () => {
     return <div id={chartId} />
 }
 
-var maxGenbanks = 10;
+const familySectionKey = "families"
+const genbankSectionKey = "sequences"
+
+const sraIdKey = "sra_id"
+const familyNameKey = "family_name"
+const maxGenbanks = 10;
+const genbankSortKey = "n_reads"
+const genbankNameKey = "genbank_id"
+const genbankFamilyNameKey = "family_name"
+const genbankTitleKey = "genbank_name"
+const genbankCoverageKey = "coverage_bins"
+const familyCoverageKey = "coverage_bins"
 
 export const renderChart = (summary, columns) => {
     var chartSvg = d3.select(`#${chartId}`)
@@ -47,38 +58,38 @@ export const renderChart = (summary, columns) => {
     var familyTextHeight = 50;
 
     var genbanksByFamily = d3.nest()
-        .key(d => d.fam)
-        .entries(summary["accessionSections"])
+        .key(d => d[genbankFamilyNameKey])
+        .entries(summary[genbankSectionKey])
         .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
         }, {});
-    summary["familySections"].forEach((family, i) => {
-        var familyCoverageData = getCoverageData(family);
+    summary[familySectionKey].forEach((family, i) => {
+        var familyCoverageData = getCoverageData(family, familyCoverageKey);
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
-            .attr("rowid", `${family.family}`);
-        var familySubGroup = drawExpandableRow(familyG, family.family, "family", familyCoverageData, i);
+            .attr("rowid", `${family[familyNameKey]}`);
+        var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i);
         addColumns(familyG.select("svg"), columns, colMap, family);
-        addFamilyText(familySubGroup, family);
+        addFamilyText(familySubGroup);
 
         var familyGenbanksG = familySubGroup.append("g")
             .attr("class", "family-genbanks")
             .attr("transform", `translate(0, ${familyTextHeight})`)
 
-        var genbanks = genbanksByFamily[family.family]
-            .sort((a, b) => parseFloat(a.cvgpct) < parseFloat(b.cvgpct));
+        var genbanks = genbanksByFamily[family[familyNameKey]]
+            .sort((a, b) => parseFloat(a[genbankSortKey]) < parseFloat(b[genbankSortKey]));
         if (genbanks.length > maxGenbanks) {
             genbanks = genbanks.slice(0, maxGenbanks);
         }
         genbanks.forEach((genbank, i) => {
-            var genbankCoverageData = getCoverageData(genbank);
+            var genbankCoverageData = getCoverageData(genbank, genbankCoverageKey);
             var genbankG = familyGenbanksG.append("g")
                 .attr("class", "genbank")
-                .attr("rowid", `${genbank.acc}`)
-                .attr("family", `${family.family}`);
+                .attr("rowid", `${genbank[genbankNameKey]}`)
+                .attr("family", `${family[familyNameKey]}`);
             var genbankSubGroup = drawExpandableRow(
-                genbankG, genbank.acc, "genbank",
+                genbankG, genbank[genbankNameKey], "genbank",
                 genbankCoverageData, i);
             addColumns(genbankG.select("svg"), columns, colMap, genbank);
             addGenbankText(genbankSubGroup, genbank);
@@ -294,7 +305,7 @@ function addFamilyText(gElement) {
     var textEntry = textGroup.append("text")
         .attr("transform",
             `translate(0, ${genbankHeaderY})`)
-        .text(`Top ${maxGenbanks} GenBank accessions by coverage:`);
+        .text(`Top ${maxGenbanks} GenBank accessions by read count:`);
 }
 
 function addGenbankText(gElement, genbank) {
@@ -303,14 +314,14 @@ function addGenbankText(gElement, genbank) {
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
     var genbankTitle = textGroup.append("text")
-        .text("Name: " + genbank.name)
+        .text("Name: " + genbank[genbankTitleKey])
         .style("font-size", 10);
 
     // JBrowse link
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${genbank.sra}&loc=${genbank.acc}`
+    var jBrowseLink = `/jbrowse?bam=${genbank[sraIdKey]}&loc=${genbank[genbankNameKey]}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")

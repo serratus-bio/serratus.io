@@ -2,30 +2,32 @@
 import * as d3 from 'd3';
 
 export const cvgCartoonMap = {
-    '_': 0,
-    '.': 0.25,
-    'o': 0.5,
-    'O': 1
+    "_": 0,
+    ".": 1,
+    ":": 2,
+    "u": 4,
+    "w": 8,
+    "a": 16,
+    "o": 32,
+    "m": 64,
+    "U": 128,
+    "W": 256,
+    "A": 512,
+    "O": 1024,
+    "M": 2048,
+    "^": 4096,
 }
 
 export const colMap = {
     "score": {
         "name": "Score",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
+        "desc": "Assembly-prediction score",
+        "valueSuffix": "",
         "size": 50,
         "domain": [0, 100],
         "fill": "#67c286"
     },
-    "cvgPct": {
-        "name": "Coverage",
-        "desc": "Sequence coverage (bins with at least 1 read)",
-        "valueSuffix": "%",
-        "size": 70,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "pctId": {
+    "percent_identity": {
         "name": "Identity",
         "desc": "Average alignment identity",
         "size": 70,
@@ -33,7 +35,7 @@ export const colMap = {
         "domain": [75, 100],
         "fill": "#fdb53c"
     },
-    "aln": {
+    "n_reads": {
         "name": "Reads",
         "desc": "Number of alignments (bowtie2)",
         "size": 70,
@@ -43,10 +45,15 @@ export const colMap = {
     }
 }
 
+var cvgLims = [0, 4096];
+
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
-export const colorMap = d3.scaleSequential(d3.interpolateYlOrRd)
-    .domain([0, 1]);
+const defaultColorMap = d3.scaleSequentialSymlog(d3.interpolateYlOrRd).domain(cvgLims);
+export function colorMap(value) {
+    if (value === 0) return "rgb(255, 255, 255)";
+    return defaultColorMap(value);
+}
 const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
@@ -114,20 +121,29 @@ export function drawLegend(svgElement) {
 
     // create a scale and axis for the legend
     var legendScale = d3.scaleLinear()
-        .domain([0, 1])
+        .domain(cvgLims)
         .range([legendHeight - margin.top - margin.bottom, 0]);
     var legendAxis = legendSvg.append("g")
         .attr("transform", `translate(${legendWidth - margin.left - margin.right}, ${margin.top - 0.5})`)
         .call(d3.axisRight(legendScale));
 };
 
+// TODO: combine with addColumns
 export function addHeaders(gElement) {
     var yShift = 15;
 
-    var colText = "Match";
-    var xShift = sectionMargin.left - caretWidth;
+    var colText = "Count";
+    var xShift = 45;
     var textG = gElement.append("g")
     var text = textG.append("text")
+        .text(colText)
+        .style("text-anchor", "end")
+        .attr("transform",
+            `translate(${xShift}, ${yShift})`);
+
+    colText = "Match";
+    xShift = sectionMargin.left - caretWidth;
+    text = textG.append("text")
         .text(colText)
         .style("text-anchor", "end")
         .attr("transform",
@@ -212,9 +228,9 @@ export function addColumns(gElement, columns, colMap, summaryEntry = null) {
     });
 }
 
-export function getCoverageData(match) {
+export function getCoverageData(match, cvgKey = "coverage_bins") {
     var matchCoverageData = [];
-    [...match.cvg].forEach(function (bit, i) {
+    [...match[cvgKey]].forEach(function (bit, i) {
         matchCoverageData.push({
             bin: i,
             cartoonChar: bit
