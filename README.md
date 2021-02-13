@@ -9,9 +9,9 @@ This repository is just one of the main repositories involving Serratus:
 
 1. Repository for Serratus database curation: [serratus-bio/serratus-summary-uploader](https://github.com/serratus-bio/serratus-summary-uploader)
 2. Repository for Serratus REST API: [serratus-bio/serratus-summary-api](https://github.com/serratus-bio/serratus-summary-api)
-2. Repository for Serratus website: [serratus-bio/serratus.io](https://github.com/serratus-bio/serratus.io)
-3. Repository for Serratus data exploration R package: [serratus-bio/tantalus](https://github.com/serratus-bio/tantalus)
-4. Repository for Serratus bioinformatics work: [ababaian/serratus](https://github.com/ababaian/serratus)
+3. Repository for Serratus website: [serratus-bio/serratus.io](https://github.com/serratus-bio/serratus.io)
+4. Repository for Serratus data exploration R package: [serratus-bio/tantalus](https://github.com/serratus-bio/tantalus)
+5. Repository for Serratus bioinformatics work: [ababaian/serratus](https://github.com/ababaian/serratus)
 
 ## Serratus Explorer
 
