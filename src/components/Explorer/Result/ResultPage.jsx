@@ -42,8 +42,11 @@ export default (props) => {
 
     let loading = (
         <div className="text-center">
-            Loading... (this might take a while)
-        </div>
+            <span>Loading... (this might take a while)</span>
+            <span>------------------------------------</span>
+            <span>Serratus is made possible through the promise of collective data-sharing.</span>
+            <span>If you learn from these data, please consider your role in releasing data freely and without restriction.</span>
+            </div>
     )
 
     let error = (
