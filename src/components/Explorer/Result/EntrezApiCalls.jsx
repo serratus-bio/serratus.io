@@ -1,42 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = process.env.REACT_APP_API_URL;
 const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
-
-export const fetchSraRun = async (sraAccession) => {
-    const response = await axios.get(`${baseUrl}/nucleotide/sra=${sraAccession}`);
-    return response.data
-}
-
-export const fetchSraMatchesByAccession = async (genbankAccession, page, perPage, identityRange, scoreRange) => {
-    var [identityMin, identityMax] = identityRange;
-    var [scoreMin, scoreMax] = scoreRange;
-    var params = {
-        page: page,
-        perPage: perPage,
-        scoreMin: scoreMin,
-        scoreMax: scoreMax,
-        identityMin: identityMin,
-        identityMax: identityMax
-    }
-    const response = await axios.get(`${baseUrl}/nucleotide/genbank=${genbankAccession}`, {params: params});
-    return response.data;
-}
-
-export const fetchSraMatchesByFamily = async (familyName, page, perPage, identityRange, scoreRange) => {
-    var [identityMin, identityMax] = identityRange;
-    var [scoreMin, scoreMax] = scoreRange;
-    var params = {
-        page: page,
-        perPage: perPage,
-        scoreMin: scoreMin,
-        scoreMax: scoreMax,
-        identityMin: identityMin,
-        identityMax: identityMax
-    }
-    const response = await axios.get(`${baseUrl}/nucleotide/family=${familyName}`, {params: params});
-    return response.data;
-}
 
 export const getEsearch = async (db, term) => {
     const response = await axios.get(`${eutilsUrl}/esearch.fcgi?db=${db}&term=${term}&retmax=1&usehistory=y`, { responseType: 'text' });
