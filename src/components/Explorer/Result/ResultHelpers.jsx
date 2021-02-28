@@ -9,10 +9,12 @@ import {
 import {
     tryGetGenBankTitle,
     tryGetSraStudyName,
+} from './EntrezApiCalls';
+import {
     fetchPagedMatchesByGenbank,
     fetchPagedMatchesByFamily,
-    fetchSraRun
-} from '../ApiCalls';
+    fetchSraRun,
+} from './SerratusApiCalls';
 
 export const getPageLinks = (type, value) => {
     if (type === "family") {
