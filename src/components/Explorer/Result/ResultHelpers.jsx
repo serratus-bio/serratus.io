@@ -108,13 +108,8 @@ export const getTitle = async (type, value, valueCorrected) => {
 }
 
 export const getDataPromise = (type, value, page, perPage, identityRange, coverageRange) => {
-    switch (type) {
-        case "family":
-            return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
-        case "genbank":
-            return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
-        case "run":
-            return fetchSraRun(value);
-        default:
+    if (type === "run") {
+        return fetchSraRun(value);
     }
+    return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
 }
