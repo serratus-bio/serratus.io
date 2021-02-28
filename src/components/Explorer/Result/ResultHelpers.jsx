@@ -11,8 +11,7 @@ import {
     tryGetSraStudyName,
 } from './EntrezApiCalls';
 import {
-    fetchPagedMatchesByGenbank,
-    fetchPagedMatchesByFamily,
+    fetchPagedMatches,
     fetchSraRun,
 } from './SerratusApiCalls';
 
@@ -111,9 +110,9 @@ export const getTitle = async (type, value, valueCorrected) => {
 export const getDataPromise = (type, value, page, perPage, identityRange, coverageRange) => {
     switch (type) {
         case "family":
-            return fetchPagedMatchesByFamily(value, page, perPage, identityRange, coverageRange);
+            return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
         case "genbank":
-            return fetchPagedMatchesByGenbank(value, page, perPage, identityRange, coverageRange);
+            return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
         case "run":
             return fetchSraRun(value);
         default:
