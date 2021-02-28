@@ -9,8 +9,8 @@ import {
 import {
     tryGetGenBankTitle,
     tryGetSraStudyName,
-    fetchSraMatchesByAccession,
-    fetchSraMatchesByFamily,
+    fetchPagedMatchesByGenbank,
+    fetchPagedMatchesByFamily,
     fetchSraRun
 } from '../ApiCalls';
 
@@ -109,11 +109,11 @@ export const getTitle = async (type, value, valueCorrected) => {
 export const getDataPromise = (type, value, page, perPage, identityRange, coverageRange) => {
     switch (type) {
         case "family":
-            return fetchSraMatchesByFamily(value, page, perPage, identityRange, coverageRange);
+            return fetchPagedMatchesByFamily(value, page, perPage, identityRange, coverageRange);
         case "genbank":
-            return fetchSraMatchesByAccession(value, page, perPage, identityRange, coverageRange);
+            return fetchPagedMatchesByGenbank(value, page, perPage, identityRange, coverageRange);
         case "run":
-            return fetchSraRun(value, page);
+            return fetchSraRun(value);
         default:
     }
 }

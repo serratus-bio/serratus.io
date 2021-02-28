@@ -3,15 +3,16 @@ import axios from 'axios'
 const baseUrl = process.env.REACT_APP_API_URL;
 const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils';
 
-export const fetchSraRun = async (sraAccession) => {
-    const response = await axios.get(`${baseUrl}/nucleotide/sra=${sraAccession}`);
+export const fetchSraRun = async (runId) => {
+    const response = await axios.get(`${baseUrl}/summary/nucleotide/run=${runId}`);
     return response.data
 }
 
-export const fetchSraMatchesByAccession = async (genbankAccession, page, perPage, identityRange, scoreRange) => {
+export const fetchPagedMatchesByGenbank = async (genbankId, page, perPage, identityRange, scoreRange) => {
     var [identityMin, identityMax] = identityRange;
     var [scoreMin, scoreMax] = scoreRange;
     var params = {
+        genbank: genbankId,
         page: page,
         perPage: perPage,
         scoreMin: scoreMin,
@@ -19,14 +20,15 @@ export const fetchSraMatchesByAccession = async (genbankAccession, page, perPage
         identityMin: identityMin,
         identityMax: identityMax
     }
-    const response = await axios.get(`${baseUrl}/nucleotide/genbank=${genbankAccession}`, {params: params});
+    const response = await axios.get(`${baseUrl}/matches/nucleotide/paged`, {params: params});
     return response.data;
 }
 
-export const fetchSraMatchesByFamily = async (familyName, page, perPage, identityRange, scoreRange) => {
+export const fetchPagedMatchesByFamily = async (familyName, page, perPage, identityRange, scoreRange) => {
     var [identityMin, identityMax] = identityRange;
     var [scoreMin, scoreMax] = scoreRange;
     var params = {
+        family: familyName,
         page: page,
         perPage: perPage,
         scoreMin: scoreMin,
@@ -34,7 +36,7 @@ export const fetchSraMatchesByFamily = async (familyName, page, perPage, identit
         identityMin: identityMin,
         identityMax: identityMax
     }
-    const response = await axios.get(`${baseUrl}/nucleotide/family=${familyName}`, {params: params});
+    const response = await axios.get(`${baseUrl}/matches/nucleotide/paged`, {params: params});
     return response.data;
 }
 
