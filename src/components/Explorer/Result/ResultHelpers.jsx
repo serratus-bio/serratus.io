@@ -11,8 +11,8 @@ import {
     tryGetSraStudyName,
 } from './EntrezApiCalls';
 import {
-    fetchPagedMatchesByGenbank,
-    fetchPagedMatchesByFamily,
+    getMatchesDownloadUrl,
+    fetchPagedMatches,
     fetchSraRun,
 } from './SerratusApiCalls';
 
@@ -109,13 +109,22 @@ export const getTitle = async (type, value, valueCorrected) => {
 }
 
 export const getDataPromise = (type, value, page, perPage, identityRange, coverageRange) => {
-    switch (type) {
-        case "family":
-            return fetchPagedMatchesByFamily(value, page, perPage, identityRange, coverageRange);
-        case "genbank":
-            return fetchPagedMatchesByGenbank(value, page, perPage, identityRange, coverageRange);
-        case "run":
-            return fetchSraRun(value);
-        default:
+    if (type === "run") {
+        return fetchSraRun(value);
     }
+    return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
+}
+
+export const DownloadButton = (props) => {
+    const {queryType, queryValue, identityLims, coverageLims} = props;
+    const downloadUrl = getMatchesDownloadUrl(queryType, queryValue, identityLims, coverageLims);
+    return (
+        <div className="flex justify-center">
+            <LinkButton
+                link={downloadUrl}
+                text="Download Matches"
+                icon={downloadIcon}
+                download={true} />
+        </div>
+    )
 }

@@ -7,34 +7,32 @@ export const fetchSraRun = async (runId) => {
     return response.data;
 }
 
-export const fetchPagedMatchesByGenbank = async (genbankId, page, perPage, identityRange, scoreRange) => {
-    var [identityMin, identityMax] = identityRange;
-    var [scoreMin, scoreMax] = scoreRange;
+export const getMatchesDownloadUrl = (type, value, identityLims, coverageLims) => {
+    var [identityMin, identityMax] = identityLims;
+    var [scoreMin, scoreMax] = coverageLims;
     var params = {
-        genbank: genbankId,
-        page: page,
-        perPage: perPage,
         scoreMin: scoreMin,
         scoreMax: scoreMax,
         identityMin: identityMin,
         identityMax: identityMax
-    }
-    const response = await axios.get(`${baseUrl}/matches/nucleotide/paged`, {params: params});
-    return response.data;
+    };
+    params[type] = value;
+    const urlParams = new URLSearchParams(params);
+    return `${baseUrl}/matches/nucleotide?${urlParams}`;
 }
 
-export const fetchPagedMatchesByFamily = async (familyName, page, perPage, identityRange, scoreRange) => {
+export const fetchPagedMatches = async (type, value, page, perPage, identityRange, scoreRange) => {
     var [identityMin, identityMax] = identityRange;
     var [scoreMin, scoreMax] = scoreRange;
     var params = {
-        family: familyName,
         page: page,
         perPage: perPage,
         scoreMin: scoreMin,
         scoreMax: scoreMax,
         identityMin: identityMin,
         identityMax: identityMax
-    }
+    };
+    params[type] = value;
     const response = await axios.get(`${baseUrl}/matches/nucleotide/paged`, {params: params});
     return response.data;
 }
