@@ -5,6 +5,7 @@ import {
     getDataPromise,
     getPageLinks,
     getTitle,
+    ExportButton,
 } from './ResultHelpers';
 
 export default (props) => {
@@ -69,6 +70,14 @@ export default (props) => {
                     type={queryType}
                     value={queryValue}
                     dataPromise={dataPromise} />
+                {queryType !== 'run' &&
+                    <ExportButton
+                        queryType={queryType}
+                        queryValue={queryValue}
+                        identityLims={identityLims}
+                        coverageLims={coverageLims}
+                    />
+                }
             </div>
         </div>
     )
