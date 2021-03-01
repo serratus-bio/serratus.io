@@ -11,7 +11,7 @@ import {
     tryGetSraStudyName,
 } from './EntrezApiCalls';
 import {
-    getMatchesExportUrl,
+    getMatchesDownloadUrl,
     fetchPagedMatches,
     fetchSraRun,
 } from './SerratusApiCalls';
@@ -115,9 +115,9 @@ export const getDataPromise = (type, value, page, perPage, identityRange, covera
     return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
 }
 
-export const ExportButton = (props) => {
+export const DownloadButton = (props) => {
     const {queryType, queryValue, identityLims, coverageLims} = props;
-    const downloadUrl = getMatchesExportUrl(queryType, queryValue, identityLims, coverageLims);
+    const downloadUrl = getMatchesDownloadUrl(queryType, queryValue, identityLims, coverageLims);
     return (
         <div className="flex justify-center">
             <LinkButton

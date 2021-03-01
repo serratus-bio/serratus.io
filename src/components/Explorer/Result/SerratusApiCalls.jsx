@@ -7,7 +7,7 @@ export const fetchSraRun = async (runId) => {
     return response.data;
 }
 
-export const getMatchesExportUrl = (type, value, identityLims, coverageLims) => {
+export const getMatchesDownloadUrl = (type, value, identityLims, coverageLims) => {
     var [identityMin, identityMax] = identityLims;
     var [scoreMin, scoreMax] = coverageLims;
     var params = {

@@ -5,7 +5,7 @@ import {
     getDataPromise,
     getPageLinks,
     getTitle,
-    ExportButton,
+    DownloadButton,
 } from './ResultHelpers';
 
 export default (props) => {
@@ -71,7 +71,7 @@ export default (props) => {
                     value={queryValue}
                     dataPromise={dataPromise} />
                 {queryType !== 'run' &&
-                    <ExportButton
+                    <DownloadButton
                         queryType={queryType}
                         queryValue={queryValue}
                         identityLims={identityLims}
