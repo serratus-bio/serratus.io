@@ -3,7 +3,7 @@ import Select from 'react-select';
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
 
-export default (props) => {
+const SelectFamily = (props) => {
     const family = props.family;
     const setFamily = props.setFamily;
     const [selectValue, setSelectValue] = React.useState();
@@ -27,3 +27,5 @@ export default (props) => {
             onMenuOpen={() => setSelectValue({})} />
     )
 }
+
+export default SelectFamily;

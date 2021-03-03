@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import * as d3 from 'd3';
 import { createD3RangeSlider } from './d3RangeSlider';
 
-export default (props) => {
+const FilterSlider = (props) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)
     // optional props: linearGradientString, onChange:callback, onTouchEnd:callback
 
@@ -64,3 +64,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default FilterSlider;

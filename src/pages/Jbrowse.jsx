@@ -4,7 +4,7 @@ const bamBucket = "lovelywater";
 const faFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa";
 const faiFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai";
 
-export default (props) => {
+const Jbrowse = (props) => {
     var urlParams = new URLSearchParams(props.location.search);
     var bam = urlParams.get("bam");
     var loc = urlParams.get("loc");
@@ -61,3 +61,5 @@ export default (props) => {
         </div>
     );
 }
+
+export default Jbrowse;

@@ -3,9 +3,11 @@ import * as d3 from 'd3';
 
 const chartId = "chart"
 
-export default () => {
+const ExploreChart = () => {
     return <div id={chartId} />
 }
+
+export default ExploreChart;
 
 
 // D3 CODE BELOW

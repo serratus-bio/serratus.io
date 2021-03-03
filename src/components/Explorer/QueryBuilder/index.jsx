@@ -26,7 +26,7 @@ import {
 } from '../../../CommonHelpers';
 import allFamilyData from '../data/SerratusIO_scoreID.json';
 
-export default (props) => {
+const QueryBuilder = (props) => {
     const sliderIdentityLimsRef = props.identityLimsRef;
     const sliderCoverageLimsRef = props.coverageLimsRef;
     const queryType = props.queryType;
@@ -172,3 +172,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default QueryBuilder;

@@ -6,7 +6,7 @@ import {
   ExternalLink
 } from '../CommonHelpers';
 
-export default () => {
+const About = () => {
   const headTags = (
     <Helmet>
       <title>Serratus | About</title>
@@ -54,3 +54,5 @@ export default () => {
     </div>
   )
 }
+
+export default About;

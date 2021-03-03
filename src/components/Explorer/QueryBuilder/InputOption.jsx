@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default (props) => {
+const InputOption = (props) => {
     return (
         <div className={props.className}>
             <input type="radio" name="querytype" value={props.value} checked={props.checked}
@@ -9,3 +9,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default InputOption;

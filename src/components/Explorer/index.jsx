@@ -15,7 +15,7 @@ import {
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
-export default (props) => {
+const Explorer = (props) => {
     const queryTypeStaticRef = React.useRef();
     const queryValueStaticRef = React.useRef();
     const identityLimsStaticRef = React.useRef();
@@ -98,3 +98,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default Explorer;

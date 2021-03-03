@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExternalLink } from '../../CommonHelpers';
 
-export default () => {
+const DataReference = () => {
     return (
         <div className="text-gray-700 text-sm">
             <div className="my-2">Programmatic access to Serratus databases is available via the R package, <ExternalLink href="https://github.com/serratus-bio/tantalus" className="text-blue-600">Tantalus</ExternalLink>.</div>
@@ -11,3 +11,5 @@ export default () => {
         </div>
     )
 }
+
+export default DataReference;
