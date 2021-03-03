@@ -4,13 +4,8 @@ const bamBucket = "lovelywater";
 const faFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa";
 const faiFile = "https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai";
 
-const Jbrowse = (props) => {
-    var urlParams = new URLSearchParams(props.location.search);
-    var bam = urlParams.get("bam");
-    var loc = urlParams.get("loc");
-
-    // Add some features
-    const config = {
+const getJbrowseConfig = (bam) => {
+    return {
         containerID: "GenomeBrowser",
         refSeqs: {
             url: faiFile,
@@ -31,10 +26,17 @@ const Jbrowse = (props) => {
         ],
         includes: null,
     };
+}
+
+const Jbrowse = (props) => {
+    var urlParams = new URLSearchParams(props.location.search);
+    var bam = urlParams.get("bam");
+    var loc = urlParams.get("loc");
 
     // Instatiate JBrowse
     React.useEffect(() => {
         console.log("reload")
+        const config = getJbrowseConfig(bam);
         window.addEventListener("load", () => {
             window.JBrowse = new window.Browser(config);
             window.JBrowse.navigateTo(loc);
@@ -42,7 +44,7 @@ const Jbrowse = (props) => {
             window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`);
             console.log(window.JBrowse)
         });
-    }, [config, bam, loc])
+    }, [bam, loc])
 
     return (
         <div className="App">
