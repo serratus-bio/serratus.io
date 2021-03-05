@@ -1,9 +1,5 @@
 import React from 'react';
-import SelectFamily from './SelectFamily';
-import SelectGenbank from './SelectGenbank';
-import SearchRun from './SearchRun';
 import FilterSlider from './FilterSlider';
-import InputOption from './InputOption';
 import ExploreChart, {
     renderChart,
     updateData,
@@ -25,6 +21,7 @@ import {
     helpIcon
 } from '../../../CommonHelpers';
 import allFamilyData from '../data/SerratusIO_scoreID.json';
+import QueryTypeSelector from './QueryTypeSelector';
 
 const QueryBuilder = (props) => {
     const sliderIdentityLimsRef = props.identityLimsRef;
@@ -35,26 +32,11 @@ const QueryBuilder = (props) => {
     const setQueryValue = props.setQueryValue;
 
     // set family to valid value for initial chart render
-    const [initialFamily] = React.useState('Coronaviridae');
+    const initialFamily = 'Coronaviridae';
     const [initialIdentityLims] = React.useState(props.identityLimsRef.current);
     const [initialCoverageLims] = React.useState(props.coverageLimsRef.current);
-    const [initialQueryType] = React.useState(props.queryType);
-    const [initialQueryValue] = React.useState(props.queryValue);
-
-    const [family, setFamily] = React.useState(initialFamily);
-    const [genbank, setGenbank] = React.useState();
-    const [run, setRun] = React.useState();
 
     const [errorMessage, setErrorMessage] = React.useState("");
-
-    React.useEffect(() => {
-        switch (initialQueryType) {
-            case "family": setFamily(initialQueryValue); break;
-            case "genbank": setGenbank(initialQueryValue); break;
-            case "run": setRun(initialQueryValue); break;
-            default:
-        }
-    }, [initialQueryType, initialQueryValue])
 
     // initial chart render
     React.useEffect(() => {
@@ -67,30 +49,21 @@ const QueryBuilder = (props) => {
 
     // update chart for subsequent family changes
     React.useEffect(() => {
-        var data = allFamilyData[family];
+        var data = allFamilyData[queryValue];
+        if (!data) { return; }
         updateData(data);
         updateYLims();
-    }, [family]);
+    }, [queryValue]);
 
     // functions to update chart with slider changes
     const updateX = () => { updateXLims(...sliderIdentityLimsRef.current) }
     const updateZ = () => { updateZLims(...sliderCoverageLimsRef.current) }
     const updateY = () => { updateYLims(500) }
 
-    // update query value
+    // reset error message
     React.useEffect(() => {
         setErrorMessage("");
-        switch (queryType) {
-            case "family": setQueryValue(family); break;
-            case "genbank": setQueryValue(genbank); break;
-            case "run": setQueryValue(run); break;
-            default:
-        }
-    }, [family, genbank, run, queryType, setQueryValue]);
-
-    const queryTypeChange = (e) => {
-        setQueryType(e.target.value);
-    }
+    }, [queryType]);
 
     const goToQuery = () => {
         if (!queryValue) {
@@ -114,29 +87,14 @@ const QueryBuilder = (props) => {
 
     return (
         <div className="flex-grow">
-            <div className="flex flex-row justify-center">
-                <InputOption className="mx-2" value="family" displayText="Family" checked={queryType === "family"} onChange={queryTypeChange} />
-                <InputOption className="mx-2" value="genbank" displayText="GenBank" checked={queryType === "genbank"} onChange={queryTypeChange} />
-                <InputOption className="mx-2" value="run" displayText="SRA Run" checked={queryType === "run"} onChange={queryTypeChange} />
-            </div>
-            <div label="inputs">
-                <div className={queryType === "family" ? "visible" : "hidden"}>
-                    <SelectFamily
-                        family={family}
-                        setFamily={setFamily} />
-                </div>
-                <div className={queryType === "genbank" ? "visible" : "hidden"}>
-                    <SelectGenbank
-                        genbank={genbank}
-                        setGenbank={setGenbank} />
-                </div>
-                <div className={queryType === "run" ? "visible" : "hidden"}>
-                    <SearchRun
-                        run={run}
-                        setRun={setRun}
-                        onEnter={goToQuery} />
-                </div>
-            </div>
+            <QueryTypeSelector
+                initialFamily={initialFamily}
+                queryType={queryType}
+                setQueryType={setQueryType}
+                queryValue={queryValue}
+                setQueryValue={setQueryValue}
+                goToQuery={goToQuery}
+                />
             <div className="max-w-xl m-auto">
                 <div className={`${slidersVisibility} mb-10`}>
                     <div className="mx-2">
