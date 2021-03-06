@@ -38,7 +38,6 @@ var dataByZStackFiltered;
 var chartZRects;
 
 export const renderChart = (data, xDomain, zDomain) => {
-    familyData = data;
     setXLims(xDomain);
     zLims = zDomain;
     zDomainValues = getAllValues(...zDomain);
@@ -93,7 +92,7 @@ export const renderChart = (data, xDomain, zDomain) => {
         .attr("opacity", 1)
         .text(yLabel);
 
-    filterAndSetStackData();
+    updateData(data);
 
     var rectsG = chartG.append("g").attr("label", "stack-rects");
 
@@ -118,7 +117,7 @@ export const renderChart = (data, xDomain, zDomain) => {
 
 export const updateData = (data) => {
     familyData = data;
-    filterAndSetStackData(data);
+    filterAndSetStackData();
 }
 
 export const updateXLims = (begin, end) => {
