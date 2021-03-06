@@ -20,8 +20,18 @@ const QueryTypeSelector = ({initialFamily, queryType, setQueryType, queryValue, 
         willMount.current = false;
     }
 
+    const switchQueryValue = (queryType) => {
+        switch (queryType) {
+            case "family": setQueryValue(family); break;
+            case "genbank": setQueryValue(genbank); break;
+            case "run": setQueryValue(run); break;
+            default:
+        }
+    }
+
     // update query value
     React.useEffect(() => {
+        // can't use switchQueryValue() here - temp fix
         switch (queryType) {
             case "family": setQueryValue(family); break;
             case "genbank": setQueryValue(genbank); break;
@@ -31,7 +41,9 @@ const QueryTypeSelector = ({initialFamily, queryType, setQueryType, queryValue, 
     }, [family, genbank, run, queryType, setQueryValue]);
 
     const queryTypeChange = (e) => {
-        setQueryType(e.target.value);
+        const newQueryType = e.target.value;
+        setQueryType(newQueryType);
+        switchQueryValue(newQueryType);
     }
 
     return (
