@@ -36,14 +36,15 @@ const QueryBuilder = (props) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
-    const willMount = React.useRef(true);
-    if (willMount.current) {
+    const chartRendered = React.useRef(false);
+    if (!chartRendered.current && queryType !== 'run') {
         fetchMatchCounts(queryType, queryValue).then((data) => {
+            if (!data) return;
             renderChart(data, identityDomain, coverageDomain);
             updateXLims(...props.identityLimsRef.current);
             updateZLims(...props.coverageLimsRef.current);
             updateYLims();
-            willMount.current = false;
+            chartRendered.current = true;
         });
     }
 
@@ -52,7 +53,7 @@ const QueryBuilder = (props) => {
         if (!queryValue || queryType === 'run')
             return;
         fetchMatchCounts(queryType, queryValue).then((data) => {
-            if (willMount.current || !data)
+            if (!chartRendered.current || !data)
                 return;
             updateData(data);
             updateYLims();
