@@ -16,7 +16,6 @@ const filterText = (domain, searchText) => {
 
 const loadOptions = (inputValue, callback) => {
     fetchValues('family').then((data) => {
-        data = data.sort((a, b) => a.localeCompare(b))
         data = filterText(data, inputValue);
         callback(listToLabels(data));
     });
