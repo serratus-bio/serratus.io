@@ -25,14 +25,7 @@ import {
     fetchMatchCounts,
 } from './SerratusApiCalls';
 
-const QueryBuilder = (props) => {
-    const sliderIdentityLimsRef = props.identityLimsRef;
-    const sliderCoverageLimsRef = props.coverageLimsRef;
-    const queryType = props.queryType;
-    const setQueryType = props.setQueryType;
-    const queryValue = props.queryValue;
-    const setQueryValue = props.setQueryValue;
-
+const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType, queryValue, setQueryValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
@@ -41,8 +34,8 @@ const QueryBuilder = (props) => {
         fetchMatchCounts(queryType, queryValue).then((data) => {
             if (!data) return;
             renderChart(data, identityDomain, coverageDomain);
-            updateXLims(...props.identityLimsRef.current);
-            updateZLims(...props.coverageLimsRef.current);
+            updateXLims(...identityLimsRef.current);
+            updateZLims(...coverageLimsRef.current);
             updateYLims();
             chartRendered.current = true;
         });
@@ -61,8 +54,8 @@ const QueryBuilder = (props) => {
     }, [queryType, queryValue]);
 
     // functions to update chart with slider changes
-    const updateX = () => { updateXLims(...sliderIdentityLimsRef.current) }
-    const updateZ = () => { updateZLims(...sliderCoverageLimsRef.current) }
+    const updateX = () => { updateXLims(...identityLimsRef.current) }
+    const updateZ = () => { updateZLims(...coverageLimsRef.current) }
     const updateY = () => { updateYLims(500) }
 
     // reset error message
@@ -78,9 +71,9 @@ const QueryBuilder = (props) => {
         let params = new URLSearchParams();
         params.set(queryType, queryValue);
         if (queryType !== 'run') {
-            var identity = constructRangeStr(...sliderIdentityLimsRef.current);
+            var identity = constructRangeStr(...identityLimsRef.current);
             params.set('identity', identity);
-            var coverage = constructRangeStr(...sliderCoverageLimsRef.current);
+            var coverage = constructRangeStr(...coverageLimsRef.current);
             params.set('coverage', coverage);
         }
         var queryUrl = `explorer?${params.toString()}#${resultSectionId}`;
@@ -105,7 +98,7 @@ const QueryBuilder = (props) => {
                         <div className="pt-6 text-center">{getIdentitySliderLabel(queryType)}</div>
                         <FilterSlider id="sliderIdentity"
                             sliderDomain={identityDomain}
-                            sliderLimsRef={sliderIdentityLimsRef}
+                            sliderLimsRef={identityLimsRef}
                             onChange={updateX}
                             onTouchEnd={updateY} />
                     </div>
@@ -113,7 +106,7 @@ const QueryBuilder = (props) => {
                         <div className="pt-6 text-center">{getCoverageSliderLabel(queryType)}</div>
                         <FilterSlider id="sliderCoverage"
                             sliderDomain={coverageDomain}
-                            sliderLimsRef={sliderCoverageLimsRef}
+                            sliderLimsRef={coverageLimsRef}
                             linearGradientString={viridisCssGradient}
                             onChange={updateZ}
                             onTouchEnd={updateY} />
