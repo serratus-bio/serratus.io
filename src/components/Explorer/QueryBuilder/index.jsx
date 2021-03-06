@@ -35,29 +35,29 @@ const QueryBuilder = (props) => {
 
     // set family to valid value for initial chart render
     const initialFamily = 'Coronaviridae';
-    const [initialIdentityLims] = React.useState(props.identityLimsRef.current);
-    const [initialCoverageLims] = React.useState(props.coverageLimsRef.current);
 
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
-    React.useEffect(() => {
-        fetchMatchCounts(queryType, queryValue).then((data) => {
+    const willMount = React.useRef(true);
+    if (willMount.current) {
+        fetchMatchCounts('family', initialFamily).then((data) => {
             renderChart(data, identityDomain, coverageDomain);
-            updateXLims(...initialIdentityLims);
-            updateZLims(...initialCoverageLims);
+            updateXLims(...props.identityLimsRef.current);
+            updateZLims(...props.coverageLimsRef.current);
             updateYLims();
+            willMount.current = false;
         });
-    }, [initialFamily, initialIdentityLims, initialCoverageLims]);
+    }
 
     // update chart for subsequent family changes
     React.useEffect(() => {
         fetchMatchCounts(queryType, queryValue).then((data) => {
-            if (!data) { return; }
+            if (willMount.current || !data) { return; }
             updateData(data);
             updateYLims();
         });
-    }, [queryValue]);
+    }, [queryType, queryValue]);
 
     // functions to update chart with slider changes
     const updateX = () => { updateXLims(...sliderIdentityLimsRef.current) }
