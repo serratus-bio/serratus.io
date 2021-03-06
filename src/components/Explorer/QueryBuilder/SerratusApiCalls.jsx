@@ -8,3 +8,8 @@ export const fetchMatchCounts = async (type, value) => {
     const response = await axios.get(`${baseUrl}/counts/nucleotide`, {params: params});
     return response.data;
 }
+
+export const fetchValues = async (type) => {
+    const response = await axios.get(`${baseUrl}/list/nucleotide/${type}`);
+    return response.data;
+}
