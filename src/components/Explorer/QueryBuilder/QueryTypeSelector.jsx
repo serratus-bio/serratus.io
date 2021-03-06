@@ -4,8 +4,8 @@ import SelectGenbank from './SelectGenbank';
 import SearchRun from './SearchRun';
 import InputOption from './InputOption';
 
-const QueryTypeSelector = ({initialFamily, queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
-    const [family, setFamily] = React.useState(initialFamily);
+const QueryTypeSelector = ({queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
+    const [family, setFamily] = React.useState();
     const [genbank, setGenbank] = React.useState();
     const [run, setRun] = React.useState();
 

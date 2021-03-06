@@ -33,15 +33,12 @@ const QueryBuilder = (props) => {
     const queryValue = props.queryValue;
     const setQueryValue = props.setQueryValue;
 
-    // set family to valid value for initial chart render
-    const initialFamily = 'Coronaviridae';
-
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
     const willMount = React.useRef(true);
     if (willMount.current) {
-        fetchMatchCounts('family', initialFamily).then((data) => {
+        fetchMatchCounts(queryType, queryValue).then((data) => {
             renderChart(data, identityDomain, coverageDomain);
             updateXLims(...props.identityLimsRef.current);
             updateZLims(...props.coverageLimsRef.current);
@@ -89,13 +86,12 @@ const QueryBuilder = (props) => {
         window.location.href = queryUrl;
     }
 
-    const chartVisibility = (queryType === "family" ? "visible" : "hidden");
+    const chartVisibility = (queryType !== "run" ? "visible" : "hidden");
     const slidersVisibility = (queryType !== "run" ? "visible" : "hidden");
 
     return (
         <div className="flex-grow">
             <QueryTypeSelector
-                initialFamily={initialFamily}
                 queryType={queryType}
                 setQueryType={setQueryType}
                 queryValue={queryValue}
