@@ -54,9 +54,9 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
     }, [queryType, queryValue]);
 
     // functions to update chart with slider changes
-    const updateX = () => { updateXLims(...identityLimsRef.current) }
-    const updateZ = () => { updateZLims(...coverageLimsRef.current) }
-    const updateY = () => { updateYLims(500) }
+    const updateX = () => { chartRendered.current && updateXLims(...identityLimsRef.current) }
+    const updateZ = () => { chartRendered.current && updateZLims(...coverageLimsRef.current) }
+    const updateY = () => { chartRendered.current && updateYLims(500) }
 
     // reset error message
     React.useEffect(() => {
