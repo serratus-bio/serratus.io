@@ -4,46 +4,32 @@ import SelectGenbank from './SelectGenbank';
 import SearchRun from './SearchRun';
 import InputOption from './InputOption';
 
+
+const defaultValues = {
+    'family': 'Coronaviridae',
+    'genbank': 'NC_034446.1',
+}
+
 const QueryTypeSelector = ({queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
-    const [family, setFamily] = React.useState();
-    const [genbank, setGenbank] = React.useState();
-    const [run, setRun] = React.useState();
+    const [values, setValues] = React.useState(defaultValues);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
-        switch (queryType) {
-            case "family": setFamily(queryValue); break;
-            case "genbank": setGenbank(queryValue); break;
-            case "run": setRun(queryValue); break;
-            default:
-        }
+        let newValues = values;
+        newValues[queryType] = queryValue;
+        setValues(newValues);
         willMount.current = false;
-    }
-
-    const switchQueryValue = (queryType) => {
-        switch (queryType) {
-            case "family": setQueryValue(family); break;
-            case "genbank": setQueryValue(genbank); break;
-            case "run": setQueryValue(run); break;
-            default:
-        }
     }
 
     // update query value
     React.useEffect(() => {
-        // can't use switchQueryValue() here - temp fix
-        switch (queryType) {
-            case "family": setQueryValue(family); break;
-            case "genbank": setQueryValue(genbank); break;
-            case "run": setQueryValue(run); break;
-            default:
-        }
-    }, [family, genbank, run, queryType, setQueryValue]);
+        setQueryValue(values[queryType]);
+    }, [values, queryType, setQueryValue]);
 
     const queryTypeChange = (e) => {
         const newQueryType = e.target.value;
         setQueryType(newQueryType);
-        switchQueryValue(newQueryType);
+        setQueryValue(values[newQueryType]);
     }
 
     return (
@@ -56,18 +42,18 @@ const QueryTypeSelector = ({queryType, setQueryType, queryValue, setQueryValue, 
             <div label="inputs">
                 <div className={queryType === "family" ? "visible" : "hidden"}>
                     <SelectFamily
-                        family={family}
-                        setFamily={setFamily} />
+                        family={values['family']}
+                        setFamily={newValue => {setValues(oldValues => ({...oldValues, family: newValue}))}} />
                 </div>
                 <div className={queryType === "genbank" ? "visible" : "hidden"}>
                     <SelectGenbank
-                        genbank={genbank}
-                        setGenbank={setGenbank} />
+                        genbank={values['genbank']}
+                        setGenbank={newValue => {setValues(oldValues => ({...oldValues, genbank: newValue}))}} />
                 </div>
                 <div className={queryType === "run" ? "visible" : "hidden"}>
                     <SearchRun
-                        run={run}
-                        setRun={setRun}
+                        run={values['run']}
+                        setRun={newValue => {setValues(oldValues => ({...oldValues, run: newValue}))}}
                         onEnter={goToQuery} />
                 </div>
             </div>
