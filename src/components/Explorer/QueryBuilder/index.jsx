@@ -20,8 +20,10 @@ import {
     ExternalLink,
     helpIcon
 } from '../../../CommonHelpers';
-import allFamilyData from '../data/SerratusIO_scoreID.json';
 import QueryTypeSelector from './QueryTypeSelector';
+import {
+    fetchMatchCounts,
+} from './SerratusApiCalls';
 
 const QueryBuilder = (props) => {
     const sliderIdentityLimsRef = props.identityLimsRef;
@@ -40,19 +42,21 @@ const QueryBuilder = (props) => {
 
     // initial chart render
     React.useEffect(() => {
-        var data = allFamilyData[initialFamily];
-        renderChart(data, identityDomain, coverageDomain);
-        updateXLims(...initialIdentityLims);
-        updateZLims(...initialCoverageLims);
-        updateYLims();
+        fetchMatchCounts(queryType, queryValue).then((data) => {
+            renderChart(data, identityDomain, coverageDomain);
+            updateXLims(...initialIdentityLims);
+            updateZLims(...initialCoverageLims);
+            updateYLims();
+        });
     }, [initialFamily, initialIdentityLims, initialCoverageLims]);
 
     // update chart for subsequent family changes
     React.useEffect(() => {
-        var data = allFamilyData[queryValue];
-        if (!data) { return; }
-        updateData(data);
-        updateYLims();
+        fetchMatchCounts(queryType, queryValue).then((data) => {
+            if (!data) { return; }
+            updateData(data);
+            updateYLims();
+        });
     }, [queryValue]);
 
     // functions to update chart with slider changes

@@ -13,8 +13,8 @@ export default ExploreChart;
 // D3 CODE BELOW
 
 // data-specific
-const xColumn = "pctid";
-const yColumn = "n";
+const xColumn = "percent_identity";
+const yColumn = "count";
 const zColumn = "score";
 const xLabel = "% Identity";
 const yLabel = "Matches";
