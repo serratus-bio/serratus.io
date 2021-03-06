@@ -14,10 +14,11 @@ const filterText = (domain, searchText) => {
     ).slice(0, maxDropdownSize);
 };
 
-const loadOptions = (inputValue, callback) => {
-    fetchValues('family').then((data) => {
+const allValuesPromise = fetchValues('family');
+const loadOptions = (inputValue) => {
+    return allValuesPromise.then((data) => {
         data = filterText(data, inputValue);
-        callback(listToLabels(data));
+        return listToLabels(data);
     });
 }
 
