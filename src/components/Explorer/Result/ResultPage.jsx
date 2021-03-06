@@ -9,7 +9,7 @@ import RunChart, {
 
 const resultItemsKey = "result";
 
-export default (props) => {
+const ResultPage = (props) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -82,3 +82,5 @@ export default (props) => {
     }
     return <GenericChart />
 }
+
+export default ResultPage;

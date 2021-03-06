@@ -24,9 +24,11 @@ const chartId = "familyChart"
 
 const sraKey = "sra_id"
 
-export default () => {
+const GenericChart = () => {
     return <div id={chartId} />
 }
+
+export default GenericChart;
 
 export const renderChart = (results, columns) => {
     var chartSvg = d3.select(`#${chartId}`)

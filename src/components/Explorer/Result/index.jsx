@@ -8,7 +8,7 @@ import {
     DownloadButton,
 } from './ResultHelpers';
 
-export default (props) => {
+const Result = (props) => {
     const queryType = props.queryType;
     const queryValue = props.queryValue;
     const identityLims = props.identityLims;
@@ -82,3 +82,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default Result;

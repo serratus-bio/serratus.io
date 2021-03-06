@@ -6,7 +6,7 @@ import {
 
 // assumes 3 instances
 
-export default (props) => {
+const AboutCard = (props) => {
     return (
         <div className={`m-4 sm:py-10 lg:w-1/3 ${classesBoxBorder}`}>
             <img className="h-24 w-24 mt-4 m-auto" src={props.imgTop} alt={props.imgTopAlt} />
@@ -23,3 +23,5 @@ export default (props) => {
         </div>
     )
 }
+
+export default AboutCard;

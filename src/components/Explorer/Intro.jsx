@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default () => {
+const Intro = () => {
     return (
         <div className="text-center">
             Explore Serratus SRA run matches for a family name or GenBank accession.<br />
@@ -16,3 +16,5 @@ export default () => {
         </div>
     )
 }
+
+export default Intro;

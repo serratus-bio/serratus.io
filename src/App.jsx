@@ -12,7 +12,7 @@ import Jbrowse from './pages/Jbrowse';
 import Access from './pages/Access';
 import Footer from './components/Footer';
 
-export default () => {
+const App = () => {
   React.useEffect(() => {
     // track initial page load
     ReactGA.pageview(window.location.pathname + window.location.search);
@@ -43,3 +43,5 @@ export default () => {
     </div>
   );
 }
+
+export default App;

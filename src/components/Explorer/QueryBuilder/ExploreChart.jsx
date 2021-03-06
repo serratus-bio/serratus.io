@@ -3,16 +3,18 @@ import * as d3 from 'd3';
 
 const chartId = "chart"
 
-export default () => {
+const ExploreChart = () => {
     return <div id={chartId} />
 }
+
+export default ExploreChart;
 
 
 // D3 CODE BELOW
 
 // data-specific
-const xColumn = "pctid";
-const yColumn = "n";
+const xColumn = "percent_identity";
+const yColumn = "count";
 const zColumn = "score";
 const xLabel = "% Identity";
 const yLabel = "Matches";
@@ -36,7 +38,6 @@ var dataByZStackFiltered;
 var chartZRects;
 
 export const renderChart = (data, xDomain, zDomain) => {
-    familyData = data;
     setXLims(xDomain);
     zLims = zDomain;
     zDomainValues = getAllValues(...zDomain);
@@ -91,7 +92,7 @@ export const renderChart = (data, xDomain, zDomain) => {
         .attr("opacity", 1)
         .text(yLabel);
 
-    filterAndSetStackData();
+    updateData(data);
 
     var rectsG = chartG.append("g").attr("label", "stack-rects");
 
@@ -116,7 +117,7 @@ export const renderChart = (data, xDomain, zDomain) => {
 
 export const updateData = (data) => {
     familyData = data;
-    filterAndSetStackData(data);
+    filterAndSetStackData();
 }
 
 export const updateXLims = (begin, end) => {

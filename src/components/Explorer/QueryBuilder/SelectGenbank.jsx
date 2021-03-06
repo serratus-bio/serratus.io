@@ -12,7 +12,7 @@ const genbankSelectDomain = Object.keys(genbankEntries).map((genbank) => {
     return { label: getLabel(genbank), value: genbank };
 });
 
-export default (props) => {
+const SelectGenbank = (props) => {
     const genbank = props.genbank;
     const setGenbank = props.setGenbank;
     const maxDropdownSize = 200;
@@ -54,3 +54,5 @@ export default (props) => {
             placeholder={`Type to search (first ${maxDropdownSize} options displayed)`} />
     )
 }
+
+export default SelectGenbank;

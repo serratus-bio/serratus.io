@@ -8,7 +8,7 @@ import {
 
 import teamData from '../data/teamData.json';
 
-export default () => {
+const Team = () => {
 
     const headTags = (
         <Helmet>
@@ -68,3 +68,5 @@ export default () => {
         </div>
     )
 }
+
+export default Team;

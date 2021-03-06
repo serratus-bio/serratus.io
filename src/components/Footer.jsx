@@ -1,7 +1,7 @@
 import React from 'react';
 import { ExternalLink } from '../CommonHelpers';
 
-export default () => {
+const Footer = () => {
     return(
         <footer className="bg-gray-100 px-4 py-2 border-t-2 border-gray-300 md:text-center">
             This website is still under <ExternalLink href="https://github.com/serratus-bio/serratus.io" className="text-blue-600">active development</ExternalLink>.
@@ -10,3 +10,5 @@ export default () => {
         </footer>
     )
 }
+
+export default Footer;

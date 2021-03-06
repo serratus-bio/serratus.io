@@ -23,9 +23,11 @@ import {
 
 const chartId = "runChart"
 
-export default () => {
+const RunChart = () => {
     return <div id={chartId} />
 }
+
+export default RunChart;
 
 const familySectionKey = "families"
 const genbankSectionKey = "sequences"

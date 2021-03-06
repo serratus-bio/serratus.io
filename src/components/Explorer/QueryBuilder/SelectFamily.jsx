@@ -1,9 +1,28 @@
 import React from 'react';
-import Select from 'react-select';
-import allFamilyData from '../data/SerratusIO_scoreID.json';
-const selectOptions = Object.keys(allFamilyData).map((family) => { return { label: family, value: family } });
+import AsyncSelect from 'react-select/async';
+import { fetchValues } from './SerratusApiCalls';
 
-export default (props) => {
+const maxDropdownSize = 200;
+
+const listToLabels = (list) => {
+    return list.map((value) => { return { label: value, value: value } });
+}
+
+const filterText = (domain, searchText) => {
+    return domain.filter(i =>
+        i.toLowerCase().includes(searchText.toLowerCase())
+    ).slice(0, maxDropdownSize);
+};
+
+const allValuesPromise = fetchValues('family');
+const loadOptions = (inputValue) => {
+    return allValuesPromise.then((data) => {
+        data = filterText(data, inputValue);
+        return listToLabels(data);
+    });
+}
+
+const SelectFamily = (props) => {
     const family = props.family;
     const setFamily = props.setFamily;
     const [selectValue, setSelectValue] = React.useState();
@@ -19,11 +38,20 @@ export default (props) => {
         }
     }
 
+    const onMenuOpen = () => {
+        setSelectValue(null);
+    }
+
     return (
-        <Select
-            options={selectOptions}
+        <AsyncSelect
+            cacheOptions
+            defaultOptions
             value={selectValue}
+            loadOptions={loadOptions}
             onChange={selectOnChange}
-            onMenuOpen={() => setSelectValue({})} />
+            onMenuOpen={onMenuOpen}
+            placeholder={`Type to search`} />
     )
 }
+
+export default SelectFamily;
