@@ -52,8 +52,11 @@ const QueryBuilder = (props) => {
 
     // update chart for subsequent family changes
     React.useEffect(() => {
+        if (!queryValue || queryType === 'run')
+            return;
         fetchMatchCounts(queryType, queryValue).then((data) => {
-            if (willMount.current || !data) { return; }
+            if (willMount.current || !data)
+                return;
             updateData(data);
             updateYLims();
         });
