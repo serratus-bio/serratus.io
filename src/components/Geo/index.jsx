@@ -1,7 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
 import GeoReactPlotly from './GeoReactPlotly';
-// import GeoPlotlyJs, { renderChart } from './GeoPlotlyJs';
 
 const Geo = () => {
     const headTags = (
@@ -10,13 +9,10 @@ const Geo = () => {
         </Helmet>
     )
 
-    // React.useEffect(() => {
-    //     renderChart();
-    // })
-
-    return (
+    return <>
+        {headTags}
         <GeoReactPlotly />
-    )
+    </>
 }
 
 export default Geo;
