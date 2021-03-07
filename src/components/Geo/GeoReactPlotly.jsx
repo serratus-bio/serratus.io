@@ -32,6 +32,7 @@ const GeoReactPlotly = () => {
                     type: "densitymapbox",
                     coloraxis: 'coloraxis',
                 }];
+                console.log(`number of rows: ${newData[0].lon.length}`);
                 setData(newData);
             })
     }, []);
