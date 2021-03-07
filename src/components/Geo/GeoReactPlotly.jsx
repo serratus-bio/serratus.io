@@ -1,6 +1,6 @@
 import React from "react";
 import Plot from 'react-plotly.js';
-import Plotly from 'plotly.js';
+import Plotly from "plotly.js-basic-dist";
 import dataTsv from './rdrp_pos.tsv';
 
 const GeoReactPlotly = () => {
