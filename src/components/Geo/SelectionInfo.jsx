@@ -2,22 +2,19 @@ import React from "react";
 import { ExternalLink, externalLinkIcon } from '../../CommonHelpers'
 
 const SelectionInfo = ({ selectedPoints }) => {
-    const originalPoints = selectedPoints;
-    if (!selectedPoints || selectedPoints.length === 0) {
-        return null;
-    }
+    const noSelection = selectedPoints === undefined;
+    const nPoints = selectedPoints ? selectedPoints.length : 0;
+    let nPointsDisplayed = nPoints;
 
     const maxRows = 50;
-    let truncated = false;
-    if (selectedPoints.length > maxRows) {
+    if (nPoints > maxRows) {
         selectedPoints = selectedPoints.slice(0, maxRows);
-        truncated = true;
+        nPointsDisplayed = maxRows;
     }
 
     const tdClasses = "border border-light-blue-500 px-4 py-2 text-light-blue-600 font-medium"
 
-    return <div className="mx-8 my-4">
-        {truncated && <span>{maxRows}/{originalPoints.length} results displayed.</span>}
+    const resultsTable = <>
         <table className="table-auto my-4">
             <tbody>
                 <tr>
@@ -26,7 +23,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <th>Release Date</th>
                     <th>Geocoded Text</th>
                 </tr>
-                {selectedPoints.map((point) =>
+                {selectedPoints && selectedPoints.map((point) =>
                     <tr key={point.sra_id}>
                         <td className={tdClasses}><a href={`explorer?run=${point.sra_id}`} className="text-blue-600">{point.sra_id}</a></td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
@@ -36,6 +33,14 @@ const SelectionInfo = ({ selectedPoints }) => {
                 )}
             </tbody>
         </table>
+    </>
+
+    return <div className="mx-8 my-4">
+        {noSelection
+            ? <span>Use <b>Box/Lasso Select</b> to display details.</span>
+            : <span>{nPointsDisplayed}/{nPoints} results displayed.</span>
+        }
+        {nPoints !== 0 && resultsTable}
     </div>
 }
 
