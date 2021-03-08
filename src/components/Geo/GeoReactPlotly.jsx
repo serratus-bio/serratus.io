@@ -17,6 +17,8 @@ const GeoReactPlotly = () => {
     React.useEffect(() => {
         Plotly.d3.tsv(dataTsv,
             function (err, rows) {
+                console.log(`dataTsv: ${dataTsv}`);
+                console.log(`err: ${err}`);
                 function unpack(rows, key) {
                     return rows.map(function (row) {
                         return row[key];
