@@ -1,7 +1,7 @@
 import React from "react";
 import Plot from 'react-plotly.js';
 import Plotly from "plotly.js-basic-dist";
-import dataTsv from './rdrp_pos.tsv';
+import dataTsv from './rdrp_pos_jitter.tsv';
 
 const layout = {
     mapbox: { style: "open-street-map", zoom: 1 },
@@ -32,8 +32,8 @@ const GeoReactPlotly = ({ setSelectedPoints }) => {
                 };
 
                 const newData = [{
-                    lon: unpack(rows, 'coordinate_x'),
-                    lat: unpack(rows, 'coordinate_y'),
+                    lon: unpack(rows, 'coord_jx'),
+                    lat: unpack(rows, 'coord_jy'),
                     customdata: rows,
                     text: getHoverText(rows),
                     marker: { color: "Maroon", size: 4 },
