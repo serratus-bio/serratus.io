@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet';
-import GeoReactPlotly from './GeoReactPlotly';
+import MapPlot from './MapPlot';
 import SelectionInfo from './SelectionInfo';
 
 const Geo = () => {
@@ -14,7 +14,7 @@ const Geo = () => {
 
     return <>
         {headTags}
-        <GeoReactPlotly setSelectedPoints={setSelectedPoints} />
+        <MapPlot setSelectedPoints={setSelectedPoints} />
         <SelectionInfo selectedPoints={selectedPoints} />
     </>
 }

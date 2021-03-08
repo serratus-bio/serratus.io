@@ -10,7 +10,7 @@ const layout = {
     autosize: true,
 };
 
-const GeoReactPlotly = ({ setSelectedPoints }) => {
+const MapPlot = ({ setSelectedPoints }) => {
     const [figureState, setFigureState] = React.useState({ data: [], layout: layout });
 
     React.useEffect(() => {
@@ -71,4 +71,4 @@ const GeoReactPlotly = ({ setSelectedPoints }) => {
     </>
 }
 
-export default GeoReactPlotly;
+export default MapPlot;
