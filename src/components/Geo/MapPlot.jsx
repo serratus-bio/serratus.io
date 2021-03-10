@@ -5,8 +5,7 @@ import dataTsv from './rdrp_pos_jitter.tsv';
 
 const layout = {
     mapbox: { style: "open-street-map", zoom: 1 },
-    title: { text: "Locations of RdRP+ BioSamples with geospatial info" },
-    margin: { t: 40, b: 0 },
+    margin: { t: 0, b: 0, l: 0, r: 0 },
     autosize: true,
 };
 

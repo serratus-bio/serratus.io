@@ -36,10 +36,7 @@ const SelectionInfo = ({ selectedPoints }) => {
     </>
 
     return <div className="mx-8 my-4">
-        {noSelection
-            ? <span>Use <b>Box/Lasso Select</b> to display details.</span>
-            : <span>{nPointsDisplayed}/{nPoints} results displayed.</span>
-        }
+        {!noSelection && <span>{nPointsDisplayed}/{nPoints} results displayed.</span>}
         {nPoints !== 0 && resultsTable}
     </div>
 }
