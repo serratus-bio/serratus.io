@@ -21,7 +21,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <th>SRA Run</th>
                     <th>BioSample</th>
                     <th>Release Date</th>
-                    <th>Geocoded Text</th>
+                    <th>Inferred Location</th>
                 </tr>
                 {selectedPoints && selectedPoints.map((point) =>
                     <tr key={point.sra_id}>
