@@ -25,7 +25,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                 </tr>
                 {selectedPoints && selectedPoints.map((point) =>
                     <tr key={point.sra_id}>
-                        <td className={tdClasses}><a href={`explorer?run=${point.sra_id}`} className="text-blue-600">{point.sra_id}</a></td>
+                        <td className={tdClasses}>{point.sra_id}</td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}>{point.release_date}</td>
                         <td className={tdClasses}>{point.from_text}</td>
