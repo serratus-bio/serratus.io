@@ -21,6 +21,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <th>SRA Run</th>
                     <th>BioSample</th>
                     <th>Release Date</th>
+                    <th>Lat, Lon</th>
                     <th>Inferred Location</th>
                 </tr>
                 {selectedPoints && selectedPoints.map((point) =>
@@ -28,6 +29,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                         <td className={tdClasses}>{point.run_id}</td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}>{point.release_date}</td>
+                        <td className={tdClasses}>{point.coordinate_y}, {point.coordinate_x}</td>
                         <td className={tdClasses}>{point.from_text}</td>
                     </tr>
                 )}
