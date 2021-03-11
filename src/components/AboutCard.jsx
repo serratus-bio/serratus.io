@@ -2,7 +2,7 @@ import React from 'react'
 import {
     classesBoxBorder,
     ExternalLink
-} from '../CommonHelpers';
+} from '../common/Helpers';
 
 // assumes 3 instances
 

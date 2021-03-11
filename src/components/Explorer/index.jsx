@@ -4,7 +4,7 @@ import QueryBuilder from './QueryBuilder';
 import Intro from './Intro';
 import Result from './Result';
 import DataReference from './DataReference';
-import { classesBoxBorder } from '../../CommonHelpers';
+import { classesBoxBorder } from '../../common/Helpers';
 import {
     identityDomain,
     coverageDomain,

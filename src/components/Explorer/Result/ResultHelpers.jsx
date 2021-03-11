@@ -5,7 +5,7 @@ import {
     externalLinkIcon,
     downloadIcon,
     helpIcon,
-} from '../../../CommonHelpers';
+} from '../../../common/Helpers';
 import {
     tryGetGenBankTitle,
     tryGetSraStudyName,

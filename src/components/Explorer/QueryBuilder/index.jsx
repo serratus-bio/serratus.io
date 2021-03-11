@@ -19,7 +19,7 @@ import {
 import {
     ExternalLink,
     helpIcon
-} from '../../../CommonHelpers';
+} from '../../../common/Helpers';
 import QueryTypeSelector from './QueryTypeSelector';
 import {
     fetchMatchCounts,

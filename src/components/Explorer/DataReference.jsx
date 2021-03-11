@@ -1,5 +1,5 @@
 import React from 'react'
-import { ExternalLink } from '../../CommonHelpers';
+import { ExternalLink } from '../../common/Helpers';
 
 const DataReference = () => {
     return (

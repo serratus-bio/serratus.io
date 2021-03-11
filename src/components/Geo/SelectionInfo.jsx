@@ -1,5 +1,5 @@
 import React from "react";
-import { ExternalLink, externalLinkIcon } from '../../CommonHelpers'
+import { ExternalLink, externalLinkIcon } from '../../common/Helpers'
 
 const SelectionInfo = ({ selectedPoints }) => {
     const noSelection = selectedPoints === undefined;
