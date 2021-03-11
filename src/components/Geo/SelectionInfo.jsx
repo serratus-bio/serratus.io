@@ -4,13 +4,8 @@ import { ExternalLink, externalLinkIcon } from '../../CommonHelpers'
 const SelectionInfo = ({ selectedPoints }) => {
     const noSelection = selectedPoints === undefined;
     const nPoints = selectedPoints ? selectedPoints.length : 0;
-    let nPointsDisplayed = nPoints;
-
     const maxRows = 50;
-    if (nPoints > maxRows) {
-        selectedPoints = selectedPoints.slice(0, maxRows);
-        nPointsDisplayed = maxRows;
-    }
+    const displayPoints = (nPoints > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints;
 
     const tdClasses = "border border-light-blue-500 px-4 py-2 text-light-blue-600 font-medium"
 
@@ -24,8 +19,8 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <th>Lat, Lon</th>
                     <th>Inferred Location</th>
                 </tr>
-                {selectedPoints && selectedPoints.map((point) =>
-                    <tr key={point.sra_id}>
+                {displayPoints && displayPoints.map((point) =>
+                    <tr key={point.run_id}>
                         <td className={tdClasses}>{point.run_id}</td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}>{point.release_date}</td>
@@ -37,9 +32,15 @@ const SelectionInfo = ({ selectedPoints }) => {
         </table>
     </>
 
+    const runIds = selectedPoints && selectedPoints.map((point) => {
+        return point.run_id;
+    });
+    const downloadData = runIds && runIds.join('\n');
+
     return <div className="mx-8 my-4">
-        {!noSelection && <span>{nPointsDisplayed}/{nPoints} results displayed.</span>}
+        {!noSelection && <span>{displayPoints.length}/{nPoints} results displayed.</span>}
         {nPoints !== 0 && resultsTable}
+        <a download href={`data:text/plain;charset=utf-8,${downloadData}`}>Download SRA Runs</a>
     </div>
 }
 
