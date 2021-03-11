@@ -32,7 +32,7 @@ export default RunChart;
 const familySectionKey = "families"
 const genbankSectionKey = "sequences"
 
-const sraIdKey = "sra_id"
+const sraIdKey = "run_id"
 const familyNameKey = "family_name"
 const maxGenbanks = 10;
 const genbankSortKey = "n_reads"

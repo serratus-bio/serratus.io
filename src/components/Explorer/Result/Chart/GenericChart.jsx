@@ -22,7 +22,7 @@ import {
 
 const chartId = "familyChart"
 
-const sraKey = "sra_id"
+const sraKey = "run_id"
 
 const GenericChart = () => {
     return <div id={chartId} />
