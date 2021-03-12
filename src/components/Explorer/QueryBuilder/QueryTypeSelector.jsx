@@ -1,6 +1,5 @@
 import React from 'react';
-import SelectFamily from './SelectFamily';
-import SelectGenbank from './SelectGenbank';
+import ValueSelector from './Dropdown/ValueSelector';
 import SearchRun from './SearchRun';
 import InputOption from './InputOption';
 
@@ -40,15 +39,11 @@ const QueryTypeSelector = ({queryType, setQueryType, queryValue, setQueryValue, 
                 <InputOption className="mx-2" value="run" displayText="SRA Run" checked={queryType === "run"} onChange={queryTypeChange} />
             </div>
             <div label="inputs">
-                <div className={queryType === "family" ? "visible" : "hidden"}>
-                    <SelectFamily
-                        family={values['family']}
-                        setFamily={newValue => {setValues(oldValues => ({...oldValues, family: newValue}))}} />
-                </div>
-                <div className={queryType === "genbank" ? "visible" : "hidden"}>
-                    <SelectGenbank
-                        genbank={values['genbank']}
-                        setGenbank={newValue => {setValues(oldValues => ({...oldValues, genbank: newValue}))}} />
+                <div className={queryType !== "run" ? "visible" : "hidden"}>
+                    <ValueSelector
+                        queryType={queryType}
+                        queryValue={values[queryType]}
+                        setQueryValue={newValue => {setValues(oldValues => ({...oldValues, [queryType]: newValue}))}} />
                 </div>
                 <div className={queryType === "run" ? "visible" : "hidden"}>
                     <SearchRun
