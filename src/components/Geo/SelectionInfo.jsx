@@ -34,13 +34,14 @@ const SelectionInfo = ({ selectedPoints }) => {
 
     const downloadData = selectedPoints
         .map(point => point.run_id)
-        .join('\n');
+        .join('%0A');
     const downloadButton = <>
         <LinkButton
             link={`data:text/plain;charset=utf-8,${downloadData}`}
             text="Download Matches"
             icon={downloadIcon}
-            download={true} />
+            download="SerratusMatches.txt"
+        />
     </>
 
     return <div className="mx-8 my-4">
