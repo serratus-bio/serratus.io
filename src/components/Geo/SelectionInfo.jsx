@@ -8,7 +8,7 @@ const SelectionInfo = ({ selectedPoints }) => {
     const maxRows = 50;
     const displayPoints = (selectedPoints.length > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints;
 
-    const tdClasses = "border border-light-blue-500 px-4 py-2 text-light-blue-600 font-medium"
+    const tdClasses = "border px-4 py-2"
     const resultsTable = <>
         <table className="table-auto my-4">
             <tbody>
@@ -45,8 +45,8 @@ const SelectionInfo = ({ selectedPoints }) => {
 
     return <div className="mx-8 my-4">
         {displayPoints.length}/{selectedPoints.length} results displayed.
-        {selectedPoints.length !== 0 && resultsTable}
         {selectedPoints.length !== 0 && downloadButton}
+        {selectedPoints.length !== 0 && resultsTable}
     </div>
 }
 
