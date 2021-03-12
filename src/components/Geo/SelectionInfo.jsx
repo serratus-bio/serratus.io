@@ -15,6 +15,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                 <tr>
                     <th>SRA Run</th>
                     <th>BioSample</th>
+                    <th>Host</th>
                     <th>Release Date</th>
                     <th>Lat, Lon</th>
                     <th>Inferred Location</th>
@@ -23,6 +24,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <tr key={point.run_id}>
                         <td className={tdClasses}>{point.run_id}</td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
+                        <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${point.tax_id}`} className="text-blue-600">{point.scientific_name}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}>{point.release_date}</td>
                         <td className={tdClasses}>{point.coordinate_y}, {point.coordinate_x}</td>
                         <td className={tdClasses}>{point.from_text}</td>
