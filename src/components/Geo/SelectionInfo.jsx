@@ -3,13 +3,12 @@ import { ExternalLink, externalLinkIcon, downloadIcon } from '../../common/Helpe
 import LinkButton from "../../common/LinkButton";
 
 const SelectionInfo = ({ selectedPoints }) => {
-    const noSelection = selectedPoints === undefined;
-    const nPoints = selectedPoints ? selectedPoints.length : 0;
+    if (selectedPoints === undefined) return null;
+
     const maxRows = 50;
-    const displayPoints = (nPoints > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints;
+    const displayPoints = (selectedPoints.length > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints;
 
     const tdClasses = "border border-light-blue-500 px-4 py-2 text-light-blue-600 font-medium"
-
     const resultsTable = <>
         <table className="table-auto my-4">
             <tbody>
@@ -20,7 +19,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                     <th>Lat, Lon</th>
                     <th>Inferred Location</th>
                 </tr>
-                {displayPoints && displayPoints.map((point) =>
+                {displayPoints.map(point =>
                     <tr key={point.run_id}>
                         <td className={tdClasses}>{point.run_id}</td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
@@ -33,19 +32,21 @@ const SelectionInfo = ({ selectedPoints }) => {
         </table>
     </>
 
-    const runIds = selectedPoints && selectedPoints.map((point) => {
-        return point.run_id;
-    });
-    const downloadData = runIds && runIds.join('\n');
-
-    return <div className="mx-8 my-4">
-        {!noSelection && <span>{displayPoints.length}/{nPoints} results displayed.</span>}
-        {nPoints !== 0 && resultsTable}
+    const downloadData = selectedPoints
+        .map(point => point.run_id)
+        .join('\n');
+    const downloadButton = <>
         <LinkButton
             link={`data:text/plain;charset=utf-8,${downloadData}`}
             text="Download Matches"
             icon={downloadIcon}
             download={true} />
+    </>
+
+    return <div className="mx-8 my-4">
+        {displayPoints.length}/{selectedPoints.length} results displayed.
+        {selectedPoints.length !== 0 && resultsTable}
+        {selectedPoints.length !== 0 && downloadButton}
     </div>
 }
 
