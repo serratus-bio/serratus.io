@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink } from "../../../CommonHelpers";
+import { ExternalLink } from "../../../common/Helpers";
 import GenericChart, {
     renderChart as renderGenericChart
 } from './Chart/GenericChart';
