@@ -15,7 +15,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                 <tr>
                     <th>SRA Run</th>
                     <th>BioSample</th>
-                    <th>Host</th>
+                    <th>Source</th>
                     <th>Release Date</th>
                     <th>Lat, Lon</th>
                     <th>Inferred Location</th>
