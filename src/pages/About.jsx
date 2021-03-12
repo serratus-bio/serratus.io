@@ -17,7 +17,7 @@ const About = () => {
       <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
         <h1 className="text-3xl font-bold text-center">Background</h1>
         <p className="my-3"> 0.001% of the Earth's viruses are known to science. Emergent viral diseases such as COVID-19 caused by the SARS-CoV-2 virus can have devastating consequences on human society. To prepare for (and mitigate) the next pandemic, there is an urgent need to characterize the planetary diversity of viruses.</p>
-        <p className="my-3">Serratus is an Open Science project to uncover the planetary virome, freely and openly.</p>
+        <p className="my-3"><b>Serratus</b> is an Open Science project to uncover the planetary virome, freely and openly.</p>
       </div>
       <hr className="block sm:hidden" />
       <div className="flex flex-col lg:flex-row">
