@@ -1,5 +1,6 @@
 import React from "react";
-import { ExternalLink, externalLinkIcon } from '../../common/Helpers'
+import { ExternalLink, externalLinkIcon, downloadIcon } from '../../common/Helpers'
+import LinkButton from "../../common/LinkButton";
 
 const SelectionInfo = ({ selectedPoints }) => {
     const noSelection = selectedPoints === undefined;
@@ -40,7 +41,11 @@ const SelectionInfo = ({ selectedPoints }) => {
     return <div className="mx-8 my-4">
         {!noSelection && <span>{displayPoints.length}/{nPoints} results displayed.</span>}
         {nPoints !== 0 && resultsTable}
-        <a download href={`data:text/plain;charset=utf-8,${downloadData}`}>Download SRA Runs</a>
+        <LinkButton
+            link={`data:text/plain;charset=utf-8,${downloadData}`}
+            text="Download Matches"
+            icon={downloadIcon}
+            download={true} />
     </div>
 }
 
