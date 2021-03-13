@@ -23,6 +23,7 @@ const Geo = () => {
             <dfn data-info="Use the <b>Box Select</b> or <b>Lasso Select</b> icons in the top-right to retrieve a detailed sample list below the map.">(select data)</dfn>
 
             <dfn data-info="Currently in Beta Version. Feedback is welcome.">(beta)</dfn>
+        </p>
 
         <div className="my-2">
             <MapPlot setSelectedPoints={setSelectedPoints} />
