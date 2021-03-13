@@ -57,7 +57,7 @@ async function getData() {
     function getHoverText(rows) {
         return rows.map(row => {
             var text = `${row['run_id']}
-                <br>Source: ${row['scientific_name']}`;
+                <br>Organism: ${row['scientific_name']}`;
             if (row['from_text']) {
                 text += `<br>Inferred location: "${row['from_text']}"`;
             }
