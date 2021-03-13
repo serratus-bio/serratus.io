@@ -22,7 +22,7 @@ const Team = () => {
             <div className={`p-2 ${classesBoxBorder}`}>
                 <div className="text-left md:text-center">
                     <div>Serratus is an Open-Science project. Our aim is to create a 100% reproducible study with 100% transparent and freely available data.</div>
-                    <ExternalLink href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600">We welcome all scientists and developers to contribute.</ExternalLink>
+                    <ExternalLink href="https://github.com/ababaian/serratus/blob/master/CONTRIBUTING.md" className="text-blue-600">Join the <b>Serratus</b> Collaboration</ExternalLink>
                 </div>
             </div>
             <div className="sm:h-3"></div>
