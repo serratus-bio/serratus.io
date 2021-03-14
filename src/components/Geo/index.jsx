@@ -27,7 +27,7 @@ const Geo = () => {
 
         <div className="text-center">Beta Version. Feedback is welcome.</div>
 
-        <div class="text-left text-gray-500">Use the `Box Select` or `Lasso Select` icons in the top-right to retrieve a list of sample details below the map.</p>
+        <div class="text-left text-gray-500">Use the `Box Select` or `Lasso Select` icons in the top-right to retrieve a list of sample details below the map.</div>
 
         <SelectionInfo selectedPoints={selectedPoints} />
     </div>
