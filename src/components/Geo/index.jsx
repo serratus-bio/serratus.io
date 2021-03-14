@@ -2,7 +2,10 @@ import React from 'react'
 import { Helmet } from 'react-helmet';
 import MapPlot from './MapPlot';
 import SelectionInfo from './SelectionInfo';
-
+import {
+    ExternalLink,
+    helpIcon
+} from '../../common/Helpers';
 const Geo = () => {
     const [selectedPoints, setSelectedPoints] = React.useState();
 
