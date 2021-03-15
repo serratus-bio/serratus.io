@@ -29,9 +29,10 @@ const QueryTypeSelector = ({defaultValues, queryType, setQueryType, queryValue, 
     return (
         <div>
             <div className="flex flex-row justify-center">
-                <InputOption className="mx-2" value="family" displayText="Family" checked={queryType === "family"} onChange={queryTypeChange} />
-                <InputOption className="mx-2" value="genbank" displayText="GenBank" checked={queryType === "genbank"} onChange={queryTypeChange} />
-                <InputOption className="mx-2" value="run" displayText="SRA Run" checked={queryType === "run"} onChange={queryTypeChange} />
+                {Object.keys(defaultValues).map(type =>
+                    <InputOption className="mx-2" value={type} displayText={displayName[type]} checked={queryType === type} onChange={queryTypeChange} />
+                )}
+                <InputOption className="mx-2" value="run" displayText={displayName["run"]} checked={queryType === "run"} onChange={queryTypeChange} />
             </div>
             <div label="inputs">
                 <div className={queryType !== "run" ? "visible" : "hidden"}>
@@ -52,3 +53,9 @@ const QueryTypeSelector = ({defaultValues, queryType, setQueryType, queryValue, 
 }
 
 export default QueryTypeSelector;
+
+const displayName = {
+    'family': 'Family',
+    'genbank': 'GenBank',
+    'run': 'SRA Run',
+}
