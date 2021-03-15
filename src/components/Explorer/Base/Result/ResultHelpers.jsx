@@ -1,11 +1,11 @@
 import React from "react";
-import LinkButton from '../../../common/LinkButton';
+import LinkButton from '../../../../common/LinkButton';
 import {
     ExternalLink,
     externalLinkIcon,
     downloadIcon,
     helpIcon,
-} from '../../../common/Helpers';
+} from '../../../../common/Helpers';
 import {
     tryGetGenBankTitle,
     tryGetSraStudyName,

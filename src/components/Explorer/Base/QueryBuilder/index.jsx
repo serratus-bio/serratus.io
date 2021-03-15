@@ -19,7 +19,7 @@ import {
 import {
     ExternalLink,
     helpIcon
-} from '../../../common/Helpers';
+} from '../../../../common/Helpers';
 import SearchLevelSelector from './SearchLevelSelector';
 import {
     fetchMatchCounts,

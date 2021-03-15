@@ -5,7 +5,7 @@ import ReactGA from 'react-ga';
 import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
-import Explorer from './components/Explorer';
+import NucleotideExplorer from './components/Explorer/Nucleotide';
 import About from './pages/About';
 import Team from './pages/Team';
 import Jbrowse from './pages/Jbrowse';
@@ -31,7 +31,7 @@ const App = () => {
       <Navbar></Navbar>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/explorer" component={Explorer} />
+        <Route exact path="/explorer" component={NucleotideExplorer} />
         <Route exact path="/about" component={About} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/jbrowse" component={Jbrowse} />

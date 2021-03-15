@@ -4,7 +4,7 @@ import QueryBuilder from './QueryBuilder';
 import Intro from './Intro';
 import Result from './Result';
 import DataReference from './DataReference';
-import { classesBoxBorder } from '../../common/Helpers';
+import { classesBoxBorder } from '../../../common/Helpers';
 import {
     identityDomain,
     coverageDomain,
@@ -21,7 +21,7 @@ const defaultValues = {
     'run': '',
 }
 
-const Explorer = ({
+const ExplorerBase = ({
         searchType = 'nucleotide',
         defaultSearchLevelValues = defaultValues,
         location}) => {
@@ -110,4 +110,4 @@ const Explorer = ({
     )
 }
 
-export default Explorer;
+export default ExplorerBase;
