@@ -66,7 +66,9 @@ const SearchLevelOption = (props) => {
 }
 
 const displayName = {
+    'phylum': 'Phylum',
     'family': 'Family',
     'genbank': 'GenBank',
+    'sequence': 'GenBank',
     'run': 'SRA Run',
 }

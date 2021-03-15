@@ -6,6 +6,7 @@ import { useTransition } from 'react-spring'
 import './styles/main.css';
 import Home from './pages/Home';
 import NucleotideExplorer from './components/Explorer/Nucleotide';
+import RdrpExplorer from './components/Explorer/Rdrp';
 import About from './pages/About';
 import Team from './pages/Team';
 import Jbrowse from './pages/Jbrowse';
@@ -32,6 +33,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/explorer" component={NucleotideExplorer} />
+        <Route exact path="/explorer/rdrp" component={RdrpExplorer} />
         <Route exact path="/about" component={About} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/jbrowse" component={Jbrowse} />
