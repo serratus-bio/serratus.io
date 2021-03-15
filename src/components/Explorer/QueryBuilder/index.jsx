@@ -25,6 +25,12 @@ import {
     fetchMatchCounts,
 } from './SerratusApiCalls';
 
+
+const defaultValues = {
+    'family': 'Coronaviridae',
+    'genbank': 'NC_034446.1',
+}
+
 const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType, queryValue, setQueryValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
@@ -86,6 +92,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
     return (
         <div className="flex-grow">
             <QueryTypeSelector
+                defaultValues={defaultValues}
                 queryType={queryType}
                 setQueryType={setQueryType}
                 queryValue={queryValue}

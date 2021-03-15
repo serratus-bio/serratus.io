@@ -4,12 +4,7 @@ import SearchRun from './SearchRun';
 import InputOption from './InputOption';
 
 
-const defaultValues = {
-    'family': 'Coronaviridae',
-    'genbank': 'NC_034446.1',
-}
-
-const QueryTypeSelector = ({queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
+const QueryTypeSelector = ({defaultValues, queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
     const [values, setValues] = React.useState(defaultValues);
 
     const willMount = React.useRef(true);
