@@ -26,19 +26,17 @@ import {
 } from './SerratusApiCalls';
 
 
-const defaultValues = {
-    'family': 'Coronaviridae',
-    'genbank': 'NC_034446.1',
-    'run': '',
-}
-
-const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue}) => {
+const QueryBuilder = ({
+        searchType, defaultSearchLevelValues,
+        identityLimsRef, coverageLimsRef,
+        searchLevel, setSearchLevel,
+        searchLevelValue, setSearchLevelValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
     const chartRendered = React.useRef(false);
     if (!chartRendered.current && searchLevel !== 'run') {
-        fetchMatchCounts(searchLevel, searchLevelValue).then((data) => {
+        fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
             if (!data) return;
             renderChart(data, identityDomain, coverageDomain);
             updateXLims(...identityLimsRef.current);
@@ -52,7 +50,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
     React.useEffect(() => {
         if (!searchLevelValue || searchLevel === 'run')
             return;
-        fetchMatchCounts(searchLevel, searchLevelValue).then((data) => {
+        fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
             if (!chartRendered.current || !data)
                 return;
             updateData(data);
@@ -93,7 +91,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
     return (
         <div className="flex-grow">
             <QueryTypeSelector
-                defaultValues={defaultValues}
+                defaultValues={defaultSearchLevelValues}
                 searchLevel={searchLevel}
                 setSearchLevel={setSearchLevel}
                 searchLevelValue={searchLevelValue}

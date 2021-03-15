@@ -15,7 +15,16 @@ import {
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
-const Explorer = (props) => {
+const defaultValues = {
+    'family': 'Coronaviridae',
+    'genbank': 'NC_034446.1',
+    'run': '',
+}
+
+const Explorer = ({
+        searchType = 'nucleotide',
+        defaultSearchLevelValues = defaultValues,
+        location}) => {
     const searchLevelStaticRef = React.useRef();
     const searchLevelValueStaticRef = React.useRef();
     const identityLimsStaticRef = React.useRef();
@@ -25,7 +34,7 @@ const Explorer = (props) => {
     var searchLevelValueFromParam = null;
     var identityLimsFromParam = null;
     var coverageLimsFromParam = null;
-    var urlParams = new URLSearchParams(props.location.search);
+    var urlParams = new URLSearchParams(location.search);
     searchLevels.forEach(searchLevel => {
         var searchLevelValue = urlParams.get(searchLevel);
         // assuming mutually exclusive parameters
@@ -70,8 +79,10 @@ const Explorer = (props) => {
             </Helmet>
             <div className={`flex flex-col px-4 py-2 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <QueryBuilder
+                    searchType={searchType}
                     identityLimsRef={identityLimsRef}
                     coverageLimsRef={coverageLimsRef}
+                    defaultSearchLevelValues={defaultSearchLevelValues}
                     searchLevel={searchLevel}
                     setSearchLevel={setSearchLevel}
                     searchLevelValue={searchLevelValue}
