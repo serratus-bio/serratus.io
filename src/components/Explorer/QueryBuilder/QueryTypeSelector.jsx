@@ -1,7 +1,6 @@
 import React from 'react';
 import ValueSelector from './Dropdown/ValueSelector';
 import SearchRun from './SearchRun';
-import InputOption from './InputOption';
 
 
 const QueryTypeSelector = ({defaultValues, queryType, setQueryType, queryValue, setQueryValue, goToQuery}) => {
@@ -53,6 +52,16 @@ const QueryTypeSelector = ({defaultValues, queryType, setQueryType, queryValue, 
 }
 
 export default QueryTypeSelector;
+
+const InputOption = (props) => {
+    return (
+        <div className={props.className}>
+            <input type="radio" name="querytype" value={props.value} checked={props.checked}
+                onChange={props.onChange} />
+            <span className="ml-1">{props.displayText}</span>
+        </div>
+    )
+}
 
 const displayName = {
     'family': 'Family',

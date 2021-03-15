@@ -1,5 +1,3 @@
-import React from "react";
-
 // definitions
 export const queryTypes = ["family", "genbank", "run"];
 export const identityDomain = [75, 100];
@@ -26,16 +24,6 @@ export const getCoverageSliderLabel = (type) => {
         genbank: "Coverage"
     };
     return typeMap[type];
-}
-
-export const InputOption = (props) => {
-    return (
-        <div className={props.className}>
-            <input type="radio" name="querytype" value={props.value} checked={props.checked}
-                onChange={props.onChange} />
-            <span className="ml-1">{props.displayText}</span>
-        </div>
-    )
 }
 
 // filtering
