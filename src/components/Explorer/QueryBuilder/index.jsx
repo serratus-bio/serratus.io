@@ -91,6 +91,7 @@ const QueryBuilder = ({
     return (
         <div className="flex-grow">
             <SearchLevelSelector
+                searchType={searchType}
                 defaultValues={defaultSearchLevelValues}
                 searchLevel={searchLevel}
                 setSearchLevel={setSearchLevel}

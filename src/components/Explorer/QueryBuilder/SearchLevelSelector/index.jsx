@@ -3,7 +3,11 @@ import Dropdown from './Dropdown';
 import SearchRun from './SearchRun';
 
 
-export default function SearchLevelSelector({defaultValues, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue, viewMatches}) {
+export default function SearchLevelSelector({
+        searchType, defaultValues,
+        searchLevel, setSearchLevel,
+        searchLevelValue, setSearchLevelValue,
+        viewMatches}) {
     const [values, setValues] = React.useState(defaultValues);
 
     const willMount = React.useRef(true);
@@ -35,6 +39,7 @@ export default function SearchLevelSelector({defaultValues, searchLevel, setSear
             <div label="inputs">
                 <div className={searchLevel !== "run" ? "visible" : "hidden"}>
                     <Dropdown
+                        searchType={searchType}
                         searchLevel={searchLevel}
                         searchLevelValue={values[searchLevel]}
                         setSearchLevelValue={newValue => {setValues(oldValues => ({...oldValues, [searchLevel]: newValue}))}} />

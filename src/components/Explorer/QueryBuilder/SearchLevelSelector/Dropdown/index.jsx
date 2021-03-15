@@ -3,7 +3,9 @@ import AsyncSelect from 'react-select/async';
 import { getLoadOptions, getLabel } from './GetValues';
 
 
-export default function ValueSelector({searchLevel, searchLevelValue, setSearchLevelValue}) {
+export default function Dropdown({
+        searchType, searchLevel,
+        searchLevelValue, setSearchLevelValue}) {
     const [selected, setSelected] = React.useState();
 
     React.useEffect(() => {
@@ -30,7 +32,7 @@ export default function ValueSelector({searchLevel, searchLevelValue, setSearchL
             cacheOptions
             defaultOptions
             value={selected}
-            loadOptions={getLoadOptions(searchLevel)}
+            loadOptions={getLoadOptions(searchType, searchLevel)}
             onChange={selectOnChange}
             onMenuOpen={onMenuOpen}
             placeholder={`Type to search`} />
