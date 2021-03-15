@@ -2,18 +2,18 @@ import { fetchValues } from '../SerratusApiCalls';
 import genbankEntries from '../../data/cov3ma.genbank.json';
 
 
-export function getLoadOptions(queryType) {
-    if (queryType === 'family') return getFamilyOptions;
-    if (queryType === 'genbank') return getGenbankOptions;
+export function getLoadOptions(searchLevel) {
+    if (searchLevel === 'family') return getFamilyOptions;
+    if (searchLevel === 'genbank') return getGenbankOptions;
 }
 
-export function getLabel(queryType, queryValue) {
-    if (queryType === 'family') {
-        return queryValue;
+export function getLabel(searchLevel, searchLevelValue) {
+    if (searchLevel === 'family') {
+        return searchLevelValue;
     }
-    if (queryType === 'genbank') {
-        var info = genbankEntries[queryValue];
-        return `[${queryValue}] ${info.title}`;
+    if (searchLevel === 'genbank') {
+        var info = genbankEntries[searchLevelValue];
+        return `[${searchLevelValue}] ${info.title}`;
     }
 }
 

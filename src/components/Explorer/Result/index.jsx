@@ -9,8 +9,8 @@ import {
 } from './ResultHelpers';
 
 const Result = (props) => {
-    const queryType = props.queryType;
-    const queryValue = props.queryValue;
+    const searchLevel = props.searchLevel;
+    const searchLevelValue = props.searchLevelValue;
     const identityLims = props.identityLims;
     const coverageLims = props.coverageLims;
 
@@ -18,40 +18,40 @@ const Result = (props) => {
     const [pageNumber, setPageNumber] = React.useState(1);
     const [dataPromise, setDataPromise] = React.useState();
     const [pageTitle, setPageTitle] = React.useState();
-    const [queryValueCorrected, setQueryValueCorrected] = React.useState(queryValue);
-    const links = getPageLinks(queryType, queryValueCorrected);
+    const [searchLevelValueCorrected, setSearchLevelValueCorrected] = React.useState(searchLevelValue);
+    const links = getPageLinks(searchLevel, searchLevelValueCorrected);
 
     React.useEffect(() => {
-        if (!queryValue) {
+        if (!searchLevelValue) {
             return;
         }
-        console.log(`Loading query result page for ${queryType}=${queryValue}.`);
+        console.log(`Loading query result page for ${searchLevel}=${searchLevelValue}.`);
         // check for AMR accession
-        let valueCorrected = queryValue;
-        if (queryType === "genbank") {
+        let valueCorrected = searchLevelValue;
+        if (searchLevel === "genbank") {
             let patternForAMR = /.*_\d{7}/g;
-            let isFromAMR = queryValue.match(patternForAMR);
+            let isFromAMR = searchLevelValue.match(patternForAMR);
             if (isFromAMR) {
                 valueCorrected = valueCorrected.slice(0, valueCorrected.lastIndexOf("_"));
-                setQueryValueCorrected(valueCorrected);
+                setSearchLevelValueCorrected(valueCorrected);
             }
         }
-        getTitle(queryType, queryValue, valueCorrected).then(setPageTitle);
-    }, [queryType, queryValue]);
+        getTitle(searchLevel, searchLevelValue, valueCorrected).then(setPageTitle);
+    }, [searchLevel, searchLevelValue]);
 
     React.useEffect(() => {
-        if (!queryValue) {
+        if (!searchLevelValue) {
             return;
         }
-        setDataPromise(getDataPromise(queryType, queryValue, pageNumber, perPage, identityLims, coverageLims));
-    }, [queryType, queryValue, pageNumber, identityLims, coverageLims]);
+        setDataPromise(getDataPromise(searchLevel, searchLevelValue, pageNumber, perPage, identityLims, coverageLims));
+    }, [searchLevel, searchLevelValue, pageNumber, identityLims, coverageLims]);
 
     return (
         <div className="max-w-4xl m-auto">
             <div>
                 <div className="w-full text-center">
                     <div>
-                        <div className="text-xl font-bold">{queryValue}</div>
+                        <div className="text-xl font-bold">{searchLevelValue}</div>
                         {pageTitle && <div className="text-lg italic">{pageTitle}</div>}
                     </div>
                 </div>
@@ -60,20 +60,19 @@ const Result = (props) => {
                 </div>
             </div>
             <div className="p-6">
-                {queryType !== 'run' &&
+                {searchLevel !== 'run' &&
                     <Paginator
                         pageNumber={pageNumber}
                         perPage={perPage}
                         setPageNumber={setPageNumber}
                         dataPromise={dataPromise} />}
                 <ResultPage
-                    type={queryType}
-                    value={queryValue}
+                    searchLevel={searchLevel}
                     dataPromise={dataPromise} />
-                {queryType !== 'run' &&
+                {searchLevel !== 'run' &&
                     <DownloadButton
-                        queryType={queryType}
-                        queryValue={queryValue}
+                        searchLevel={searchLevel}
+                        searchLevelValue={searchLevelValue}
                         identityLims={identityLims}
                         coverageLims={coverageLims}
                     />

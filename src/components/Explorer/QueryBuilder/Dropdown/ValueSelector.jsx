@@ -3,20 +3,20 @@ import AsyncSelect from 'react-select/async';
 import { getLoadOptions, getLabel } from './GetValues';
 
 
-export default function ValueSelector({queryType, queryValue, setQueryValue}) {
+export default function ValueSelector({searchLevel, searchLevelValue, setSearchLevelValue}) {
     const [selected, setSelected] = React.useState();
 
     React.useEffect(() => {
         setSelected({
-            label: getLabel(queryType, queryValue),
-            value: queryValue
+            label: getLabel(searchLevel, searchLevelValue),
+            value: searchLevelValue
         })
-    }, [queryType, queryValue])
+    }, [searchLevel, searchLevelValue])
 
     function selectOnChange(newSelection) {
         setSelected(newSelection);
         if (newSelection.length !== 0) {
-            setQueryValue(newSelection.value);
+            setSearchLevelValue(newSelection.value);
         }
     }
 
@@ -26,11 +26,11 @@ export default function ValueSelector({queryType, queryValue, setQueryValue}) {
 
     return (
         <AsyncSelect
-            key={JSON.stringify(queryType)} // https://github.com/JedWatson/react-select/issues/1581#issuecomment-408625770
+            key={JSON.stringify(searchLevel)} // https://github.com/JedWatson/react-select/issues/1581#issuecomment-408625770
             cacheOptions
             defaultOptions
             value={selected}
-            loadOptions={getLoadOptions(queryType)}
+            loadOptions={getLoadOptions(searchLevel)}
             onChange={selectOnChange}
             onMenuOpen={onMenuOpen}
             placeholder={`Type to search`} />

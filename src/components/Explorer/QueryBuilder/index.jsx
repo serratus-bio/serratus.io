@@ -31,13 +31,13 @@ const defaultValues = {
     'genbank': 'NC_034446.1',
 }
 
-const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType, queryValue, setQueryValue}) => {
+const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
     // initial chart render
     const chartRendered = React.useRef(false);
-    if (!chartRendered.current && queryType !== 'run') {
-        fetchMatchCounts(queryType, queryValue).then((data) => {
+    if (!chartRendered.current && searchLevel !== 'run') {
+        fetchMatchCounts(searchLevel, searchLevelValue).then((data) => {
             if (!data) return;
             renderChart(data, identityDomain, coverageDomain);
             updateXLims(...identityLimsRef.current);
@@ -49,15 +49,15 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
 
     // update chart for subsequent family changes
     React.useEffect(() => {
-        if (!queryValue || queryType === 'run')
+        if (!searchLevelValue || searchLevel === 'run')
             return;
-        fetchMatchCounts(queryType, queryValue).then((data) => {
+        fetchMatchCounts(searchLevel, searchLevelValue).then((data) => {
             if (!chartRendered.current || !data)
                 return;
             updateData(data);
             updateYLims();
         });
-    }, [queryType, queryValue]);
+    }, [searchLevel, searchLevelValue]);
 
     // functions to update chart with slider changes
     const updateX = () => { chartRendered.current && updateXLims(...identityLimsRef.current) }
@@ -67,16 +67,16 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
     // reset error message
     React.useEffect(() => {
         setErrorMessage("");
-    }, [queryType]);
+    }, [searchLevel]);
 
     const goToQuery = () => {
-        if (!queryValue) {
+        if (!searchLevelValue) {
             setErrorMessage("Enter a query value.");
             return;
         }
         let params = new URLSearchParams();
-        params.set(queryType, queryValue);
-        if (queryType !== 'run') {
+        params.set(searchLevel, searchLevelValue);
+        if (searchLevel !== 'run') {
             var identity = constructRangeStr(...identityLimsRef.current);
             params.set('identity', identity);
             var coverage = constructRangeStr(...coverageLimsRef.current);
@@ -86,23 +86,23 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
         window.location.href = queryUrl;
     }
 
-    const chartVisibility = (queryType !== "run" ? "visible" : "hidden");
-    const slidersVisibility = (queryType !== "run" ? "visible" : "hidden");
+    const chartVisibility = (searchLevel !== "run" ? "visible" : "hidden");
+    const slidersVisibility = (searchLevel !== "run" ? "visible" : "hidden");
 
     return (
         <div className="flex-grow">
             <QueryTypeSelector
                 defaultValues={defaultValues}
-                queryType={queryType}
-                setQueryType={setQueryType}
-                queryValue={queryValue}
-                setQueryValue={setQueryValue}
+                searchLevel={searchLevel}
+                setSearchLevel={setSearchLevel}
+                searchLevelValue={searchLevelValue}
+                setSearchLevelValue={setSearchLevelValue}
                 goToQuery={goToQuery}
                 />
             <div className="max-w-xl m-auto">
                 <div className={`${slidersVisibility} mb-10`}>
                     <div className="mx-2">
-                        <div className="pt-6 text-center">{getIdentitySliderLabel(queryType)}</div>
+                        <div className="pt-6 text-center">{getIdentitySliderLabel(searchLevel)}</div>
                         <FilterSlider id="sliderIdentity"
                             sliderDomain={identityDomain}
                             sliderLimsRef={identityLimsRef}
@@ -110,7 +110,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, queryType, setQueryType
                             onTouchEnd={updateY} />
                     </div>
                     <div className="mx-2">
-                        <div className="pt-6 text-center">{getCoverageSliderLabel(queryType)}</div>
+                        <div className="pt-6 text-center">{getCoverageSliderLabel(searchLevel)}</div>
                         <FilterSlider id="sliderCoverage"
                             sliderDomain={coverageDomain}
                             sliderLimsRef={coverageLimsRef}

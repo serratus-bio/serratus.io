@@ -1,5 +1,5 @@
 // definitions
-export const queryTypes = ["family", "genbank", "run"];
+export const searchLevels = ["family", "genbank", "run"];
 export const identityDomain = [75, 100];
 export const coverageDomain = [0, 100];
 export const resultSectionId = "result";

@@ -16,11 +16,11 @@ import {
     fetchSraRun,
 } from './SerratusApiCalls';
 
-export const getPageLinks = (type, value) => {
-    if (type === "family") {
-        var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${value}`;
+export const getPageLinks = (searchLevel, searchLevelValue) => {
+    if (searchLevel === "family") {
+        var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${searchLevelValue}`;
         var text = "Taxonomy Browser"
-        if (value === "AMR") {
+        if (searchLevelValue === "AMR") {
             link = "https://card.mcmaster.ca/";
             text = "Database Website";
         }
@@ -34,42 +34,42 @@ export const getPageLinks = (type, value) => {
             </div>
         )
     }
-    if (type === "genbank") {
+    if (searchLevel === "genbank") {
         return (
             <div>
                 <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/nuccore/${value}`}
+                    link={`https://www.ncbi.nlm.nih.gov/nuccore/${searchLevelValue}`}
                     text="GenBank"
                     icon={externalLinkIcon}
                     newTab={true} />
             </div>
         )
     }
-    if (type === "run") {
+    if (searchLevel === "run") {
         return (
             <div>
                 <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${value}`}
+                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${searchLevelValue}`}
                     text="SRA"
                     icon={externalLinkIcon}
                     newTab={true} />
                 <LinkButton
-                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${value}`}
+                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${searchLevelValue}`}
                     text="Trace"
                     icon={externalLinkIcon}
                     newTab={true} />
                 <LinkButton
-                    link={`${window.location.origin}/jbrowse?bam=${value}`}
+                    link={`${window.location.origin}/jbrowse?bam=${searchLevelValue}`}
                     text="JBrowse"
                     icon={externalLinkIcon}
                     newTab={true} />
                 <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/bam/${value}.bam`}
+                    link={`https://s3.amazonaws.com/lovelywater/bam/${searchLevelValue}.bam`}
                     text=".bam"
                     icon={downloadIcon}
                     download={true} />
                 <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/summary2/${value}.summary`}
+                    link={`https://s3.amazonaws.com/lovelywater/summary2/${searchLevelValue}.summary`}
                     text=".summary"
                     icon={downloadIcon}
                     download={true} />
@@ -81,26 +81,26 @@ export const getPageLinks = (type, value) => {
     }
 }
 
-export const getTitle = async (type, value, valueCorrected) => {
+export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCorrected) => {
     console.log("Fetching Entrez data...");
     let title = null;
-    switch (type) {
+    switch (searchLevel) {
         case "family":
-            if (value === "AMR") {
+            if (searchLevelValue === "AMR") {
                 title = "The Comprehensive Antibiotic Resistance Database (CARD)";
             }
             break;
         case "genbank":
-            if (value !== valueCorrected) {
-                title = await tryGetGenBankTitle(valueCorrected);
+            if (searchLevelValue !== searchLevelValueCorrected) {
+                title = await tryGetGenBankTitle(searchLevelValueCorrected);
                 title = `[AMR] ${title}`;
             }
             else {
-                title = await tryGetGenBankTitle(value);
+                title = await tryGetGenBankTitle(searchLevelValue);
             }
             break;
         case "run":
-            title = await tryGetSraStudyName(value);
+            title = await tryGetSraStudyName(searchLevelValue);
             break;
         default:
     }
@@ -108,16 +108,15 @@ export const getTitle = async (type, value, valueCorrected) => {
     return title;
 }
 
-export const getDataPromise = (type, value, page, perPage, identityRange, coverageRange) => {
-    if (type === "run") {
-        return fetchSraRun(value);
+export const getDataPromise = (searchLevel, searchLevelValue, page, perPage, identityRange, coverageRange) => {
+    if (searchLevel === "run") {
+        return fetchSraRun(searchLevelValue);
     }
-    return fetchPagedMatches(type, value, page, perPage, identityRange, coverageRange);
+    return fetchPagedMatches(searchLevel, searchLevelValue, page, perPage, identityRange, coverageRange);
 }
 
-export const DownloadButton = (props) => {
-    const {queryType, queryValue, identityLims, coverageLims} = props;
-    const downloadUrl = getMatchesDownloadUrl(queryType, queryValue, identityLims, coverageLims);
+export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, coverageLims}) => {
+    const downloadUrl = getMatchesDownloadUrl(searchLevel, searchLevelValue, identityLims, coverageLims);
     return (
         <div className="flex justify-center">
             <LinkButton

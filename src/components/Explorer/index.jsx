@@ -9,32 +9,32 @@ import {
     identityDomain,
     coverageDomain,
     parseRange,
-    queryTypes,
+    searchLevels,
     resultSectionId
 } from "./ExplorerHelpers";
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
 const Explorer = (props) => {
-    const queryTypeStaticRef = React.useRef();
-    const queryValueStaticRef = React.useRef();
+    const searchLevelStaticRef = React.useRef();
+    const searchLevelValueStaticRef = React.useRef();
     const identityLimsStaticRef = React.useRef();
     const coverageLimsStaticRef = React.useRef();
 
-    var queryTypeFromParam = null;
-    var queryValueFromParam = null;
+    var searchLevelFromParam = null;
+    var searchLevelValueFromParam = null;
     var identityLimsFromParam = null;
     var coverageLimsFromParam = null;
     var urlParams = new URLSearchParams(props.location.search);
-    queryTypes.forEach(queryType => {
-        var queryValue = urlParams.get(queryType);
+    searchLevels.forEach(searchLevel => {
+        var searchLevelValue = urlParams.get(searchLevel);
         // assuming mutually exclusive parameters
-        if (queryValue) {
-            queryTypeFromParam = queryType;
-            queryValueFromParam = queryValue;
+        if (searchLevelValue) {
+            searchLevelFromParam = searchLevel;
+            searchLevelValueFromParam = searchLevelValue;
         }
     });
-    var queryPresent = queryTypeFromParam !== null;
+    var searchLevelProvided = searchLevelFromParam !== null;
     var identityParamStr = urlParams.get("identity");
     if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, identityDomain);
     var coverageParamStr = urlParams.get("coverage");
@@ -46,11 +46,11 @@ const Explorer = (props) => {
         if (!identityLimsFromParam) { identityLimsFromParam = identityDomain }
         if (!coverageLimsFromParam) { coverageLimsFromParam = [50, 100] }
         // family must be valid for initial chart render
-        if (!queryTypeFromParam) { queryTypeFromParam = "family" }
-        if (!queryValueFromParam) { queryValueFromParam = "Coronaviridae" }
+        if (!searchLevelFromParam) { searchLevelFromParam = "family" }
+        if (!searchLevelValueFromParam) { searchLevelValueFromParam = "Coronaviridae" }
 
-        queryTypeStaticRef.current = (queryTypeFromParam);
-        queryValueStaticRef.current = (queryValueFromParam);
+        searchLevelStaticRef.current = (searchLevelFromParam);
+        searchLevelValueStaticRef.current = (searchLevelValueFromParam);
         identityLimsStaticRef.current = (identityLimsFromParam);
         coverageLimsStaticRef.current = (coverageLimsFromParam);
 
@@ -58,24 +58,24 @@ const Explorer = (props) => {
     }
 
     // values that change with user input (QueryBuilder)
-    const [queryType, setQueryType] = React.useState(queryTypeStaticRef.current);
-    const [queryValue, setQueryValue] = React.useState(queryValueStaticRef.current);
+    const [searchLevel, setSearchLevel] = React.useState(searchLevelStaticRef.current);
+    const [searchLevelValue, setSearchLevelValue] = React.useState(searchLevelValueStaticRef.current);
     const identityLimsRef = React.useRef(identityLimsStaticRef.current);
     const coverageLimsRef = React.useRef(coverageLimsStaticRef.current);
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             <Helmet>
-                <title>Serratus | {queryValueStaticRef.current ? `${queryValueStaticRef.current}` : "Explorer"}</title>
+                <title>Serratus | {searchLevelValueStaticRef.current ? `${searchLevelValueStaticRef.current}` : "Explorer"}</title>
             </Helmet>
             <div className={`flex flex-col px-4 py-2 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <QueryBuilder
                     identityLimsRef={identityLimsRef}
                     coverageLimsRef={coverageLimsRef}
-                    queryType={queryType}
-                    setQueryType={setQueryType}
-                    queryValue={queryValue}
-                    setQueryValue={setQueryValue} />
+                    searchLevel={searchLevel}
+                    setSearchLevel={setSearchLevel}
+                    searchLevelValue={searchLevelValue}
+                    setSearchLevelValue={setSearchLevelValue} />
                 <div className={`hidden ${switchSize}:block mb-auto text-center`}>
                     <DataReference />
                 </div>
@@ -83,11 +83,11 @@ const Explorer = (props) => {
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`} />
             <hr className="sm:hidden" />
             <div id={resultSectionId} className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
-                {!queryPresent ?
+                {!searchLevelProvided ?
                     <Intro /> :
                     <Result
-                        queryType={queryTypeStaticRef.current}
-                        queryValue={queryValueStaticRef.current}
+                        searchLevel={searchLevelStaticRef.current}
+                        searchLevelValue={searchLevelValueStaticRef.current}
                         identityLims={identityLimsStaticRef.current}
                         coverageLims={coverageLimsStaticRef.current} />
                 }

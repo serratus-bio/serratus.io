@@ -9,21 +9,21 @@ import RunChart, {
 
 const resultItemsKey = "result";
 
-const ResultPage = (props) => {
+const ResultPage = ({searchLevel, dataPromise}) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        if(!props.dataPromise) {
+        if(!dataPromise) {
             return;
         }
         setIsLoading(true);
 
         var columns = ["score", "percent_identity", "n_reads"];
-        props.dataPromise.then((data) => {
+        dataPromise.then((data) => {
             setIsLoading(false);
-            if (props.type === "run") {
+            if (searchLevel === "run") {
                 setHasResults(data && data.length !== 0);
                 renderRunChart(data, columns);
             }
@@ -33,12 +33,12 @@ const ResultPage = (props) => {
             }
         }).catch(err => {
             setHasError(true);
-            if (props.type === "run" && err.toString().includes(500)) {
+            if (searchLevel === "run" && err.toString().includes(500)) {
                 setHasError(false);
             }
             setIsLoading(false);
         });
-    }, [props.type, props.dataPromise]);
+    }, [searchLevel, dataPromise]);
 
     let loading = (
         <div className="text-center">
@@ -71,7 +71,7 @@ const ResultPage = (props) => {
     if (isLoading) {
         return loading
     }
-    if (props.type === "run") {
+    if (searchLevel === "run") {
         if (!hasResults) {
             return noResultsRun
         }

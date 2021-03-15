@@ -7,7 +7,7 @@ export const fetchSraRun = async (runId) => {
     return response.data;
 }
 
-export const getMatchesDownloadUrl = (type, value, identityLims, coverageLims) => {
+export const getMatchesDownloadUrl = (searchLevel, searchLevelValue, identityLims, coverageLims) => {
     var [identityMin, identityMax] = identityLims;
     var [scoreMin, scoreMax] = coverageLims;
     var params = {
@@ -16,12 +16,12 @@ export const getMatchesDownloadUrl = (type, value, identityLims, coverageLims) =
         identityMin: identityMin,
         identityMax: identityMax
     };
-    params[type] = value;
+    params[searchLevel] = searchLevelValue;
     const urlParams = new URLSearchParams(params);
     return `${baseUrl}/matches/nucleotide?${urlParams}`;
 }
 
-export const fetchPagedMatches = async (type, value, page, perPage, identityRange, scoreRange) => {
+export const fetchPagedMatches = async (searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange) => {
     var [identityMin, identityMax] = identityRange;
     var [scoreMin, scoreMax] = scoreRange;
     var params = {
@@ -32,7 +32,7 @@ export const fetchPagedMatches = async (type, value, page, perPage, identityRang
         identityMin: identityMin,
         identityMax: identityMax
     };
-    params[type] = value;
+    params[searchLevel] = searchLevelValue;
     const response = await axios.get(`${baseUrl}/matches/nucleotide/paged`, {params: params});
     return response.data;
 }
