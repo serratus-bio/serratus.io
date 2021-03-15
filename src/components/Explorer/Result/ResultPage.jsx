@@ -48,7 +48,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
 
     let error = (
         <div className="text-center">
-            <span>This query did not return any results.</span><br />
+            <span>This search did not return any results.</span><br />
             <span>If this is unexpected, please </span>
             <ExternalLink href="https://github.com/serratus-bio/serratus.io/issues/new" className="text-blue-600">
                 submit an issue

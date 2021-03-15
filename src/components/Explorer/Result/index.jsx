@@ -25,7 +25,7 @@ const Result = (props) => {
         if (!searchLevelValue) {
             return;
         }
-        console.log(`Loading query result page for ${searchLevel}=${searchLevelValue}.`);
+        console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
         // check for AMR accession
         let valueCorrected = searchLevelValue;
         if (searchLevel === "genbank") {

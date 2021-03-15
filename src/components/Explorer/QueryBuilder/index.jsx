@@ -69,9 +69,9 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
         setErrorMessage("");
     }, [searchLevel]);
 
-    const goToQuery = () => {
+    const viewMatches = () => {
         if (!searchLevelValue) {
-            setErrorMessage("Enter a query value.");
+            setErrorMessage("Enter a search value.");
             return;
         }
         let params = new URLSearchParams();
@@ -82,8 +82,8 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
             var coverage = constructRangeStr(...coverageLimsRef.current);
             params.set('coverage', coverage);
         }
-        var queryUrl = `explorer?${params.toString()}#${resultSectionId}`;
-        window.location.href = queryUrl;
+        var saerchUrl = `explorer?${params.toString()}#${resultSectionId}`;
+        window.location.href = saerchUrl;
     }
 
     const chartVisibility = (searchLevel !== "run" ? "visible" : "hidden");
@@ -97,7 +97,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
                 setSearchLevel={setSearchLevel}
                 searchLevelValue={searchLevelValue}
                 setSearchLevelValue={setSearchLevelValue}
-                goToQuery={goToQuery}
+                viewMatches={viewMatches}
                 />
             <div className="max-w-xl m-auto">
                 <div className={`${slidersVisibility} mb-10`}>
@@ -124,7 +124,7 @@ const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchL
                 </div>
                 <div className="flex flex-row justify-center items-center mt-4">
                     <button className="w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4"
-                        onClick={goToQuery}>
+                        onClick={viewMatches}>
                         View Matches
                     </button>
                     <ExternalLink className='ml-2 mb-1' title='Open tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>{helpIcon}</ExternalLink>

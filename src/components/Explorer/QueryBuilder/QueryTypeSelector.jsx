@@ -3,7 +3,7 @@ import ValueSelector from './Dropdown/ValueSelector';
 import SearchRun from './SearchRun';
 
 
-const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue, goToQuery}) => {
+const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue, viewMatches}) => {
     const [values, setValues] = React.useState(defaultValues);
 
     const willMount = React.useRef(true);
@@ -14,7 +14,7 @@ const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLe
         willMount.current = false;
     }
 
-    // update query value
+    // update search value
     React.useEffect(() => {
         setSearchLevelValue(values[searchLevel]);
     }, [values, searchLevel, setSearchLevelValue]);
@@ -44,7 +44,7 @@ const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLe
                     <SearchRun
                         run={values['run']}
                         setRun={newValue => {setValues(oldValues => ({...oldValues, run: newValue}))}}
-                        onEnter={goToQuery} />
+                        onEnter={viewMatches} />
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@ export default QueryTypeSelector;
 const InputOption = (props) => {
     return (
         <div className={props.className}>
-            <input type="radio" name="querytype" value={props.value} checked={props.checked}
+            <input type="radio" name="searchLevel" value={props.value} checked={props.checked}
                 onChange={props.onChange} />
             <span className="ml-1">{props.displayText}</span>
         </div>
