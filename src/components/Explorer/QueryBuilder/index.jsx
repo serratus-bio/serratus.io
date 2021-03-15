@@ -81,8 +81,8 @@ const QueryBuilder = ({
             var coverage = constructRangeStr(...coverageLimsRef.current);
             params.set('coverage', coverage);
         }
-        var saerchUrl = `explorer?${params.toString()}#${resultSectionId}`;
-        window.location.href = saerchUrl;
+        var searchUrl = `explorer?${params.toString()}#${resultSectionId}`;
+        window.location.href = searchUrl;
     }
 
     const chartVisibility = (searchLevel !== "run" ? "visible" : "hidden");
