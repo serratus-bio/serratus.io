@@ -41,7 +41,7 @@ const Geo = () => {
         <div className="text-center text-xl">The Planetary RNA Virome</div>
 
 
-        <div><Details title={helpIcon} defaultOpen={false}>
+        <div><Details title="info" defaultOpen={false}>
         <p>We searched 5.7 million public sequencing libraries for the RNA virus hallmark gene, RNA-dependent RNA Polymerase (RdRP).</p>
         
         <p>This map shows the location of BioSamples from which an intact RdRP sequence could be recovered and geographical meta-data was present.</p>
@@ -53,7 +53,7 @@ const Geo = () => {
             <MapPlot setSelectedPoints={setSelectedPoints} />
         </div>
 
-        <div class="text-left text-gray-500">Use the `Box Select` or `Lasso Select` icons in the top-right to retrieve a list of sample details below the map.</div>
+        <div class="text-left text-gray-600">Use the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right to retrieve a list of sample details below the map.</div>
 
         <div className="text-center">Beta Version. Feedback is welcome.</div>
 
