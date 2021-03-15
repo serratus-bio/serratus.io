@@ -1,9 +1,9 @@
 import React from 'react';
-import ValueSelector from './Dropdown/ValueSelector';
+import Dropdown from './Dropdown';
 import SearchRun from './SearchRun';
 
 
-const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue, viewMatches}) => {
+export default function SearchLevelSelector({defaultValues, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue, viewMatches}) {
     const [values, setValues] = React.useState(defaultValues);
 
     const willMount = React.useRef(true);
@@ -29,12 +29,12 @@ const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLe
         <div>
             <div className="flex flex-row justify-center">
                 {Object.keys(defaultValues).map(type =>
-                    <InputOption className="mx-2" value={type} displayText={displayName[type]} checked={searchLevel === type} onChange={searchLevelChange} />
+                    <SearchLevelOption className="mx-2"  key={type} value={type} displayText={displayName[type]} checked={searchLevel === type} onChange={searchLevelChange} />
                 )}
             </div>
             <div label="inputs">
                 <div className={searchLevel !== "run" ? "visible" : "hidden"}>
-                    <ValueSelector
+                    <Dropdown
                         searchLevel={searchLevel}
                         searchLevelValue={values[searchLevel]}
                         setSearchLevelValue={newValue => {setValues(oldValues => ({...oldValues, [searchLevel]: newValue}))}} />
@@ -50,9 +50,7 @@ const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLe
     )
 }
 
-export default QueryTypeSelector;
-
-const InputOption = (props) => {
+const SearchLevelOption = (props) => {
     return (
         <div className={props.className}>
             <input type="radio" name="searchLevel" value={props.value} checked={props.checked}

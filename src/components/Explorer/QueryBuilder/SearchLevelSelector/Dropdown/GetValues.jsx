@@ -1,5 +1,5 @@
-import { fetchValues } from '../SerratusApiCalls';
-import genbankEntries from '../../data/cov3ma.genbank.json';
+import { fetchValues } from '../../SerratusApiCalls';
+import genbankEntries from '../../../data/cov3ma.genbank.json';
 
 
 export function getLoadOptions(searchLevel) {
@@ -29,7 +29,7 @@ function getGenbankOptions(inputValue, callback) {
 }
 
 const maxDropdownSize = 200;
-const familyDomainPromise = fetchValues('family');
+const familyDomainPromise = fetchValues('nucleotide', 'family');
 const genbankDomain = Object.keys(genbankEntries).map(genbank => {
     const info = genbankEntries[genbank];
     return { label: `[${genbank}] ${info.title}`, value: genbank };

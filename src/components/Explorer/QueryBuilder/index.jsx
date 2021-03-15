@@ -20,7 +20,7 @@ import {
     ExternalLink,
     helpIcon
 } from '../../../common/Helpers';
-import QueryTypeSelector from './QueryTypeSelector';
+import SearchLevelSelector from './SearchLevelSelector';
 import {
     fetchMatchCounts,
 } from './SerratusApiCalls';
@@ -56,7 +56,7 @@ const QueryBuilder = ({
             updateData(data);
             updateYLims();
         });
-    }, [searchLevel, searchLevelValue]);
+    }, [searchType, searchLevel, searchLevelValue]);
 
     // functions to update chart with slider changes
     const updateX = () => { chartRendered.current && updateXLims(...identityLimsRef.current) }
@@ -90,7 +90,7 @@ const QueryBuilder = ({
 
     return (
         <div className="flex-grow">
-            <QueryTypeSelector
+            <SearchLevelSelector
                 defaultValues={defaultSearchLevelValues}
                 searchLevel={searchLevel}
                 setSearchLevel={setSearchLevel}
