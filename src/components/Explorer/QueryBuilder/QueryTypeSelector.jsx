@@ -31,7 +31,6 @@ const QueryTypeSelector = ({defaultValues, searchLevel, setSearchLevel, searchLe
                 {Object.keys(defaultValues).map(type =>
                     <InputOption className="mx-2" value={type} displayText={displayName[type]} checked={searchLevel === type} onChange={searchLevelChange} />
                 )}
-                <InputOption className="mx-2" value="run" displayText={displayName["run"]} checked={searchLevel === "run"} onChange={searchLevelChange} />
             </div>
             <div label="inputs">
                 <div className={searchLevel !== "run" ? "visible" : "hidden"}>

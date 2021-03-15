@@ -29,6 +29,7 @@ import {
 const defaultValues = {
     'family': 'Coronaviridae',
     'genbank': 'NC_034446.1',
+    'run': '',
 }
 
 const QueryBuilder = ({identityLimsRef, coverageLimsRef, searchLevel, setSearchLevel, searchLevelValue, setSearchLevelValue}) => {
