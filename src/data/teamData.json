@@ -5,9 +5,13 @@
       "members": [
         {
           "name": "Artem Babaian",
-          "affiliation": "University of British Columbia",
           "email": "ababaian AT bccrc DOT com",
           "github": "ababaian"
+        },
+        {
+          "name": "Benjamin Buchfinnk",
+          "affiliation": "Max Planck Institute for Developmental Biology",
+          "github": "bbuchfink"
         },
         {
           "name": "Robert C. Edgar",
@@ -29,6 +33,10 @@
           "github": "taltman"
         },
         {
+          "name": "Pierre Barbera",
+          "affiliation": "Computational Molecular Evolution Group\nHeidelberg Institute for Theoretical Studies\nHeidelberg, Germany"
+        },
+        {
           "name": "Rayan Chikhi",
           "affiliation": "Institut Pasteur & CNRS",
           "email": "rayan.chikhi AT pasteur DOT fr"
@@ -42,10 +50,6 @@
           "name": "Dmitry Meleshko",
           "affiliation": "Center for Algorithmic Biotechnologies\nSaint Petersburg State University",
           "email": "d.meleshko AT spbu DOT ru"
-        },
-        {
-          "name": "Pierre Barbera",
-          "affiliation": "Computational Molecular Evolution Group\nHeidelberg Institute for Theoretical Studies\nHeidelberg, Germany"
         }
       ]
     },
@@ -67,11 +71,16 @@
           "affiliation": "University of British Columbia",
           "email": "gnovakovsky AT cmmt DOT ubc DOT ca",
           "github": "fransilvion"
-        },
+        }
+      ]
+    },
+    {
+      "name": "Serratus Virology Team",
+      "members": [
         {
-          "name": "Ana Sepetovska",
-          "email": "as9632 AT nyu DOT edu",
-          "github": "sepetaana"
+          "name": "Marcos de la Pena",
+          "affiliation": "Universidad Politécnica de Valencia-CSIC.",
+          "email": "rivero AT ibmcp DOT upv DOT es"
         }
       ]
     }

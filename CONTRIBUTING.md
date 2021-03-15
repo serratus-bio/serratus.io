@@ -27,6 +27,10 @@ There are 3 repositories:
 ```sh
 cd path/to/serratus.io
 npm install
+
+# Increase build memory
+export NODE_OPTIONS=--max_old_space_size=4096
+ 
 npm start
 ```
 
