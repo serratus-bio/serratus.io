@@ -13,6 +13,8 @@ export default function NucleotideExplorer({location}) {
         <ExplorerBase
             searchType={searchType}
             defaultSearchLevelValues={defaultValues}
+            identityDomain={[75, 100]}
+            scoreDomain={[0, 100]}
             location={location}
         />
     </>

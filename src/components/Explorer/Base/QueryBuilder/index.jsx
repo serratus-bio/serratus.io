@@ -8,8 +8,6 @@ import ExploreChart, {
     updateZLims
 } from './ExploreChart';
 import {
-    identityDomain,
-    scoreDomain,
     viridisCssGradient,
     constructRangeStr,
     resultSectionId
@@ -26,6 +24,7 @@ import {
 
 const QueryBuilder = ({
         searchType, defaultSearchLevelValues,
+        identityDomain, scoreDomain,
         identityLimsRef, scoreLimsRef,
         searchLevel, setSearchLevel,
         searchLevelValue, setSearchLevelValue}) => {

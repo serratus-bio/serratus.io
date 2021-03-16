@@ -13,6 +13,8 @@ export default function RdrpExplorer({location}) {
         <ExplorerBase
             searchType={searchType}
             defaultSearchLevelValues={defaultValues}
+            identityDomain={[45, 100]}
+            scoreDomain={[0, 100]}
             location={location}
         />
     </>

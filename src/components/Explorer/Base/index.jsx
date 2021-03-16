@@ -6,8 +6,6 @@ import Result from './Result';
 import DataReference from './DataReference';
 import { classesBoxBorder } from '../../../common/Helpers';
 import {
-    identityDomain,
-    scoreDomain,
     parseRange,
     resultSectionId
 } from "./ExplorerHelpers";
@@ -17,6 +15,8 @@ const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrai
 const ExplorerBase = ({
         searchType,
         defaultSearchLevelValues,
+        identityDomain,
+        scoreDomain,
         location}) => {
     const searchLevelStaticRef = React.useRef();
     const searchLevelValueStaticRef = React.useRef();
@@ -75,6 +75,8 @@ const ExplorerBase = ({
                     searchType={searchType}
                     identityLimsRef={identityLimsRef}
                     scoreLimsRef={scoreLimsRef}
+                    identityDomain={identityDomain}
+                    scoreDomain={scoreDomain}
                     defaultSearchLevelValues={defaultSearchLevelValues}
                     searchLevel={searchLevel}
                     setSearchLevel={setSearchLevel}
