@@ -1,12 +1,12 @@
 import React from 'react';
 import FilterSlider from './FilterSlider';
-import ExploreChart, {
+import CountChart, {
     renderChart,
     updateData,
     updateXLims,
     updateYLims,
     updateZLims
-} from './ExploreChart';
+} from './CountChart';
 import {
     viridisCssGradient,
     constructRangeStr,
@@ -117,7 +117,7 @@ const QueryBuilder = ({
                     </div>
                 </div>
                 <div className={chartVisibility}>
-                    <ExploreChart />
+                    <CountChart />
                 </div>
                 <div className="flex flex-row justify-center items-center mt-4">
                     <button className="w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4"
