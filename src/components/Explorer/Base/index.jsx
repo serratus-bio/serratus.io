@@ -7,7 +7,7 @@ import DataReference from './DataReference';
 import { classesBoxBorder } from '../../../common/Helpers';
 import {
     identityDomain,
-    coverageDomain,
+    scoreDomain,
     parseRange,
     resultSectionId
 } from "./ExplorerHelpers";
@@ -21,12 +21,12 @@ const ExplorerBase = ({
     const searchLevelStaticRef = React.useRef();
     const searchLevelValueStaticRef = React.useRef();
     const identityLimsStaticRef = React.useRef();
-    const coverageLimsStaticRef = React.useRef();
+    const scoreLimsStaticRef = React.useRef();
 
     var searchLevelFromParam = null;
     var searchLevelValueFromParam = null;
     var identityLimsFromParam = null;
-    var coverageLimsFromParam = null;
+    var scoreLimsFromParam = null;
     var urlParams = new URLSearchParams(location.search);
     Object.keys(defaultSearchLevelValues).forEach(searchLevel => {
         var searchLevelValue = urlParams.get(searchLevel);
@@ -39,14 +39,14 @@ const ExplorerBase = ({
     var searchLevelProvided = searchLevelFromParam !== null;
     var identityParamStr = urlParams.get("identity");
     if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, identityDomain);
-    var coverageParamStr = urlParams.get("coverage");
-    if (coverageParamStr) coverageLimsFromParam = parseRange(coverageParamStr, coverageDomain);
+    var scoreParamStr = urlParams.get("score");
+    if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, scoreDomain);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
         // set defaults
         if (!identityLimsFromParam) { identityLimsFromParam = identityDomain }
-        if (!coverageLimsFromParam) { coverageLimsFromParam = [50, 100] }
+        if (!scoreLimsFromParam) { scoreLimsFromParam = [50, 100] }
         // family must be valid for initial chart render
         if (!searchLevelFromParam) { searchLevelFromParam = "family" }
         if (!searchLevelValueFromParam) { searchLevelValueFromParam = "Coronaviridae" }
@@ -54,7 +54,7 @@ const ExplorerBase = ({
         searchLevelStaticRef.current = (searchLevelFromParam);
         searchLevelValueStaticRef.current = (searchLevelValueFromParam);
         identityLimsStaticRef.current = (identityLimsFromParam);
-        coverageLimsStaticRef.current = (coverageLimsFromParam);
+        scoreLimsStaticRef.current = (scoreLimsFromParam);
 
         willMount.current = false;
     }
@@ -63,7 +63,7 @@ const ExplorerBase = ({
     const [searchLevel, setSearchLevel] = React.useState(searchLevelStaticRef.current);
     const [searchLevelValue, setSearchLevelValue] = React.useState(searchLevelValueStaticRef.current);
     const identityLimsRef = React.useRef(identityLimsStaticRef.current);
-    const coverageLimsRef = React.useRef(coverageLimsStaticRef.current);
+    const scoreLimsRef = React.useRef(scoreLimsStaticRef.current);
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
@@ -74,7 +74,7 @@ const ExplorerBase = ({
                 <QueryBuilder
                     searchType={searchType}
                     identityLimsRef={identityLimsRef}
-                    coverageLimsRef={coverageLimsRef}
+                    scoreLimsRef={scoreLimsRef}
                     defaultSearchLevelValues={defaultSearchLevelValues}
                     searchLevel={searchLevel}
                     setSearchLevel={setSearchLevel}
@@ -93,7 +93,7 @@ const ExplorerBase = ({
                         searchLevel={searchLevelStaticRef.current}
                         searchLevelValue={searchLevelValueStaticRef.current}
                         identityLims={identityLimsStaticRef.current}
-                        coverageLims={coverageLimsStaticRef.current} />
+                        scoreLims={scoreLimsStaticRef.current} />
                 }
                 <div className={`${switchSize}:hidden`}>
                     <DataReference />

@@ -1,6 +1,6 @@
 // definitions
 export const identityDomain = [75, 100];
-export const coverageDomain = [0, 100];
+export const scoreDomain = [0, 100];
 export const resultSectionId = "result";
 
 // color palettes

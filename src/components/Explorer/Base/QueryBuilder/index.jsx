@@ -9,7 +9,7 @@ import ExploreChart, {
 } from './ExploreChart';
 import {
     identityDomain,
-    coverageDomain,
+    scoreDomain,
     viridisCssGradient,
     constructRangeStr,
     resultSectionId
@@ -26,7 +26,7 @@ import {
 
 const QueryBuilder = ({
         searchType, defaultSearchLevelValues,
-        identityLimsRef, coverageLimsRef,
+        identityLimsRef, scoreLimsRef,
         searchLevel, setSearchLevel,
         searchLevelValue, setSearchLevelValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
@@ -36,9 +36,9 @@ const QueryBuilder = ({
     if (!chartRendered.current && searchLevel !== 'run') {
         fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
             if (!data) return;
-            renderChart(data, identityDomain, coverageDomain);
+            renderChart(data, identityDomain, scoreDomain);
             updateXLims(...identityLimsRef.current);
-            updateZLims(...coverageLimsRef.current);
+            updateZLims(...scoreLimsRef.current);
             updateYLims();
             chartRendered.current = true;
         });
@@ -58,7 +58,7 @@ const QueryBuilder = ({
 
     // functions to update chart with slider changes
     const updateX = () => { chartRendered.current && updateXLims(...identityLimsRef.current) }
-    const updateZ = () => { chartRendered.current && updateZLims(...coverageLimsRef.current) }
+    const updateZ = () => { chartRendered.current && updateZLims(...scoreLimsRef.current) }
     const updateY = () => { chartRendered.current && updateYLims(500) }
 
     // reset error message
@@ -76,8 +76,8 @@ const QueryBuilder = ({
         if (searchLevel !== 'run') {
             var identity = constructRangeStr(...identityLimsRef.current);
             params.set('identity', identity);
-            var coverage = constructRangeStr(...coverageLimsRef.current);
-            params.set('coverage', coverage);
+            var score = constructRangeStr(...scoreLimsRef.current);
+            params.set('score', score);
         }
         var searchUrl = `explorer?${params.toString()}#${resultSectionId}`;
         window.location.href = searchUrl;
@@ -110,8 +110,8 @@ const QueryBuilder = ({
                     <div className="mx-2">
                         <div className="pt-6 text-center">Score</div>
                         <FilterSlider id="sliderCoverage"
-                            sliderDomain={coverageDomain}
-                            sliderLimsRef={coverageLimsRef}
+                            sliderDomain={scoreDomain}
+                            sliderLimsRef={scoreLimsRef}
                             linearGradientString={viridisCssGradient}
                             onChange={updateZ}
                             onTouchEnd={updateY} />

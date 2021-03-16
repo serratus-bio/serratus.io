@@ -8,12 +8,7 @@ import {
     DownloadButton,
 } from './ResultHelpers';
 
-const Result = (props) => {
-    const searchLevel = props.searchLevel;
-    const searchLevelValue = props.searchLevelValue;
-    const identityLims = props.identityLims;
-    const coverageLims = props.coverageLims;
-
+const Result = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
     const perPage = 20;
     const [pageNumber, setPageNumber] = React.useState(1);
     const [dataPromise, setDataPromise] = React.useState();
@@ -43,8 +38,8 @@ const Result = (props) => {
         if (!searchLevelValue) {
             return;
         }
-        setDataPromise(getDataPromise(searchLevel, searchLevelValue, pageNumber, perPage, identityLims, coverageLims));
-    }, [searchLevel, searchLevelValue, pageNumber, identityLims, coverageLims]);
+        setDataPromise(getDataPromise(searchLevel, searchLevelValue, pageNumber, perPage, identityLims, scoreLims));
+    }, [searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims]);
 
     return (
         <div className="max-w-4xl m-auto">
@@ -74,7 +69,7 @@ const Result = (props) => {
                         searchLevel={searchLevel}
                         searchLevelValue={searchLevelValue}
                         identityLims={identityLims}
-                        coverageLims={coverageLims}
+                        scoreLims={scoreLims}
                     />
                 }
             </div>

@@ -108,15 +108,15 @@ export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCo
     return title;
 }
 
-export const getDataPromise = (searchLevel, searchLevelValue, page, perPage, identityRange, coverageRange) => {
+export const getDataPromise = (searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange) => {
     if (searchLevel === "run") {
         return fetchSraRun(searchLevelValue);
     }
-    return fetchPagedMatches(searchLevel, searchLevelValue, page, perPage, identityRange, coverageRange);
+    return fetchPagedMatches(searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange);
 }
 
-export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, coverageLims}) => {
-    const downloadUrl = getMatchesDownloadUrl(searchLevel, searchLevelValue, identityLims, coverageLims);
+export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
+    const downloadUrl = getMatchesDownloadUrl(searchLevel, searchLevelValue, identityLims, scoreLims);
     return (
         <div className="flex justify-center">
             <LinkButton
