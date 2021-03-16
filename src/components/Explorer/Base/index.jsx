@@ -15,15 +15,9 @@ import {
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
-const defaultValues = {
-    'family': 'Coronaviridae',
-    'genbank': 'NC_034446.1',
-    'run': '',
-}
-
 const ExplorerBase = ({
-        searchType = 'nucleotide',
-        defaultSearchLevelValues = defaultValues,
+        searchType,
+        defaultSearchLevelValues,
         location}) => {
     const searchLevelStaticRef = React.useRef();
     const searchLevelValueStaticRef = React.useRef();
