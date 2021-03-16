@@ -1,6 +1,5 @@
 import React from "react";
-import { ExternalLink, externalLinkIcon, downloadIcon } from '../../common/Helpers'
-import LinkButton from "../../common/LinkButton";
+import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common';
 
 const SelectionInfo = ({ selectedPoints }) => {
     if (selectedPoints === undefined) return null;

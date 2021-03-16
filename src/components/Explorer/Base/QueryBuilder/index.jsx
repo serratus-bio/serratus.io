@@ -15,7 +15,7 @@ import {
 import {
     ExternalLink,
     helpIcon
-} from '../../../../common/Helpers';
+} from 'common';
 import SearchLevelSelector from './SearchLevelSelector';
 import {
     fetchMatchCounts,

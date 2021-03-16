@@ -5,7 +5,7 @@ import {
     searchIcon,
     externalLinkIcon,
     ExternalLink,
-} from '../common/Helpers';
+} from 'common';
 
 const Home = () => {
     const headTags = (

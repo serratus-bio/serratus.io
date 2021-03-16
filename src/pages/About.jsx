@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import {
   classesBoxBorder,
   ExternalLink
-} from '../common/Helpers';
+} from 'common';
 
 const About = () => {
   const headTags = (

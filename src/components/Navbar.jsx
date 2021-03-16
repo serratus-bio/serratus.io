@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
-import { ExternalLink } from "../common/Helpers";
+import { ExternalLink } from "common";
 
 const Navbar = () => {
   return (

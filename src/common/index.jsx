@@ -12,3 +12,4 @@ export const githubIcon = (<svg className="inline fill-current w-4 h-4 mb-1" xml
 
 // components
 export const ExternalLink = (props) => {return (<a {...props} target="_blank" rel="noopener noreferrer">{props.children}</a>)}
+export {default as LinkButton} from './LinkButton';
