@@ -23,7 +23,7 @@ const Result = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
         console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
         // check for AMR accession
         let valueCorrected = searchLevelValue;
-        if (searchLevel === "genbank") {
+        if (searchLevel === "sequence") {
             let patternForAMR = /.*_\d{7}/g;
             let isFromAMR = searchLevelValue.match(patternForAMR);
             if (isFromAMR) {
