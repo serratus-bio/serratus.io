@@ -5,7 +5,7 @@ const Intro = () => {
         <div className="text-center">
             Explore Serratus SRA run matches for a family name or GenBank accession.<br />
             Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a><br />
-            GenBank: <a className="text-blue-600" href="?genbank=NC_034446.1">NC_034446.1</a><br />
+            GenBank: <a className="text-blue-600" href="?sequence=NC_034446.1">NC_034446.1</a><br />
             <br />
             Alternatively, find matches associated with a SRA run accession.<br />
             <br />

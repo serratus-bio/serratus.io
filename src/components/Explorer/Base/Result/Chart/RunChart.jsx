@@ -36,9 +36,9 @@ const sraIdKey = "run_id"
 const familyNameKey = "family_name"
 const maxGenbanks = 10;
 const genbankSortKey = "n_reads"
-const genbankNameKey = "genbank_id"
+const genbankNameKey = "sequence_accession"
 const genbankFamilyNameKey = "family_name"
-const genbankTitleKey = "genbank_name"
+const genbankTitleKey = "virus_name"
 const genbankCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 

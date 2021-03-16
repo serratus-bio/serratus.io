@@ -34,7 +34,7 @@ export const getPageLinks = (searchLevel, searchLevelValue) => {
             </div>
         )
     }
-    if (searchLevel === "genbank") {
+    if (searchLevel === "sequence") {
         return (
             <div>
                 <LinkButton
@@ -90,7 +90,7 @@ export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCo
                 title = "The Comprehensive Antibiotic Resistance Database (CARD)";
             }
             break;
-        case "genbank":
+        case "sequence":
             if (searchLevelValue !== searchLevelValueCorrected) {
                 title = await tryGetGenBankTitle(searchLevelValueCorrected);
                 title = `[AMR] ${title}`;

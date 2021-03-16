@@ -5,7 +5,7 @@ export default function NucleotideExplorer({location}) {
     const searchType = 'nucleotide';
     const defaultValues = {
         'family': 'Coronaviridae',
-        'genbank': 'NC_034446.1',
+        'sequence': 'NC_034446.1',
         'run': '',
     };
 
