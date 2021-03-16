@@ -12,8 +12,6 @@ import {
     coverageDomain,
     viridisCssGradient,
     constructRangeStr,
-    getIdentitySliderLabel,
-    getCoverageSliderLabel,
     resultSectionId
 } from "../ExplorerHelpers";
 import {
@@ -102,7 +100,7 @@ const QueryBuilder = ({
             <div className="max-w-xl m-auto">
                 <div className={`${slidersVisibility} mb-10`}>
                     <div className="mx-2">
-                        <div className="pt-6 text-center">{getIdentitySliderLabel(searchLevel)}</div>
+                        <div className="pt-6 text-center">Alignment identity (%)</div>
                         <FilterSlider id="sliderIdentity"
                             sliderDomain={identityDomain}
                             sliderLimsRef={identityLimsRef}
@@ -110,7 +108,7 @@ const QueryBuilder = ({
                             onTouchEnd={updateY} />
                     </div>
                     <div className="mx-2">
-                        <div className="pt-6 text-center">{getCoverageSliderLabel(searchLevel)}</div>
+                        <div className="pt-6 text-center">Score</div>
                         <FilterSlider id="sliderCoverage"
                             sliderDomain={coverageDomain}
                             sliderLimsRef={coverageLimsRef}

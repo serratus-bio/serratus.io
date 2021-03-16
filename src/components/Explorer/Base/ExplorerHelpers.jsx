@@ -1,30 +1,10 @@
 // definitions
-export const searchLevels = ["family", "genbank", "run"];
 export const identityDomain = [75, 100];
 export const coverageDomain = [0, 100];
 export const resultSectionId = "result";
 
 // color palettes
 export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414487, #355f8d, #2a788e, #21908d, #22a884, #42be71, #7ad151, #bddf26, #fce640)" // slight modification of https://bennettfeely.com/cssscales/#viridis
-
-
-// functions
-
-export const getIdentitySliderLabel = (type) => {
-    let typeMap = {
-        family: "Average alignment identity (%)",
-        genbank: "Alignment identity (%)"
-    };
-    return typeMap[type];
-}
-
-export const getCoverageSliderLabel = (type) => {
-    let typeMap = {
-        family: "Score (pangenome coverage)",
-        genbank: "Coverage"
-    };
-    return typeMap[type];
-}
 
 // filtering
 

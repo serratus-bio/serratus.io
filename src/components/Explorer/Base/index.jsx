@@ -9,7 +9,6 @@ import {
     identityDomain,
     coverageDomain,
     parseRange,
-    searchLevels,
     resultSectionId
 } from "./ExplorerHelpers";
 
@@ -29,7 +28,7 @@ const ExplorerBase = ({
     var identityLimsFromParam = null;
     var coverageLimsFromParam = null;
     var urlParams = new URLSearchParams(location.search);
-    searchLevels.forEach(searchLevel => {
+    Object.keys(defaultSearchLevelValues).forEach(searchLevel => {
         var searchLevelValue = urlParams.get(searchLevel);
         // assuming mutually exclusive parameters
         if (searchLevelValue) {
