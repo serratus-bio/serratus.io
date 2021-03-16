@@ -30,16 +30,16 @@ const RunChart = () => {
 export default RunChart;
 
 const familySectionKey = "families"
-const genbankSectionKey = "sequences"
+const sequenceSectionKey = "sequences"
 
-const sraIdKey = "run_id"
+const runIdKey = "run_id"
 const familyNameKey = "family_name"
-const maxGenbanks = 10;
-const genbankSortKey = "n_reads"
-const genbankNameKey = "sequence_accession"
-const genbankFamilyNameKey = "family_name"
-const genbankTitleKey = "virus_name"
-const genbankCoverageKey = "coverage_bins"
+const maxSequences = 10;
+const sequenceSortKey = "n_reads"
+const sequenceNameKey = "sequence_accession"
+const sequenceFamilyNameKey = "family_name"
+const sequenceTitleKey = "virus_name"
+const sequenceCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 
 export const renderChart = (summary, columns) => {
@@ -59,9 +59,9 @@ export const renderChart = (summary, columns) => {
 
     var familyTextHeight = 50;
 
-    var genbanksByFamily = d3.nest()
-        .key(d => d[genbankFamilyNameKey])
-        .entries(summary[genbankSectionKey])
+    var sequencesByFamily = d3.nest()
+        .key(d => d[sequenceFamilyNameKey])
+        .entries(summary[sequenceSectionKey])
         .reduce(function (obj, x) {
             obj[x["key"]] = x["values"]
             return obj;
@@ -75,26 +75,26 @@ export const renderChart = (summary, columns) => {
         addColumns(familyG.select("svg"), columns, colMap, family);
         addFamilyText(familySubGroup);
 
-        var familyGenbanksG = familySubGroup.append("g")
-            .attr("class", "family-genbanks")
+        var familySequencesG = familySubGroup.append("g")
+            .attr("class", "family-sequences")
             .attr("transform", `translate(0, ${familyTextHeight})`)
 
-        var genbanks = genbanksByFamily[family[familyNameKey]]
-            .sort((a, b) => parseFloat(a[genbankSortKey]) < parseFloat(b[genbankSortKey]));
-        if (genbanks.length > maxGenbanks) {
-            genbanks = genbanks.slice(0, maxGenbanks);
+        var sequences = sequencesByFamily[family[familyNameKey]]
+            .sort((a, b) => parseFloat(a[sequenceSortKey]) < parseFloat(b[sequenceSortKey]));
+        if (sequences.length > maxSequences) {
+            sequences = sequences.slice(0, maxSequences);
         }
-        genbanks.forEach((genbank, i) => {
-            var genbankCoverageData = getCoverageData(genbank, genbankCoverageKey);
-            var genbankG = familyGenbanksG.append("g")
-                .attr("class", "genbank")
-                .attr("rowid", `${genbank[genbankNameKey]}`)
+        sequences.forEach((sequence, i) => {
+            var sequenceCoverageData = getCoverageData(sequence, sequenceCoverageKey);
+            var sequenceG = familySequencesG.append("g")
+                .attr("class", "sequence")
+                .attr("rowid", `${sequence[sequenceNameKey]}`)
                 .attr("family", `${family[familyNameKey]}`);
-            var genbankSubGroup = drawExpandableRow(
-                genbankG, genbank[genbankNameKey], "genbank",
-                genbankCoverageData, i);
-            addColumns(genbankG.select("svg"), columns, colMap, genbank);
-            addGenbankText(genbankSubGroup, genbank);
+            var sequenceSubGroup = drawExpandableRow(
+                sequenceG, sequence[sequenceNameKey], "sequence",
+                sequenceCoverageData, i);
+            addColumns(sequenceG.select("svg"), columns, colMap, sequence);
+            addSequenceText(sequenceSubGroup, sequence);
         });
     });
 }
@@ -195,7 +195,7 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
             }
             else {
                 var familyName = gElement.attr("family");
-                toggleGenbankRow(familyName, name);
+                toggleSequenceRow(familyName, name);
             }
         });
 
@@ -258,16 +258,16 @@ function toggleFamilyRow(familyName) {
     var allRows = d3.selectAll(".family");
     var currentRow = d3.select(`.family[rowid="${familyName}"]`);
     var subsectionHeight = 300;
-    var waitForGenbank = false;
-    currentRow.selectAll(".genbank").each(function (d, i) {
-        var genbankName = d3.select(this).attr("rowid");
+    var waitForSequence = false;
+    currentRow.selectAll(".sequence").each(function (d, i) {
+        var sequenceName = d3.select(this).attr("rowid");
         var isExpanded = !d3.select(this).select(`.subsection[visibility="visible"]`).empty();
         if (isExpanded) {
-            toggleGenbankRow(familyName, genbankName);
-            waitForGenbank = true;
+            toggleSequenceRow(familyName, sequenceName);
+            waitForSequence = true;
         }
     });
-    var timeout = waitForGenbank ? 500 : 0;  // hacky fix for family+acc collapse
+    var timeout = waitForSequence ? 500 : 0;  // hacky fix for family+acc collapse
     setTimeout(() => { toggleIRow(allRows, currentRow, subsectionHeight) }, timeout);
 }
 
@@ -287,9 +287,9 @@ function shiftLowerFamilies(familyName, shiftY) {
     });
 }
 
-function toggleGenbankRow(familyName, genbankName) {
-    var allRows = d3.selectAll(".genbank");
-    var currentRow = d3.select(`.genbank[rowid="${genbankName}"]`);
+function toggleSequenceRow(familyName, sequenceName) {
+    var allRows = d3.selectAll(".sequence");
+    var currentRow = d3.select(`.sequence[rowid="${sequenceName}"]`);
     var subsectionVisibility = currentRow.select("g.subsection").attr("visibility");
     var subSectionVisible = subsectionVisibility === "visible";
     var subsectionHeight = 100;
@@ -303,27 +303,27 @@ function addFamilyText(gElement) {
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
-    var genbankHeaderY = 40;
+    var sequenceHeaderY = 40;
     var textEntry = textGroup.append("text")
         .attr("transform",
-            `translate(0, ${genbankHeaderY})`)
-        .text(`Top ${maxGenbanks} GenBank accessions by read count:`);
+            `translate(0, ${sequenceHeaderY})`)
+        .text(`Top ${maxSequences} GenBank accessions by read count:`);
 }
 
-function addGenbankText(gElement, genbank) {
-    // GenBank title
+function addSequenceText(gElement, sequence) {
+    // Sequence title
     var textGroup = gElement.append("g")
         .attr("transform",
             `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
-    var genbankTitle = textGroup.append("text")
-        .text("Name: " + genbank[genbankTitleKey])
+    var sequenceTitle = textGroup.append("text")
+        .text("Name: " + sequence[sequenceTitleKey])
         .style("font-size", 10);
 
     // JBrowse link
     var jBrowseG = textGroup.append("g")
         .attr("transform",
             `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${genbank[sraIdKey]}&loc=${genbank[genbankNameKey]}`
+    var jBrowseLink = `/jbrowse?bam=${sequence[runIdKey]}&loc=${sequence[sequenceNameKey]}`
     var jBrowseTitle = jBrowseG.append("text")
         .text("View Alignment")
         .style("fill", "blue")
