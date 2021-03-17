@@ -1,6 +1,6 @@
 import React from 'react';
 import AsyncSelect from 'react-select/async';
-import { getLoadOptions, getLabel } from './GetValues';
+import { getLoadOptions, getSelectedObject } from './GetValues';
 
 
 export default function Dropdown({
@@ -9,11 +9,11 @@ export default function Dropdown({
     const [selected, setSelected] = React.useState();
 
     React.useEffect(() => {
-        setSelected({
-            label: getLabel(searchLevel, searchLevelValue),
-            value: searchLevelValue
-        })
-    }, [searchLevel, searchLevelValue])
+        async function setSelectionAsync() {
+            setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue));
+        }
+        setSelectionAsync();
+    }, [searchType, searchLevel, searchLevelValue])
 
     function selectOnChange(newSelection) {
         setSelected(newSelection);
