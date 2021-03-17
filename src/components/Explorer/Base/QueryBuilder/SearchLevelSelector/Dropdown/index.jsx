@@ -26,6 +26,10 @@ export default function Dropdown({
         setSelected(null);
     }
 
+    async function onMenuClose() {
+        setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue));
+    }
+
     return (
         <AsyncSelect
             key={JSON.stringify(searchLevel)} // https://github.com/JedWatson/react-select/issues/1581#issuecomment-408625770
@@ -35,6 +39,7 @@ export default function Dropdown({
             loadOptions={getLoadOptions(searchType, searchLevel)}
             onChange={selectOnChange}
             onMenuOpen={onMenuOpen}
+            onMenuClose={onMenuClose}
             placeholder={`Type to search`} />
     )
 }
