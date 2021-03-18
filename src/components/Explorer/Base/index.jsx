@@ -92,6 +92,7 @@ const ExplorerBase = ({
                 {!searchLevelProvided ?
                     <Intro /> :
                     <Result
+                        searchType={searchType}
                         searchLevel={searchLevelStaticRef.current}
                         searchLevelValue={searchLevelValueStaticRef.current}
                         identityLims={identityLimsStaticRef.current}
