@@ -130,7 +130,7 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
         .style("fill", "blue")
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link = `/explorer?${rowType}=${name}`;
+            var link = `${window.location.pathname}?${rowType}=${name}`;
             var textWidth = 100;
             var textHeight = 14;
             var linkA = d3.select(this.parentNode)

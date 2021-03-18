@@ -78,7 +78,8 @@ const QueryBuilder = ({
             var score = constructRangeStr(...scoreLimsRef.current);
             params.set('score', score);
         }
-        var searchUrl = `explorer?${params.toString()}#${resultSectionId}`;
+        var base = window.location.pathname.slice(1);
+        var searchUrl = `${base}?${params.toString()}#${resultSectionId}`;
         window.location.href = searchUrl;
     }
 

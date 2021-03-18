@@ -85,7 +85,7 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex) {
         .style("fill", "blue")
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link = `/explorer?run=${name}`;
+            var link = `${window.location.pathname}?run=${name}`;
             var offsetX = 0
             var textWidth = 80;
             var textHeight = 14;
