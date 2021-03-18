@@ -8,7 +8,6 @@ export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414
 
 export const parseRange = (rangeStr, bounds) => {
     // parse
-    rangeStr = rangeStr.slice(1, rangeStr.length - 1);
     var [low, high] = rangeStr.split("-").map((s) => {
         var intVal = +s;
         if (isNaN(intVal)) {
@@ -28,5 +27,5 @@ export const parseRange = (rangeStr, bounds) => {
 }
 
 export const constructRangeStr = (begin, end) => {
-    return `[${begin}-${end}]`;
+    return `${begin}-${end}`;
 }
