@@ -29,7 +29,7 @@ export const colMap = {
     },
     "percent_identity": {
         "name": "Identity",
-        "desc": "Average alignment identity",
+        "desc": "Alignment identity",
         "size": 70,
         "valueSuffix": "%",
         "domain": [75, 100],
@@ -37,7 +37,7 @@ export const colMap = {
     },
     "n_reads": {
         "name": "Reads",
-        "desc": "Number of alignments (bowtie2)",
+        "desc": "Number of alignments",
         "size": 70,
         "valueSuffix": "",
         "domain": [0, 1000],
