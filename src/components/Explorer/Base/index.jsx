@@ -9,15 +9,12 @@ import {
     parseRange,
     resultSectionId
 } from "./ExplorerHelpers";
+import { BaseContext } from './BaseContext';
 
 const switchSize = "lg";  // Tailwind prefix to switch between landscape/portrait mode
 
-const ExplorerBase = ({
-        searchType,
-        defaultSearchLevelValues,
-        identityDomain,
-        scoreDomain,
-        location}) => {
+const ExplorerBase = ({location}) => {
+    const context = React.useContext(BaseContext);
     const searchLevelStaticRef = React.useRef();
     const searchLevelValueStaticRef = React.useRef();
     const identityLimsStaticRef = React.useRef();
@@ -28,7 +25,7 @@ const ExplorerBase = ({
     var identityLimsFromParam = null;
     var scoreLimsFromParam = null;
     var urlParams = new URLSearchParams(location.search);
-    Object.keys(defaultSearchLevelValues).forEach(searchLevel => {
+    Object.keys(context.defaultSearchLevelValues).forEach(searchLevel => {
         var searchLevelValue = urlParams.get(searchLevel);
         // assuming mutually exclusive parameters
         if (searchLevelValue) {
@@ -38,14 +35,14 @@ const ExplorerBase = ({
     });
     var searchLevelProvided = searchLevelFromParam !== null;
     var identityParamStr = urlParams.get("identity");
-    if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, identityDomain);
+    if (identityParamStr) identityLimsFromParam = parseRange(identityParamStr, context.domain.identity);
     var scoreParamStr = urlParams.get("score");
-    if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, scoreDomain);
+    if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, context.domain.score);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
         // set defaults
-        if (!identityLimsFromParam) { identityLimsFromParam = identityDomain }
+        if (!identityLimsFromParam) { identityLimsFromParam = context.domain.identity }
         if (!scoreLimsFromParam) { scoreLimsFromParam = [50, 100] }
         // family must be valid for initial chart render
         if (!searchLevelFromParam) { searchLevelFromParam = "family" }
@@ -72,12 +69,8 @@ const ExplorerBase = ({
             </Helmet>
             <div className={`flex flex-col px-4 py-2 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
                 <QueryBuilder
-                    searchType={searchType}
                     identityLimsRef={identityLimsRef}
                     scoreLimsRef={scoreLimsRef}
-                    identityDomain={identityDomain}
-                    scoreDomain={scoreDomain}
-                    defaultSearchLevelValues={defaultSearchLevelValues}
                     searchLevel={searchLevel}
                     setSearchLevel={setSearchLevel}
                     searchLevelValue={searchLevelValue}
@@ -92,7 +85,6 @@ const ExplorerBase = ({
                 {!searchLevelProvided ?
                     <Intro /> :
                     <Result
-                        searchType={searchType}
                         searchLevel={searchLevelStaticRef.current}
                         searchLevelValue={searchLevelValueStaticRef.current}
                         identityLims={identityLimsStaticRef.current}

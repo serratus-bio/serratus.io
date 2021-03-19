@@ -15,6 +15,7 @@ import {
     fetchPagedMatches,
     fetchSraRun,
 } from './SerratusApiCalls';
+import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 export const getPageLinks = (searchLevel, searchLevelValue) => {
     if (searchLevel === "family") {
@@ -115,8 +116,9 @@ export const getDataPromise = (searchType, searchLevel, searchLevelValue, page, 
     return fetchPagedMatches(searchType, searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange);
 }
 
-export const DownloadButton = ({searchType, searchLevel, searchLevelValue, identityLims, scoreLims}) => {
-    const downloadUrl = getMatchesDownloadUrl(searchType, searchLevel, searchLevelValue, identityLims, scoreLims);
+export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
+    const context = React.useContext(BaseContext);
+    const downloadUrl = getMatchesDownloadUrl(context.searchType, searchLevel, searchLevelValue, identityLims, scoreLims);
     return (
         <div className="flex justify-center">
             <LinkButton

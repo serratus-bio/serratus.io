@@ -1,14 +1,14 @@
 import React from 'react';
 import Dropdown from './Dropdown';
 import SearchRun from './SearchRun';
-
+import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 export default function SearchLevelSelector({
-        searchType, defaultValues,
         searchLevel, setSearchLevel,
         searchLevelValue, setSearchLevelValue,
         viewMatches}) {
-    const [values, setValues] = React.useState(defaultValues);
+    const context = React.useContext(BaseContext);
+    const [values, setValues] = React.useState(context.defaultSearchLevelValues);
 
     const willMount = React.useRef(true);
     if (willMount.current) {
@@ -32,14 +32,14 @@ export default function SearchLevelSelector({
     return (
         <div>
             <div className="flex flex-row justify-center">
-                {Object.keys(defaultValues).map(type =>
+                {Object.keys(values).map(type =>
                     <SearchLevelOption className="mx-2"  key={type} value={type} displayText={displayName[type]} checked={searchLevel === type} onChange={searchLevelChange} />
                 )}
             </div>
             <div label="inputs">
                 <div className={searchLevel !== "run" ? "visible" : "hidden"}>
                     <Dropdown
-                        searchType={searchType}
+                        searchType={context.searchType}
                         searchLevel={searchLevel}
                         searchLevelValue={values[searchLevel]}
                         setSearchLevelValue={newValue => {setValues(oldValues => ({...oldValues, [searchLevel]: newValue}))}} />

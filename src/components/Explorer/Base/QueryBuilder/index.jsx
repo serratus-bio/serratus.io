@@ -19,25 +19,22 @@ import SearchLevelSelector from './SearchLevelSelector';
 import {
     fetchMatchCounts,
 } from './SerratusApiCalls';
-import { ThemeContext } from '../ThemeContext';
+import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 
 const QueryBuilder = ({
-        searchType, defaultSearchLevelValues,
-        identityDomain, scoreDomain,
         identityLimsRef, scoreLimsRef,
         searchLevel, setSearchLevel,
         searchLevelValue, setSearchLevelValue}) => {
+    const context = React.useContext(BaseContext);
     const [errorMessage, setErrorMessage] = React.useState("");
-
-    const theme = React.useContext(ThemeContext);
 
     // initial chart render
     const chartRendered = React.useRef(false);
     if (!chartRendered.current && searchLevel !== 'run') {
-        fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
+        fetchMatchCounts(context.searchType, searchLevel, searchLevelValue).then((data) => {
             if (!data) return;
-            renderChart(data, identityDomain, scoreDomain, theme.d3InterpolateFunction);
+            renderChart(data, context.domain.identity, context.domain.score, context.theme.d3InterpolateFunction);
             updateXLims(...identityLimsRef.current);
             updateZLims(...scoreLimsRef.current);
             updateYLims();
@@ -49,13 +46,13 @@ const QueryBuilder = ({
     React.useEffect(() => {
         if (!searchLevelValue || searchLevel === 'run')
             return;
-        fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
+        fetchMatchCounts(context.searchType, searchLevel, searchLevelValue).then((data) => {
             if (!chartRendered.current || !data)
                 return;
             updateData(data);
             updateYLims();
         });
-    }, [searchType, searchLevel, searchLevelValue]);
+    }, [context.searchType, searchLevel, searchLevelValue]);
 
     // functions to update chart with slider changes
     const updateX = () => { chartRendered.current && updateXLims(...identityLimsRef.current) }
@@ -91,8 +88,6 @@ const QueryBuilder = ({
     return (
         <div className="flex-grow">
             <SearchLevelSelector
-                searchType={searchType}
-                defaultValues={defaultSearchLevelValues}
                 searchLevel={searchLevel}
                 setSearchLevel={setSearchLevel}
                 searchLevelValue={searchLevelValue}
@@ -104,7 +99,7 @@ const QueryBuilder = ({
                     <div className="mx-2">
                         <div className="pt-6 text-center">Alignment identity (%)</div>
                         <FilterSlider id="sliderIdentity"
-                            sliderDomain={identityDomain}
+                            sliderDomain={context.domain.identity}
                             sliderLimsRef={identityLimsRef}
                             onChange={updateX}
                             onTouchEnd={updateY} />
@@ -112,9 +107,9 @@ const QueryBuilder = ({
                     <div className="mx-2">
                         <div className="pt-6 text-center">Score</div>
                         <FilterSlider id="sliderCoverage"
-                            sliderDomain={scoreDomain}
+                            sliderDomain={context.domain.score}
                             sliderLimsRef={scoreLimsRef}
-                            linearGradientString={theme.gradientString}
+                            linearGradientString={context.theme.gradientString}
                             onChange={updateZ}
                             onTouchEnd={updateY} />
                     </div>
