@@ -8,7 +8,6 @@ import CountChart, {
     updateZLims
 } from './CountChart';
 import {
-    viridisCssGradient,
     constructRangeStr,
     resultSectionId
 } from "../ExplorerHelpers";
@@ -20,6 +19,7 @@ import SearchLevelSelector from './SearchLevelSelector';
 import {
     fetchMatchCounts,
 } from './SerratusApiCalls';
+import { ThemeContext } from '../ThemeContext';
 
 
 const QueryBuilder = ({
@@ -30,12 +30,14 @@ const QueryBuilder = ({
         searchLevelValue, setSearchLevelValue}) => {
     const [errorMessage, setErrorMessage] = React.useState("");
 
+    const theme = React.useContext(ThemeContext);
+
     // initial chart render
     const chartRendered = React.useRef(false);
     if (!chartRendered.current && searchLevel !== 'run') {
         fetchMatchCounts(searchType, searchLevel, searchLevelValue).then((data) => {
             if (!data) return;
-            renderChart(data, identityDomain, scoreDomain);
+            renderChart(data, identityDomain, scoreDomain, theme.d3InterpolateFunction);
             updateXLims(...identityLimsRef.current);
             updateZLims(...scoreLimsRef.current);
             updateYLims();
@@ -112,7 +114,7 @@ const QueryBuilder = ({
                         <FilterSlider id="sliderCoverage"
                             sliderDomain={scoreDomain}
                             sliderLimsRef={scoreLimsRef}
-                            linearGradientString={viridisCssGradient}
+                            linearGradientString={theme.gradientString}
                             onChange={updateZ}
                             onTouchEnd={updateY} />
                     </div>

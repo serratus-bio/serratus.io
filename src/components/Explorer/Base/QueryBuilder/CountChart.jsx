@@ -37,7 +37,7 @@ var yAxis;
 var dataByZStackFiltered;
 var chartZRects;
 
-export const renderChart = (data, xDomain, zDomain) => {
+export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
     setXLims(xDomain);
     zLims = zDomain;
     zDomainValues = getAllValues(...zDomain);
@@ -64,7 +64,7 @@ export const renderChart = (data, xDomain, zDomain) => {
     yScale = d3.scaleLinear()
         .range([chartHeight, 0]);
     yScale.domain(yLims).nice();
-    var colorScale = d3.scaleSequential(d3.interpolateViridis);
+    var colorScale = d3.scaleSequential(d3InterpolateFunction);
     colorScale.domain(zDomain);
 
     xAxis = chartG.append("g")

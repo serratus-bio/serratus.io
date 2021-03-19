@@ -1,8 +1,9 @@
 // definitions
 export const resultSectionId = "result";
 
-// color palettes
-export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414487, #355f8d, #2a788e, #21908d, #22a884, #42be71, #7ad151, #bddf26, #fce640)" // slight modification of https://bennettfeely.com/cssscales/#viridis
+// color palettes, derived from https://bennettfeely.com/scales
+export const viridisCssGradient = "linear-gradient(90deg, #440154, #482475, #414487, #355f8d, #2a788e, #21908d, #22a884, #42be71, #7ad151, #bddf26, #fce640)"
+export const infernoCssGradient = "linear-gradient(90deg, #000004, #140B35, #3A0963, #60136E, #85216B, #A92E5E, #CB4149, #E65D2F, #F78311, #FCAD12, #F5DB4B)"
 
 // filtering
 

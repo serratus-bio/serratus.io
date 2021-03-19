@@ -1,5 +1,8 @@
 import React from 'react';
 import ExplorerBase from '../Base';
+import { ThemeContext } from '../Base/ThemeContext';
+import { viridisCssGradient } from '../Base/ExplorerHelpers';
+import { interpolateViridis } from 'd3';
 
 export default function NucleotideExplorer({location}) {
     const searchType = 'nucleotide';
@@ -9,7 +12,12 @@ export default function NucleotideExplorer({location}) {
         'run': '',
     };
 
-    return <>
+    const theme = {
+        gradientString: viridisCssGradient,
+        d3InterpolateFunction: interpolateViridis,
+    }
+
+    return <ThemeContext.Provider value={theme}>
         <ExplorerBase
             searchType={searchType}
             defaultSearchLevelValues={defaultValues}
@@ -17,5 +25,5 @@ export default function NucleotideExplorer({location}) {
             scoreDomain={[0, 100]}
             location={location}
         />
-    </>
+    </ThemeContext.Provider>
 }
