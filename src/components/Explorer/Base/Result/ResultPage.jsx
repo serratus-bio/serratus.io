@@ -6,10 +6,12 @@ import GenericChart, {
 import RunChart, {
     renderChart as renderRunChart
 } from './Chart/RunChart';
+import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 const resultItemsKey = "result";
 
 const ResultPage = ({searchLevel, dataPromise}) => {
+    const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -25,11 +27,11 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             setIsLoading(false);
             if (searchLevel === "run") {
                 setHasResults(data && data.length !== 0);
-                renderRunChart(data, columns);
+                renderRunChart(data, columns, context.result.theme.d3InterpolateFunction);
             }
             else {
                 setHasResults(data && data[resultItemsKey].length !== 0);
-                renderGenericChart(data[resultItemsKey], columns);
+                renderGenericChart(data[resultItemsKey], columns, context.result.theme.d3InterpolateFunction);
             }
         }).catch(err => {
             setHasError(true);

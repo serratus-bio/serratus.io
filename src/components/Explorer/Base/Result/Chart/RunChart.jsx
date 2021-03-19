@@ -42,14 +42,14 @@ const sequenceTitleKey = "virus_name"
 const sequenceCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 
-export const renderChart = (summary, columns) => {
+export const renderChart = (summary, columns, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);
     var familiesSvg = chartSvg.append("svg")
         .attr("y", tableShiftY);
 
-    drawLegend(familiesSvg);
+    drawLegend(familiesSvg, d3InterpolateFunction);
 
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
@@ -71,7 +71,7 @@ export const renderChart = (summary, columns) => {
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
             .attr("rowid", `${family[familyNameKey]}`);
-        var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i);
+        var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i, d3InterpolateFunction);
         addColumns(familyG.select("svg"), columns, colMap, family);
         addFamilyText(familySubGroup);
 
@@ -92,14 +92,15 @@ export const renderChart = (summary, columns) => {
                 .attr("family", `${family[familyNameKey]}`);
             var sequenceSubGroup = drawExpandableRow(
                 sequenceG, sequence[sequenceNameKey], "sequence",
-                sequenceCoverageData, i);
+                sequenceCoverageData, i,
+                d3InterpolateFunction);
             addColumns(sequenceG.select("svg"), columns, colMap, sequence);
             addSequenceText(sequenceSubGroup, sequence);
         });
     });
 }
 
-function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
+function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
@@ -163,7 +164,7 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex) {
         .attr("x", d => x(d.bin))
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))
+        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
     var barBorderPath = entryG
         .append("rect")

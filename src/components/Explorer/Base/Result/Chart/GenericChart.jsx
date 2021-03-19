@@ -30,14 +30,14 @@ const GenericChart = () => {
 
 export default GenericChart;
 
-export const renderChart = (results, columns) => {
+export const renderChart = (results, columns, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);
     var matchSvg = chartSvg.append("svg")
         .attr("y", tableShiftY);
 
-    drawLegend(matchSvg);
+    drawLegend(matchSvg, d3InterpolateFunction);
 
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
@@ -50,12 +50,12 @@ export const renderChart = (results, columns) => {
         var matchG = matchSvg.append("g")
             .attr("class", "sra")
             .attr("rowid", `${match[sraKey]}`);
-        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i);
+        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i, d3InterpolateFunction);
         addColumns(matchG.select("svg"), columns, colMap, match);
     });
 }
 
-function drawExpandableRow(gElement, name, heatSquareData, rowIndex) {
+function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3InterpolateFunction) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
@@ -111,7 +111,7 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex) {
         .attr("x", d => x(d.bin))
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar]))
+        .style("fill", d => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
     var barBorderPath = entryG
         .append("rect")

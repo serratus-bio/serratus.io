@@ -49,12 +49,11 @@ var cvgLims = [0, 4096];
 
 const cvgLength = 25;
 export const genomeBins = [...Array(cvgLength).keys()];
-const defaultColorMap = d3.scaleSequentialSymlog(d3.interpolateYlOrRd).domain(cvgLims);
-export function colorMap(value) {
+export function colorMap(value, d3InterpolateFunction) {
     if (value === 0) return "rgb(255, 255, 255)";
+    const defaultColorMap = d3.scaleSequentialSymlog(d3InterpolateFunction).domain(cvgLims);
     return defaultColorMap(value);
 }
-const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value));
 
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
 export const sectionWidth = 750;
@@ -79,7 +78,7 @@ function linspace(start, end, n) {
 }
 
 // adapted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d
-export function drawLegend(svgElement) {
+export function drawLegend(svgElement, d3InterpolateFunction) {
     var legendWidth = 80,
         legendHeight = 200,
         margin = { top: 10, right: 60, bottom: 10, left: 2 };
@@ -96,6 +95,8 @@ export function drawLegend(svgElement) {
         .attr('x2', '0%') // to top
         .attr('y2', '0%')
         .attr('spreadMethod', 'pad');
+
+    const colorScale = Object.values(cvgCartoonMap).map((value) => colorMap(value, d3InterpolateFunction));
 
     var pct = linspace(0, 100, colorScale.length).map(function (d) {
         return Math.round(d) + '%';

@@ -2,7 +2,7 @@ import React from 'react';
 import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { infernoCssGradient } from '../Base/ExplorerHelpers';
-import { interpolateInferno } from 'd3';
+import { interpolateInferno, interpolateYlOrRd } from 'd3';
 
 export default function RdrpExplorer({location}) {
     const context = {
@@ -19,6 +19,11 @@ export default function RdrpExplorer({location}) {
         domain: {
             identity: [45, 100],
             score: [0, 100],
+        },
+        result: {
+            theme: {
+                d3InterpolateFunction: interpolateYlOrRd,
+            },
         },
     };
 

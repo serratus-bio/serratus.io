@@ -2,7 +2,7 @@ import React from 'react';
 import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { viridisCssGradient } from '../Base/ExplorerHelpers';
-import { interpolateViridis } from 'd3';
+import { interpolateViridis, interpolateBlues } from 'd3';
 
 export default function NucleotideExplorer({location}) {
     const context = {
@@ -19,6 +19,11 @@ export default function NucleotideExplorer({location}) {
         domain: {
             identity: [75, 100],
             score: [0, 100],
+        },
+        result: {
+            theme: {
+                d3InterpolateFunction: interpolateBlues,
+            },
         },
     };
 
