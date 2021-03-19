@@ -1,35 +1,14 @@
 import React from 'react'
-import ReactDOM from "react-dom";
 import { Helmet } from 'react-helmet';
 import MapPlot from './MapPlot';
 import SelectionInfo from './SelectionInfo';
 import {
-    ExternalLink,
     helpIcon
 } from '../../common/Helpers';
-import styles from '../../styles/collapse.css';
 
-function Details({ defaultOpen = false, title, children }) {
-  function handleKey({ key }) {
-    [" ", "return"].includes(key) && setOpen(o => !o);
-  }
-  const [open, setOpen] = React.useState(defaultOpen);
-  console.log(open);
-  return (
-    <details
-      open={defaultOpen}
-      onKeyDown={handleKey}
-      onClick={() => setOpen(o => !o)}
-    >
-      <summary>{title}</summary>
-      {open && children}
-    </details>
-  );
-}
-
-const Geo = ({ collapsed, children }) => {
+const Geo = () => {
     const [selectedPoints, setSelectedPoints] = React.useState();
-    const [isCollapsed, setIsCollapsed] = React.useState(collapsed);
+    const [isCollapsed, setIsCollapsed] = React.useState(false);
 
 
     const headTags = (
@@ -61,8 +40,6 @@ const Geo = ({ collapsed, children }) => {
         </div>
 
         <div class="text-left text-gray-600">Use the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right to retrieve a list of sample details below the map.</div>
-
-        <div className="text-center">Beta Version. Feedback is welcome.</div>
 
         <SelectionInfo selectedPoints={selectedPoints} />
     </div>
