@@ -2,7 +2,7 @@ import React from 'react';
 import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { viridisCssGradient } from '../Base/ExplorerHelpers';
-import { interpolateViridis, interpolateBlues } from 'd3';
+import { interpolateViridis, interpolateYlGnBu } from 'd3';
 
 export default function NucleotideExplorer({location}) {
     const context = {
@@ -22,7 +22,7 @@ export default function NucleotideExplorer({location}) {
         },
         result: {
             theme: {
-                d3InterpolateFunction: interpolateBlues,
+                d3InterpolateFunction: interpolateYlGnBu,
             },
         },
     };
