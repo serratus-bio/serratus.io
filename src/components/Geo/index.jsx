@@ -7,7 +7,7 @@ import {
     ExternalLink,
     helpIcon
 } from '../../common/Helpers';
-
+import styles from '../../styles/collapse.css';
 
 function Details({ defaultOpen = false, title, children }) {
   function handleKey({ key }) {
@@ -45,7 +45,6 @@ const Geo = ({ collapsed, children }) => {
           <button className="text-left collapse-button" onClick={() => setIsCollapsed(!isCollapsed)} >
             {helpIcon} Info
           </button>
-
         <div
           className={`collapse-content ${!isCollapsed ? 'collapsed' : 'expanded'}`}
           aria-expanded={isCollapsed}
