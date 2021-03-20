@@ -32,14 +32,14 @@ const Geo = () => {
             
             <p>This map shows the location of BioSamples from which an intact RdRP sequence could be recovered and geographical meta-data was present.</p>
             
-            <p> A 100-meter randomization is applied to all points to prevent overplotting.</p>
+            <p>A 100-meter randomization is applied to all points to prevent overplotting.</p>
         </div>
 
         <div className="my-2">
             <MapPlot setSelectedPoints={setSelectedPoints} />
         </div>
 
-        <div class="text-left text-gray-600">Use the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right to retrieve a list of sample details below the map.</div>
+        <div class="text-left text-gray-600">Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right.</div>
 
         <SelectionInfo selectedPoints={selectedPoints} />
     </div>
