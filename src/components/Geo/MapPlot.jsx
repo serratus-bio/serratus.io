@@ -40,7 +40,7 @@ const layout = {
     mapbox: { style: "open-street-map", zoom: 1, pitch: 15 },
     margin: { t: 0, b: 0, l: 0, r: 0 },
     autosize: true,
-    clickmode: 'select',
+    clickmode: 'select+event',
 };
 
 async function getData() {
