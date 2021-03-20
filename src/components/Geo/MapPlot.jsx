@@ -37,9 +37,10 @@ export default function MapPlot({ setSelectedPoints }) {
 }
 
 const layout = {
-    mapbox: { style: "open-street-map", zoom: 1 },
+    mapbox: { style: "open-street-map", zoom: 1, pitch: 15 },
     margin: { t: 0, b: 0, l: 0, r: 0 },
     autosize: true,
+    clickmode: 'select',
 };
 
 async function getData() {
@@ -69,10 +70,12 @@ async function getData() {
         type: "scattermapbox",
         lon: unpack(rows, 'coordinate_x'),
         lat: unpack(rows, 'coordinate_y'),
+        mode: "markers",
         customdata: rows,
         text: getHoverText(rows),
         hoverinfo: "text",
-        marker: { color: "Maroon", size: 4 },
-        radius: 3,
+        marker: { color: "Maroon", size: 5, opacity: 1 },
+        radius: 4,
+        selected: {marker: { color: "Purple", size: 7, opacity: 1 } },
     }];
 }
