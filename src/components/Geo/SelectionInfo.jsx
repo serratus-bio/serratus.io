@@ -21,7 +21,7 @@ const SelectionInfo = ({ selectedPoints }) => {
                 </tr>
                 {displayPoints.map(point =>
                     <tr key={point.run_id}>
-                        <td className={tdClasses}>{point.run_id}</td>
+                        <td className={tdClasses}><ExternalLink href={`/explorer/rdrp?run=${point.run_id}`} className="text-blue-600">{point.run_id}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/biosample/?term=${point.biosample_id}`} className="text-blue-600">{point.biosample_id}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}><ExternalLink href={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${point.tax_id}`} className="text-blue-600">{point.scientific_name}{externalLinkIcon}</ExternalLink></td>
                         <td className={tdClasses}>{point.release_date}</td>
