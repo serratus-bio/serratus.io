@@ -3,6 +3,7 @@ import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { infernoCssGradient } from '../Base/ExplorerHelpers';
 import { interpolateInferno, interpolateYlOrRd } from 'd3';
+import LinkButtons from './LinkButtons';
 
 export default function RdrpExplorer({location}) {
     const context = {
@@ -47,6 +48,7 @@ export default function RdrpExplorer({location}) {
                     "fill": "#658fc4"
                 }
             },
+            LinkButtons: LinkButtons,
             theme: {
                 d3InterpolateFunction: interpolateYlOrRd,
             },

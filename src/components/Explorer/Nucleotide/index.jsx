@@ -3,6 +3,7 @@ import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { viridisCssGradient } from '../Base/ExplorerHelpers';
 import { interpolateViridis, interpolateYlGnBu } from 'd3';
+import LinkButtons from './LinkButtons';
 
 export default function NucleotideExplorer({location}) {
     const context = {
@@ -47,6 +48,7 @@ export default function NucleotideExplorer({location}) {
                     "fill": "#658fc4"
                 }
             },
+            LinkButtons: LinkButtons,
             theme: {
                 d3InterpolateFunction: interpolateYlGnBu,
             },

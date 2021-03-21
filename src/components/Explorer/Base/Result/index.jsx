@@ -3,7 +3,6 @@ import Paginator from './Paginator';
 import ResultPage from './ResultPage';
 import {
     getDataPromise,
-    getPageLinks,
     getTitle,
     DownloadButton,
 } from './ResultHelpers';
@@ -16,7 +15,7 @@ const Result = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
     const [dataPromise, setDataPromise] = React.useState();
     const [pageTitle, setPageTitle] = React.useState();
     const [searchLevelValueCorrected, setSearchLevelValueCorrected] = React.useState(searchLevelValue);
-    const links = getPageLinks(searchLevel, searchLevelValueCorrected);
+    const LinkButtons = context.result.LinkButtons;
 
     React.useEffect(() => {
         if (!searchLevelValue) {
@@ -53,7 +52,9 @@ const Result = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
                     </div>
                 </div>
                 <div className="flex justify-center items-center my-2">
-                    {links}
+                    <LinkButtons
+                        searchLevel={searchLevel}
+                        searchLevelValue={searchLevelValueCorrected} />
                 </div>
             </div>
             <div className="p-6">

@@ -1,10 +1,7 @@
 import React from "react";
 import {
     LinkButton,
-    ExternalLink,
-    externalLinkIcon,
     downloadIcon,
-    helpIcon,
 } from 'common';
 import {
     tryGetGenBankTitle,
@@ -16,71 +13,6 @@ import {
     fetchSraRun,
 } from './SerratusApiCalls';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
-
-export const getPageLinks = (searchLevel, searchLevelValue) => {
-    if (searchLevel === "family") {
-        var link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${searchLevelValue}`;
-        var text = "Taxonomy Browser"
-        if (searchLevelValue === "AMR") {
-            link = "https://card.mcmaster.ca/";
-            text = "Database Website";
-        }
-        return (
-            <div>
-                <LinkButton
-                    link={link}
-                    text={text}
-                    icon={externalLinkIcon}
-                    newTab={true} />
-            </div>
-        )
-    }
-    if (searchLevel === "sequence") {
-        return (
-            <div>
-                <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/nuccore/${searchLevelValue}`}
-                    text="GenBank"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-            </div>
-        )
-    }
-    if (searchLevel === "run") {
-        return (
-            <div>
-                <LinkButton
-                    link={`https://www.ncbi.nlm.nih.gov/sra/?term=${searchLevelValue}`}
-                    text="SRA"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-                <LinkButton
-                    link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${searchLevelValue}`}
-                    text="Trace"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-                <LinkButton
-                    link={`${window.location.origin}/jbrowse?bam=${searchLevelValue}`}
-                    text="JBrowse"
-                    icon={externalLinkIcon}
-                    newTab={true} />
-                <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/bam/${searchLevelValue}.bam`}
-                    text=".bam"
-                    icon={downloadIcon}
-                    download={true} />
-                <LinkButton
-                    link={`https://s3.amazonaws.com/lovelywater/summary2/${searchLevelValue}.summary`}
-                    text=".summary"
-                    icon={downloadIcon}
-                    download={true} />
-                <div className="inline-flex -ml-1">
-                    <ExternalLink href="https://github.com/ababaian/serratus/wiki/.summary-Reports">{helpIcon}</ExternalLink>
-                </div>
-            </div>
-        )
-    }
-}
 
 export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCorrected) => {
     console.log("Fetching Entrez data...");
