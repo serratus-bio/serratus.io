@@ -4,7 +4,7 @@ import MapPlot from './MapPlot';
 import SelectionInfo from './SelectionInfo';
 import {
     helpIcon
-} from '../../common/Helpers';
+} from 'common';
 
 const Geo = () => {
     const [selectedPoints, setSelectedPoints] = React.useState();
@@ -39,7 +39,7 @@ const Geo = () => {
             <MapPlot setSelectedPoints={setSelectedPoints} />
         </div>
 
-        <div class="text-left text-gray-600">Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right.</div>
+        <div className="text-left text-gray-600">Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the top-right.</div>
 
         <SelectionInfo selectedPoints={selectedPoints} />
     </div>
