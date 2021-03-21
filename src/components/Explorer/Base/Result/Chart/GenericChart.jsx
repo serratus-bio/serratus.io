@@ -6,7 +6,6 @@ import {
     cvgCartoonMap,
     genomeBins,
     colorMap,
-    colMap,
     sectionMargin,
     sectionWidth,
     sectionHeight,
@@ -30,7 +29,7 @@ const GenericChart = () => {
 
 export default GenericChart;
 
-export const renderChart = (results, columns, d3InterpolateFunction) => {
+export const renderChart = (results, columns, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);

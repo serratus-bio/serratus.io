@@ -18,33 +18,6 @@ export const cvgCartoonMap = {
     "^": 4096,
 }
 
-export const colMap = {
-    "score": {
-        "name": "Score",
-        "desc": "Assembly-prediction score",
-        "valueSuffix": "",
-        "size": 50,
-        "domain": [0, 100],
-        "fill": "#67c286"
-    },
-    "percent_identity": {
-        "name": "Identity",
-        "desc": "Alignment identity",
-        "size": 70,
-        "valueSuffix": "%",
-        "domain": [75, 100],
-        "fill": "#fdb53c"
-    },
-    "n_reads": {
-        "name": "Reads",
-        "desc": "Number of alignments",
-        "size": 70,
-        "valueSuffix": "",
-        "domain": [0, 1000],
-        "fill": "#658fc4"
-    }
-}
-
 var cvgLims = [0, 4096];
 
 const cvgLength = 25;

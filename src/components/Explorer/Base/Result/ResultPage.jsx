@@ -27,11 +27,11 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             setIsLoading(false);
             if (searchLevel === "run") {
                 setHasResults(data && data.length !== 0);
-                renderRunChart(data, columns, context.result.theme.d3InterpolateFunction);
+                renderRunChart(data, columns, context.result.colMap, context.result.theme.d3InterpolateFunction);
             }
             else {
                 setHasResults(data && data[resultItemsKey].length !== 0);
-                renderGenericChart(data[resultItemsKey], columns, context.result.theme.d3InterpolateFunction);
+                renderGenericChart(data[resultItemsKey], columns, context.result.colMap, context.result.theme.d3InterpolateFunction);
             }
         }).catch(err => {
             setHasError(true);

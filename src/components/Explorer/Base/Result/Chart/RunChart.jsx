@@ -6,7 +6,6 @@ import {
     cvgCartoonMap,
     genomeBins,
     colorMap,
-    colMap,
     sectionMargin,
     sectionWidth,
     sectionHeight,
@@ -42,7 +41,7 @@ const sequenceTitleKey = "virus_name"
 const sequenceCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 
-export const renderChart = (summary, columns, d3InterpolateFunction) => {
+export const renderChart = (summary, columns, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);

@@ -21,6 +21,32 @@ export default function NucleotideExplorer({location}) {
             score: [0, 100],
         },
         result: {
+            colMap: {
+                "score": {
+                    "name": "Score",
+                    "desc": "Assembly-prediction score",
+                    "valueSuffix": "",
+                    "size": 50,
+                    "domain": [0, 100],
+                    "fill": "#67c286"
+                },
+                "percent_identity": {
+                    "name": "Identity",
+                    "desc": "Average read-alignment identity (nt)",
+                    "size": 70,
+                    "valueSuffix": "%",
+                    "domain": [75, 100],
+                    "fill": "#fdb53c"
+                },
+                "n_reads": {
+                    "name": "Reads",
+                    "desc": "Number of aligned reads (bowtie2)",
+                    "size": 70,
+                    "valueSuffix": "",
+                    "domain": [0, 1000],
+                    "fill": "#658fc4"
+                }
+            },
             theme: {
                 d3InterpolateFunction: interpolateYlGnBu,
             },
