@@ -29,7 +29,7 @@ const GenericChart = () => {
 
 export default GenericChart;
 
-export const renderChart = (results, columns, colMap, d3InterpolateFunction) => {
+export const renderChart = (results, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 500`);
@@ -42,7 +42,7 @@ export const renderChart = (results, columns, colMap, d3InterpolateFunction) => 
     var columnHeadersG = chartSvg.append("g")
         .attr("transform", `translate(0, ${tableShiftY - sectionHeight})`);
     addHeaders(columnHeadersG);
-    addColumns(columnHeadersG, columns, colMap);
+    addColumns(columnHeadersG, colMap);
 
     results.forEach((match, i) => {
         var coverageData = getCoverageData(match);
@@ -50,7 +50,7 @@ export const renderChart = (results, columns, colMap, d3InterpolateFunction) => 
             .attr("class", "sra")
             .attr("rowid", `${match[sraKey]}`);
         var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i, d3InterpolateFunction);
-        addColumns(matchG.select("svg"), columns, colMap, match);
+        addColumns(matchG.select("svg"), colMap, match);
     });
 }
 

@@ -132,14 +132,14 @@ export function addHeaders(gElement) {
             `translate(${xShift}, ${yShift})`);
 }
 
-export function addColumns(gElement, columns, colMap, summaryEntry = null) {
+export function addColumns(gElement, colMap, summaryEntry = null) {
     var yShift = 15;
     var colHeight = sectionHeight;
     var textG = gElement.append("g")
         .attr("transform",
             `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`);
     var prevWidth = 0;
-    columns.forEach((column) => {
+    Object.keys(colMap).forEach((column) => {
         var colAttrs = colMap[column];
         var colWidth = colAttrs["size"];
         var colText = summaryEntry ? summaryEntry[column] : colAttrs["name"];

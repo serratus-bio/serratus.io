@@ -41,7 +41,7 @@ const sequenceTitleKey = "virus_name"
 const sequenceCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 
-export const renderChart = (summary, columns, colMap, d3InterpolateFunction) => {
+export const renderChart = (summary, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);
@@ -54,7 +54,7 @@ export const renderChart = (summary, columns, colMap, d3InterpolateFunction) => 
     var columnHeadersG = chartSvg.append("g")
         .attr("transform", `translate(0, ${tableShiftY - sectionHeight})`);
     addHeaders(columnHeadersG);
-    addColumns(columnHeadersG, columns, colMap);
+    addColumns(columnHeadersG, colMap);
 
     var familyTextHeight = 50;
 
@@ -71,7 +71,7 @@ export const renderChart = (summary, columns, colMap, d3InterpolateFunction) => 
             .attr("class", "family")
             .attr("rowid", `${family[familyNameKey]}`);
         var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i, d3InterpolateFunction);
-        addColumns(familyG.select("svg"), columns, colMap, family);
+        addColumns(familyG.select("svg"), colMap, family);
         addFamilyText(familySubGroup);
 
         var familySequencesG = familySubGroup.append("g")
@@ -93,7 +93,7 @@ export const renderChart = (summary, columns, colMap, d3InterpolateFunction) => 
                 sequenceG, sequence[sequenceNameKey], "sequence",
                 sequenceCoverageData, i,
                 d3InterpolateFunction);
-            addColumns(sequenceG.select("svg"), columns, colMap, sequence);
+            addColumns(sequenceG.select("svg"), colMap, sequence);
             addSequenceText(sequenceSubGroup, sequence);
         });
     });
