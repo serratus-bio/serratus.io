@@ -58,17 +58,12 @@ function RunLinkButtons({run_id}) {
             icon={externalLinkIcon}
             newTab={true} />
         <LinkButton
-            link={`${window.location.origin}/jbrowse?bam=${run_id}`}
-            text="JBrowse"
-            icon={externalLinkIcon}
-            newTab={true} />
-        <LinkButton
-            link={`https://s3.amazonaws.com/lovelywater/bam/${run_id}.bam`}
-            text=".bam"
+            link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}
+            text=".pro"
             icon={downloadIcon}
             download={true} />
         <LinkButton
-            link={`https://s3.amazonaws.com/lovelywater/summary2/${run_id}.summary`}
+            link={`https://s3.amazonaws.com/lovelywater/rsummary/${run_id}.psummary`}
             text=".summary"
             icon={downloadIcon}
             download={true} />
