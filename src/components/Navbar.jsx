@@ -12,7 +12,7 @@ const Navbar = () => {
         <NavLink exact to="/" className="ml-10 w-20 h-8 "><img src="/logo.png" alt="logo"></img></NavLink>
         <div className="justify-flex-end mt-1 mr-10">
           <NavLink exact to="/explorer" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Explorer</NavLink>
-          <NavLink exact to="/explorer-rdrp" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">RdRP Explorer (beta)</NavLink>
+          <NavLink exact to="/explorer/rdrp" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">RdRP Explorer (beta)</NavLink>
           <NavLink exact to="/geo" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Map (beta)</NavLink>
           <NavLink exact to="/about" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">About</NavLink>
           <NavLink exact to="/team" className="ml-10 hover:text-blue-800" activeClassName="text-blue-600">Team</NavLink>
