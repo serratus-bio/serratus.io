@@ -15,6 +15,8 @@ const ResultPage = ({searchLevel, dataPromise}) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
+    
+    function loadSecondChart(name) { console.log(`${name}`) };
 
     React.useEffect(() => {
         if(!dataPromise) {
@@ -26,7 +28,8 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             setIsLoading(false);
             if (searchLevel === "run") {
                 setHasResults(data && data.length !== 0);
-                renderRunChart(data, context.result.colMap, context.result.theme.d3InterpolateFunction);
+                const familySectionKey = "families"
+                renderRunChart(data[familySectionKey], context.result.colMap, context.result.theme.d3InterpolateFunction, loadSecondChart);
             }
             else {
                 setHasResults(data && data[resultItemsKey].length !== 0);

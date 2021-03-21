@@ -13,7 +13,6 @@ import {
     barWidth,
     barHeight,
     barBorder,
-    caretWidth,
     drawLegend,
     addHeaders,
     addColumns,
@@ -28,20 +27,10 @@ const RunChart = () => {
 
 export default RunChart;
 
-const familySectionKey = "families"
-const sequenceSectionKey = "sequences"
-
-const runIdKey = "run_id"
 const familyNameKey = "family_name"
-const maxSequences = 10;
-const sequenceSortKey = "n_reads"
-const sequenceNameKey = "sequence_accession"
-const sequenceFamilyNameKey = "family_name"
-const sequenceTitleKey = "virus_name"
-const sequenceCoverageKey = "coverage_bins"
 const familyCoverageKey = "coverage_bins"
 
-export const renderChart = (summary, colMap, d3InterpolateFunction) => {
+export const renderChart = (results, colMap, d3InterpolateFunction, loadSecondChart) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);
@@ -56,50 +45,24 @@ export const renderChart = (summary, colMap, d3InterpolateFunction) => {
     addHeaders(columnHeadersG);
     addColumns(columnHeadersG, colMap);
 
-    var familyTextHeight = 50;
-
-    var sequencesByFamily = d3.nest()
-        .key(d => d[sequenceFamilyNameKey])
-        .entries(summary[sequenceSectionKey])
-        .reduce(function (obj, x) {
-            obj[x["key"]] = x["values"]
-            return obj;
-        }, {});
-    summary[familySectionKey].forEach((family, i) => {
-        var familyCoverageData = getCoverageData(family, familyCoverageKey);
+    results.forEach((family, i) => {
         var familyG = familiesSvg.append("g")
             .attr("class", "family")
             .attr("rowid", `${family[familyNameKey]}`);
-        var familySubGroup = drawExpandableRow(familyG, family[familyNameKey], "family", familyCoverageData, i, d3InterpolateFunction);
-        addColumns(familyG.select("svg"), colMap, family);
-        addFamilyText(familySubGroup);
-
-        var familySequencesG = familySubGroup.append("g")
-            .attr("class", "family-sequences")
-            .attr("transform", `translate(0, ${familyTextHeight})`)
-
-        var sequences = sequencesByFamily[family[familyNameKey]]
-            .sort((a, b) => parseFloat(a[sequenceSortKey]) < parseFloat(b[sequenceSortKey]));
-        if (sequences.length > maxSequences) {
-            sequences = sequences.slice(0, maxSequences);
-        }
-        sequences.forEach((sequence, i) => {
-            var sequenceCoverageData = getCoverageData(sequence, sequenceCoverageKey);
-            var sequenceG = familySequencesG.append("g")
-                .attr("class", "sequence")
-                .attr("rowid", `${sequence[sequenceNameKey]}`)
-                .attr("family", `${family[familyNameKey]}`);
-            var sequenceSubGroup = drawExpandableRow(
-                sequenceG, sequence[sequenceNameKey], "sequence",
-                sequenceCoverageData, i,
-                d3InterpolateFunction);
-            addColumns(sequenceG.select("svg"), colMap, sequence);
-            addSequenceText(sequenceSubGroup, sequence);
+        drawExpandableRow({
+            gElement: familyG,
+            name: family[familyNameKey],
+            rowType: "family",
+            coverageData: getCoverageData(family, familyCoverageKey),
+            rowIndex: i,
+            d3InterpolateFunction: d3InterpolateFunction,
+            loadSecondChart: loadSecondChart,
         });
+        addColumns(familyG.select("svg"), colMap, family);
     });
 }
 
-function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction) {
+function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction, loadSecondChart}) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
@@ -125,7 +88,6 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3In
     yAxis.select("path").remove();
     yAxis.select("line").remove();
     yAxis.selectAll("text")
-        .attr("x", -caretWidth)
         .style("font-size", 12)
         .style("fill", "blue")
         .style('cursor', 'pointer')
@@ -137,7 +99,7 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3In
                 .append("a")
                 .attr("xlink:href", link)
             linkA.append("rect")
-                .attr("x", -(caretWidth + textWidth))
+                .attr("x", -textWidth)
                 .attr("y", -8)
                 .attr("width", textWidth)
                 .attr("height", textHeight)
@@ -145,18 +107,10 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3In
                 .style("opacity", 0)
         });
 
-    var caret = yAxis.append("g")
-        .attr("transform", `translate(-12, 9)`)
-        .append("path")
-        .attr("class", "expand-caret")
-        .attr("d", d3.symbol().type(d3.symbolTriangle))
-        .attr('fill', 'black')
-        .attr("transform", "rotate(-30)");
+    var heatMap = entryG.append("g")
+        .attr("class", "heatmap");
 
-    var heatBar = entryG.append("g")
-        .attr("class", "heatbar");
-
-    var heatSquares = heatBar.selectAll()
+    var heatSquares = heatMap.selectAll()
         .data(coverageData)
         .enter()
         .append("rect")
@@ -167,173 +121,18 @@ function drawExpandableRow(gElement, name, rowType, coverageData, rowIndex, d3In
 
     var barBorderPath = entryG
         .append("rect")
+        .attr("class", "heatmap-border")
         .attr("width", barWidth)
         .attr("height", barHeight)
         .style("fill", "none")
         .style("stroke", barBorder.color)
         .style("stroke-width", barBorder.size);
 
-    var heatmapCover = entryG
-        .append("rect")
+    var clickExpandRect = entryG.append("rect")
+        .attr("class", "heatmap-click")
+        .attr("visibility", "visible")
         .attr("width", barWidth)
         .attr("height", barHeight)
-        .attr("class", "heatmap-cover")
         .style("opacity", 0)
-        .style("fill", "#000");
-
-    var clickExpandShiftX = 20
-    var clickExpandRect = entryG.append("rect")
-        .attr("class", "click-expand")
-        .attr("visibility", "visible")
-        .attr("transform", `translate(${-clickExpandShiftX}, 0)`)
-        .attr("width", barWidth + clickExpandShiftX)
-        .attr("height", barHeight)
-        .style("opacity", 0)
-        .style('cursor', 'pointer').on("click", function () {
-            if (rowType === "family") {
-                toggleFamilyRow(name);
-            }
-            else {
-                var familyName = gElement.attr("family");
-                toggleSequenceRow(familyName, name);
-            }
-        });
-
-    var subsection = entrySvg
-        .append("g")
-        .attr("class", "subsection")
-        .attr("visibility", "hidden")
-        .attr("transform",
-            `translate(0, ${sectionMargin.top + barHeight})`);
-    return subsection
-}
-
-function toggleVisibilityValue(currentValue) {
-    return (currentValue === "visible" ? "hidden" : "visible");
-}
-
-function toggleIRow(allRows, currentRow, subsectionHeight) {
-    var subsectionG = currentRow.select("g.subsection");
-    var subsectionVisibility = subsectionG.attr("visibility");
-    var subSectionVisible = subsectionVisibility === "visible";
-    var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
-    var caretRotate = subSectionVisible ? -30 : 60;
-    var fadeTime = 500;
-    var shift = false;
-    allRows.each(function (d, i) {
-        if (shift) {
-            var currentY = parseInt(d3.select(this).select("svg").attr("y"));
-            d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
-        }
-        if (d3.select(this).attr("rowid") === currentRow.attr("rowid")) {
-            shift = true;
-            subsectionG.attr("visibility", toggleVisibilityValue(subsectionVisibility));
-            var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
-            d3.select(this).select(".click-expand")
-                .attr("visibility", "hidden");
-            d3.select(this).select("svg")
-                .transition().duration(fadeTime)
-                .attr("height", currentHeight + shiftY);
-            d3.select(this).select(".expand-caret")
-                .transition().duration(fadeTime)
-                .attr("transform", `rotate(${caretRotate})`)
-                .on("end", () => {
-                    d3.select(this).select(".click-expand")
-                        .attr("visibility", "visible");
-                });
-        }
-        else {
-            d3.select(this).select(".heatmap-cover")
-                .transition().duration(fadeTime)
-                .style("opacity", subSectionVisible ? 0 : 0.4);
-            var currentClickExpandVisibility = d3.select(this).select(".click-expand")
-                .attr("visibility");
-            d3.select(this).select(".click-expand")
-                .attr("visibility", toggleVisibilityValue(currentClickExpandVisibility));
-        }
-    });
-}
-
-function toggleFamilyRow(familyName) {
-    var allRows = d3.selectAll(".family");
-    var currentRow = d3.select(`.family[rowid="${familyName}"]`);
-    var subsectionHeight = 300;
-    var waitForSequence = false;
-    currentRow.selectAll(".sequence").each(function (d, i) {
-        var sequenceName = d3.select(this).attr("rowid");
-        var isExpanded = !d3.select(this).select(`.subsection[visibility="visible"]`).empty();
-        if (isExpanded) {
-            toggleSequenceRow(familyName, sequenceName);
-            waitForSequence = true;
-        }
-    });
-    var timeout = waitForSequence ? 500 : 0;  // hacky fix for family+acc collapse
-    setTimeout(() => { toggleIRow(allRows, currentRow, subsectionHeight) }, timeout);
-}
-
-function shiftLowerFamilies(familyName, shiftY) {
-    var fadeTime = 500;
-    var shift = false;
-    d3.selectAll(".family").each(function (d, i) {
-        if (shift) {
-            var currentY = parseInt(d3.select(this).select("svg").attr("y"));
-            d3.select(this).select("svg").transition().duration(fadeTime).attr("y", currentY + shiftY);
-        }
-        if (d3.select(this).attr("rowid") === familyName) {
-            shift = true;
-            var currentHeight = parseInt(d3.select(this).select("svg").attr("height"));
-            d3.select(this).select("svg").transition().duration(fadeTime).attr("height", currentHeight + shiftY);
-        }
-    });
-}
-
-function toggleSequenceRow(familyName, sequenceName) {
-    var allRows = d3.selectAll(".sequence");
-    var currentRow = d3.select(`.sequence[rowid="${sequenceName}"]`);
-    var subsectionVisibility = currentRow.select("g.subsection").attr("visibility");
-    var subSectionVisible = subsectionVisibility === "visible";
-    var subsectionHeight = 100;
-    var shiftY = subSectionVisible ? -subsectionHeight : subsectionHeight;
-    toggleIRow(allRows, currentRow, subsectionHeight);
-    shiftLowerFamilies(familyName, shiftY);
-}
-
-function addFamilyText(gElement) {
-    var textGroup = gElement.append("g")
-        .attr("transform",
-            `translate(${sectionMargin.left}, ${sectionMargin.top})`);
-
-    var sequenceHeaderY = 40;
-    var textEntry = textGroup.append("text")
-        .attr("transform",
-            `translate(0, ${sequenceHeaderY})`)
-        .text(`Top ${maxSequences} GenBank accessions by read count:`);
-}
-
-function addSequenceText(gElement, sequence) {
-    // Sequence title
-    var textGroup = gElement.append("g")
-        .attr("transform",
-            `translate(${sectionMargin.left}, ${sectionMargin.top + 14})`);
-    var sequenceTitle = textGroup.append("text")
-        .text("Name: " + sequence[sequenceTitleKey])
-        .style("font-size", 10);
-
-    // JBrowse link
-    var jBrowseG = textGroup.append("g")
-        .attr("transform",
-            `translate(0, 20)`);
-    var jBrowseLink = `/jbrowse?bam=${sequence[runIdKey]}&loc=${sequence[sequenceNameKey]}`
-    var jBrowseTitle = jBrowseG.append("text")
-        .text("View Alignment")
-        .style("fill", "blue")
-    var jBrowseA = jBrowseG.append("a")
-        .attr("xlink:href", jBrowseLink)
-    jBrowseA.append("rect")
-        .attr("x", 0)
-        .attr("y", -15)
-        .attr("width", 120)
-        .attr("height", 20)
-        .attr("fill", "black")
-        .style("opacity", 0)
+        .style('cursor', 'pointer').on("click", () => loadSecondChart(name));
 }

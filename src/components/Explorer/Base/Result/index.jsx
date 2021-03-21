@@ -1,6 +1,6 @@
 import React from 'react';
 import Paginator from './Paginator';
-import ResultPage from './ResultPage';
+import ResultPage from './ResultChart';
 import {
     getDataPromise,
     getTitle,
