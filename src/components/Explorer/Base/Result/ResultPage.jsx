@@ -39,7 +39,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             }
             setIsLoading(false);
         });
-    }, [searchLevel, dataPromise, context.result.theme.d3InterpolateFunction]);
+    }, [searchLevel, dataPromise, context.result]);
 
     let loading = (
         <div className="text-center">
