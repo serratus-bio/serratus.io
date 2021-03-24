@@ -27,7 +27,7 @@ const RunChart = () => {
 
 export default RunChart;
 
-const familyNameKey = "family_name"
+const familyNameKey = "family_id"
 const familyCoverageKey = "coverage_bins"
 
 export const renderChart = (results, colMap, d3InterpolateFunction, loadSecondChart) => {
