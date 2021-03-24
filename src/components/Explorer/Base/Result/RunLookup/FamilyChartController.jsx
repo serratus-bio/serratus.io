@@ -1,11 +1,11 @@
 import React from 'react';
 import { ExternalLink } from "common";
-import RunChart, {
+import Chart, {
     renderChart as renderRunChart
 } from './FamilyChartD3';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
-const ResultPage = ({searchLevel, dataPromise}) => {
+const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -13,9 +13,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
     function drilldownCallback(name) { console.log(`${name}`) };
 
     React.useEffect(() => {
-        if(!dataPromise) {
-            return;
-        }
+        if(!dataPromise) return;
         setIsLoading(true);
 
         dataPromise.then((data) => {
@@ -27,7 +25,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             // TODO: handle error
             setIsLoading(false);
         });
-    }, [searchLevel, dataPromise, context.result]);
+    }, [dataPromise, context.result]);
 
     let loading = (
         <div className="text-center">
@@ -52,7 +50,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
     if (!hasResults) {
         return noResultsRun
     }
-    return <RunChart />
+    return <Chart />
 }
 
-export default ResultPage;
+export default ChartController;

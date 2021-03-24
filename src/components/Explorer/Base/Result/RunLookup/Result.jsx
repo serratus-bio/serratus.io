@@ -1,6 +1,6 @@
 import React from 'react';
 import Paginator from '../Paginator';
-import ResultPage from './FamilyChartController';
+import ChartController from './FamilyChartController';
 import { getTitle } from '../ResultHelpers';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 import { fetchPagedRunMatches } from './SerratusApiCalls';
@@ -15,18 +15,14 @@ const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims
     const LinkButtons = context.result.LinkButtons;
 
     React.useEffect(() => {
-        if (!searchLevelValue) {
-            return;
-        }
+        if (!searchLevelValue) return;
         console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
         let valueCorrected = searchLevelValue;
         getTitle(searchLevel, searchLevelValue, valueCorrected).then(setPageTitle);
     }, [searchLevel, searchLevelValue]);
 
     React.useEffect(() => {
-        if (!searchLevelValue) {
-            return;
-        }
+        if (!searchLevelValue) return;
         setDataPromise(fetchPagedRunMatches(context.searchType, searchLevelValue, pageNumber, perPage));
     }, [context.searchType, searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims]);
 
@@ -51,8 +47,7 @@ const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims
                     perPage={perPage}
                     setPageNumber={setPageNumber}
                     dataPromise={dataPromise} />
-                <ResultPage
-                    searchLevel={searchLevel}
+                <ChartController
                     dataPromise={dataPromise} />
             </div>
         </div>

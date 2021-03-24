@@ -7,18 +7,15 @@ import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 const resultItemsKey = "result";
 
-const ResultChart = ({searchLevel, dataPromise}) => {
+const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [hasError, setHasError] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        if(!dataPromise) {
-            return;
-        }
+        if(!dataPromise) return;
         setIsLoading(true);
-
         dataPromise.then((data) => {
             setIsLoading(false);
             setHasResults(data && data[resultItemsKey].length !== 0);
@@ -27,7 +24,7 @@ const ResultChart = ({searchLevel, dataPromise}) => {
             setHasError(true);
             setIsLoading(false);
         });
-    }, [searchLevel, dataPromise, context.result]);
+    }, [dataPromise, context.result]);
 
     let loading = (
         <div className="text-center">
@@ -55,4 +52,4 @@ const ResultChart = ({searchLevel, dataPromise}) => {
     return <Chart />
 }
 
-export default ResultChart;
+export default ChartController;

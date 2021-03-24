@@ -19,13 +19,13 @@ import {
     getCoverageData,
 } from '../ChartHelpers';
 
-const chartId = "runChart"
+const chartId = "run-family-lookup-chart"
 
-const RunChart = () => {
+const Chart = () => {
     return <div id={chartId} />
 }
 
-export default RunChart;
+export default Chart;
 
 const familyNameKey = "family_id"
 const familyCoverageKey = "coverage_bins"

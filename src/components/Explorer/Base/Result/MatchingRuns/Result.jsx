@@ -1,6 +1,6 @@
 import React from 'react';
 import Paginator from '../Paginator';
-import ResultChart from './ChartController';
+import ChartController from './ChartController';
 import {
     getTitle,
     DownloadButton,
@@ -19,9 +19,7 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
     const LinkButtons = context.result.LinkButtons;
 
     React.useEffect(() => {
-        if (!searchLevelValue) {
-            return;
-        }
+        if (!searchLevelValue) return;
         console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
         // check for AMR accession
         let valueCorrected = searchLevelValue;
@@ -37,9 +35,7 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
     }, [searchLevel, searchLevelValue]);
 
     React.useEffect(() => {
-        if (!searchLevelValue) {
-            return;
-        }
+        if (!searchLevelValue) return;
         setDataPromise(fetchPagedMatches(context.searchType, searchLevel, searchLevelValue, pageNumber, perPage, identityLims, scoreLims));
     }, [context.searchType, searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims]);
 
@@ -64,8 +60,7 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
                     perPage={perPage}
                     setPageNumber={setPageNumber}
                     dataPromise={dataPromise} />
-                <ResultChart
-                    searchLevel={searchLevel}
+                <ChartController
                     dataPromise={dataPromise} />
                 <DownloadButton
                     searchLevel={searchLevel}

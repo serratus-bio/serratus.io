@@ -19,15 +19,15 @@ import {
     getCoverageData,
 } from '../ChartHelpers';
 
-const chartId = "familyChart"
+const chartId = "matching-runs-chart"
 
 const sraKey = "run_id"
 
-const GenericChart = () => {
+const Chart = () => {
     return <div id={chartId} />
 }
 
-export default GenericChart;
+export default Chart;
 
 export const renderChart = (results, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
