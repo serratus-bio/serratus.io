@@ -5,12 +5,10 @@ import Chart, {
 } from './FamilyChartD3';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
-const ChartController = ({dataPromise}) => {
+const ChartController = ({dataPromise, drilldownCallback}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
-    
-    function drilldownCallback(name) { console.log(`${name}`) };
 
     React.useEffect(() => {
         if(!dataPromise) return;
