@@ -10,7 +10,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
     
-    function loadSecondChart(name) { console.log(`${name}`) };
+    function drilldownCallback(name) { console.log(`${name}`) };
 
     React.useEffect(() => {
         if(!dataPromise) {
@@ -22,7 +22,7 @@ const ResultPage = ({searchLevel, dataPromise}) => {
             setIsLoading(false);
             setHasResults(data && data.length !== 0);
             const familySectionKey = "families"
-            renderRunChart(data[familySectionKey], context.result.colMap, context.result.theme.d3InterpolateFunction, loadSecondChart);
+            renderRunChart(data[familySectionKey], context.result.colMap, context.result.theme.d3InterpolateFunction, drilldownCallback);
         }).catch(err => {
             // TODO: handle error
             setIsLoading(false);

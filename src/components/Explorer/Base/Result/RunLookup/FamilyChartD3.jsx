@@ -30,7 +30,7 @@ export default RunChart;
 const familyNameKey = "family_id"
 const familyCoverageKey = "coverage_bins"
 
-export const renderChart = (results, colMap, d3InterpolateFunction, loadSecondChart) => {
+export const renderChart = (results, colMap, d3InterpolateFunction, drilldownCallback) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
         .attr("viewBox", `0 0 750 700`);
@@ -56,13 +56,13 @@ export const renderChart = (results, colMap, d3InterpolateFunction, loadSecondCh
             coverageData: getCoverageData(family, familyCoverageKey),
             rowIndex: i,
             d3InterpolateFunction: d3InterpolateFunction,
-            loadSecondChart: loadSecondChart,
+            drilldownCallback: drilldownCallback,
         });
         addColumns(familyG.select("svg"), colMap, family);
     });
 }
 
-function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction, loadSecondChart}) {
+function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction, drilldownCallback}) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
@@ -134,5 +134,5 @@ function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3I
         .attr("width", barWidth)
         .attr("height", barHeight)
         .style("opacity", 0)
-        .style('cursor', 'pointer').on("click", () => loadSecondChart(name));
+        .style('cursor', 'pointer').on("click", () => drilldownCallback(name));
 }
