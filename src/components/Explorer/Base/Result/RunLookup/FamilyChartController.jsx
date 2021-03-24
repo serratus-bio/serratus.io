@@ -21,8 +21,8 @@ const ResultPage = ({searchLevel, dataPromise}) => {
         dataPromise.then((data) => {
             setIsLoading(false);
             setHasResults(data && data.length !== 0);
-            const familySectionKey = "families"
-            renderRunChart(data[familySectionKey], context.result.colMap, context.result.theme.d3InterpolateFunction, drilldownCallback);
+            const resultItemsKey = "result";
+            renderRunChart(data[resultItemsKey], context.result.colMap, context.result.theme.d3InterpolateFunction, drilldownCallback);
         }).catch(err => {
             // TODO: handle error
             setIsLoading(false);

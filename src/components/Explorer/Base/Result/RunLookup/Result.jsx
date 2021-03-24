@@ -3,7 +3,7 @@ import Paginator from '../Paginator';
 import ResultPage from './FamilyChartController';
 import { getTitle } from '../ResultHelpers';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
-import { fetchSraRun } from './SerratusApiCalls';
+import { fetchPagedRunMatches } from './SerratusApiCalls';
 
 // for run -> family/sequence lookup
 const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
@@ -27,7 +27,7 @@ const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims
         if (!searchLevelValue) {
             return;
         }
-        setDataPromise(fetchSraRun(context.searchType, searchLevelValue));
+        setDataPromise(fetchPagedRunMatches(context.searchType, searchLevelValue, pageNumber, perPage));
     }, [context.searchType, searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims]);
 
     return (
