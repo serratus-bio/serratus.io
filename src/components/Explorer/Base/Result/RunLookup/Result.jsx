@@ -6,7 +6,7 @@ import { BaseContext } from 'components/Explorer/Base/BaseContext';
 import { fetchPagedRunMatches } from './SerratusApiCalls';
 
 // for run -> family/sequence lookup
-const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
+const RunLookupResult = ({runId}) => {
     const context = React.useContext(BaseContext);
     const perPage = 20;
     const [pageNumber, setPageNumber] = React.useState(1);
@@ -15,29 +15,28 @@ const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims
     const LinkButtons = context.result.LinkButtons;
 
     React.useEffect(() => {
-        if (!searchLevelValue) return;
-        console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
-        getRunTitle(searchLevelValue).then(setPageTitle);
-    }, [searchLevel, searchLevelValue]);
+        if (!runId) return;
+        getRunTitle(runId).then(setPageTitle);
+    }, [runId]);
 
     React.useEffect(() => {
-        if (!searchLevelValue) return;
-        setDataPromise(fetchPagedRunMatches(context.searchType, searchLevelValue, pageNumber, perPage));
-    }, [context.searchType, searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims]);
+        if (!runId) return;
+        setDataPromise(fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage));
+    }, [context.searchType, runId, pageNumber]);
 
     return (
         <div className="max-w-4xl m-auto">
             <div>
                 <div className="w-full text-center">
                     <div>
-                        <div className="text-xl font-bold">{searchLevelValue}</div>
+                        <div className="text-xl font-bold">{runId}</div>
                         {pageTitle && <div className="text-lg italic">{pageTitle}</div>}
                     </div>
                 </div>
                 <div className="flex justify-center items-center my-2">
                     <LinkButtons
-                        searchLevel={searchLevel}
-                        searchLevelValue={searchLevelValue} />
+                        searchLevel="run"
+                        searchLevelValue={runId} />
                 </div>
             </div>
             <div className="p-6">

@@ -6,10 +6,7 @@ const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
     if (searchLevel === "run") {
         return <>
             <RunLookupResult
-                searchLevel={searchLevel}
-                searchLevelValue={searchLevelValue}
-                identityLims={identityLims}
-                scoreLims={scoreLims}
+                runId={searchLevelValue}
             />
         </>
     }
