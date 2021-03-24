@@ -2,10 +2,10 @@ import React from 'react';
 import { ExternalLink } from "common";
 import Chart, {
     renderChart as renderRunChart
-} from './FamilyChartD3';
+} from './SequenceChartD3';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
-const ChartController = ({dataPromise, drilldownCallback}) => {
+const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -18,12 +18,12 @@ const ChartController = ({dataPromise, drilldownCallback}) => {
             setIsLoading(false);
             setHasResults(data && data.length !== 0);
             const resultItemsKey = "result";
-            renderRunChart(data[resultItemsKey], context.result.colMap, context.result.theme.d3InterpolateFunction, drilldownCallback);
+            renderRunChart(data[resultItemsKey], context.result.colMap, context.result.theme.d3InterpolateFunction);
         }).catch(err => {
             // TODO: handle error
             setIsLoading(false);
         });
-    }, [dataPromise, context.result, drilldownCallback]);
+    }, [dataPromise, context.result]);
 
     let loading = (
         <div className="text-center">

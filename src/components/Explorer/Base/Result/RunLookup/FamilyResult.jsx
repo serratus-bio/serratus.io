@@ -8,7 +8,7 @@ import { fetchPagedRunMatches } from './SerratusApiCalls';
 // for run -> family/sequence lookup
 const FamilyResult = ({runId, drilldownCallback}) => {
     const context = React.useContext(BaseContext);
-    const perPage = 20;
+    const perPage = 10;
     const [pageNumber, setPageNumber] = React.useState(1);
     const [dataPromise, setDataPromise] = React.useState();
     const [pageTitle, setPageTitle] = React.useState();

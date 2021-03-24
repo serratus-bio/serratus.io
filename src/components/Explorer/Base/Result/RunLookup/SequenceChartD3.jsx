@@ -19,7 +19,7 @@ import {
     getCoverageData,
 } from '../ChartHelpers';
 
-const chartId = "run-family-lookup-chart"
+const chartId = "run-sequence-lookup-chart"
 
 const Chart = () => {
     return <div id={chartId} />
@@ -27,17 +27,17 @@ const Chart = () => {
 
 export default Chart;
 
-const familyNameKey = "family_id"
-const familyCoverageKey = "coverage_bins"
+const sequenceNameKey = "sequence_accession"
+const covergaeKey = "coverage_bins"
 
-export const renderChart = (results, colMap, d3InterpolateFunction, drilldownCallback) => {
+export const renderChart = (results, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
-        .attr("viewBox", `0 0 750 250`);
-    var familiesSvg = chartSvg.append("svg")
+        .attr("viewBox", `0 0 750 400`);
+    var sequencesSvg = chartSvg.append("svg")
         .attr("y", tableShiftY);
 
-    drawLegend(familiesSvg, d3InterpolateFunction);
+    drawLegend(sequencesSvg, d3InterpolateFunction);
 
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
@@ -45,20 +45,19 @@ export const renderChart = (results, colMap, d3InterpolateFunction, drilldownCal
     addHeaders(columnHeadersG);
     addColumns(columnHeadersG, colMap);
 
-    results.forEach((family, i) => {
-        var familyG = familiesSvg.append("g")
-            .attr("class", "family")
-            .attr("rowid", `${family[familyNameKey]}`);
+    results.forEach((sequence, i) => {
+        var sequenceG = sequencesSvg.append("g")
+            .attr("class", "sequence")
+            .attr("rowid", `${sequence[sequenceNameKey]}`);
         drawExpandableRow({
-            gElement: familyG,
-            name: family[familyNameKey],
-            rowType: "family",
-            coverageData: getCoverageData(family, familyCoverageKey),
+            gElement: sequenceG,
+            name: sequence[sequenceNameKey],
+            rowType: "sequence",
+            coverageData: getCoverageData(sequence, covergaeKey),
             rowIndex: i,
             d3InterpolateFunction: d3InterpolateFunction,
-            drilldownCallback: drilldownCallback,
         });
-        addColumns(familyG.select("svg"), colMap, family);
+        addColumns(sequenceG.select("svg"), colMap, sequence);
     });
 }
 
@@ -128,11 +127,11 @@ function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3I
         .style("stroke", barBorder.color)
         .style("stroke-width", barBorder.size);
 
-    var clickExpandRect = entryG.append("rect")
-        .attr("class", "heatmap-click")
-        .attr("visibility", "visible")
-        .attr("width", barWidth)
-        .attr("height", barHeight)
-        .style("opacity", 0)
-        .style('cursor', 'pointer').on("click", () => drilldownCallback(name));
+    // var clickExpandRect = entryG.append("rect")
+    //     .attr("class", "heatmap-click")
+    //     .attr("visibility", "visible")
+    //     .attr("width", barWidth)
+    //     .attr("height", barHeight)
+    //     .style("opacity", 0)
+    //     .style('cursor', 'pointer').on("click", () => drilldownCallback(name));
 }
