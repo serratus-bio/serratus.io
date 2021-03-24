@@ -2,7 +2,9 @@ import React from 'react';
 import Paginator from '../Paginator';
 import ChartController from './ChartController';
 import {
-    getTitle,
+    getFamilyTitle,
+    getSequenceName,
+    getSequenceTitle,
     DownloadButton,
 } from '../ResultHelpers';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
@@ -21,17 +23,14 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
     React.useEffect(() => {
         if (!searchLevelValue) return;
         console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
-        // check for AMR accession
-        let valueCorrected = searchLevelValue;
-        if (searchLevel === "sequence") {
-            let patternForAMR = /.*_\d{7}/g;
-            let isFromAMR = searchLevelValue.match(patternForAMR);
-            if (isFromAMR) {
-                valueCorrected = valueCorrected.slice(0, valueCorrected.lastIndexOf("_"));
-                setSearchLevelValueCorrected(valueCorrected);
-            }
+
+        if (searchLevel === 'family') {
+            getFamilyTitle(searchLevelValue).then(setPageTitle);
         }
-        getTitle(searchLevel, searchLevelValue, valueCorrected).then(setPageTitle);
+        else { // sequence
+            getSequenceTitle(searchLevelValue).then(setPageTitle);
+            setSearchLevelValueCorrected(getSequenceName(searchLevelValue));
+        }
     }, [searchLevel, searchLevelValue]);
 
     React.useEffect(() => {

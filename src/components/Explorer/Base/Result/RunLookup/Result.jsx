@@ -1,7 +1,7 @@
 import React from 'react';
 import Paginator from '../Paginator';
 import ChartController from './FamilyChartController';
-import { getTitle } from '../ResultHelpers';
+import { getRunTitle } from '../ResultHelpers';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 import { fetchPagedRunMatches } from './SerratusApiCalls';
 
@@ -17,8 +17,7 @@ const RunLookupResult = ({searchLevel, searchLevelValue, identityLims, scoreLims
     React.useEffect(() => {
         if (!searchLevelValue) return;
         console.log(`Loading search result page for ${searchLevel}=${searchLevelValue}.`);
-        let valueCorrected = searchLevelValue;
-        getTitle(searchLevel, searchLevelValue, valueCorrected).then(setPageTitle);
+        getRunTitle(searchLevelValue).then(setPageTitle);
     }, [searchLevel, searchLevelValue]);
 
     React.useEffect(() => {

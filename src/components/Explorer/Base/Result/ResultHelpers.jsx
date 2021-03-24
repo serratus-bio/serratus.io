@@ -12,31 +12,35 @@ import {
 } from './MatchingRuns/SerratusApiCalls';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
-export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCorrected) => {
-    console.log("Fetching Entrez data...");
-    let title = null;
-    switch (searchLevel) {
-        case "family":
-            if (searchLevelValue === "AMR") {
-                title = "The Comprehensive Antibiotic Resistance Database (CARD)";
-            }
-            break;
-        case "sequence":
-            if (searchLevelValue !== searchLevelValueCorrected) {
-                title = await tryGetGenBankTitle(searchLevelValueCorrected);
-                title = `[AMR] ${title}`;
-            }
-            else {
-                title = await tryGetGenBankTitle(searchLevelValue);
-            }
-            break;
-        case "run":
-            title = await tryGetSraStudyName(searchLevelValue);
-            break;
-        default:
+export async function getRunTitle(run) {
+    return await tryGetSraStudyName(run);
+}
+
+export async function getSequenceTitle(sequence) {
+    let sequenceCorrected = getSequenceName(sequence);
+    if (sequence !== sequenceCorrected) {
+        let genbankTitle = await tryGetGenBankTitle(sequenceCorrected);
+        return `[AMR] ${genbankTitle}`;
     }
-    console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
-    return title;
+    else {
+        return await tryGetGenBankTitle(sequence);
+    }
+}
+
+export async function getFamilyTitle(family) {
+    if (family === "AMR") {
+        return "The Comprehensive Antibiotic Resistance Database (CARD)";
+    }
+    return null;
+}
+
+export function getSequenceName(sequence) {
+    let patternForAMR = /.*_\d{7}/g;
+    let isFromAMR = sequence.match(patternForAMR);
+    if (isFromAMR) {
+        return sequence.slice(0, sequence.lastIndexOf("_"));
+    }
+    return sequence;
 }
 
 export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {

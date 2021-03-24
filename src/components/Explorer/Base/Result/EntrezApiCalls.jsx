@@ -42,7 +42,7 @@ export const tryGetSraStudyName = async (accession) => {
         return entrezStudyName;
     }
     catch (err) {
-        return;
+        return null;
     }
 }
 
