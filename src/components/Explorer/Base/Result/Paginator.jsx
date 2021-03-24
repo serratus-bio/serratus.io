@@ -3,11 +3,11 @@ import React from "react";
 const resultTotalKey = "total";
 
 const Paginator = ( {pageNumber, perPage, setPageNumber, dataPromise} ) => {
-  const [numPages, setNumPages] = React.useState();
+  const [numPages, setNumPages] = React.useState(); // from dataPromise later
   const [loading, setLoading] = React.useState(true);
   
   const visibleButton = "bg-gray-300 hover:bg-gray-500 mx-2 py-1 px-4 rounded inline-flex items-center";
-  const invisibleButton = "invisible" + visibleButton;
+  const invisibleButton = "invisible " + visibleButton;
   const centerButtons = "flex flex-row justify-center items-center";
 
   const nextPage = () => setPageNumber(pageNumber + 1);

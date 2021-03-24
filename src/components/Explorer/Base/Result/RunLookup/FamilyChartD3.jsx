@@ -17,26 +17,27 @@ import {
     addHeaders,
     addColumns,
     getCoverageData,
-} from './ChartHelpers';
+} from '../ChartHelpers';
 
-const chartId = "familyChart"
+const chartId = "runChart"
 
-const sraKey = "run_id"
-
-const GenericChart = () => {
+const RunChart = () => {
     return <div id={chartId} />
 }
 
-export default GenericChart;
+export default RunChart;
 
-export const renderChart = (results, colMap, d3InterpolateFunction) => {
+const familyNameKey = "family_name"
+const familyCoverageKey = "coverage_bins"
+
+export const renderChart = (results, colMap, d3InterpolateFunction, loadSecondChart) => {
     var chartSvg = d3.select(`#${chartId}`)
         .append("svg")
-        .attr("viewBox", `0 0 750 500`);
-    var matchSvg = chartSvg.append("svg")
+        .attr("viewBox", `0 0 750 700`);
+    var familiesSvg = chartSvg.append("svg")
         .attr("y", tableShiftY);
 
-    drawLegend(matchSvg, d3InterpolateFunction);
+    drawLegend(familiesSvg, d3InterpolateFunction);
 
     var columnTooltipSvgText = chartSvg.append("text").attr("id", "tooltip");
     var columnHeadersG = chartSvg.append("g")
@@ -44,17 +45,24 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
     addHeaders(columnHeadersG);
     addColumns(columnHeadersG, colMap);
 
-    results.forEach((match, i) => {
-        var coverageData = getCoverageData(match);
-        var matchG = matchSvg.append("g")
-            .attr("class", "sra")
-            .attr("rowid", `${match[sraKey]}`);
-        var matchSubGroup = drawExpandableRow(matchG, match[sraKey], coverageData, i, d3InterpolateFunction);
-        addColumns(matchG.select("svg"), colMap, match);
+    results.forEach((family, i) => {
+        var familyG = familiesSvg.append("g")
+            .attr("class", "family")
+            .attr("rowid", `${family[familyNameKey]}`);
+        drawExpandableRow({
+            gElement: familyG,
+            name: family[familyNameKey],
+            rowType: "family",
+            coverageData: getCoverageData(family, familyCoverageKey),
+            rowIndex: i,
+            d3InterpolateFunction: d3InterpolateFunction,
+            loadSecondChart: loadSecondChart,
+        });
+        addColumns(familyG.select("svg"), colMap, family);
     });
 }
 
-function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3InterpolateFunction) {
+function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3InterpolateFunction, loadSecondChart}) {
     var entrySvg = gElement.append("svg")
         .attr("y", rowIndex * sectionHeight)
         .attr("width", sectionWidth)
@@ -84,15 +92,14 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
         .style("fill", "blue")
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link = `${window.location.pathname}?run=${name}`;
-            var offsetX = 0
-            var textWidth = 80;
+            var link = `${window.location.pathname}?${rowType}=${name}`;
+            var textWidth = 100;
             var textHeight = 14;
-            d3.select(this.parentNode)
+            var linkA = d3.select(this.parentNode)
                 .append("a")
                 .attr("xlink:href", link)
-                .append("rect")
-                .attr("x", offsetX - textWidth)
+            linkA.append("rect")
+                .attr("x", -textWidth)
                 .attr("y", -8)
                 .attr("width", textWidth)
                 .attr("height", textHeight)
@@ -100,11 +107,11 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
                 .style("opacity", 0)
         });
 
-    var heatBar = entryG.append("g")
-        .attr("class", "heatbar");
+    var heatMap = entryG.append("g")
+        .attr("class", "heatmap");
 
-    var heatSquares = heatBar.selectAll()
-        .data(heatSquareData)
+    var heatSquares = heatMap.selectAll()
+        .data(coverageData)
         .enter()
         .append("rect")
         .attr("x", d => x(d.bin))
@@ -114,17 +121,18 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
 
     var barBorderPath = entryG
         .append("rect")
+        .attr("class", "heatmap-border")
         .attr("width", barWidth)
         .attr("height", barHeight)
         .style("fill", "none")
         .style("stroke", barBorder.color)
         .style("stroke-width", barBorder.size);
 
-    var heatmapCover = entryG
-        .append("rect")
+    var clickExpandRect = entryG.append("rect")
+        .attr("class", "heatmap-click")
+        .attr("visibility", "visible")
         .attr("width", barWidth)
         .attr("height", barHeight)
-        .attr("class", "heatmap-cover")
         .style("opacity", 0)
-        .style("fill", "#000");
+        .style('cursor', 'pointer').on("click", () => loadSecondChart(name));
 }

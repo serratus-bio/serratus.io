@@ -9,9 +9,7 @@ import {
 } from './EntrezApiCalls';
 import {
     getMatchesDownloadUrl,
-    fetchPagedMatches,
-    fetchSraRun,
-} from './SerratusApiCalls';
+} from './MatchingRuns/SerratusApiCalls';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCorrected) => {
@@ -39,13 +37,6 @@ export const getTitle = async (searchLevel, searchLevelValue, searchLevelValueCo
     }
     console.log(title ? "Done fetching Entrez data." : "Could not load Entrez data.");
     return title;
-}
-
-export const getDataPromise = (searchType, searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange) => {
-    if (searchLevel === "run") {
-        return fetchSraRun(searchType, searchLevelValue);
-    }
-    return fetchPagedMatches(searchType, searchLevel, searchLevelValue, page, perPage, identityRange, scoreRange);
 }
 
 export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
