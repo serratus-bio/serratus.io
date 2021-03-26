@@ -31,7 +31,9 @@ export function colorMap(value, d3InterpolateFunction) {
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
 export const sectionWidth = 750;
 export const sectionHeight = 20;
-export const tableShiftY = 20;
+export const headerTextHeight = 25;
+export const tooltipY = 15;
+export const tableShiftY = headerTextHeight + tooltipY;
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
 export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
 
@@ -148,7 +150,7 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
             .text(colText)
             .style("text-anchor", "middle")
             .attr("x", prevWidth + (colWidth / 2));
-        if (summaryEntry && (colText != null)) {
+        if (summaryEntry) {
             text.text(colText + colAttrs.valueSuffix)
                 .style("opacity", 0)
                 .attr("column", column)
@@ -174,7 +176,6 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
         }
         var tooltipFontSize = 10;
         var tooltipX = sectionMargin.left + barWidth + prevWidth + (colWidth / 2);
-        var tooltipY = 15;
         var hoverForColumnText = textG.append("rect")
             .attr("width", colWidth)
             .attr("height", colHeight)

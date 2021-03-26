@@ -2,7 +2,7 @@ import React from "react";
 import * as d3 from 'd3';
 import {
     sectionHeight as rowHeight,
-    tableShiftY as headerTextHeight,
+    tableShiftY,
     drawLegend,
     addHeaders,
     addColumns,
@@ -20,13 +20,13 @@ export class SequenceChart {
             .append("svg")
             .attr("viewBox", `0 0 750 400`);
         this.sequencesSvg = rootSvg.append("svg")
-            .attr("y", headerTextHeight);
+            .attr("y", tableShiftY);
 
         drawLegend(this.sequencesSvg, d3InterpolateFunction);
 
         var columnTooltipSvgText = rootSvg.append("text").attr("id", "tooltip");
         var columnHeadersG = rootSvg.append("g")
-            .attr("transform", `translate(0, ${headerTextHeight - rowHeight})`);
+            .attr("transform", `translate(0, ${tableShiftY - rowHeight})`);
         addHeaders(columnHeadersG);
         addColumns(columnHeadersG, colMap);
 
