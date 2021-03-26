@@ -90,7 +90,7 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
             var textHeight = 14;
             d3.select(this.parentNode)
                 .append("a")
-                .attr("xlink:href", link)
+                .attr("href", link)
                 .append("rect")
                 .attr("x", offsetX - textWidth)
                 .attr("y", -8)

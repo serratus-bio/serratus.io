@@ -97,7 +97,7 @@ function drawExpandableRow({gElement, name, rowType, coverageData, rowIndex, d3I
             var textHeight = 14;
             var linkA = d3.select(this.parentNode)
                 .append("a")
-                .attr("xlink:href", link)
+                .attr("href", link)
             linkA.append("rect")
                 .attr("x", -textWidth)
                 .attr("y", -8)

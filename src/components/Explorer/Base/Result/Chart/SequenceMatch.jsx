@@ -112,7 +112,7 @@ export class SequenceMatch {
         const xShift = 725;  // TODO: compute from colMap
         const yShift = (rowHeight - iconHeight) / 2;
         this.mainSvg.append("image")
-            .attr('xlink:href', image)
+            .attr('href', image)
             .attr('width', iconWidth)
             .attr('height', iconHeight)
             .attr("transform",
@@ -120,7 +120,8 @@ export class SequenceMatch {
             .style("fill", "blue")
             .style('cursor', 'pointer');
         this.mainSvg.append("a")
-            .attr("xlink:href", link)
+            .attr("href", link)
+            .attr("target", "_blank")
             .append("rect")
             .attr('width', iconWidth)
             .attr('height', iconHeight)
