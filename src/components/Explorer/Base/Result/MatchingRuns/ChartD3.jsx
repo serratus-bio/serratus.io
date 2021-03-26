@@ -17,7 +17,7 @@ import {
     addHeaders,
     addColumns,
     getCoverageData,
-} from '../ChartHelpers';
+} from '../Chart/ChartHelpers';
 
 const chartId = "matching-runs-chart"
 

@@ -31,7 +31,7 @@ export function colorMap(value, d3InterpolateFunction) {
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
 export const sectionWidth = 750;
 export const sectionHeight = 20;
-export const tableShiftY = 40;
+export const tableShiftY = 20;
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
 export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
 
@@ -148,31 +148,29 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
             .text(colText)
             .style("text-anchor", "middle")
             .attr("x", prevWidth + (colWidth / 2));
-        if (summaryEntry) {
-            if (colText != null) {
-                text.text(colText + colAttrs.valueSuffix)
-                    .style("opacity", 0)
-                    .attr("column", column)
-                    .style("font-size", 12);
-                var diff = parseInt(colText) - colAttrs["domain"][0];
-                var diffCapped = Math.min(diff, colAttrs["domain"][1]);
-                var range = colAttrs["domain"][1] - colAttrs["domain"][0];
-                var colorBarWidth = Math.max(0, colWidth * diffCapped / range);
-                var colorBar = cellG.append("rect")
-                    .attr("fill", colAttrs["fill"])
-                    .attr("width", colorBarWidth)
-                    .attr("height", colHeight)
-                    .attr("x", prevWidth)
-                    .attr("y", -yShift);
-                var border = cellG.append("rect")
-                    .attr("fill", "none")
-                    .style("stroke", "black")
-                    .style("stroke-width", 1)
-                    .attr("width", colWidth)
-                    .attr("height", colHeight)
-                    .attr("x", prevWidth)
-                    .attr("y", -yShift);
-            }
+        if (summaryEntry && (colText != null)) {
+            text.text(colText + colAttrs.valueSuffix)
+                .style("opacity", 0)
+                .attr("column", column)
+                .style("font-size", 12);
+            var diff = parseInt(colText) - colAttrs["domain"][0];
+            var diffCapped = Math.min(diff, colAttrs["domain"][1]);
+            var range = colAttrs["domain"][1] - colAttrs["domain"][0];
+            var colorBarWidth = Math.max(0, colWidth * diffCapped / range);
+            var colorBar = cellG.append("rect")
+                .attr("fill", colAttrs["fill"])
+                .attr("width", colorBarWidth)
+                .attr("height", colHeight)
+                .attr("x", prevWidth)
+                .attr("y", -yShift);
+            var border = cellG.append("rect")
+                .attr("fill", "none")
+                .style("stroke", "black")
+                .style("stroke-width", 1)
+                .attr("width", colWidth)
+                .attr("height", colHeight)
+                .attr("x", prevWidth)
+                .attr("y", -yShift);
         }
         var tooltipFontSize = 10;
         var tooltipX = sectionMargin.left + barWidth + prevWidth + (colWidth / 2);

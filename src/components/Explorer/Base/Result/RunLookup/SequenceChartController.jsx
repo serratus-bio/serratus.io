@@ -1,14 +1,13 @@
 import React from 'react';
 import { ExternalLink } from "common";
-import Chart, {
-    renderChart as renderRunChart
-} from './SequenceChartD3';
+import { SequenceChart } from '../Chart/SequenceChart';
 import { BaseContext } from 'components/Explorer/Base/BaseContext';
 
 const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
+    const chart = new SequenceChart("run-sequence-lookup-chart");
 
     React.useEffect(() => {
         if(!dataPromise) return;
@@ -18,7 +17,7 @@ const ChartController = ({dataPromise}) => {
             setIsLoading(false);
             setHasResults(data && data.length !== 0);
             const resultItemsKey = "result";
-            renderRunChart(data[resultItemsKey], context.result.colMap, context.result.theme.d3InterpolateFunction);
+            chart.render(data[resultItemsKey], context.result.colMap, context.result.theme.d3InterpolateFunction);
         }).catch(err => {
             // TODO: handle error
             setIsLoading(false);
@@ -48,7 +47,7 @@ const ChartController = ({dataPromise}) => {
     if (!hasResults) {
         return noResultsRun
     }
-    return <Chart />
+    return chart.component;
 }
 
 export default ChartController;

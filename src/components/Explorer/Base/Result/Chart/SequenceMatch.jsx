@@ -44,14 +44,14 @@ export class SequenceMatch {
     addLinkAndHeatmap() {
         const coverageData = getCoverageData(this.data, coverageKey);
 
-        const mainSvg = this.sequenceG.append("svg")
+        this.mainSvg = this.sequenceG.append("svg")
             .attr("y", this.rowIndex * rowHeight)
             .attr("width", rowWidth)
             .attr("height", rowHeight)
             .attr("border", rowBorder.size)
             .style("display", "block")
 
-        const mainG = mainSvg.append("g")
+        const mainG = this.mainSvg.append("g")
             .attr("transform",
                 `translate(${sectionMargin.left}, ${sectionMargin.top})`);
 
@@ -101,6 +101,18 @@ export class SequenceMatch {
     }
 
     addStats() {
-        addColumns(this.sequenceG.select("svg"), this.colMap, this.data);
+        addColumns(this.mainSvg, this.colMap, this.data);
+    }
+
+    addJBrowseIcon() {
+        this.mainSvg.append("text").html("JB")
+            .attr("transform",
+                `translate(${725}, ${15})`)
+                .style("fill", "blue")
+            .style('cursor', 'pointer')
+            .on("click", () => {
+                const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`;
+                window.location = link;
+            });
     }
 }
