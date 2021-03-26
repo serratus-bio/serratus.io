@@ -105,14 +105,27 @@ export class SequenceMatch {
     }
 
     addJBrowseIcon() {
-        this.mainSvg.append("text").html("JB")
+        const image = '/atcg.png'
+        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`;
+        const iconWidth = 15;
+        const iconHeight = 15;
+        const xShift = 725;
+        const yShift = (rowHeight - iconHeight)/2;
+        this.mainSvg.append("image")
+            .attr('xlink:href', image)
+            .attr('width', iconWidth)
+            .attr('height', iconHeight)
             .attr("transform",
-                `translate(${725}, ${15})`)
-                .style("fill", "blue")
-            .style('cursor', 'pointer')
-            .on("click", () => {
-                const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`;
-                window.location = link;
-            });
+                `translate(${xShift}, ${yShift})`)
+            .style("fill", "blue")
+            .style('cursor', 'pointer');
+        this.mainSvg.append("a")
+            .attr("xlink:href", link)
+            .append("rect")
+            .attr('width', iconWidth)
+            .attr('height', iconHeight)
+            .attr("transform",
+                `translate(${xShift}, ${yShift})`)
+            .style("opacity", 0);
     }
 }
