@@ -109,8 +109,8 @@ export class SequenceMatch {
         const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`;
         const iconWidth = 15;
         const iconHeight = 15;
-        const xShift = 725;
-        const yShift = (rowHeight - iconHeight)/2;
+        const xShift = 725;  // TODO: compute from colMap
+        const yShift = (rowHeight - iconHeight) / 2;
         this.mainSvg.append("image")
             .attr('xlink:href', image)
             .attr('width', iconWidth)

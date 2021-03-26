@@ -7,7 +7,7 @@ const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
-    const chart = new SequenceChart("run-sequence-lookup-chart");
+    const [chart] = React.useState(new SequenceChart("run-sequence-lookup-chart"));
 
     React.useEffect(() => {
         if(!dataPromise) return;
@@ -22,7 +22,7 @@ const ChartController = ({dataPromise}) => {
             // TODO: handle error
             setIsLoading(false);
         });
-    }, [dataPromise, context.result]);
+    }, [dataPromise, context.result, chart]);
 
     let loading = (
         <div className="text-center">

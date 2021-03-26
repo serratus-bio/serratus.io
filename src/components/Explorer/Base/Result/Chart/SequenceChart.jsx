@@ -10,6 +10,7 @@ import {
 import { SequenceMatch } from '../Chart/SequenceMatch'
 
 export class SequenceChart {
+    // TODO: put all config in constructor params
     constructor(chartId) {
         this.chartId = chartId
         this.component = <div id={this.chartId} />
@@ -24,10 +25,12 @@ export class SequenceChart {
 
         drawLegend(this.sequencesSvg, d3InterpolateFunction);
 
-        var columnTooltipSvgText = rootSvg.append("text").attr("id", "tooltip");
         var columnHeadersG = rootSvg.append("g")
             .attr("transform", `translate(0, ${tableShiftY - rowHeight})`);
         addHeaders(columnHeadersG);
+
+        // stats headers, tooltip
+        rootSvg.append("text").attr("id", "tooltip");
         addColumns(columnHeadersG, colMap);
 
         this.addRows(results, colMap, d3InterpolateFunction);

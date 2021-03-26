@@ -31,8 +31,8 @@ export function colorMap(value, d3InterpolateFunction) {
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 };
 export const sectionWidth = 750;
 export const sectionHeight = 20;
-export const headerTextHeight = 25;
-export const tooltipY = 15;
+const headerTextHeight = 25;
+const tooltipY = 15;
 export const tableShiftY = headerTextHeight + tooltipY;
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right;
 export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom;
