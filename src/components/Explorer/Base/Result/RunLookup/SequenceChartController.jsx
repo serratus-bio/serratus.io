@@ -7,7 +7,7 @@ const ChartController = ({dataPromise}) => {
     const context = React.useContext(BaseContext);
     const [hasResults, setHasResults] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(true);
-    const [chart] = React.useState(new SequenceChart(
+    const [chart] = React.useState(() => new SequenceChart(
         "run-sequence-lookup-chart",
         context.result.colMap,
         context.result.theme.d3InterpolateFunction
