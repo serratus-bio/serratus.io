@@ -22,6 +22,7 @@ export default function RdrpExplorer({location}) {
             score: [0, 100],
         },
         result: {
+            addJbrowseLinks: false,
             colMap: {
                 "score": {
                     "name": "Score",

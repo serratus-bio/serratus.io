@@ -22,6 +22,7 @@ export default function NucleotideExplorer({location}) {
             score: [0, 100],
         },
         result: {
+            addJbrowseLinks: true,
             colMap: {
                 "score": {
                     "name": "Score",

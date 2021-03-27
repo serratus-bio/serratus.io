@@ -10,10 +10,12 @@ import {
 import { SequenceMatch } from '../Chart/SequenceMatch'
 
 export class SequenceChart {
-    constructor(chartId, colMap, d3InterpolateFunction) {
+    constructor(chartId, colMap, d3InterpolateFunction, addJbrowseLinks) {
         this.chartId = chartId;
         this.colMap = colMap;
         this.d3InterpolateFunction = d3InterpolateFunction;
+        this.addJbrowseLinks = addJbrowseLinks;
+
         this.component = <div id={this.chartId} />;
         this.rootSvg = null;
     }
@@ -65,7 +67,9 @@ export class SequenceChart {
             const match = new SequenceMatch(this.sequencesSvg, sequence, i, this.colMap, this.d3InterpolateFunction);
             match.addLinkAndHeatmap();
             match.addStats();
-            match.addJBrowseIcon();
+            if (this.addJbrowseLinks) {
+                match.addJBrowseIcon();
+            }
         });
     }
 }

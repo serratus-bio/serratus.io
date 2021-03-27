@@ -10,7 +10,8 @@ const ChartController = ({dataPromise}) => {
     const [chart] = React.useState(() => new SequenceChart(
         "run-sequence-lookup-chart",
         context.result.colMap,
-        context.result.theme.d3InterpolateFunction
+        context.result.theme.d3InterpolateFunction,
+        context.result.addJbrowseLinks
     ));
 
     React.useEffect(() => {
