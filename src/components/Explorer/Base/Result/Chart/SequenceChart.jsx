@@ -15,23 +15,46 @@ export class SequenceChart {
         this.colMap = colMap;
         this.d3InterpolateFunction = d3InterpolateFunction;
         this.component = <div id={this.chartId} />;
+        this.rootSvg = null;
+    }
+
+    componentLoaded() {
+        return Boolean(this.rootSvg);
+    }
+
+    lazyInit() {
+        if(this.rootSvg) return;
+        this.rootSvg = d3.select(`#${this.chartId}`)
+            .append("svg")
+            .attr("viewBox", `0 0 750 400`);
+    }
+
+    clearIfInit() {
+        if (!this.rootSvg) return;
+        this.rootSvg.selectAll("*").remove();
+    }
+
+    setLoading() {
+        this.clearIfInit();
+        this.rootSvg.append("text")
+            .attr("transform", `translate(${750/2}, ${tableShiftY})`)
+            .text("Loading...");
     }
 
     render(results) {
-        var rootSvg = d3.select(`#${this.chartId}`)
-            .append("svg")
-            .attr("viewBox", `0 0 750 400`);
-        this.sequencesSvg = rootSvg.append("svg")
+        this.lazyInit();
+        this.clearIfInit();
+        this.sequencesSvg = this.rootSvg.append("svg")
             .attr("y", tableShiftY);
 
         drawLegend(this.sequencesSvg, this.d3InterpolateFunction);
 
-        var columnHeadersG = rootSvg.append("g")
+        var columnHeadersG = this.rootSvg.append("g")
             .attr("transform", `translate(0, ${tableShiftY - rowHeight})`);
         addHeaders(columnHeadersG);
 
         // stats headers, tooltip
-        rootSvg.append("text").attr("id", "tooltip");
+        this.rootSvg.append("text").attr("id", "tooltip");
         addColumns(columnHeadersG, this.colMap);
 
         this.addRows(results);
