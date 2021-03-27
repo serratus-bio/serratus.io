@@ -6,9 +6,8 @@ import SequenceResult from './SequenceResult';
 // for run -> family/sequence lookup
 const RunLookupResult = ({ runId }) => {
     const [sequenceResult, setSequenceResult] = React.useState(null);
-    function drilldownCallback(family) {
-        console.log(`${family}`)
-        setSequenceResult(<SequenceResult runId={runId} familyId={family} />)
+    function drilldownCallback(familyId) {
+        setSequenceResult(<SequenceResult runId={runId} propFamilyId={familyId} />)
     };
 
     const instructions = <div className="text-center">Click a family heatmap to view sequence-level matches</div>
