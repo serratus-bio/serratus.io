@@ -3,6 +3,7 @@ import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { infernoCssGradient } from '../Base/ExplorerHelpers';
 import { interpolateInferno, interpolateYlOrRd } from 'd3';
+import Intro from './Intro';
 import LinkButtons from './LinkButtons';
 
 export default function RdrpExplorer({location}) {
@@ -17,6 +18,7 @@ export default function RdrpExplorer({location}) {
             gradientString: infernoCssGradient,
             d3InterpolateFunction: interpolateInferno,
         },
+        intro: Intro,
         domain: {
             identity: [45, 100],
             score: [0, 100],

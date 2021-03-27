@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import QueryBuilder from './QueryBuilder';
-import Intro from './Intro';
 import Result from './Result';
 import DataReference from './DataReference';
 import { classesBoxBorder } from 'common';
@@ -83,7 +82,7 @@ const ExplorerBase = ({location}) => {
             <hr className="sm:hidden" />
             <div id={resultSectionId} className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>
                 {!searchLevelProvided ?
-                    <Intro /> :
+                    <context.intro /> :
                     <Result
                         searchLevel={searchLevelStaticRef.current}
                         searchLevelValue={searchLevelValueStaticRef.current}

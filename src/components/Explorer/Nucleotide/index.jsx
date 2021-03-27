@@ -3,6 +3,7 @@ import ExplorerBase from '../Base';
 import { BaseContext } from '../Base/BaseContext';
 import { viridisCssGradient } from '../Base/ExplorerHelpers';
 import { interpolateViridis, interpolateYlGnBu } from 'd3';
+import Intro from './Intro';
 import LinkButtons from './LinkButtons';
 
 export default function NucleotideExplorer({location}) {
@@ -17,6 +18,7 @@ export default function NucleotideExplorer({location}) {
             gradientString: viridisCssGradient,
             d3InterpolateFunction: interpolateViridis,
         },
+        intro: Intro,
         domain: {
             identity: [75, 100],
             score: [0, 100],
