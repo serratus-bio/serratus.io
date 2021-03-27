@@ -10,20 +10,21 @@ import {
 import { SequenceMatch } from '../Chart/SequenceMatch'
 
 export class SequenceChart {
-    // TODO: put all config in constructor params
-    constructor(chartId) {
-        this.chartId = chartId
-        this.component = <div id={this.chartId} />
+    constructor(chartId, colMap, d3InterpolateFunction) {
+        this.chartId = chartId;
+        this.colMap = colMap;
+        this.d3InterpolateFunction = d3InterpolateFunction;
+        this.component = <div id={this.chartId} />;
     }
 
-    render(results, colMap, d3InterpolateFunction) {
+    render(results) {
         var rootSvg = d3.select(`#${this.chartId}`)
             .append("svg")
             .attr("viewBox", `0 0 750 400`);
         this.sequencesSvg = rootSvg.append("svg")
             .attr("y", tableShiftY);
 
-        drawLegend(this.sequencesSvg, d3InterpolateFunction);
+        drawLegend(this.sequencesSvg, this.d3InterpolateFunction);
 
         var columnHeadersG = rootSvg.append("g")
             .attr("transform", `translate(0, ${tableShiftY - rowHeight})`);
@@ -31,14 +32,14 @@ export class SequenceChart {
 
         // stats headers, tooltip
         rootSvg.append("text").attr("id", "tooltip");
-        addColumns(columnHeadersG, colMap);
+        addColumns(columnHeadersG, this.colMap);
 
-        this.addRows(results, colMap, d3InterpolateFunction);
+        this.addRows(results);
     }
 
-    addRows(results, colMap, d3InterpolateFunction) {
+    addRows(results) {
         results.forEach((sequence, i) => {
-            const match = new SequenceMatch(this.sequencesSvg, sequence, i, colMap, d3InterpolateFunction);
+            const match = new SequenceMatch(this.sequencesSvg, sequence, i, this.colMap, this.d3InterpolateFunction);
             match.addLinkAndHeatmap();
             match.addStats();
             match.addJBrowseIcon();
