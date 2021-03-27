@@ -36,21 +36,18 @@ export default function SearchLevelSelector({
                     <SearchLevelOption className="mx-2"  key={type} value={type} displayText={displayName[type]} checked={searchLevel === type} onChange={searchLevelChange} />
                 )}
             </div>
-            <div label="inputs">
-                <div className={searchLevel !== "run" ? "visible" : "hidden"}>
-                    <Dropdown
-                        searchType={context.searchType}
-                        searchLevel={searchLevel}
-                        searchLevelValue={values[searchLevel]}
-                        setSearchLevelValue={newValue => {setValues(oldValues => ({...oldValues, [searchLevel]: newValue}))}} />
-                </div>
-                <div className={searchLevel === "run" ? "visible" : "hidden"}>
-                    <SearchRun
-                        run={values['run']}
-                        setRun={newValue => {setValues(oldValues => ({...oldValues, run: newValue}))}}
-                        onEnter={viewMatches} />
-                </div>
-            </div>
+            {searchLevel === "run" ?
+                <SearchRun
+                    run={values['run']}
+                    setRun={newValue => { setValues(oldValues => ({ ...oldValues, run: newValue })) }}
+                    onEnter={viewMatches} />
+                :
+                <Dropdown
+                    searchType={context.searchType}
+                    searchLevel={searchLevel}
+                    searchLevelValue={values[searchLevel]}
+                    setSearchLevelValue={newValue => { setValues(oldValues => ({ ...oldValues, [searchLevel]: newValue })) }} />
+            }
         </div>
     )
 }
