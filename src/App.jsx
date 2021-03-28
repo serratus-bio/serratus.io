@@ -32,17 +32,17 @@ const App = () => {
       <Navbar></Navbar>
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/explorer-nt" component={NucleotideExplorer} />
+        <Route exact path="/explorer" component={NucleotideExplorer} />
         <Route exact path="/explorer-rdrp" component={RdrpExplorer} />
         <Route exact path="/about" component={About} />
         <Route exact path="/team" component={Team} />
         <Route exact path="/jbrowse" component={Jbrowse} />
         <Route exact path="/geo" component={Geo} />
         <Route exact path="/access" component={Access} />
-        <Route exact path="/explorer" component={() => {return <Redirect to="/explorer-nt" />}} />
-        <Route exact path="/family" component={() => {return <Redirect to="/explorer-nt" />}} />
-        <Route exact path="/explore" component={() => {return <Redirect to="/explorer-nt" />}} />
-        <Route exact path="/query" component={() => {return <Redirect to="/explorer-nt" />}} />
+        <Route exact path="/family" component={() => {return <Redirect to="/explorer" />}} />
+        <Route exact path="/explore" component={() => {return <Redirect to="/explorer" />}} />
+        <Route exact path="/query" component={() => {return <Redirect to="/explorer" />}} />
+        <Route exact path="/explorer-nt" component={() => {return <Redirect to="/explorer" />}} />
       </Switch>
       {window.location.pathname !== "/" && <Footer />}
     </div>
