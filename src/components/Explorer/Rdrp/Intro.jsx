@@ -74,7 +74,7 @@ const info = <>
 const examples = <>
     Explore Serratus by virus family name, GenBank accession (in sequence reference), or SRA run identifier.<br />
     <br />
-    Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a>, <a className="text-blue-600" href="?family=Qinviridae&identity=45-100&score=25-100">Qinviridae</a>, <a className="text-blue-600" href="family=Quenyaviridae">Quenyaviridae</a>...<br />
+    Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a>, <a className="text-blue-600" href="?family=Qinviridae&identity=45-100&score=25-100">Qinviridae</a>, <a className="text-blue-600" href="?family=Quenyaviridae">Quenyaviridae</a>...<br />
     <br />
     GenBank: <a className="text-blue-600" href="?sequence=NC_001653">Hepatitis Delta Virus (NC_001653)</a>, <a className="text-blue-600" href="?sequence=AAF26709&identity=45-100&score=15-100">Rubella (AAF26709)</a>...<br />
     
