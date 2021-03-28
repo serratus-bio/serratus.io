@@ -5,7 +5,7 @@ import {
     searchIcon,
     externalLinkIcon,
     ExternalLink,
-} from '../common/Helpers';
+} from 'common';
 
 const Home = () => {
     const headTags = (
@@ -26,8 +26,8 @@ const Home = () => {
                     </NavLink>
                     <ExternalLink className="mt-1" title='Open tutorial on project wiki' href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>Tutorial {externalLinkIcon}</ExternalLink>
                     <h3 className="inline text-lg font-thin mt-3">
-                        <span className="font-normal">3,837,755</span> runs processed<span className="border-l border-white mx-2" />
-                        <span className="font-normal">5,620,086,903,602,832</span> nucleotides
+                        <span className="font-normal">5,696,598</span> runs processed<span className="border-l border-white mx-2" />
+                        <span className="font-normal">10,167,539,273,088,080</span> nucleotides
                     </h3>
                 </div>
             </div>
