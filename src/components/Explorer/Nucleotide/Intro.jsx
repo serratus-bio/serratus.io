@@ -7,8 +7,8 @@ const Intro = () => {
     const [showMascot, setShowMascot] = React.useState(false);
 
     return <>
-        <div className="text-3xl text-center">
-            Vertebrate Viral Pangenome (NT)
+        <div className="text-3xl text-center text-maroon">
+            Vertebrate Viral Pangenome (NT) Search
         </div>
 
         <div id="info" class="text-left" >
@@ -57,13 +57,14 @@ const info = <>
         <ExternalLink href="https://s3.amazonaws.com/lovelywater/seq/cov3ma/cov3ma.fa" className="text-blue-600"> (cov3ma.fa) </ExternalLink>
     </div>
     <div>
-    Short reads were aligned against a nucleotide pangenome of:
+    Short reads were aligned against a nucleotide pangenome.
     <ol className="list-decimal list-inside">
         <li>GenBank Coronaviridae sequences clustered at 99% identity (n=10,101)</li>
         <li>non-retrovirus Vertebrate RefSeq Viruses (n=2,849)</li>
         <li><ExternalLink href="https://card.mcmaster.ca/" className="text-blue-600">CARD</ExternalLink> Antimicrobial Resistance (AMR) genes clustered at 95%</li>
     </ol>
     </div>
+    <div> Operational sensitivity: 85-99% genome-wide nucleotide identity. </div>
     <div className="font-bold my-2">
         SRA Search
         <ExternalLink href="https://github.com/ababaian/serratus/wiki/SRA-queries" className="text-blue-600"> (wiki v201210) </ExternalLink>

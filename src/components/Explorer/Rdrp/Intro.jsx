@@ -57,8 +57,9 @@ const info = <>
         <ExternalLink href="https://s3.amazonaws.com/lovelywater/seq/rdrp1/rdrp1.fa" className="text-blue-600"> (rdrp1.fa) </ExternalLink>
     </div>
     <div>
-        Short-reads were translated-nucleotide alignment against an amino-acid collection of RNA dependent RNA Polymerase from all RNA viruses (n = 14,941) and deltavirus antigen.
+        Short-reads were translated-nucleotide alignment against an amino-acid collection of RNA dependent RNA Polymerase from all RNA viruses (n = 14,941) and deltavirus antigen. 
     </div>
+    <div> Operational sensitivity: 60-95% RdRP amino acid identity. </div>
     <div className="font-bold my-2">
         SRA Search
         <ExternalLink href="https://github.com/ababaian/serratus/wiki/SRA-queries" className="text-blue-600"> (wiki) </ExternalLink>
