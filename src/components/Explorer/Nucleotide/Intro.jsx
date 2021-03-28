@@ -79,8 +79,7 @@ const examples = <>
     Explore Serratus by virus family name, GenBank accession (in sequence reference), or SRA run identifier.<br />
     <br />
     Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a>, <a className="text-blue-600" href="?family=Circoviridae">Circoviridae</a>,  <a className="text-blue-600" href="?family=Reoviridae">Reoviridae</a>... <br />
-
-   
+    <br />
     GenBank: <a className="text-blue-600" href="?sequence=NC_045512.2">SARS-CoV-2 (NC_045512.2)</a>, <a className="text-blue-600" href="?sequence=NC_001498.1">Ateline alphaherpesvirus 1 (NC_034446.1)</a>, <a className="text-blue-600" href="?sequence=NC_034446.1">Measles virus (NC_001498.1)</a>...<br />
 
     <br />
