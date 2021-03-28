@@ -36,7 +36,7 @@ const Intro = () => {
             <button className="text-center m-auto" onClick={() => setShowMascot(!showMascot)}>
                 <div align="center" id="Frank">
                     <img align="center" className="h-64" src="/Frank_Ginger.png" alt="Frank and Ginger, the Serratus mascots" />
-                    <i>The Serratus mascots: Frank and Ginger</i>
+                    <i>Serratus mascots: Frank and Ginger</i>
                 </div>
             </button>
             <div className={showMascot ? "block" : "hidden"}>
@@ -71,7 +71,7 @@ const info = <>
 </>;
 
 const examples = <>
-    Explore Serratus by virus family name, GenBank accession (in sequence refernece), or SRA run identifier.<br />
+    Explore Serratus by virus family name, GenBank accession (in sequence reference), or SRA run identifier.<br />
     <br />
     Family: <a className="text-blue-600" href="?family=Coronaviridae">Coronaviridae</a>, <a className="text-blue-600" href="?family=Qinviridae&identity=45-100&score=25-100">Qinviridae</a>, <a className="text-blue-600" href="family=Quenyaviridae">Quenyaviridae</a>...<br />
     <br />
