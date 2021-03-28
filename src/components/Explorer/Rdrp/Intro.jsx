@@ -5,10 +5,7 @@ const Intro = () => {
     const [showInfo, setShowInfo] = React.useState(false);
     const [showExamples, setShowExamples] = React.useState(true);
     const [showMascot, setShowMascot] = React.useState(false);
-
-    const [selectedPoints, setSelectedPoints] = React.useState();
-    const [isCollapsed, setIsCollapsed] = React.useState(false);
-
+    
     return <>
         <div className="text-3xl text-center">
             RNA Dependent RNA Polymerase (RdRP) Search
