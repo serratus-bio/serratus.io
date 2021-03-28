@@ -4,6 +4,7 @@ import { helpIcon, ExternalLink } from 'common';
 const Intro = () => {
     const [showInfo, setShowInfo] = React.useState(false);
     const [showExamples, setShowExamples] = React.useState(true);
+    const [showMascot, setShowMascot] = React.useState(false);
 
     const [selectedPoints, setSelectedPoints] = React.useState();
     const [isCollapsed, setIsCollapsed] = React.useState(false);
@@ -31,9 +32,16 @@ const Intro = () => {
             </div>
         </div>
 
-        <div align="center" id="Frank">
-            <img align="center" className="h-64" src="/Frank_Ginger.png" alt="Frank and Ginger, the Serratus mascots" />
-            <i>The Serratus mascots: Frank and Ginger</i>
+        <div id="mascot" class="text-center" >
+            <button className="text-center m-auto" onClick={() => setShowMascot(!showMascot)}>
+                <div align="center" id="Frank">
+                    <img align="center" className="h-64" src="/Frank_Ginger.png" alt="Frank and Ginger, the Serratus mascots" />
+                    <i>The Serratus mascots: Frank and Ginger</i>
+                </div>
+            </button>
+            <div className={showMascot ? "block" : "hidden"}>
+                <div className="my-2 sm:ml-12">{mascot}</div>
+            </div>
         </div>
     </>
 }
@@ -49,7 +57,7 @@ const info = <>
         <ExternalLink href="https://s3.amazonaws.com/lovelywater/seq/rdrp1/rdrp1.fa" className="text-blue-600"> (rdrp1.fa) </ExternalLink>
     </div>
     <div>
-        Short-reads were translated-nucleotide aligned against an amino-acid collection of RNA dependent RNA Polymerase from all RNA viruses (n = 14,941) and deltavirus antigen.
+        Short-reads were translated-nucleotide alignment against an amino-acid collection of RNA dependent RNA Polymerase from all RNA viruses (n = 14,941) and deltavirus antigen.
     </div>
     <div className="font-bold my-2">
         SRA Search
@@ -74,4 +82,10 @@ const examples = <>
     <br />
     Example 1: Frank the Bat (<a className="text-blue-600" href="?run=ERR2756788">ERR2756788</a>)<br />
     Example 2: Ginger the Cat (<a className="text-blue-600" href="?run=SRR7287110">SRR7287110</a>)<br />
+</>
+
+const mascot = <>
+    <div> Serratus is made possible through the promise of collective data-sharing. </div>
+    <div> If you learn from these data, consider your role in releasing data freely and without restriction.</div>
+    <br />
 </>
