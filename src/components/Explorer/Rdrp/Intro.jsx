@@ -1,5 +1,5 @@
 import React from 'react';
-import { helpIcon, ExternalLink } from 'common';
+import { ExternalLink } from 'common';
 
 const Intro = () => {
     const [showInfo, setShowInfo] = React.useState(false);
@@ -16,7 +16,7 @@ const Intro = () => {
 
         <div id="info" class="text-left" >
             <button className="text-xl m-auto" onClick={() => setShowInfo(!showInfo)}>
-                ► Search Information
+                {showInfo ? "▼" : "►"} Search Information
             </button>
             <div className={showInfo ? "block" : "hidden"}>
                 <div className="my-2 sm:ml-12">{info}</div>
@@ -25,7 +25,7 @@ const Intro = () => {
 
         <div id="examples" class="text-left" >
             <button className="text-xl m-auto" onClick={() => setShowExamples(!showExamples)}>
-                ► Examples
+                {showExamples ? "▼" : "►"} Examples
             </button>
             <div className={showExamples ? "block" : "hidden"}>
                 <div className="my-2 sm:ml-12">{examples}</div>
@@ -79,10 +79,7 @@ const examples = <>
     GenBank: <a className="text-blue-600" href="?sequence=NC_001653">Hepatitis Delta Virus (NC_001653)</a>, <a className="text-blue-600" href="?sequence=AAF26709&identity=45-100&score=15-100">Rubella (AAF26709)</a>...<br />
     
     <br />
-    SRA Run ID: <br />
-    <br />
-    Example 1: Frank the Bat (<a className="text-blue-600" href="?run=ERR2756788">ERR2756788</a>)<br />
-    Example 2: Ginger the Cat (<a className="text-blue-600" href="?run=SRR7287110">SRR7287110</a>)<br />
+    SRA Run ID: <a className="text-blue-600" href="?run=ERR2756788">Frank the Bat (ERR2756788)</a> and  <a className="text-blue-600" href="?run=SRR7287110">Ginger the Cat (SRR7287110)</a><br />
 </>
 
 const mascot = <>

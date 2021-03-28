@@ -13,7 +13,7 @@ const Intro = () => {
 
         <div id="info" class="text-left" >
             <button className="text-xl m-auto" onClick={() => setShowInfo(!showInfo)}>
-                ► Search Information
+                {showInfo ? "▼" : "►"} Search Information
             </button>
             <div className={showInfo ? "block" : "hidden"}>
                 <div className="my-2 sm:ml-12">{info}</div>
@@ -22,7 +22,7 @@ const Intro = () => {
 
         <div id="examples" class="text-left" >
             <button className="text-xl m-auto" onClick={() => setShowExamples(!showExamples)}>
-                ► Examples
+                {showExamples ? "▼" : "►"} Examples
             </button>
             <div className={showExamples ? "block" : "hidden"}>
                 <div className="my-2 sm:ml-12">{examples}</div>
@@ -84,10 +84,7 @@ const examples = <>
     GenBank: <a className="text-blue-600" href="?sequence=NC_045512.2">SARS-CoV-2 (NC_045512.2)</a>, <a className="text-blue-600" href="?sequence=NC_001498.1">Ateline alphaherpesvirus 1 (NC_034446.1)</a>, <a className="text-blue-600" href="?sequence=NC_034446.1">Measles virus (NC_001498.1)</a>...<br />
 
     <br />
-    SRA Run ID:<br />
-    <br />
-    Example 1: Frank the Bat (<a className="text-blue-600" href="?run=ERR2756788">ERR2756788</a>)<br />
-    Example 2: Ginger the Cat (<a className="text-blue-600" href="?run=SRR7287110">SRR7287110</a>)<br />
+    SRA Run ID: <a className="text-blue-600" href="?run=ERR2756788">Frank the Bat (ERR2756788)</a> and  <a className="text-blue-600" href="?run=SRR7287110">Ginger the Cat (SRR7287110)</a><br />
 </>
 
 const mascot = <>
