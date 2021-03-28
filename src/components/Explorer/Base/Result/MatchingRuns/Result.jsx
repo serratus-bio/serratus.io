@@ -51,6 +51,12 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
                     <LinkButtons
                         searchLevel={searchLevel}
                         searchLevelValue={searchLevelValueCorrected} />
+                    <DownloadButton
+                    searchLevel={searchLevel}
+                    searchLevelValue={searchLevelValue}
+                    identityLims={identityLims}
+                    scoreLims={scoreLims}
+                />
                 </div>
             </div>
             <div className="p-6">
@@ -61,12 +67,7 @@ const MatchingRunsResult = ({searchLevel, searchLevelValue, identityLims, scoreL
                     dataPromise={dataPromise} />
                 <ChartController
                     dataPromise={dataPromise} />
-                <DownloadButton
-                    searchLevel={searchLevel}
-                    searchLevelValue={searchLevelValue}
-                    identityLims={identityLims}
-                    scoreLims={scoreLims}
-                />
+
             </div>
         </div>
     )

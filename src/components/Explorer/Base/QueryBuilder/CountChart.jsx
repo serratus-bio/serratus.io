@@ -212,7 +212,7 @@ const getXTicks = () => {
         return xLimValues;
     }
     return xLimValues.filter((d, i) => {
-        if ((xLimValues[0] + i) % 2 === 0) {
+        if ((xLimValues[0] + i) % 5 === 0) {
             return true;
         }
         return false;

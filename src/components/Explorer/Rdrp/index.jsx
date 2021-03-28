@@ -36,7 +36,7 @@ export default function RdrpExplorer({location}) {
                 },
                 "percent_identity": {
                     "name": "Identity",
-                    "desc": "Alignment identity",
+                    "desc": "Alignment identity (aa)",
                     "size": 70,
                     "valueSuffix": "%",
                     "domain": [45, 100],
