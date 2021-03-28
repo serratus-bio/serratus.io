@@ -83,7 +83,7 @@ const examples = <>
 </>
 
 const mascot = <>
-    <div> Serratus is made possible through the promise of collective data-sharing. </div>
-    <div> If you learn from these data, consider your role in releasing data freely and without restriction.</div>
+    <div className="text-gray-600"> Serratus is made possible through the promise of collective data-sharing. </div>
+    <div  className="text-gray-600"> If you learn from these data, consider your role in releasing data freely and without restriction.</div>
     <br />
 </>
