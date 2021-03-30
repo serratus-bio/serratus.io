@@ -83,9 +83,10 @@ async function getData(): Promise<PlotlyData[]> {
 }
 
 // temp fix pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
-type PlotlyData = Plotly.Data & Partial<{
-    selected: Partial<{
-        marker: Partial<Plotly.PlotMarker>
-        textfont: Partial<Plotly.Font>
+type PlotlyData = Plotly.Data
+    & Partial<{
+        selected: Partial<{
+            marker: Partial<Plotly.PlotMarker>
+            textfont: Partial<Plotly.Font>
+        }>
     }>
-}>
