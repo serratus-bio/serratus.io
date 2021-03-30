@@ -9,19 +9,16 @@ type Props = {
 }
 
 export default function MapPlot({ setSelectedPoints }: Props) {
-    const [state, setState] = React.useState<PlotlyConfig>({ data: [], layout: layout })
+    const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({ data: [] })
 
     React.useEffect(() => {
         async function render() {
-            setState({
-                data: await getData(),
-                layout: layout,
-            })
+            setConfig({ data: await getData() })
         }
         render()
     }, [])
 
-    if (!state.data || !state.data.length) return null
+    if (!config.data || !config.data.length) return null
 
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
@@ -31,12 +28,12 @@ export default function MapPlot({ setSelectedPoints }: Props) {
 
     return <>
         <Plot
-            data={state.data}
-            layout={state.layout}
+            data={config.data}
+            layout={layout}
             useResizeHandler
             style={{ width: "100%", height: "100%", minHeight: "500px" }}
             onSelected={onSelected}
-            onUpdate={(figure) => setState(figure)}
+            onUpdate={figure => setConfig(figure)}
         />
     </>
 }
@@ -83,11 +80,6 @@ async function getData(): Promise<PlotlyData[]> {
         marker: { color: "Maroon", size: 5, opacity: 1 },
         selected: { marker: { color: "Purple", size: 7, opacity: 1 } },
     }]
-}
-
-type PlotlyConfig = {
-    data: PlotlyData[],
-    layout: Partial<Plotly.Layout>,
 }
 
 // temp fix pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
