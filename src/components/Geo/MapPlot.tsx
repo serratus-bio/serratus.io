@@ -82,6 +82,7 @@ async function getData(): Promise<Plotly.Data[]> {
         hoverinfo: "text",
         marker: { color: "Maroon", size: 5, opacity: 1 },
         // selected: { marker: { color: "Purple", size: 7, opacity: 1 } },
+        // pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
     }]
 }
 
