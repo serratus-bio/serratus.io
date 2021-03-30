@@ -48,7 +48,7 @@ const layout: Partial<Plotly.Layout> = {
     clickmode: 'event+select',
 }
 
-async function getData(): Promise<Plotly.Data[]> {
+async function getData(): Promise<PlotlyData[]> {
     // TODO: use type annotation
     const rows = await d3.tsv(rdrpPosTsv) as object as RunData[]
     function unpack(rows: RunData[], key: string) {
@@ -81,12 +81,19 @@ async function getData(): Promise<Plotly.Data[]> {
         text: getHoverText(rows),
         hoverinfo: "text",
         marker: { color: "Maroon", size: 5, opacity: 1 },
-        // selected: { marker: { color: "Purple", size: 7, opacity: 1 } },
-        // pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
+        selected: { marker: { color: "Purple", size: 7, opacity: 1 } },
     }]
 }
 
 type PlotlyConfig = {
-    data: Plotly.Data[],
+    data: PlotlyData[],
     layout: Partial<Plotly.Layout>,
 }
+
+// temp fix pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
+type PlotlyData = Plotly.Data & Partial<{
+    selected: Partial<{
+        marker: Partial<Plotly.PlotMarker>
+        textfont: Partial<Plotly.Font>
+    }>
+}>
