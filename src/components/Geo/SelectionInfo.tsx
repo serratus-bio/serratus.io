@@ -1,9 +1,9 @@
 import React from "react"
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common'
-import { RunDataList } from './types'
+import { RunData } from './types'
 
 type Props = {
-    selectedPoints: RunDataList | undefined
+    selectedPoints: RunData[] | undefined
 }
 
 const SelectionInfo = ({ selectedPoints }: Props) => {

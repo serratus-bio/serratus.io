@@ -1,4 +1,6 @@
-export type RunData = {
+export type RunData = Plotly.Datum & {
+    [key: string]: string
+
     run_id: string,
     biosample_id: string,
     release_date: string,
@@ -8,5 +10,3 @@ export type RunData = {
     coordinate_y: string,
     from_text: string,
 }
-
-export type RunDataList = Array<RunData>
