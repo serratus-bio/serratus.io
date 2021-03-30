@@ -2,13 +2,15 @@ import React from 'react'
 import { Helmet } from 'react-helmet';
 import MapPlot from './MapPlot';
 import SelectionInfo from './SelectionInfo';
+import { RunDataList } from './types'
 import {
     helpIcon
 } from 'common';
 
+
 const Geo = () => {
-    const [selectedPoints, setSelectedPoints] = React.useState();
-    const [isCollapsed, setIsCollapsed] = React.useState(false);
+    const [selectedPoints, setSelectedPoints] = React.useState<RunDataList>();
+    const [isCollapsed, setIsCollapsed] = React.useState<boolean>(false);
 
 
     const headTags = (
