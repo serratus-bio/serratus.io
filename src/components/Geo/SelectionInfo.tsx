@@ -43,7 +43,7 @@ const SelectionInfo = ({ selectedPoints }: Props) => {
         .join('%0A')
     const downloadButton = <>
         <LinkButton
-            link={`data:text/plaincharset=utf-8,${downloadData}`}
+            link={`data:text/plain;charset=utf-8,${downloadData}`}
             text="Download Matches"
             icon={downloadIcon}
             download="SerratusMatches.txt"
