@@ -1,23 +1,25 @@
-import React from 'react';
-import MatchingRunsResult from './MatchingRuns/Result';
-import RunLookupResult from './RunLookup/Result';
+import React from 'react'
+import MatchingRunsResult from './MatchingRuns/Result'
+import RunLookupResult from './RunLookup/Result'
 
 const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
-    if (searchLevel === "run") {
-        return <>
-            <RunLookupResult
-                runId={searchLevelValue}
+    if (searchLevel === 'run') {
+        return (
+            <>
+                <RunLookupResult runId={searchLevelValue} />
+            </>
+        )
+    }
+    return (
+        <>
+            <MatchingRunsResult
+                searchLevel={searchLevel}
+                searchLevelValue={searchLevelValue}
+                identityLims={identityLims}
+                scoreLims={scoreLims}
             />
         </>
-    }
-    return <>
-        <MatchingRunsResult
-            searchLevel={searchLevel}
-            searchLevelValue={searchLevelValue}
-            identityLims={identityLims}
-            scoreLims={scoreLims}
-        />
-    </>
+    )
 }
 
-export default Result;
+export default Result

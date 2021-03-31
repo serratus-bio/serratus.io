@@ -1,33 +1,43 @@
-import React from 'react';
-import AsyncSelect from 'react-select/async';
-import { getLoadOptions, getSelectedObject } from './GetValues';
-
+import React from 'react'
+import AsyncSelect from 'react-select/async'
+import { getLoadOptions, getSelectedObject } from './GetValues'
 
 export default function Dropdown({
-        searchType, searchLevel,
-        searchLevelValue, setSearchLevelValue}) {
-    const [selected, setSelected] = React.useState();
+    searchType,
+    searchLevel,
+    searchLevelValue,
+    setSearchLevelValue,
+}) {
+    const [selected, setSelected] = React.useState()
 
     React.useEffect(() => {
         async function setSelectionAsync() {
-            setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue));
+            setSelected(
+                await getSelectedObject(
+                    searchType,
+                    searchLevel,
+                    searchLevelValue
+                )
+            )
         }
-        setSelectionAsync();
+        setSelectionAsync()
     }, [searchType, searchLevel, searchLevelValue])
 
     function selectOnChange(newSelection) {
-        setSelected(newSelection);
+        setSelected(newSelection)
         if (newSelection.length !== 0) {
-            setSearchLevelValue(newSelection.value);
+            setSearchLevelValue(newSelection.value)
         }
     }
 
     function onMenuOpen() {
-        setSelected(null);
+        setSelected(null)
     }
 
     async function onMenuClose() {
-        setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue));
+        setSelected(
+            await getSelectedObject(searchType, searchLevel, searchLevelValue)
+        )
     }
 
     return (
@@ -40,6 +50,7 @@ export default function Dropdown({
             onChange={selectOnChange}
             onMenuOpen={onMenuOpen}
             onMenuClose={onMenuClose}
-            placeholder={`Type to search`} />
+            placeholder={`Type to search`}
+        />
     )
 }
