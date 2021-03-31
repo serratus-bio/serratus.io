@@ -4,21 +4,15 @@ import RunLookupResult from './RunLookup/Result'
 
 const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
     if (searchLevel === 'run') {
-        return (
-            <>
-                <RunLookupResult runId={searchLevelValue} />
-            </>
-        )
+        return <RunLookupResult runId={searchLevelValue} />
     }
     return (
-        <>
-            <MatchingRunsResult
-                searchLevel={searchLevel}
-                searchLevelValue={searchLevelValue}
-                identityLims={identityLims}
-                scoreLims={scoreLims}
-            />
-        </>
+        <MatchingRunsResult
+            searchLevel={searchLevel}
+            searchLevelValue={searchLevelValue}
+            identityLims={identityLims}
+            scoreLims={scoreLims}
+        />
     )
 }
 

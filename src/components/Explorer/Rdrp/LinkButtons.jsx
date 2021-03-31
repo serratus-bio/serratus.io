@@ -27,27 +27,23 @@ function FamilyLinkButtons({ family_name }) {
         text = 'Database Website'
     }
     return (
-        <>
-            <LinkButton
-                link={link}
-                text={text}
-                icon={externalLinkIcon}
-                newTab={true}
-            />
-        </>
+        <LinkButton
+            link={link}
+            text={text}
+            icon={externalLinkIcon}
+            newTab={true}
+        />
     )
 }
 
 function SequenceLinkButtons({ sequence_accession }) {
     return (
-        <>
-            <LinkButton
-                link={`https://www.ncbi.nlm.nih.gov/nuccore/${sequence_accession}`}
-                text="GenBank"
-                icon={externalLinkIcon}
-                newTab={true}
-            />
-        </>
+        <LinkButton
+            link={`https://www.ncbi.nlm.nih.gov/nuccore/${sequence_accession}`}
+            text="GenBank"
+            icon={externalLinkIcon}
+            newTab={true}
+        />
     )
 }
 

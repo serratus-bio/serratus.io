@@ -33,16 +33,14 @@ export default function MapPlot({ setSelectedPoints }: Props) {
     }
 
     return (
-        <>
-            <Plot
-                data={config.data}
-                layout={layout}
-                useResizeHandler
-                style={{ width: '100%', height: '100%', minHeight: '500px' }}
-                onSelected={onSelected}
-                onUpdate={(figure) => setConfig(figure)}
-            />
-        </>
+        <Plot
+            data={config.data}
+            layout={layout}
+            useResizeHandler
+            style={{ width: '100%', height: '100%', minHeight: '500px' }}
+            onSelected={onSelected}
+            onUpdate={(figure) => setConfig(figure)}
+        />
     )
 }
 
