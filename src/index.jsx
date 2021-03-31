@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history'
 
 import { App } from './App'
 
-var history = createBrowserHistory()
+const history = createBrowserHistory()
 
 if (process.env.NODE_ENV === 'production') {
     ReactGA.initialize('UA-175034803-1')

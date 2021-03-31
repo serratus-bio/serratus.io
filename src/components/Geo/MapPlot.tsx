@@ -63,7 +63,7 @@ async function getData(): Promise<PlotlyData[]> {
 
     function getHoverText(rows: RunData[]): string[] {
         return rows.map((row) => {
-            var text = `${row.run_id}
+            let text = `${row.run_id}
                 <br>Organism: ${row.scientific_name}`
             if (row.from_text) {
                 text += `<br>Inferred location: "${row.from_text}"`

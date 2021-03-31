@@ -29,9 +29,9 @@ const getJbrowseConfig = (bam) => {
 }
 
 export const Jbrowse = (props) => {
-    var urlParams = new URLSearchParams(props.location.search)
-    var bam = urlParams.get('bam')
-    var loc = urlParams.get('loc')
+    const urlParams = new URLSearchParams(props.location.search)
+    const bam = urlParams.get('bam')
+    const loc = urlParams.get('loc')
 
     // Instatiate JBrowse
     React.useEffect(() => {

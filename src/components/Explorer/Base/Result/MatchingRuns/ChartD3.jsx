@@ -28,22 +28,22 @@ export const Chart = () => {
 }
 
 export const renderChart = (results, colMap, d3InterpolateFunction) => {
-    var chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 500`)
-    var matchSvg = chartSvg.append('svg').attr('y', tableShiftY)
+    const chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 500`)
+    const matchSvg = chartSvg.append('svg').attr('y', tableShiftY)
 
     drawLegend(matchSvg, d3InterpolateFunction)
 
-    var columnTooltipSvgText = chartSvg.append('text').attr('id', 'tooltip')
-    var columnHeadersG = chartSvg
+    const columnTooltipSvgText = chartSvg.append('text').attr('id', 'tooltip')
+    const columnHeadersG = chartSvg
         .append('g')
         .attr('transform', `translate(0, ${tableShiftY - sectionHeight})`)
     addHeaders(columnHeadersG)
     addColumns(columnHeadersG, colMap)
 
     results.forEach((match, i) => {
-        var coverageData = getCoverageData(match)
-        var matchG = matchSvg.append('g').attr('class', 'sra').attr('rowid', `${match[sraKey]}`)
-        var matchSubGroup = drawExpandableRow(
+        const coverageData = getCoverageData(match)
+        const matchG = matchSvg.append('g').attr('class', 'sra').attr('rowid', `${match[sraKey]}`)
+        const matchSubGroup = drawExpandableRow(
             matchG,
             match[sraKey],
             coverageData,
@@ -55,7 +55,7 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
 }
 
 function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3InterpolateFunction) {
-    var entrySvg = gElement
+    const entrySvg = gElement
         .append('svg')
         .attr('y', rowIndex * sectionHeight)
         .attr('width', sectionWidth)
@@ -63,14 +63,14 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
         .attr('border', barBorder.size)
         .style('display', 'block')
 
-    var entryG = entrySvg
+    const entryG = entrySvg
         .append('g')
         .attr('transform', `translate(${sectionMargin.left}, ${sectionMargin.top})`)
 
-    var x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
+    const x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
 
-    var y = d3.scaleBand().range([0, barHeight]).domain([name]).padding(0.01)
-    var yAxis = entryG.append('g').call(d3.axisLeft(y))
+    const y = d3.scaleBand().range([0, barHeight]).domain([name]).padding(0.01)
+    const yAxis = entryG.append('g').call(d3.axisLeft(y))
     yAxis.select('path').remove()
     yAxis.select('line').remove()
     yAxis
@@ -79,10 +79,10 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
         .style('fill', 'blue')
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link = `${window.location.pathname}?run=${name}`
-            var offsetX = 0
-            var textWidth = 80
-            var textHeight = 14
+            const link = `${window.location.pathname}?run=${name}`
+            const offsetX = 0
+            const textWidth = 80
+            const textHeight = 14
             d3.select(this.parentNode)
                 .append('a')
                 .attr('href', link)
@@ -95,9 +95,9 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
                 .style('opacity', 0)
         })
 
-    var heatBar = entryG.append('g').attr('class', 'heatbar')
+    const heatBar = entryG.append('g').attr('class', 'heatbar')
 
-    var heatSquares = heatBar
+    const heatSquares = heatBar
         .selectAll()
         .data(heatSquareData)
         .enter()
@@ -107,7 +107,7 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
         .attr('height', y.bandwidth())
         .style('fill', (d) => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
-    var barBorderPath = entryG
+    const barBorderPath = entryG
         .append('rect')
         .attr('width', barWidth)
         .attr('height', barHeight)
@@ -115,7 +115,7 @@ function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3Interpola
         .style('stroke', barBorder.color)
         .style('stroke-width', barBorder.size)
 
-    var heatmapCover = entryG
+    const heatmapCover = entryG
         .append('rect')
         .attr('width', barWidth)
         .attr('height', barHeight)

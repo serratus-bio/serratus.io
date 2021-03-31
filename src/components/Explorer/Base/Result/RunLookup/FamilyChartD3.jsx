@@ -29,20 +29,20 @@ const familyNameKey = 'family_id'
 const familyCoverageKey = 'coverage_bins'
 
 export const renderChart = (results, colMap, d3InterpolateFunction, drilldownCallback) => {
-    var chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 250`)
-    var familiesSvg = chartSvg.append('svg').attr('y', tableShiftY)
+    const chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 250`)
+    const familiesSvg = chartSvg.append('svg').attr('y', tableShiftY)
 
     drawLegend(familiesSvg, d3InterpolateFunction)
 
-    var columnTooltipSvgText = chartSvg.append('text').attr('id', 'tooltip')
-    var columnHeadersG = chartSvg
+    const columnTooltipSvgText = chartSvg.append('text').attr('id', 'tooltip')
+    const columnHeadersG = chartSvg
         .append('g')
         .attr('transform', `translate(0, ${tableShiftY - sectionHeight})`)
     addHeaders(columnHeadersG)
     addColumns(columnHeadersG, colMap)
 
     results.forEach((family, i) => {
-        var familyG = familiesSvg
+        const familyG = familiesSvg
             .append('g')
             .attr('class', 'family')
             .attr('rowid', `${family[familyNameKey]}`)
@@ -68,7 +68,7 @@ function drawExpandableRow({
     d3InterpolateFunction,
     drilldownCallback,
 }) {
-    var entrySvg = gElement
+    const entrySvg = gElement
         .append('svg')
         .attr('y', rowIndex * sectionHeight)
         .attr('width', sectionWidth)
@@ -76,14 +76,14 @@ function drawExpandableRow({
         .attr('border', barBorder.size)
         .style('display', 'block')
 
-    var entryG = entrySvg
+    const entryG = entrySvg
         .append('g')
         .attr('transform', `translate(${sectionMargin.left}, ${sectionMargin.top})`)
 
-    var x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
+    const x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
 
-    var y = d3.scaleBand().range([0, barHeight]).domain([name]).padding(0.01)
-    var yAxis = entryG.append('g').call(d3.axisLeft(y))
+    const y = d3.scaleBand().range([0, barHeight]).domain([name]).padding(0.01)
+    const yAxis = entryG.append('g').call(d3.axisLeft(y))
     yAxis.select('path').remove()
     yAxis.select('line').remove()
     yAxis
@@ -92,10 +92,10 @@ function drawExpandableRow({
         .style('fill', 'blue')
         .style('cursor', 'pointer')
         .each(function (d, i) {
-            var link = `${window.location.pathname}?${rowType}=${name}`
-            var textWidth = 100
-            var textHeight = 14
-            var linkA = d3.select(this.parentNode).append('a').attr('href', link)
+            const link = `${window.location.pathname}?${rowType}=${name}`
+            const textWidth = 100
+            const textHeight = 14
+            const linkA = d3.select(this.parentNode).append('a').attr('href', link)
             linkA
                 .append('rect')
                 .attr('x', -textWidth)
@@ -106,9 +106,9 @@ function drawExpandableRow({
                 .style('opacity', 0)
         })
 
-    var heatMap = entryG.append('g').attr('class', 'heatmap')
+    const heatMap = entryG.append('g').attr('class', 'heatmap')
 
-    var heatSquares = heatMap
+    const heatSquares = heatMap
         .selectAll()
         .data(coverageData)
         .enter()
@@ -118,7 +118,7 @@ function drawExpandableRow({
         .attr('height', y.bandwidth())
         .style('fill', (d) => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
-    var barBorderPath = entryG
+    const barBorderPath = entryG
         .append('rect')
         .attr('class', 'heatmap-border')
         .attr('width', barWidth)
@@ -127,7 +127,7 @@ function drawExpandableRow({
         .style('stroke', barBorder.color)
         .style('stroke-width', barBorder.size)
 
-    var clickExpandRect = entryG
+    const clickExpandRect = entryG
         .append('rect')
         .attr('class', 'heatmap-click')
         .attr('visibility', 'visible')

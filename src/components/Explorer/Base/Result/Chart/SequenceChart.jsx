@@ -49,7 +49,7 @@ export class SequenceChart {
 
         drawLegend(this.sequencesSvg, this.d3InterpolateFunction)
 
-        var columnHeadersG = this.rootSvg
+        const columnHeadersG = this.rootSvg
             .append('g')
             .attr('transform', `translate(0, ${tableShiftY - rowHeight})`)
         addHeaders(columnHeadersG)

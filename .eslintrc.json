@@ -17,6 +17,7 @@
   "rules": {
     "react/prop-types": "off", // TODO: consider after TypeScript conversion
     "no-unused-vars": ["error", {"args": "after-used", "argsIgnorePattern": "^_"}],
+    "no-var": "error",
     "import/no-default-export": "error",
     "prettier/prettier": "error" // always last
   },

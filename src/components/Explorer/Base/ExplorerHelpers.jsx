@@ -11,8 +11,8 @@ export const infernoCssGradient =
 
 export const parseRange = (rangeStr, bounds) => {
     // parse
-    var [low, high] = rangeStr.split('-').map((s) => {
-        var intVal = +s
+    let [low, high] = rangeStr.split('-').map((s) => {
+        const intVal = +s
         if (isNaN(intVal)) {
             throw new Error('Invalid search filter parameter value')
         }
@@ -20,7 +20,7 @@ export const parseRange = (rangeStr, bounds) => {
     })
 
     // constrict
-    var [min, max] = bounds
+    const [min, max] = bounds
     if (low < min) low = min
     if (high > max) high = max
     if (low > max) low = max

@@ -16,24 +16,24 @@ export const ExplorerBase = ({ location }) => {
     const identityLimsStaticRef = React.useRef()
     const scoreLimsStaticRef = React.useRef()
 
-    var searchLevelFromParam = null
-    var searchLevelValueFromParam = null
-    var identityLimsFromParam = null
-    var scoreLimsFromParam = null
-    var urlParams = new URLSearchParams(location.search)
+    let searchLevelFromParam = null
+    let searchLevelValueFromParam = null
+    let identityLimsFromParam = null
+    let scoreLimsFromParam = null
+    const urlParams = new URLSearchParams(location.search)
     Object.keys(context.defaultSearchLevelValues).forEach((searchLevel) => {
-        var searchLevelValue = urlParams.get(searchLevel)
+        const searchLevelValue = urlParams.get(searchLevel)
         // assuming mutually exclusive parameters
         if (searchLevelValue) {
             searchLevelFromParam = searchLevel
             searchLevelValueFromParam = searchLevelValue
         }
     })
-    var searchLevelProvided = searchLevelFromParam !== null
-    var identityParamStr = urlParams.get('identity')
+    const searchLevelProvided = searchLevelFromParam !== null
+    const identityParamStr = urlParams.get('identity')
     if (identityParamStr)
         identityLimsFromParam = parseRange(identityParamStr, context.domain.identity)
-    var scoreParamStr = urlParams.get('score')
+    const scoreParamStr = urlParams.get('score')
     if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, context.domain.score)
 
     const willMount = React.useRef(true)

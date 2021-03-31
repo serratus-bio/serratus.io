@@ -18,7 +18,7 @@ export const cvgCartoonMap = {
     '^': 4096,
 }
 
-var cvgLims = [0, 4096]
+const cvgLims = [0, 4096]
 
 const cvgLength = 25
 export const genomeBins = [...Array(cvgLength).keys()]
@@ -41,9 +41,9 @@ export const barBorder = { size: 1, color: '#999' }
 export const caretWidth = 25
 
 function linspace(start, end, n) {
-    var out = []
-    var delta = (end - start) / (n - 1)
-    var i = 0
+    const out = []
+    const delta = (end - start) / (n - 1)
+    let i = 0
     while (i < n - 1) {
         out.push(start + i * delta)
         i++
@@ -54,13 +54,16 @@ function linspace(start, end, n) {
 
 // adapted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d
 export function drawLegend(svgElement, d3InterpolateFunction) {
-    var legendWidth = 80,
+    const legendWidth = 80,
         legendHeight = 200,
         margin = { top: 10, right: 60, bottom: 10, left: 2 }
 
-    var legendSvg = svgElement.append('svg').attr('width', legendWidth).attr('height', legendHeight)
+    const legendSvg = svgElement
+        .append('svg')
+        .attr('width', legendWidth)
+        .attr('height', legendHeight)
 
-    var gradient = legendSvg
+    const gradient = legendSvg
         .append('defs')
         .append('linearGradient')
         .attr('id', 'gradient')
@@ -74,11 +77,11 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
         colorMap(value, d3InterpolateFunction)
     )
 
-    var pct = linspace(0, 100, colorScale.length).map(function (d) {
+    const pct = linspace(0, 100, colorScale.length).map(function (d) {
         return Math.round(d) + '%'
     })
 
-    var colourPct = d3.zip(pct, colorScale)
+    const colourPct = d3.zip(pct, colorScale)
     colourPct.forEach(function (d) {
         gradient
             .append('stop')
@@ -99,11 +102,11 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
         .style('stroke-width', 1)
 
     // create a scale and axis for the legend
-    var legendScale = d3
+    const legendScale = d3
         .scaleLinear()
         .domain(cvgLims)
         .range([legendHeight - margin.top - margin.bottom, 0])
-    var legendAxis = legendSvg
+    const legendAxis = legendSvg
         .append('g')
         .attr(
             'transform',
@@ -114,12 +117,12 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
 
 // TODO: combine with addColumns
 export function addHeaders(gElement) {
-    var yShift = 15
+    const yShift = 15
 
-    var colText = 'Count'
-    var xShift = 45
-    var textG = gElement.append('g')
-    var text = textG
+    let colText = 'Count'
+    let xShift = 45
+    const textG = gElement.append('g')
+    let text = textG
         .append('text')
         .text(colText)
         .style('text-anchor', 'end')
@@ -143,18 +146,18 @@ export function addHeaders(gElement) {
 }
 
 export function addColumns(gElement, colMap, summaryEntry = null) {
-    var yShift = 15
-    var colHeight = sectionHeight
-    var textG = gElement
+    const yShift = 15
+    const colHeight = sectionHeight
+    const textG = gElement
         .append('g')
         .attr('transform', `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`)
-    var prevWidth = 0
+    let prevWidth = 0
     Object.keys(colMap).forEach((column) => {
-        var colAttrs = colMap[column]
-        var colWidth = colAttrs['size']
-        var colText = summaryEntry ? summaryEntry[column] : colAttrs['name']
-        var cellG = textG.append('g')
-        var text = textG
+        const colAttrs = colMap[column]
+        const colWidth = colAttrs['size']
+        const colText = summaryEntry ? summaryEntry[column] : colAttrs['name']
+        const cellG = textG.append('g')
+        const text = textG
             .append('text')
             .text(colText)
             .style('text-anchor', 'middle')
@@ -164,18 +167,18 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
                 .style('opacity', 0)
                 .attr('column', column)
                 .style('font-size', 12)
-            var diff = parseInt(colText) - colAttrs['domain'][0]
-            var diffCapped = Math.min(diff, colAttrs['domain'][1])
-            var range = colAttrs['domain'][1] - colAttrs['domain'][0]
-            var colorBarWidth = Math.max(0, (colWidth * diffCapped) / range)
-            var colorBar = cellG
+            const diff = parseInt(colText) - colAttrs['domain'][0]
+            const diffCapped = Math.min(diff, colAttrs['domain'][1])
+            const range = colAttrs['domain'][1] - colAttrs['domain'][0]
+            const colorBarWidth = Math.max(0, (colWidth * diffCapped) / range)
+            const colorBar = cellG
                 .append('rect')
                 .attr('fill', colAttrs['fill'])
                 .attr('width', colorBarWidth)
                 .attr('height', colHeight)
                 .attr('x', prevWidth)
                 .attr('y', -yShift)
-            var border = cellG
+            const border = cellG
                 .append('rect')
                 .attr('fill', 'none')
                 .style('stroke', 'black')
@@ -185,9 +188,9 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
                 .attr('x', prevWidth)
                 .attr('y', -yShift)
         }
-        var tooltipFontSize = 10
-        var tooltipX = sectionMargin.left + barWidth + prevWidth + colWidth / 2
-        var hoverForColumnText = textG
+        const tooltipFontSize = 10
+        const tooltipX = sectionMargin.left + barWidth + prevWidth + colWidth / 2
+        const hoverForColumnText = textG
             .append('rect')
             .attr('width', colWidth)
             .attr('height', colHeight)
@@ -214,7 +217,7 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
 }
 
 export function getCoverageData(match, cvgKey = 'coverage_bins') {
-    var matchCoverageData = []
+    const matchCoverageData = []
     ;[...match[cvgKey]].forEach(function (bit, i) {
         matchCoverageData.push({
             bin: i,

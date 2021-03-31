@@ -17,37 +17,37 @@ const xLabel = '% Identity'
 const yLabel = 'Matches'
 
 // initial value determined by renderChart, then updated by functions
-var xLims
-var zLims
-var familyData
+let xLims
+let zLims
+let familyData
 
 // auto-computed
-var yLims = [0, 0] // computed after family data loaded
-var xLimValues // all x values
-var zDomainValues // all possible z values
+let yLims = [0, 0] // computed after family data loaded
+let xLimValues // all x values
+let zDomainValues // all possible z values
 
 // D3 objects
-var xScale
-var yScale
-var xAxis
-var yAxis
-var dataByZStackFiltered
-var chartZRects
+let xScale
+let yScale
+let xAxis
+let yAxis
+let dataByZStackFiltered
+let chartZRects
 
 export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
     setXLims(xDomain)
     zLims = zDomain
     zDomainValues = getAllValues(...zDomain)
 
-    var chartWidth = 300
-    var chartHeight = 150
-    var margin = { top: 10, right: 10, bottom: 33, left: 60 }
-    var svgWidth = chartWidth + margin.left + margin.right
-    var svgHeight = chartHeight + margin.top + margin.bottom
+    const chartWidth = 300
+    const chartHeight = 150
+    const margin = { top: 10, right: 10, bottom: 33, left: 60 }
+    const svgWidth = chartWidth + margin.left + margin.right
+    const svgHeight = chartHeight + margin.top + margin.bottom
 
-    var mainDiv = d3.select(`#${chartId}`)
-    var mainSvg = mainDiv.append('svg').attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
-    var chartG = mainSvg
+    const mainDiv = d3.select(`#${chartId}`)
+    const mainSvg = mainDiv.append('svg').attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
+    const chartG = mainSvg
         .append('g')
         .attr('width', chartWidth)
         .attr('height', chartHeight)
@@ -57,7 +57,7 @@ export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
     xScale.domain(xLimValues)
     yScale = d3.scaleLinear().range([chartHeight, 0])
     yScale.domain(yLims).nice()
-    var colorScale = d3.scaleSequential(d3InterpolateFunction)
+    const colorScale = d3.scaleSequential(d3InterpolateFunction)
     colorScale.domain(zDomain)
 
     xAxis = chartG
@@ -89,7 +89,7 @@ export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
 
     updateData(data)
 
-    var rectsG = chartG.append('g').attr('label', 'stack-rects')
+    const rectsG = chartG.append('g').attr('label', 'stack-rects')
 
     chartZRects = rectsG
         .selectAll('g')
@@ -136,7 +136,7 @@ export const updateZLims = (begin, end) => {
 }
 
 export const updateYLims = (transitionDuration = 0) => {
-    var maxDataY =
+    let maxDataY =
         1.2 *
         d3.max(
             dataByZStackFiltered.map((d) => {
@@ -167,7 +167,7 @@ const updateStacks = (transitionDuration = 0) => {
 }
 
 const filterAndSetStackData = () => {
-    var dataFiltered = familyData.filter((d) => {
+    const dataFiltered = familyData.filter((d) => {
         return (
             d[xColumn] >= xLims[0] &&
             d[xColumn] <= xLims[1] &&
@@ -175,17 +175,17 @@ const filterAndSetStackData = () => {
             d[zColumn] <= zLims[1]
         )
     })
-    var dataByX = d3
+    const dataByX = d3
         .nest()
         .key((d) => d[xColumn])
         .entries(dataFiltered)
     // make entry for each x
-    var xKeys = dataByX.reduce((set, d) => {
+    const xKeys = dataByX.reduce((set, d) => {
         set.add(d.key)
         return set
     }, new Set())
     xLimValues.forEach((xVal) => {
-        var xValString = xVal.toString()
+        const xValString = xVal.toString()
         if (!xKeys.has(xValString)) {
             dataByX.push({ key: xValString, values: [] })
         }

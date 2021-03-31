@@ -27,12 +27,12 @@ export const FilterSlider = (props) => {
         }
 
         const drawSlider = () => {
-            var sliderDiv = d3.select(`#${id}`)
+            const sliderDiv = d3.select(`#${id}`)
             slider.current = createD3RangeSlider(d3, sliderDomain[0], sliderDomain[1], sliderDiv)
             slider.current.onChange((range) => updateLims(range.begin, range.end))
             if (linearGradientString) {
-                var colorGradient = `background-image: ${linearGradientString};`
-                var newSliderDivStyle = sliderDiv.attr('style') + colorGradient
+                const colorGradient = `background-image: ${linearGradientString};`
+                const newSliderDivStyle = sliderDiv.attr('style') + colorGradient
                 sliderDiv.attr('style', newSliderDivStyle)
                 sliderDiv.select('.slider-container').attr('style', colorGradient)
                 sliderDiv.select('.slider').attr('style', 'background: rgba(0,0,0, 0.2)')

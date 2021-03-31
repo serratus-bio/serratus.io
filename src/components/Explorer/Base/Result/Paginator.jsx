@@ -18,8 +18,8 @@ export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) =
     const readDataPromise = async (dataPromise, perPage) => {
         if (!dataPromise) return
         dataPromise.then((data) => {
-            var total = data[resultTotalKey]
-            var numPages = Math.ceil(total / perPage)
+            const total = data[resultTotalKey]
+            const numPages = Math.ceil(total / perPage)
             setLoading(false)
             setNumPages(numPages)
         })

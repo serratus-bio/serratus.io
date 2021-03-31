@@ -3,7 +3,7 @@ import axios from 'axios'
 const baseUrl = process.env.REACT_APP_API_URL
 
 export const fetchMatchCounts = async (searchType, searchLevel, searchLevelValue) => {
-    var params = {}
+    const params = {}
     params[searchLevel] = searchLevelValue
     const response = await axios.get(`${baseUrl}/counts/${searchType}`, {
         params: params,

@@ -9,9 +9,9 @@ export const getMatchesDownloadUrl = (
     identityLims,
     scoreLims
 ) => {
-    var [identityMin, identityMax] = identityLims
-    var [scoreMin, scoreMax] = scoreLims
-    var params = {
+    const [identityMin, identityMax] = identityLims
+    const [scoreMin, scoreMax] = scoreLims
+    const params = {
         scoreMin: scoreMin,
         scoreMax: scoreMax,
         identityMin: identityMin,
@@ -31,9 +31,9 @@ export const fetchPagedMatches = async (
     identityRange,
     scoreRange
 ) => {
-    var [identityMin, identityMax] = identityRange
-    var [scoreMin, scoreMax] = scoreRange
-    var params = {
+    const [identityMin, identityMax] = identityRange
+    const [scoreMin, scoreMax] = scoreRange
+    const params = {
         page: page,
         perPage: perPage,
         scoreMin: scoreMin,
