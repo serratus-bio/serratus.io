@@ -23,7 +23,8 @@
     "start": "npm run build:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx src/",
-    "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:check": "prettier --check 'src/**/*.{js,jsx,ts,tsx}'",
+    "prettier:write": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
