@@ -1,11 +1,16 @@
-import React from "react";
-import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common';
+import React from "react"
+import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common'
+import { RunData } from './types'
 
-const SelectionInfo = ({ selectedPoints }) => {
-    if (selectedPoints === undefined) return null;
+type Props = {
+    selectedPoints: RunData[] | undefined
+}
 
-    const maxRows = 50;
-    const displayPoints = (selectedPoints.length > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints;
+const SelectionInfo = ({ selectedPoints }: Props) => {
+    if (selectedPoints === undefined) return null
+
+    const maxRows = 50
+    const displayPoints = (selectedPoints.length > maxRows) ? selectedPoints.slice(0, maxRows) : selectedPoints
 
     const tdClasses = "border px-4 py-2"
     const resultsTable = <>
@@ -35,7 +40,7 @@ const SelectionInfo = ({ selectedPoints }) => {
 
     const downloadData = selectedPoints
         .map(point => point.run_id)
-        .join('%0A');
+        .join('%0A')
     const downloadButton = <>
         <LinkButton
             link={`data:text/plain;charset=utf-8,${downloadData}`}
@@ -52,4 +57,4 @@ const SelectionInfo = ({ selectedPoints }) => {
     </div>
 }
 
-export default SelectionInfo;
+export default SelectionInfo
