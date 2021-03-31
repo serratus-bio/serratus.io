@@ -34,10 +34,10 @@ export default function SearchLevelSelector({
 
     return (
         <div>
-            <div className="flex flex-row justify-center">
+            <div className='flex flex-row justify-center'>
                 {Object.keys(values).map((type) => (
                     <SearchLevelOption
-                        className="mx-2"
+                        className='mx-2'
                         key={type}
                         value={type}
                         displayText={displayName[type]}
@@ -78,13 +78,13 @@ const SearchLevelOption = (props) => {
     return (
         <div className={props.className}>
             <input
-                type="radio"
-                name="searchLevel"
+                type='radio'
+                name='searchLevel'
                 value={props.value}
                 checked={props.checked}
                 onChange={props.onChange}
             />
-            <span className="ml-1">{props.displayText}</span>
+            <span className='ml-1'>{props.displayText}</span>
         </div>
     )
 }

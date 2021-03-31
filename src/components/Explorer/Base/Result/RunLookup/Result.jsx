@@ -10,13 +10,13 @@ const RunLookupResult = ({ runId }) => {
     }
 
     const instructions = (
-        <div className="text-center">Click a family heatmap to view sequence-level matches</div>
+        <div className='text-center'>Click a family heatmap to view sequence-level matches</div>
     )
 
     return (
         <>
             <FamilyResult runId={runId} drilldownCallback={drilldownCallback} />
-            <hr className="mb-4" />
+            <hr className='mb-4' />
             {!sequenceResult ? instructions : sequenceResult}
         </>
     )

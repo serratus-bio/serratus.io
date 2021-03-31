@@ -30,16 +30,16 @@ const ChartController = ({ dataPromise, drilldownCallback }) => {
             })
     }, [dataPromise, context.result, drilldownCallback])
 
-    let loading = <div className="text-center">Loading... (this might take a while)</div>
+    let loading = <div className='text-center'>Loading... (this might take a while)</div>
 
     let noResultsRun = (
-        <div className="text-center">
+        <div className='text-center'>
             <span>This accession has not been processed... yet.</span>
             <br />
             <span>To request this sample be processed, please </span>
             <ExternalLink
-                href="https://github.com/ababaian/serratus/issues/new"
-                className="text-blue-600">
+                href='https://github.com/ababaian/serratus/issues/new'
+                className='text-blue-600'>
                 submit an issue
             </ExternalLink>
             <span> on the Serratus project GitHub.</span>

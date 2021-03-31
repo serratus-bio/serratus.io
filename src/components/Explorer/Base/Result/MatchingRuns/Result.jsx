@@ -46,15 +46,15 @@ const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, score
     }, [context.searchType, searchLevel, searchLevelValue, pageNumber, identityLims, scoreLims])
 
     return (
-        <div className="max-w-4xl m-auto">
+        <div className='max-w-4xl m-auto'>
             <div>
-                <div className="w-full text-center">
+                <div className='w-full text-center'>
                     <div>
-                        <div className="text-xl font-bold">{searchLevelValue}</div>
-                        {pageTitle && <div className="text-lg italic">{pageTitle}</div>}
+                        <div className='text-xl font-bold'>{searchLevelValue}</div>
+                        {pageTitle && <div className='text-lg italic'>{pageTitle}</div>}
                     </div>
                 </div>
-                <div className="flex justify-center items-center my-2">
+                <div className='flex justify-center items-center my-2'>
                     <LinkButtons
                         searchLevel={searchLevel}
                         searchLevelValue={searchLevelValueCorrected}
@@ -67,7 +67,7 @@ const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, score
                     />
                 </div>
             </div>
-            <div className="p-6">
+            <div className='p-6'>
                 <Paginator
                     pageNumber={pageNumber}
                     perPage={perPage}

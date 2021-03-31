@@ -94,7 +94,7 @@ const ExplorerBase = ({ location }) => {
                 </div>
             </div>
             <div className={`h-0 sm:h-3 ${switchSize}:w-3`} />
-            <hr className="sm:hidden" />
+            <hr className='sm:hidden' />
             <div
                 id={resultSectionId}
                 className={`p-4 w-full ${switchSize}:w-2/3 ${classesBoxBorder}`}>

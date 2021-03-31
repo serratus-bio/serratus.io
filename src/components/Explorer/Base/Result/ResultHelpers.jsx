@@ -44,10 +44,10 @@ export const DownloadButton = ({ searchLevel, searchLevelValue, identityLims, sc
         scoreLims
     )
     return (
-        <div className="flex justify-center">
+        <div className='flex justify-center'>
             <LinkButton
                 link={downloadUrl}
-                text="Download Matches"
+                text='Download Matches'
                 icon={downloadIcon}
                 download={true}
             />

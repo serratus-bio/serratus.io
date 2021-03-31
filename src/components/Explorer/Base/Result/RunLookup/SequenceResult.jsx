@@ -23,11 +23,11 @@ const SequenceResult = ({ runId, propFamilyId }) => {
     }, [context, runId, pageNumber, familyId])
 
     return (
-        <div className="max-w-4xl m-auto">
-            <div className="w-full text-center">
-                <div className="text-xl font-bold">{familyId}</div>
+        <div className='max-w-4xl m-auto'>
+            <div className='w-full text-center'>
+                <div className='text-xl font-bold'>{familyId}</div>
             </div>
-            <div className="p-6">
+            <div className='p-6'>
                 <Paginator
                     pageNumber={pageNumber}
                     perPage={perPage}

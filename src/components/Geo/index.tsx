@@ -16,12 +16,12 @@ const Geo = () => {
     )
 
     return (
-        <div className="mx-4 my-2">
+        <div className='mx-4 my-2'>
             {headTags}
-            <div className="text-center text-xl">The Planetary RNA Virome</div>
+            <div className='text-center text-xl'>The Planetary RNA Virome</div>
 
             <button
-                className="text-left collapse-button"
+                className='text-left collapse-button'
                 onClick={() => setIsCollapsed(!isCollapsed)}>
                 {helpIcon} Info
             </button>
@@ -41,11 +41,11 @@ const Geo = () => {
                 <p>A 100-meter randomization is applied to all points to prevent overplotting.</p>
             </div>
 
-            <div className="my-2">
+            <div className='my-2'>
                 <MapPlot setSelectedPoints={setSelectedPoints} />
             </div>
 
-            <div className="text-left text-gray-600">
+            <div className='text-left text-gray-600'>
                 Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
                 <b>`Lasso Select`</b> icons in the top-right.
             </div>

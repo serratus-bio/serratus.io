@@ -30,16 +30,16 @@ const ChartController = ({ dataPromise }) => {
             })
     }, [dataPromise, context.result])
 
-    let loading = <div className="text-center">Loading... (this might take a while)</div>
+    let loading = <div className='text-center'>Loading... (this might take a while)</div>
 
     let error = (
-        <div className="text-center">
+        <div className='text-center'>
             <span>This search did not return any results.</span>
             <br />
             <span>If this is unexpected, please </span>
             <ExternalLink
-                href="https://github.com/serratus-bio/serratus.io/issues/new"
-                className="text-blue-600">
+                href='https://github.com/serratus-bio/serratus.io/issues/new'
+                className='text-blue-600'>
                 submit an issue
             </ExternalLink>
             <span> on the the serratus.io GitHub.</span>

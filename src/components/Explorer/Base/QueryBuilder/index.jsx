@@ -90,7 +90,7 @@ const QueryBuilder = ({
     const slidersVisibility = searchLevel !== 'run' ? 'visible' : 'hidden'
 
     return (
-        <div className="flex-grow">
+        <div className='flex-grow'>
             <SearchLevelSelector
                 searchLevel={searchLevel}
                 setSearchLevel={setSearchLevel}
@@ -98,22 +98,22 @@ const QueryBuilder = ({
                 setSearchLevelValue={setSearchLevelValue}
                 viewMatches={viewMatches}
             />
-            <div className="max-w-xl m-auto">
+            <div className='max-w-xl m-auto'>
                 <div className={`${slidersVisibility} mb-10`}>
-                    <div className="mx-2">
-                        <div className="pt-6 text-center">Alignment identity (%)</div>
+                    <div className='mx-2'>
+                        <div className='pt-6 text-center'>Alignment identity (%)</div>
                         <FilterSlider
-                            id="sliderIdentity"
+                            id='sliderIdentity'
                             sliderDomain={context.domain.identity}
                             sliderLimsRef={identityLimsRef}
                             onChange={updateX}
                             onTouchEnd={updateY}
                         />
                     </div>
-                    <div className="mx-2">
-                        <div className="pt-6 text-center">Score</div>
+                    <div className='mx-2'>
+                        <div className='pt-6 text-center'>Score</div>
                         <FilterSlider
-                            id="sliderCoverage"
+                            id='sliderCoverage'
                             sliderDomain={context.domain.score}
                             sliderLimsRef={scoreLimsRef}
                             linearGradientString={context.theme.gradientString}
@@ -125,21 +125,21 @@ const QueryBuilder = ({
                 <div className={chartVisibility}>
                     <CountChart />
                 </div>
-                <div className="flex flex-row justify-center items-center mt-4">
+                <div className='flex flex-row justify-center items-center mt-4'>
                     <button
-                        className="w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4"
+                        className='w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
                         onClick={viewMatches}>
                         View Matches
                     </button>
                     <ExternalLink
-                        className="ml-2 mb-1"
-                        title="Open tutorial on project wiki"
-                        href="https://github.com/ababaian/serratus/wiki/Serratus-Explorer">
+                        className='ml-2 mb-1'
+                        title='Open tutorial on project wiki'
+                        href='https://github.com/ababaian/serratus/wiki/Serratus-Explorer'>
                         {helpIcon}
                     </ExternalLink>
                 </div>
             </div>
-            <div className="mt-1 text-center text-red-700">{errorMessage}</div>
+            <div className='mt-1 text-center text-red-700'>{errorMessage}</div>
         </div>
     )
 }

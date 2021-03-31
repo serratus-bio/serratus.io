@@ -47,14 +47,14 @@ const Jbrowse = (props) => {
     }, [bam, loc])
 
     return (
-        <div className="App">
-            <h1 className="text-center text-2xl">SRA: {bam}</h1>
+        <div className='App'>
+            <h1 className='text-center text-2xl'>SRA: {bam}</h1>
             <div
                 style={{ width: '100%', height: 800 }}
-                className="jbrowse"
-                id="GenomeBrowser"
+                className='jbrowse'
+                id='GenomeBrowser'
                 data-config='"updateBrowserURL": true'>
-                <div id="LoadingScreen">
+                <div id='LoadingScreen'>
                     <h1>Loading...</h1>
                 </div>
             </div>

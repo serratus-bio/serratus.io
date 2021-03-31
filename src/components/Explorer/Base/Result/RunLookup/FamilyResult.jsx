@@ -25,19 +25,19 @@ const FamilyResult = ({ runId, drilldownCallback }) => {
     }, [context.searchType, runId, pageNumber])
 
     return (
-        <div className="max-w-4xl m-auto">
+        <div className='max-w-4xl m-auto'>
             <div>
-                <div className="w-full text-center">
+                <div className='w-full text-center'>
                     <div>
-                        <div className="text-xl font-bold">{runId}</div>
-                        {pageTitle && <div className="text-lg italic">{pageTitle}</div>}
+                        <div className='text-xl font-bold'>{runId}</div>
+                        {pageTitle && <div className='text-lg italic'>{pageTitle}</div>}
                     </div>
                 </div>
-                <div className="flex justify-center items-center my-2">
-                    <LinkButtons searchLevel="run" searchLevelValue={runId} />
+                <div className='flex justify-center items-center my-2'>
+                    <LinkButtons searchLevel='run' searchLevelValue={runId} />
                 </div>
             </div>
-            <div className="p-6">
+            <div className='p-6'>
                 <Paginator
                     pageNumber={pageNumber}
                     perPage={perPage}

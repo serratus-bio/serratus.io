@@ -31,40 +31,40 @@ const App = () => {
         <div>
             <Navbar></Navbar>
             <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/explorer" component={NucleotideExplorer} />
-                <Route exact path="/explorer-rdrp" component={RdrpExplorer} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/team" component={Team} />
-                <Route exact path="/jbrowse" component={Jbrowse} />
-                <Route exact path="/geo" component={Geo} />
-                <Route exact path="/access" component={Access} />
+                <Route exact path='/' component={Home} />
+                <Route exact path='/explorer' component={NucleotideExplorer} />
+                <Route exact path='/explorer-rdrp' component={RdrpExplorer} />
+                <Route exact path='/about' component={About} />
+                <Route exact path='/team' component={Team} />
+                <Route exact path='/jbrowse' component={Jbrowse} />
+                <Route exact path='/geo' component={Geo} />
+                <Route exact path='/access' component={Access} />
                 <Route
                     exact
-                    path="/family"
+                    path='/family'
                     component={() => {
-                        return <Redirect to="/explorer" />
+                        return <Redirect to='/explorer' />
                     }}
                 />
                 <Route
                     exact
-                    path="/explore"
+                    path='/explore'
                     component={() => {
-                        return <Redirect to="/explorer" />
+                        return <Redirect to='/explorer' />
                     }}
                 />
                 <Route
                     exact
-                    path="/query"
+                    path='/query'
                     component={() => {
-                        return <Redirect to="/explorer" />
+                        return <Redirect to='/explorer' />
                     }}
                 />
                 <Route
                     exact
-                    path="/explorer-nt"
+                    path='/explorer-nt'
                     component={() => {
-                        return <Redirect to="/explorer" />
+                        return <Redirect to='/explorer' />
                     }}
                 />
             </Switch>

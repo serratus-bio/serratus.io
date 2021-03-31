@@ -27,7 +27,7 @@ function SequenceLinkButtons({ sequence_accession }) {
     return (
         <LinkButton
             link={`https://www.ncbi.nlm.nih.gov/nuccore/${sequence_accession}`}
-            text="GenBank"
+            text='GenBank'
             icon={externalLinkIcon}
             newTab={true}
         />
@@ -39,36 +39,36 @@ function RunLinkButtons({ run_id }) {
         <>
             <LinkButton
                 link={`https://www.ncbi.nlm.nih.gov/sra/?term=${run_id}`}
-                text="SRA"
+                text='SRA'
                 icon={externalLinkIcon}
                 newTab={true}
             />
             <LinkButton
                 link={`https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=${run_id}`}
-                text="Trace"
+                text='Trace'
                 icon={externalLinkIcon}
                 newTab={true}
             />
             <LinkButton
                 link={`${window.location.origin}/jbrowse?bam=${run_id}`}
-                text="JBrowse"
+                text='JBrowse'
                 icon={externalLinkIcon}
                 newTab={true}
             />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/bam/${run_id}.bam`}
-                text=".bam"
+                text='.bam'
                 icon={downloadIcon}
                 download={true}
             />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/summary2/${run_id}.summary`}
-                text=".summary"
+                text='.summary'
                 icon={downloadIcon}
                 download={true}
             />
-            <div className="inline-flex -ml-1">
-                <ExternalLink href="https://github.com/ababaian/serratus/wiki/.summary-Reports">
+            <div className='inline-flex -ml-1'>
+                <ExternalLink href='https://github.com/ababaian/serratus/wiki/.summary-Reports'>
                     {helpIcon}
                 </ExternalLink>
             </div>

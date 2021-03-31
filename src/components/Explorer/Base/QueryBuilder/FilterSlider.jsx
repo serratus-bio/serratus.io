@@ -61,10 +61,10 @@ const FilterSlider = (props) => {
         <div>
             <Helmet>
                 <link
-                    href="https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css"
-                    rel="stylesheet"></link>
+                    href='https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css'
+                    rel='stylesheet'></link>
             </Helmet>
-            <div id={props.id} className="relative" style={{ height: 30 }} />
+            <div id={props.id} className='relative' style={{ height: 30 }} />
         </div>
     )
 }
