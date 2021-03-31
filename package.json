@@ -22,7 +22,7 @@
     "build:css": "postcss src/styles/tailwind.css -o src/styles/main.css",
     "start": "npm run build:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
-    "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "prettier": "prettier --write 'src/**/*.{js,jsx,ts,tsx}'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
