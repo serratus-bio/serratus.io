@@ -5,16 +5,17 @@ const eutilsUrl = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils'
 export const getEsearch = async (db, term) => {
     const response = await axios.get(
         `${eutilsUrl}/esearch.fcgi?db=${db}&term=${term}&retmax=1&usehistory=y`,
-        { responseType: 'text' }
+        {
+            responseType: 'text',
+        }
     )
     return response.data
 }
 
 export const getEsummary = async (db, entrezId) => {
-    const response = await axios.get(
-        `${eutilsUrl}/esummary.fcgi?db=${db}&id=${entrezId}`,
-        { responseType: 'text' }
-    )
+    const response = await axios.get(`${eutilsUrl}/esummary.fcgi?db=${db}&id=${entrezId}`, {
+        responseType: 'text',
+    })
     return response.data
 }
 
@@ -39,10 +40,7 @@ export const tryGetSraStudyName = async (accession) => {
         // eSummary expXml
         expXmlText = '<tag>' + expXmlText + '</tag>'
         let expXml = parser.parseFromString(expXmlText, 'text/xml')
-        let entrezStudyName = expXml
-            .getRootNode()
-            .querySelector('Study')
-            .getAttribute('name')
+        let entrezStudyName = expXml.getRootNode().querySelector('Study').getAttribute('name')
         return entrezStudyName
     } catch (err) {
         return null

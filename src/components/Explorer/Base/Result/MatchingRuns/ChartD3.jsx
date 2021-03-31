@@ -30,10 +30,7 @@ const Chart = () => {
 export default Chart
 
 export const renderChart = (results, colMap, d3InterpolateFunction) => {
-    var chartSvg = d3
-        .select(`#${chartId}`)
-        .append('svg')
-        .attr('viewBox', `0 0 750 500`)
+    var chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 500`)
     var matchSvg = chartSvg.append('svg').attr('y', tableShiftY)
 
     drawLegend(matchSvg, d3InterpolateFunction)
@@ -47,10 +44,7 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
 
     results.forEach((match, i) => {
         var coverageData = getCoverageData(match)
-        var matchG = matchSvg
-            .append('g')
-            .attr('class', 'sra')
-            .attr('rowid', `${match[sraKey]}`)
+        var matchG = matchSvg.append('g').attr('class', 'sra').attr('rowid', `${match[sraKey]}`)
         var matchSubGroup = drawExpandableRow(
             matchG,
             match[sraKey],
@@ -62,13 +56,7 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
     })
 }
 
-function drawExpandableRow(
-    gElement,
-    name,
-    heatSquareData,
-    rowIndex,
-    d3InterpolateFunction
-) {
+function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3InterpolateFunction) {
     var entrySvg = gElement
         .append('svg')
         .attr('y', rowIndex * sectionHeight)
@@ -79,10 +67,7 @@ function drawExpandableRow(
 
     var entryG = entrySvg
         .append('g')
-        .attr(
-            'transform',
-            `translate(${sectionMargin.left}, ${sectionMargin.top})`
-        )
+        .attr('transform', `translate(${sectionMargin.left}, ${sectionMargin.top})`)
 
     var x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
 
@@ -122,9 +107,7 @@ function drawExpandableRow(
         .attr('x', (d) => x(d.bin))
         .attr('width', x.bandwidth())
         .attr('height', y.bandwidth())
-        .style('fill', (d) =>
-            colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction)
-        )
+        .style('fill', (d) => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
     var barBorderPath = entryG
         .append('rect')

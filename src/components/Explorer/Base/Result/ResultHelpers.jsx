@@ -34,12 +34,7 @@ export function getSequenceName(sequence) {
     return sequence
 }
 
-export const DownloadButton = ({
-    searchLevel,
-    searchLevelValue,
-    identityLims,
-    scoreLims,
-}) => {
+export const DownloadButton = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
     const context = React.useContext(BaseContext)
     const downloadUrl = getMatchesDownloadUrl(
         context.searchType,

@@ -21,9 +21,7 @@ const FamilyResult = ({ runId, drilldownCallback }) => {
 
     React.useEffect(() => {
         if (!runId) return
-        setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage)
-        )
+        setDataPromise(fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage))
     }, [context.searchType, runId, pageNumber])
 
     return (
@@ -32,9 +30,7 @@ const FamilyResult = ({ runId, drilldownCallback }) => {
                 <div className="w-full text-center">
                     <div>
                         <div className="text-xl font-bold">{runId}</div>
-                        {pageTitle && (
-                            <div className="text-lg italic">{pageTitle}</div>
-                        )}
+                        {pageTitle && <div className="text-lg italic">{pageTitle}</div>}
                     </div>
                 </div>
                 <div className="flex justify-center items-center my-2">
@@ -48,10 +44,7 @@ const FamilyResult = ({ runId, drilldownCallback }) => {
                     setPageNumber={setPageNumber}
                     dataPromise={dataPromise}
                 />
-                <ChartController
-                    dataPromise={dataPromise}
-                    drilldownCallback={drilldownCallback}
-                />
+                <ChartController dataPromise={dataPromise} drilldownCallback={drilldownCallback} />
             </div>
         </div>
     )

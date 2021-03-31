@@ -34,9 +34,7 @@ const ChartController = ({ dataPromise }) => {
             })
     }, [dataPromise, chart])
 
-    let loading = (
-        <div className="text-center">Loading... (this might take a while)</div>
-    )
+    let loading = <div className="text-center">Loading... (this might take a while)</div>
 
     let noResultsRun = (
         <div className="text-center">

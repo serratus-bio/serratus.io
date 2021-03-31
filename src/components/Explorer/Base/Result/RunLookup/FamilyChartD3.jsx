@@ -30,16 +30,8 @@ export default Chart
 const familyNameKey = 'family_id'
 const familyCoverageKey = 'coverage_bins'
 
-export const renderChart = (
-    results,
-    colMap,
-    d3InterpolateFunction,
-    drilldownCallback
-) => {
-    var chartSvg = d3
-        .select(`#${chartId}`)
-        .append('svg')
-        .attr('viewBox', `0 0 750 250`)
+export const renderChart = (results, colMap, d3InterpolateFunction, drilldownCallback) => {
+    var chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 250`)
     var familiesSvg = chartSvg.append('svg').attr('y', tableShiftY)
 
     drawLegend(familiesSvg, d3InterpolateFunction)
@@ -88,10 +80,7 @@ function drawExpandableRow({
 
     var entryG = entrySvg
         .append('g')
-        .attr(
-            'transform',
-            `translate(${sectionMargin.left}, ${sectionMargin.top})`
-        )
+        .attr('transform', `translate(${sectionMargin.left}, ${sectionMargin.top})`)
 
     var x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
 
@@ -108,10 +97,7 @@ function drawExpandableRow({
             var link = `${window.location.pathname}?${rowType}=${name}`
             var textWidth = 100
             var textHeight = 14
-            var linkA = d3
-                .select(this.parentNode)
-                .append('a')
-                .attr('href', link)
+            var linkA = d3.select(this.parentNode).append('a').attr('href', link)
             linkA
                 .append('rect')
                 .attr('x', -textWidth)
@@ -132,9 +118,7 @@ function drawExpandableRow({
         .attr('x', (d) => x(d.bin))
         .attr('width', x.bandwidth())
         .attr('height', y.bandwidth())
-        .style('fill', (d) =>
-            colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction)
-        )
+        .style('fill', (d) => colorMap(cvgCartoonMap[d.cartoonChar], d3InterpolateFunction))
 
     var barBorderPath = entryG
         .append('rect')

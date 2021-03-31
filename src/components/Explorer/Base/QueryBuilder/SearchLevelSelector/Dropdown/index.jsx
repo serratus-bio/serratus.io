@@ -12,13 +12,7 @@ export default function Dropdown({
 
     React.useEffect(() => {
         async function setSelectionAsync() {
-            setSelected(
-                await getSelectedObject(
-                    searchType,
-                    searchLevel,
-                    searchLevelValue
-                )
-            )
+            setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue))
         }
         setSelectionAsync()
     }, [searchType, searchLevel, searchLevelValue])
@@ -35,9 +29,7 @@ export default function Dropdown({
     }
 
     async function onMenuClose() {
-        setSelected(
-            await getSelectedObject(searchType, searchLevel, searchLevelValue)
-        )
+        setSelected(await getSelectedObject(searchType, searchLevel, searchLevelValue))
     }
 
     return (

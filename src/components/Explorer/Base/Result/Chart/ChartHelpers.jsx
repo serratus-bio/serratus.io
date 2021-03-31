@@ -24,9 +24,7 @@ const cvgLength = 25
 export const genomeBins = [...Array(cvgLength).keys()]
 export function colorMap(value, d3InterpolateFunction) {
     if (value === 0) return 'rgb(255, 255, 255)'
-    const defaultColorMap = d3
-        .scaleSequentialSymlog(d3InterpolateFunction)
-        .domain(cvgLims)
+    const defaultColorMap = d3.scaleSequentialSymlog(d3InterpolateFunction).domain(cvgLims)
     return defaultColorMap(value)
 }
 
@@ -37,8 +35,7 @@ const headerTextHeight = 25
 const tooltipY = 15
 export const tableShiftY = headerTextHeight + tooltipY
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right
-export const barHeight =
-    sectionHeight - sectionMargin.top - sectionMargin.bottom
+export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom
 
 export const barBorder = { size: 1, color: '#999' }
 export const caretWidth = 25
@@ -61,10 +58,7 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
         legendHeight = 200,
         margin = { top: 10, right: 60, bottom: 10, left: 2 }
 
-    var legendSvg = svgElement
-        .append('svg')
-        .attr('width', legendWidth)
-        .attr('height', legendHeight)
+    var legendSvg = svgElement.append('svg').attr('width', legendWidth).attr('height', legendHeight)
 
     var gradient = legendSvg
         .append('defs')
@@ -113,9 +107,7 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
         .append('g')
         .attr(
             'transform',
-            `translate(${legendWidth - margin.left - margin.right}, ${
-                margin.top - 0.5
-            })`
+            `translate(${legendWidth - margin.left - margin.right}, ${margin.top - 0.5})`
         )
         .call(d3.axisRight(legendScale))
 }
@@ -155,10 +147,7 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
     var colHeight = sectionHeight
     var textG = gElement
         .append('g')
-        .attr(
-            'transform',
-            `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`
-        )
+        .attr('transform', `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`)
     var prevWidth = 0
     Object.keys(colMap).forEach((column) => {
         var colAttrs = colMap[column]

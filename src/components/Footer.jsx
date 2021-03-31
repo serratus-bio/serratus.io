@@ -16,8 +16,7 @@ const Footer = () => {
                 className="text-blue-600">
                 submit an issue on GitHub
             </ExternalLink>
-            . As an open-source project, serratus.io also welcomes any
-            contributors.
+            . As an open-source project, serratus.io also welcomes any contributors.
         </footer>
     )
 }

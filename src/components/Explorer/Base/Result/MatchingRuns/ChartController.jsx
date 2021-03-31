@@ -30,9 +30,7 @@ const ChartController = ({ dataPromise }) => {
             })
     }, [dataPromise, context.result])
 
-    let loading = (
-        <div className="text-center">Loading... (this might take a while)</div>
-    )
+    let loading = <div className="text-center">Loading... (this might take a while)</div>
 
     let error = (
         <div className="text-center">

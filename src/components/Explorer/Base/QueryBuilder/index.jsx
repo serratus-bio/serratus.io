@@ -27,11 +27,7 @@ const QueryBuilder = ({
     // initial chart render
     const chartRendered = React.useRef(false)
     if (!chartRendered.current && searchLevel !== 'run') {
-        fetchMatchCounts(
-            context.searchType,
-            searchLevel,
-            searchLevelValue
-        ).then((data) => {
+        fetchMatchCounts(context.searchType, searchLevel, searchLevelValue).then((data) => {
             if (!data) return
             renderChart(
                 data,
@@ -49,11 +45,7 @@ const QueryBuilder = ({
     // update chart for subsequent family changes
     React.useEffect(() => {
         if (!searchLevelValue || searchLevel === 'run') return
-        fetchMatchCounts(
-            context.searchType,
-            searchLevel,
-            searchLevelValue
-        ).then((data) => {
+        fetchMatchCounts(context.searchType, searchLevel, searchLevelValue).then((data) => {
             if (!chartRendered.current || !data) return
             updateData(data)
             updateYLims()
@@ -109,9 +101,7 @@ const QueryBuilder = ({
             <div className="max-w-xl m-auto">
                 <div className={`${slidersVisibility} mb-10`}>
                     <div className="mx-2">
-                        <div className="pt-6 text-center">
-                            Alignment identity (%)
-                        </div>
+                        <div className="pt-6 text-center">Alignment identity (%)</div>
                         <FilterSlider
                             id="sliderIdentity"
                             sliderDomain={context.domain.identity}

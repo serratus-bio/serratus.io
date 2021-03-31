@@ -18,13 +18,7 @@ const sequenceNameKey = 'virus_name'
 const coverageKey = 'coverage_bins'
 
 export class SequenceMatch {
-    constructor(
-        rootSvg,
-        sequenceData,
-        rowIndex,
-        colMap,
-        d3InterpolateFunction
-    ) {
+    constructor(rootSvg, sequenceData, rowIndex, colMap, d3InterpolateFunction) {
         this.data = sequenceData
         this.rowIndex = rowIndex
         this.colMap = colMap
@@ -61,21 +55,10 @@ export class SequenceMatch {
 
         const mainG = this.mainSvg
             .append('g')
-            .attr(
-                'transform',
-                `translate(${sectionMargin.left}, ${sectionMargin.top})`
-            )
+            .attr('transform', `translate(${sectionMargin.left}, ${sectionMargin.top})`)
 
-        const x = d3
-            .scaleBand()
-            .range([0, barWidth])
-            .domain(genomeBins)
-            .padding(0.01)
-        const y = d3
-            .scaleBand()
-            .range([0, barHeight])
-            .domain([this.displayName])
-            .padding(0.01)
+        const x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
+        const y = d3.scaleBand().range([0, barHeight]).domain([this.displayName]).padding(0.01)
         const yAxis = mainG.append('g').call(d3.axisLeft(y))
         yAxis.select('path').remove()
         yAxis.select('line').remove()
@@ -103,10 +86,7 @@ export class SequenceMatch {
             .attr('width', x.bandwidth())
             .attr('height', y.bandwidth())
             .style('fill', (d) =>
-                colorMap(
-                    cvgCartoonMap[d.cartoonChar],
-                    this.d3InterpolateFunction
-                )
+                colorMap(cvgCartoonMap[d.cartoonChar], this.d3InterpolateFunction)
             )
 
         mainG

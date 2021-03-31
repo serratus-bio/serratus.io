@@ -8,14 +8,10 @@ const Intro = () => {
 
     return (
         <>
-            <div className="text-3xl text-center">
-                RNA Dependent RNA Polymerase (RdRP) Search
-            </div>
+            <div className="text-3xl text-center">RNA Dependent RNA Polymerase (RdRP) Search</div>
 
             <div id="info" class="text-left">
-                <button
-                    className="text-xl m-auto"
-                    onClick={() => setShowInfo(!showInfo)}>
+                <button className="text-xl m-auto" onClick={() => setShowInfo(!showInfo)}>
                     {showInfo ? '▼' : '►'} Search Information
                 </button>
                 <div className={showInfo ? 'block' : 'hidden'}>
@@ -24,9 +20,7 @@ const Intro = () => {
             </div>
 
             <div id="examples" class="text-left">
-                <button
-                    className="text-xl m-auto"
-                    onClick={() => setShowExamples(!showExamples)}>
+                <button className="text-xl m-auto" onClick={() => setShowExamples(!showExamples)}>
                     {showExamples ? '▼' : '►'} Examples
                 </button>
                 <div className={showExamples ? 'block' : 'hidden'}>
@@ -35,9 +29,7 @@ const Intro = () => {
             </div>
 
             <div id="mascot" class="text-center">
-                <button
-                    className="text-center m-auto"
-                    onClick={() => setShowMascot(!showMascot)}>
+                <button className="text-center m-auto" onClick={() => setShowMascot(!showMascot)}>
                     <div align="center" id="Frank">
                         <img
                             align="center"
@@ -60,11 +52,7 @@ export default Intro
 
 const info = (
     <>
-        <img
-            className="m-auto h-64"
-            src="/rdrp_search.png"
-            alt="RdRP Search overview"
-        />
+        <img className="m-auto h-64" src="/rdrp_search.png" alt="RdRP Search overview" />
 
         <div className="font-bold mb-2">
             Sequence Reference: <i>rdrp1</i>{' '}
@@ -80,9 +68,8 @@ const info = (
             </ExternalLink>
         </div>
         <div>
-            Short-reads were translated-nucleotide alignment against an
-            amino-acid collection of RNA dependent RNA Polymerase from all RNA
-            viruses (n = 14,941) and deltavirus antigen.
+            Short-reads were translated-nucleotide alignment against an amino-acid collection of RNA
+            dependent RNA Polymerase from all RNA viruses (n = 14,941) and deltavirus antigen.
         </div>
         <div> Operational sensitivity: 60-95% RdRP amino acid identity. </div>
         <div className="font-bold my-2">
@@ -96,8 +83,8 @@ const info = (
         <ul className="list-disc list-inside">
             <li> 5,686,715 libraries (Jan 2021)</li>
             <li>
-                All Transcriptome, Metatranscriptome, Metagenome, Virome, and
-                Environmental sequencing
+                All Transcriptome, Metatranscriptome, Metagenome, Virome, and Environmental
+                sequencing
             </li>
             <li>Genome and Exome for non-human non-mouse mammals</li>
         </ul>
@@ -106,8 +93,8 @@ const info = (
 
 const examples = (
     <>
-        Explore Serratus by virus family name, GenBank accession (in sequence
-        reference), or SRA run identifier.
+        Explore Serratus by virus family name, GenBank accession (in sequence reference), or SRA run
+        identifier.
         <br />
         <br />
         Family:{' '}
@@ -115,9 +102,7 @@ const examples = (
             Coronaviridae
         </a>
         ,{' '}
-        <a
-            className="text-blue-600"
-            href="?family=Qinviridae&identity=45-100&score=25-100">
+        <a className="text-blue-600" href="?family=Qinviridae&identity=45-100&score=25-100">
             Qinviridae
         </a>
         ,{' '}
@@ -132,9 +117,7 @@ const examples = (
             Hepatitis Delta Virus (NC_001653)
         </a>
         ,{' '}
-        <a
-            className="text-blue-600"
-            href="?sequence=AAF26709&identity=45-100&score=15-100">
+        <a className="text-blue-600" href="?sequence=AAF26709&identity=45-100&score=15-100">
             Rubella (AAF26709)
         </a>
         ...
@@ -155,12 +138,11 @@ const examples = (
 const mascot = (
     <>
         <div className="text-gray-600">
-            Serratus is made possible through the promise of collective
-            data-sharing.
+            Serratus is made possible through the promise of collective data-sharing.
         </div>
         <div className="text-gray-600">
-            If you learn from these data, consider your role in releasing data
-            freely and without restriction.
+            If you learn from these data, consider your role in releasing data freely and without
+            restriction.
         </div>
         <br />
     </>

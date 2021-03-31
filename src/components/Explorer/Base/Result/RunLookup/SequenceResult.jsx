@@ -18,13 +18,7 @@ const SequenceResult = ({ runId, propFamilyId }) => {
 
     React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(
-                context.searchType,
-                runId,
-                pageNumber,
-                perPage,
-                familyId
-            )
+            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, familyId)
         )
     }, [context, runId, pageNumber, familyId])
 

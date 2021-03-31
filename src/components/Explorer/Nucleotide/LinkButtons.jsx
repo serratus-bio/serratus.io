@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-    LinkButton,
-    ExternalLink,
-    externalLinkIcon,
-    downloadIcon,
-    helpIcon,
-} from 'common'
+import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
 
 export default function LinkButtons({ searchLevel, searchLevelValue }) {
     if (searchLevel === 'family') {
@@ -26,14 +20,7 @@ function FamilyLinkButtons({ family_name }) {
         link = 'https://card.mcmaster.ca/'
         text = 'Database Website'
     }
-    return (
-        <LinkButton
-            link={link}
-            text={text}
-            icon={externalLinkIcon}
-            newTab={true}
-        />
-    )
+    return <LinkButton link={link} text={text} icon={externalLinkIcon} newTab={true} />
 }
 
 function SequenceLinkButtons({ sequence_accession }) {

@@ -26,10 +26,7 @@ export class SequenceChart {
 
     lazyInit() {
         if (this.rootSvg) return
-        this.rootSvg = d3
-            .select(`#${this.chartId}`)
-            .append('svg')
-            .attr('viewBox', `0 0 750 400`)
+        this.rootSvg = d3.select(`#${this.chartId}`).append('svg').attr('viewBox', `0 0 750 400`)
     }
 
     clearIfInit() {

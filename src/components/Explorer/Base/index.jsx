@@ -32,13 +32,9 @@ const ExplorerBase = ({ location }) => {
     var searchLevelProvided = searchLevelFromParam !== null
     var identityParamStr = urlParams.get('identity')
     if (identityParamStr)
-        identityLimsFromParam = parseRange(
-            identityParamStr,
-            context.domain.identity
-        )
+        identityLimsFromParam = parseRange(identityParamStr, context.domain.identity)
     var scoreParamStr = urlParams.get('score')
-    if (scoreParamStr)
-        scoreLimsFromParam = parseRange(scoreParamStr, context.domain.score)
+    if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, context.domain.score)
 
     const willMount = React.useRef(true)
     if (willMount.current) {
@@ -66,9 +62,7 @@ const ExplorerBase = ({ location }) => {
     }
 
     // values that change with user input (QueryBuilder)
-    const [searchLevel, setSearchLevel] = React.useState(
-        searchLevelStaticRef.current
-    )
+    const [searchLevel, setSearchLevel] = React.useState(searchLevelStaticRef.current)
     const [searchLevelValue, setSearchLevelValue] = React.useState(
         searchLevelValueStaticRef.current
     )
@@ -76,8 +70,7 @@ const ExplorerBase = ({ location }) => {
     const scoreLimsRef = React.useRef(scoreLimsStaticRef.current)
 
     return (
-        <div
-            className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
+        <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             <Helmet>
                 <title>
                     Serratus |{' '}
@@ -96,8 +89,7 @@ const ExplorerBase = ({ location }) => {
                     searchLevelValue={searchLevelValue}
                     setSearchLevelValue={setSearchLevelValue}
                 />
-                <div
-                    className={`hidden ${switchSize}:block mb-auto text-center`}>
+                <div className={`hidden ${switchSize}:block mb-auto text-center`}>
                     <DataReference />
                 </div>
             </div>

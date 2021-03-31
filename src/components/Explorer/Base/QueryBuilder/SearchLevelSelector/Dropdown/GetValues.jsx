@@ -4,11 +4,7 @@ export function getLoadOptions(searchType, searchLevel) {
     return getOptionsFromInputCallback(searchType, searchLevel)
 }
 
-export async function getSelectedObject(
-    searchType,
-    searchLevel,
-    searchLevelValue
-) {
+export async function getSelectedObject(searchType, searchLevel, searchLevelValue) {
     // data from API has {id: name/null}
     const dict = await getOptionsPromise(searchType, searchLevel)
     return getSelectionObject(searchLevelValue, dict[searchLevelValue])
@@ -49,10 +45,7 @@ function getOptionsPromise(searchType, searchLevel) {
         mapPromisesCache[searchType] = {}
     }
     if (!(searchLevel in mapPromisesCache[searchType])) {
-        mapPromisesCache[searchType][searchLevel] = fetchValues(
-            searchType,
-            searchLevel
-        )
+        mapPromisesCache[searchType][searchLevel] = fetchValues(searchType, searchLevel)
     }
     return mapPromisesCache[searchType][searchLevel]
 }

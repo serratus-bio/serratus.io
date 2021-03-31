@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-    LinkButton,
-    ExternalLink,
-    externalLinkIcon,
-    downloadIcon,
-} from 'common'
+import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common'
 import { RunData } from './types'
 
 type Props = {
@@ -16,9 +11,7 @@ const SelectionInfo = ({ selectedPoints }: Props) => {
 
     const maxRows = 50
     const displayPoints =
-        selectedPoints.length > maxRows
-            ? selectedPoints.slice(0, maxRows)
-            : selectedPoints
+        selectedPoints.length > maxRows ? selectedPoints.slice(0, maxRows) : selectedPoints
 
     const tdClasses = 'border px-4 py-2'
     const resultsTable = (

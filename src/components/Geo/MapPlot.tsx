@@ -5,9 +5,7 @@ import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
 
 type Props = {
-    setSelectedPoints: React.Dispatch<
-        React.SetStateAction<RunData[] | undefined>
-    >
+    setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
 export default function MapPlot({ setSelectedPoints }: Props) {
@@ -26,9 +24,7 @@ export default function MapPlot({ setSelectedPoints }: Props) {
 
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
-        const points = selectedData.points.map(
-            (point) => point.customdata
-        ) as RunData[]
+        const points = selectedData.points.map((point) => point.customdata) as RunData[]
         setSelectedPoints(points)
     }
 

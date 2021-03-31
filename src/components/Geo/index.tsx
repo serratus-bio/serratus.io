@@ -26,26 +26,19 @@ const Geo = () => {
                 {helpIcon} Info
             </button>
             <div
-                className={`collapse-content ${
-                    !isCollapsed ? 'collapsed' : 'expanded'
-                }`}
+                className={`collapse-content ${!isCollapsed ? 'collapsed' : 'expanded'}`}
                 aria-expanded={isCollapsed}>
                 <p>
-                    We searched 5.7 million public sequencing libraries for the
-                    RNA virus hallmark gene, RNA-dependent RNA Polymerase
-                    (RdRP).
+                    We searched 5.7 million public sequencing libraries for the RNA virus hallmark
+                    gene, RNA-dependent RNA Polymerase (RdRP).
                 </p>
 
                 <p>
-                    This map shows the location of BioSamples from which an
-                    intact RdRP sequence could be recovered and geographical
-                    meta-data was present.
+                    This map shows the location of BioSamples from which an intact RdRP sequence
+                    could be recovered and geographical meta-data was present.
                 </p>
 
-                <p>
-                    A 100-meter randomization is applied to all points to
-                    prevent overplotting.
-                </p>
+                <p>A 100-meter randomization is applied to all points to prevent overplotting.</p>
             </div>
 
             <div className="my-2">
@@ -53,9 +46,8 @@ const Geo = () => {
             </div>
 
             <div className="text-left text-gray-600">
-                Use <b>`Shift`</b>-click to select multiple points or the{' '}
-                <b>`Box Select`</b> or <b>`Lasso Select`</b> icons in the
-                top-right.
+                Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
+                <b>`Lasso Select`</b> icons in the top-right.
             </div>
 
             <SelectionInfo selectedPoints={selectedPoints} />

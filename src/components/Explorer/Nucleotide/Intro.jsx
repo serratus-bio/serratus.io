@@ -13,9 +13,7 @@ const Intro = () => {
             </div>
 
             <div id="info" class="text-left">
-                <button
-                    className="text-xl m-auto"
-                    onClick={() => setShowInfo(!showInfo)}>
+                <button className="text-xl m-auto" onClick={() => setShowInfo(!showInfo)}>
                     {showInfo ? '▼' : '►'} Search Information
                 </button>
                 <div className={showInfo ? 'block' : 'hidden'}>
@@ -24,9 +22,7 @@ const Intro = () => {
             </div>
 
             <div id="examples" class="text-left">
-                <button
-                    className="text-xl m-auto"
-                    onClick={() => setShowExamples(!showExamples)}>
+                <button className="text-xl m-auto" onClick={() => setShowExamples(!showExamples)}>
                     {showExamples ? '▼' : '►'} Examples
                 </button>
                 <div className={showExamples ? 'block' : 'hidden'}>
@@ -35,9 +31,7 @@ const Intro = () => {
             </div>
 
             <div id="mascot" class="text-center">
-                <button
-                    className="text-center m-auto"
-                    onClick={() => setShowMascot(!showMascot)}>
+                <button className="text-center m-auto" onClick={() => setShowMascot(!showMascot)}>
                     <div align="center" id="Frank">
                         <img
                             align="center"
@@ -60,11 +54,7 @@ export default Intro
 
 const info = (
     <>
-        <img
-            className="m-auto h-64"
-            src="/nt_search.png"
-            alt="Nucleotide Search overview"
-        />
+        <img className="m-auto h-64" src="/nt_search.png" alt="Nucleotide Search overview" />
 
         <div className="font-bold mb-2">
             Sequence Reference: <i>cov3ma</i>{' '}
@@ -82,24 +72,17 @@ const info = (
         <div>
             Short reads were aligned against a nucleotide pangenome.
             <ol className="list-decimal list-inside">
-                <li>
-                    GenBank Coronaviridae sequences clustered at 99% identity
-                    (n=10,101)
-                </li>
+                <li>GenBank Coronaviridae sequences clustered at 99% identity (n=10,101)</li>
                 <li>non-retrovirus Vertebrate RefSeq Viruses (n=2,849)</li>
                 <li>
-                    <ExternalLink
-                        href="https://card.mcmaster.ca/"
-                        className="text-blue-600">
+                    <ExternalLink href="https://card.mcmaster.ca/" className="text-blue-600">
                         CARD
                     </ExternalLink>{' '}
                     Antimicrobial Resistance (AMR) genes clustered at 95%
                 </li>
             </ol>
         </div>
-        <div>
-            Operational sensitivity: 85-99% genome-wide nucleotide identity.
-        </div>
+        <div>Operational sensitivity: 85-99% genome-wide nucleotide identity.</div>
         <div className="font-bold my-2">
             SRA Search{' '}
             <ExternalLink
@@ -117,8 +100,8 @@ const info = (
 
 const examples = (
     <>
-        Explore Serratus by virus family name, GenBank accession (in sequence
-        reference), or SRA run identifier.
+        Explore Serratus by virus family name, GenBank accession (in sequence reference), or SRA run
+        identifier.
         <br />
         <br />
         Family:{' '}
@@ -166,12 +149,11 @@ const examples = (
 const mascot = (
     <>
         <div className="text-gray-600">
-            Serratus is made possible through the promise of collective
-            data-sharing.
+            Serratus is made possible through the promise of collective data-sharing.
         </div>
         <div className="text-gray-600">
-            If you learn from these data, consider your role in releasing data
-            freely and without restriction.
+            If you learn from these data, consider your role in releasing data freely and without
+            restriction.
         </div>
         <br />
     </>

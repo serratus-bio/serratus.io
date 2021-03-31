@@ -48,9 +48,7 @@ export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
     var svgHeight = chartHeight + margin.top + margin.bottom
 
     var mainDiv = d3.select(`#${chartId}`)
-    var mainSvg = mainDiv
-        .append('svg')
-        .attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
+    var mainSvg = mainDiv.append('svg').attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
     var chartG = mainSvg
         .append('g')
         .attr('width', chartWidth)
@@ -152,10 +150,7 @@ export const updateYLims = (transitionDuration = 0) => {
     if (isNaN(maxDataY) || maxDataY < 10) maxDataY = 10 // set min upper limit of 10
     yLims = [0, maxDataY]
     yScale.domain(yLims).nice()
-    yAxis
-        .transition()
-        .duration(transitionDuration)
-        .call(d3.axisLeft(yScale).ticks(5))
+    yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5))
     updateStacks(transitionDuration)
 }
 

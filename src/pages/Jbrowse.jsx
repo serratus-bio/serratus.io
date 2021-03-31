@@ -41,10 +41,7 @@ const Jbrowse = (props) => {
             window.JBrowse = new window.Browser(config)
             window.JBrowse.navigateTo(loc)
             window.localStorage.setItem('GenomeBrowser-refseq-', loc)
-            window.localStorage.setItem(
-                'GenomeBrowser-tracks-',
-                `Cov3ma Reference Sequence,${bam}`
-            )
+            window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`)
             console.log(window.JBrowse)
         })
     }, [bam, loc])
