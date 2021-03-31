@@ -10,7 +10,7 @@ const Intro = () => {
         <>
             <div className='text-3xl text-center'>RNA Dependent RNA Polymerase (RdRP) Search</div>
 
-            <div id='info' class='text-left'>
+            <div id='info' className='text-left'>
                 <button className='text-xl m-auto' onClick={() => setShowInfo(!showInfo)}>
                     {showInfo ? '▼' : '►'} Search Information
                 </button>
@@ -19,7 +19,7 @@ const Intro = () => {
                 </div>
             </div>
 
-            <div id='examples' class='text-left'>
+            <div id='examples' className='text-left'>
                 <button className='text-xl m-auto' onClick={() => setShowExamples(!showExamples)}>
                     {showExamples ? '▼' : '►'} Examples
                 </button>
@@ -28,7 +28,7 @@ const Intro = () => {
                 </div>
             </div>
 
-            <div id='mascot' class='text-center'>
+            <div id='mascot' className='text-center'>
                 <button className='text-center m-auto' onClick={() => setShowMascot(!showMascot)}>
                     <div align='center' id='Frank'>
                         <img

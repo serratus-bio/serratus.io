@@ -1,4 +1,5 @@
 import React from 'react'
+import Plotly from 'plotly.js'
 import Plot from 'react-plotly.js'
 import * as d3 from 'd3'
 import { RunData } from './types'

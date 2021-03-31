@@ -28,7 +28,7 @@ const ChartController = ({ dataPromise }) => {
                 const resultItemsKey = 'result'
                 chart.render(data[resultItemsKey])
             })
-            .catch((err) => {
+            .catch((_err) => {
                 // TODO: handle error
                 setIsLoading(false)
             })

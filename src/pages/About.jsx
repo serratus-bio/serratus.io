@@ -14,10 +14,10 @@ const About = () => {
             <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
                 <h1 className='text-3xl font-bold text-center'>Background</h1>
                 <p className='my-3'>
-                    0.001% of the Earth's viruses are known to science. Emergent viral diseases such
-                    as COVID-19 caused by the SARS-CoV-2 virus can have devastating consequences on
-                    human society. To prepare for (and mitigate) the next pandemic, there is an
-                    urgent need to characterize the planetary diversity of viruses.
+                    0.001% of the Earth&apos;s viruses are known to science. Emergent viral diseases
+                    such as COVID-19 caused by the SARS-CoV-2 virus can have devastating
+                    consequences on human society. To prepare for (and mitigate) the next pandemic,
+                    there is an urgent need to characterize the planetary diversity of viruses.
                 </p>
                 <p className='my-3'>
                     <b>Serratus</b> is an Open Science project to uncover the planetary virome,
@@ -84,7 +84,6 @@ const AboutCard = ({
     imgTop,
     imgTopAlt,
     title,
-    text,
     imgBottom,
     imgBottomLink,
     imgBottomAlt,

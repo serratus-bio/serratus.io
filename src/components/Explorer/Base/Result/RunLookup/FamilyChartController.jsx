@@ -24,7 +24,7 @@ const ChartController = ({ dataPromise, drilldownCallback }) => {
                     drilldownCallback
                 )
             })
-            .catch((err) => {
+            .catch((_err) => {
                 // TODO: handle error
                 setIsLoading(false)
             })

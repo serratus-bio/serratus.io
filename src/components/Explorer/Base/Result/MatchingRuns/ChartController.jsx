@@ -24,7 +24,7 @@ const ChartController = ({ dataPromise }) => {
                     context.result.theme.d3InterpolateFunction
                 )
             })
-            .catch((err) => {
+            .catch((_err) => {
                 setHasError(true)
                 setIsLoading(false)
             })

@@ -1,11 +1,27 @@
 {
-  "extends": ["plugin:prettier/recommended"],
-  "plugins": ["prettier"],
-  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": [
+    "import",
+    "prettier",
+    "react"
+  ],
+  "parser": "@typescript-eslint/parser",
   "rules": {
-    // https://github.com/babel/babel-eslint/issues/681#issuecomment-420663038
-    "template-curly-spacing" : "off",
-    "indent": "off",
-    "prettier/prettier": "error"
+    "react/prop-types": "off", // TODO: consider after TypeScript conversion
+    "no-unused-vars": ["error", {"args": "after-used", "argsIgnorePattern": "^_"}],
+    // "import/no-default-export": "error",
+    "prettier/prettier": "error" // always last
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   }
 }
