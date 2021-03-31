@@ -67,18 +67,16 @@ const info = (
         />
 
         <div className="font-bold mb-2">
-            Sequence Reference: <i>rdrp1</i>
+            Sequence Reference: <i>rdrp1</i>{' '}
             <ExternalLink
                 href="https://github.com/ababaian/serratus/wiki/ref_rdrp1"
                 className="text-blue-600">
-                {' '}
-                (wiki){' '}
-            </ExternalLink>
+                (wiki)
+            </ExternalLink>{' '}
             <ExternalLink
                 href="https://s3.amazonaws.com/lovelywater/seq/rdrp1/rdrp1.fa"
                 className="text-blue-600">
-                {' '}
-                (rdrp1.fa){' '}
+                (rdrp1.fa)
             </ExternalLink>
         </div>
         <div>
@@ -88,12 +86,11 @@ const info = (
         </div>
         <div> Operational sensitivity: 60-95% RdRP amino acid identity. </div>
         <div className="font-bold my-2">
-            SRA Search
+            SRA Search{' '}
             <ExternalLink
                 href="https://github.com/ababaian/serratus/wiki/SRA-queries"
                 className="text-blue-600">
-                {' '}
-                (wiki){' '}
+                (wiki)
             </ExternalLink>
         </div>
         <ul className="list-disc list-inside">
@@ -158,12 +155,10 @@ const examples = (
 const mascot = (
     <>
         <div className="text-gray-600">
-            {' '}
             Serratus is made possible through the promise of collective
-            data-sharing.{' '}
+            data-sharing.
         </div>
         <div className="text-gray-600">
-            {' '}
             If you learn from these data, consider your role in releasing data
             freely and without restriction.
         </div>

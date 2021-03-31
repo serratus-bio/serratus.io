@@ -67,18 +67,16 @@ const info = (
         />
 
         <div className="font-bold mb-2">
-            Sequence Reference: <i>cov3ma</i>
+            Sequence Reference: <i>cov3ma</i>{' '}
             <ExternalLink
                 href="https://github.com/ababaian/serratus/wiki/ref_cov3ma"
                 className="text-blue-600">
-                {' '}
-                (wiki){' '}
-            </ExternalLink>
+                (wiki)
+            </ExternalLink>{' '}
             <ExternalLink
                 href="https://s3.amazonaws.com/lovelywater/seq/cov3ma/cov3ma.fa"
                 className="text-blue-600">
-                {' '}
-                (cov3ma.fa){' '}
+                (cov3ma.fa)
             </ExternalLink>
         </div>
         <div>
@@ -100,16 +98,14 @@ const info = (
             </ol>
         </div>
         <div>
-            {' '}
-            Operational sensitivity: 85-99% genome-wide nucleotide identity.{' '}
+            Operational sensitivity: 85-99% genome-wide nucleotide identity.
         </div>
         <div className="font-bold my-2">
-            SRA Search
+            SRA Search{' '}
             <ExternalLink
                 href="https://github.com/ababaian/serratus/wiki/SRA-queries"
                 className="text-blue-600">
-                {' '}
-                (wiki v201210){' '}
+                (wiki v201210)
             </ExternalLink>
         </div>
         <ul className="list-disc list-inside">
@@ -137,7 +133,8 @@ const examples = (
         <a className="text-blue-600" href="?family=Reoviridae">
             Reoviridae
         </a>
-        ... <br />
+        ...
+        <br />
         <br />
         GenBank:{' '}
         <a className="text-blue-600" href="?sequence=NC_045512.2">
@@ -169,12 +166,10 @@ const examples = (
 const mascot = (
     <>
         <div className="text-gray-600">
-            {' '}
             Serratus is made possible through the promise of collective
-            data-sharing.{' '}
+            data-sharing.
         </div>
         <div className="text-gray-600">
-            {' '}
             If you learn from these data, consider your role in releasing data
             freely and without restriction.
         </div>
