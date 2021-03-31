@@ -70,4 +70,4 @@ export const ExternalLink = (props) => {
         </a>
     )
 }
-export { default as LinkButton } from './LinkButton'
+export { LinkButton } from './LinkButton'

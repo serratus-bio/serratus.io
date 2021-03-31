@@ -9,7 +9,7 @@ type Props = {
     setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
-export default function MapPlot({ setSelectedPoints }: Props) {
+export const MapPlot = ({ setSelectedPoints }: Props) => {
     const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
         data: [],
     })

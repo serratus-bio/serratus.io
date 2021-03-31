@@ -4,7 +4,7 @@ import { classesBoxBorder, ExternalLink, githubIcon } from 'common'
 
 import teamData from '../data/teamData.json'
 
-const Team = () => {
+export const Team = () => {
     const headTags = (
         <Helmet>
             <title>Serratus | Team</title>
@@ -103,5 +103,3 @@ const Team = () => {
         </div>
     )
 }
-
-export default Team

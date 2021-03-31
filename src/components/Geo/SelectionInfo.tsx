@@ -6,7 +6,7 @@ type Props = {
     selectedPoints: RunData[] | undefined
 }
 
-const SelectionInfo = ({ selectedPoints }: Props) => {
+export const SelectionInfo = ({ selectedPoints }: Props) => {
     if (selectedPoints === undefined) return null
 
     const maxRows = 50
@@ -82,5 +82,3 @@ const SelectionInfo = ({ selectedPoints }: Props) => {
         </div>
     )
 }
-
-export default SelectionInfo

@@ -1,20 +1,20 @@
 import React from 'react'
-import Navbar from './components/Navbar'
-import { Route, useLocation, Switch, Redirect } from 'react-router-dom'
 import ReactGA from 'react-ga'
 import { useTransition } from 'react-spring'
+import { Route, useLocation, Switch, Redirect } from 'react-router-dom'
+import { Home } from './pages/Home'
+import { Navbar } from './components/Navbar'
+import { NucleotideExplorer } from './components/Explorer/Nucleotide'
+import { RdrpExplorer } from './components/Explorer/Rdrp'
+import { About } from './pages/About'
+import { Team } from './pages/Team'
+import { Jbrowse } from './pages/Jbrowse'
+import { Access } from './pages/Access'
+import { Footer } from './components/Footer'
+import { Geo } from './components/Geo'
 import './styles/main.css'
-import Home from './pages/Home'
-import NucleotideExplorer from './components/Explorer/Nucleotide'
-import RdrpExplorer from './components/Explorer/Rdrp'
-import About from './pages/About'
-import Team from './pages/Team'
-import Jbrowse from './pages/Jbrowse'
-import Access from './pages/Access'
-import Footer from './components/Footer'
-import Geo from './components/Geo'
 
-const App = () => {
+export const App = () => {
     React.useEffect(() => {
         // track initial page load
         ReactGA.pageview(window.location.pathname + window.location.search)
@@ -72,5 +72,3 @@ const App = () => {
         </div>
     )
 }
-
-export default App

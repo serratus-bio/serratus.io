@@ -1,10 +1,10 @@
 import React from 'react'
-import Paginator from '../Paginator'
-import ChartController from './SequenceChartController'
+import { Paginator } from '../Paginator'
+import { ChartController } from './SequenceChartController'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
-const SequenceResult = ({ runId, propFamilyId }) => {
+export const SequenceResult = ({ runId, propFamilyId }) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)
@@ -39,5 +39,3 @@ const SequenceResult = ({ runId, propFamilyId }) => {
         </div>
     )
 }
-
-export default SequenceResult

@@ -1,15 +1,15 @@
 import React from 'react'
-import Dropdown from './Dropdown'
-import SearchRun from './SearchRun'
+import { Dropdown } from './Dropdown'
+import { SearchRun } from './SearchRun'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
-export default function SearchLevelSelector({
+export const SearchLevelSelector = ({
     searchLevel,
     setSearchLevel,
     searchLevelValue,
     setSearchLevelValue,
     viewMatches,
-}) {
+}) => {
     const context = React.useContext(BaseContext)
     const [values, setValues] = React.useState(context.defaultSearchLevelValues)
 

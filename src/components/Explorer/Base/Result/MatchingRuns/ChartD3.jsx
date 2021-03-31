@@ -23,11 +23,9 @@ const chartId = 'matching-runs-chart'
 
 const sraKey = 'run_id'
 
-const Chart = () => {
+export const Chart = () => {
     return <div id={chartId} />
 }
-
-export default Chart
 
 export const renderChart = (results, colMap, d3InterpolateFunction) => {
     var chartSvg = d3.select(`#${chartId}`).append('svg').attr('viewBox', `0 0 750 500`)

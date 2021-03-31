@@ -1,9 +1,9 @@
 import React from 'react'
-import FamilyResult from './FamilyResult'
-import SequenceResult from './SequenceResult'
+import { FamilyResult } from './FamilyResult'
+import { SequenceResult } from './SequenceResult'
 
 // for run -> family/sequence lookup
-const RunLookupResult = ({ runId }) => {
+export const RunLookupResult = ({ runId }) => {
     const [sequenceResult, setSequenceResult] = React.useState(null)
     function drilldownCallback(familyId) {
         setSequenceResult(<SequenceResult runId={runId} propFamilyId={familyId} />)
@@ -21,5 +21,3 @@ const RunLookupResult = ({ runId }) => {
         </>
     )
 }
-
-export default RunLookupResult

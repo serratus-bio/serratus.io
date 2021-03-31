@@ -1,9 +1,9 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import Chart, { renderChart as renderRunChart } from './FamilyChartD3'
+import { Chart, renderChart as renderRunChart } from './FamilyChartD3'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
-const ChartController = ({ dataPromise, drilldownCallback }) => {
+export const ChartController = ({ dataPromise, drilldownCallback }) => {
     const context = React.useContext(BaseContext)
     const [hasResults, setHasResults] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
@@ -54,5 +54,3 @@ const ChartController = ({ dataPromise, drilldownCallback }) => {
     }
     return <Chart />
 }
-
-export default ChartController

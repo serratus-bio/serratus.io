@@ -2,7 +2,7 @@ import React from 'react'
 
 const resultTotalKey = 'total'
 
-const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) => {
+export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) => {
     const [numPages, setNumPages] = React.useState() // from dataPromise later
     const [loading, setLoading] = React.useState(true)
 
@@ -53,5 +53,3 @@ const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) => {
         )
     )
 }
-
-export default Paginator

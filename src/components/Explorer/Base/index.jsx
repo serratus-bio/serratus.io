@@ -1,15 +1,15 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import QueryBuilder from './QueryBuilder'
-import Result from './Result'
-import DataReference from './DataReference'
+import { QueryBuilder } from './QueryBuilder'
+import { Result } from './Result'
+import { DataReference } from './DataReference'
 import { classesBoxBorder } from 'common'
 import { parseRange, resultSectionId } from './ExplorerHelpers'
 import { BaseContext } from './BaseContext'
 
 const switchSize = 'lg' // Tailwind prefix to switch between landscape/portrait mode
 
-const ExplorerBase = ({ location }) => {
+export const ExplorerBase = ({ location }) => {
     const context = React.useContext(BaseContext)
     const searchLevelStaticRef = React.useRef()
     const searchLevelValueStaticRef = React.useRef()
@@ -115,5 +115,3 @@ const ExplorerBase = ({ location }) => {
         </div>
     )
 }
-
-export default ExplorerBase

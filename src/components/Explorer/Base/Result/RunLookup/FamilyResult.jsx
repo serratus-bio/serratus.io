@@ -1,12 +1,12 @@
 import React from 'react'
-import Paginator from '../Paginator'
-import ChartController from './FamilyChartController'
+import { Paginator } from '../Paginator'
+import { ChartController } from './FamilyChartController'
 import { getRunTitle } from '../ResultHelpers'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
 // for run -> family/sequence lookup
-const FamilyResult = ({ runId, drilldownCallback }) => {
+export const FamilyResult = ({ runId, drilldownCallback }) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
     const [pageNumber, setPageNumber] = React.useState(1)
@@ -49,5 +49,3 @@ const FamilyResult = ({ runId, drilldownCallback }) => {
         </div>
     )
 }
-
-export default FamilyResult

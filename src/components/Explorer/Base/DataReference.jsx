@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExternalLink } from 'common'
 
-const DataReference = () => {
+export const DataReference = () => {
     return (
         <div className='text-gray-700 text-sm'>
             <div className='my-2'>
@@ -26,5 +26,3 @@ const DataReference = () => {
         </div>
     )
 }
-
-export default DataReference

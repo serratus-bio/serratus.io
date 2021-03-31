@@ -4,7 +4,7 @@ import { Router } from 'react-router-dom'
 import ReactGA from 'react-ga'
 import { createBrowserHistory } from 'history'
 
-import App from './App'
+import { App } from './App'
 
 var history = createBrowserHistory()
 

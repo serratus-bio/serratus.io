@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExternalLink } from 'common'
 
-const Intro = () => {
+export const Intro = () => {
     const [showInfo, setShowInfo] = React.useState(false)
     const [showExamples, setShowExamples] = React.useState(true)
     const [showMascot, setShowMascot] = React.useState(false)
@@ -49,8 +49,6 @@ const Intro = () => {
         </>
     )
 }
-
-export default Intro
 
 const info = (
     <>

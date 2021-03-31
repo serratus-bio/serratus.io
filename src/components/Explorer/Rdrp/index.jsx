@@ -1,12 +1,12 @@
 import React from 'react'
-import ExplorerBase from '../Base'
+import { ExplorerBase } from '../Base'
 import { BaseContext } from '../Base/BaseContext'
 import { infernoCssGradient } from '../Base/ExplorerHelpers'
 import { interpolateInferno, interpolateYlOrRd } from 'd3'
-import Intro from './Intro'
-import LinkButtons from './LinkButtons'
+import { Intro } from './Intro'
+import { LinkButtons } from './LinkButtons'
 
-export default function RdrpExplorer({ location }) {
+export const RdrpExplorer = ({ location }) => {
     const context = {
         searchType: 'rdrp',
         defaultSearchLevelValues: {

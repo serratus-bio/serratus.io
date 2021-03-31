@@ -3,7 +3,7 @@ import { ExternalLink } from 'common'
 import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
-const ChartController = ({ dataPromise }) => {
+export const ChartController = ({ dataPromise }) => {
     const context = React.useContext(BaseContext)
     const [hasResults, setHasResults] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
@@ -60,5 +60,3 @@ const ChartController = ({ dataPromise }) => {
     }
     return chart.component
 }
-
-export default ChartController

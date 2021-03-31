@@ -1,12 +1,12 @@
 import React from 'react'
-import Paginator from '../Paginator'
-import ChartController from './ChartController'
+import { Paginator } from '../Paginator'
+import { ChartController } from './ChartController'
 import { getFamilyTitle, getSequenceName, getSequenceTitle, DownloadButton } from '../ResultHelpers'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedMatches } from './SerratusApiCalls'
 
 // for family/sequence -> run lookup
-const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
+export const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [pageNumber, setPageNumber] = React.useState(1)
@@ -79,5 +79,3 @@ const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, score
         </div>
     )
 }
-
-export default MatchingRunsResult

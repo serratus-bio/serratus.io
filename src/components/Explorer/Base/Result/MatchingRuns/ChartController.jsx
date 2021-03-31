@@ -1,11 +1,11 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import Chart, { renderChart as renderGenericChart } from './ChartD3'
+import { Chart, renderChart as renderGenericChart } from './ChartD3'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 const resultItemsKey = 'result'
 
-const ChartController = ({ dataPromise }) => {
+export const ChartController = ({ dataPromise }) => {
     const context = React.useContext(BaseContext)
     const [hasResults, setHasResults] = React.useState(false)
     const [hasError, setHasError] = React.useState(false)
@@ -54,5 +54,3 @@ const ChartController = ({ dataPromise }) => {
     }
     return <Chart />
 }
-
-export default ChartController

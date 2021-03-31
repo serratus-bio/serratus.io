@@ -1,6 +1,7 @@
 import React from 'react'
-import FilterSlider from './FilterSlider'
-import CountChart, {
+import { FilterSlider } from './FilterSlider'
+import {
+    CountChart,
     renderChart,
     updateData,
     updateXLims,
@@ -9,11 +10,11 @@ import CountChart, {
 } from './CountChart'
 import { constructRangeStr, resultSectionId } from '../ExplorerHelpers'
 import { ExternalLink, helpIcon } from 'common'
-import SearchLevelSelector from './SearchLevelSelector'
+import { SearchLevelSelector } from './SearchLevelSelector'
 import { fetchMatchCounts } from './SerratusApiCalls'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
-const QueryBuilder = ({
+export const QueryBuilder = ({
     identityLimsRef,
     scoreLimsRef,
     searchLevel,
@@ -143,5 +144,3 @@ const QueryBuilder = ({
         </div>
     )
 }
-
-export default QueryBuilder

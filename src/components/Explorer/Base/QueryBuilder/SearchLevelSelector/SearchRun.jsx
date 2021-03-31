@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchRun = (props) => {
+export const SearchRun = (props) => {
     const searchOnKeyUp = (e) => {
         if (e.keyCode === 13) {
             props.onEnter(e.target.value)
@@ -19,5 +19,3 @@ const SearchRun = (props) => {
         />
     )
 }
-
-export default SearchRun

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { NavLink } from 'react-router-dom'
 import { searchIcon, externalLinkIcon, ExternalLink } from 'common'
 
-const Home = () => {
+export const Home = () => {
     const headTags = (
         <Helmet>
             <title>Serratus | Home</title>
@@ -42,5 +42,3 @@ const Home = () => {
         </div>
     )
 }
-
-export default Home

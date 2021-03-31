@@ -3,11 +3,9 @@ import * as d3 from 'd3'
 
 const chartId = 'chart'
 
-const CountChart = () => {
+export const CountChart = () => {
     return <div id={chartId} />
 }
-
-export default CountChart
 
 // D3 CODE BELOW
 

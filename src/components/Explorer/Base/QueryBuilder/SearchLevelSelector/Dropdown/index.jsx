@@ -2,12 +2,7 @@ import React from 'react'
 import AsyncSelect from 'react-select/async'
 import { getLoadOptions, getSelectedObject } from './GetValues'
 
-export default function Dropdown({
-    searchType,
-    searchLevel,
-    searchLevelValue,
-    setSearchLevelValue,
-}) {
+export const Dropdown = ({ searchType, searchLevel, searchLevelValue, setSearchLevelValue }) => {
     const [selected, setSelected] = React.useState()
 
     React.useEffect(() => {

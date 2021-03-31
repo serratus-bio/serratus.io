@@ -2,7 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { classesBoxBorder, ExternalLink } from 'common'
 
-const About = () => {
+export const About = () => {
     const headTags = (
         <Helmet>
             <title>Serratus | About</title>
@@ -77,8 +77,6 @@ const About = () => {
         </div>
     )
 }
-
-export default About
 
 const AboutCard = ({
     imgTop,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
 
-export default function LinkButtons({ searchLevel, searchLevelValue }) {
+export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {
         return <FamilyLinkButtons family={searchLevelValue} />
     }

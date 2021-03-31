@@ -21,11 +21,9 @@ import {
 
 const chartId = 'run-family-lookup-chart'
 
-const Chart = () => {
+export const Chart = () => {
     return <div id={chartId} />
 }
-
-export default Chart
 
 const familyNameKey = 'family_id'
 const familyCoverageKey = 'coverage_bins'
