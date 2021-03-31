@@ -1,3 +1,5 @@
+import Plotly from 'plotly.js'
+
 export type RunData = Plotly.Datum & {
     [key: string]: string
 
