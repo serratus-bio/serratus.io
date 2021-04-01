@@ -1,58 +1,56 @@
-import React from "react";
-import {
-    LinkButton,
-    downloadIcon,
-} from 'common';
-import {
-    tryGetGenBankTitle,
-    tryGetSraStudyName,
-} from './EntrezApiCalls';
-import {
-    getMatchesDownloadUrl,
-} from './MatchingRuns/SerratusApiCalls';
-import { BaseContext } from 'components/Explorer/Base/BaseContext';
+import React from 'react'
+import { LinkButton, downloadIcon } from 'common'
+import { tryGetGenBankTitle, tryGetSraStudyName } from './EntrezApiCalls'
+import { getMatchesDownloadUrl } from './MatchingRuns/SerratusApiCalls'
+import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 export async function getRunTitle(run) {
-    return await tryGetSraStudyName(run);
+    return await tryGetSraStudyName(run)
 }
 
 export async function getSequenceTitle(sequence) {
-    let sequenceCorrected = getSequenceName(sequence);
+    let sequenceCorrected = getSequenceName(sequence)
     if (sequence !== sequenceCorrected) {
-        let genbankTitle = await tryGetGenBankTitle(sequenceCorrected);
-        return `[AMR] ${genbankTitle}`;
-    }
-    else {
-        return await tryGetGenBankTitle(sequence);
+        let genbankTitle = await tryGetGenBankTitle(sequenceCorrected)
+        return `[AMR] ${genbankTitle}`
+    } else {
+        return await tryGetGenBankTitle(sequence)
     }
 }
 
 export async function getFamilyTitle(family) {
-    if (family === "AMR") {
-        return "The Comprehensive Antibiotic Resistance Database (CARD)";
+    if (family === 'AMR') {
+        return 'The Comprehensive Antibiotic Resistance Database (CARD)'
     }
-    return null;
+    return null
 }
 
 export function getSequenceName(sequence) {
-    let patternForAMR = /.*_\d{7}/g;
-    let isFromAMR = sequence.match(patternForAMR);
+    let patternForAMR = /.*_\d{7}/g
+    let isFromAMR = sequence.match(patternForAMR)
     if (isFromAMR) {
-        return sequence.slice(0, sequence.lastIndexOf("_"));
+        return sequence.slice(0, sequence.lastIndexOf('_'))
     }
-    return sequence;
+    return sequence
 }
 
-export const DownloadButton = ({searchLevel, searchLevelValue, identityLims, scoreLims}) => {
-    const context = React.useContext(BaseContext);
-    const downloadUrl = getMatchesDownloadUrl(context.searchType, searchLevel, searchLevelValue, identityLims, scoreLims);
+export const DownloadButton = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
+    const context = React.useContext(BaseContext)
+    const downloadUrl = getMatchesDownloadUrl(
+        context.searchType,
+        searchLevel,
+        searchLevelValue,
+        identityLims,
+        scoreLims
+    )
     return (
-        <div className="flex justify-center">
+        <div className='flex justify-center'>
             <LinkButton
                 link={downloadUrl}
-                text="Download Matches"
+                text='Download Matches'
                 icon={downloadIcon}
-                download={true} />
+                download={true}
+            />
         </div>
     )
 }

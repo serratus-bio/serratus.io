@@ -1,1 +1,1 @@
-declare module '*.tsv';
+declare module '*.tsv'
