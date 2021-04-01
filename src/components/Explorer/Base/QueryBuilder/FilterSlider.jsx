@@ -3,7 +3,14 @@ import { Helmet } from 'react-helmet'
 import * as d3 from 'd3'
 import { createD3RangeSlider } from './d3RangeSlider'
 
-export const FilterSlider = (props) => {
+export const FilterSlider = ({
+    onChange,
+    onTouchEnd,
+    sliderLimsRef,
+    id: idProp,
+    sliderDomain: sliderDomainProp,
+    linearGradientString: linearGradientStringProp,
+}) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)
     // optional props: linearGradientString, onChange:callback, onTouchEnd:callback
 
@@ -11,13 +18,10 @@ export const FilterSlider = (props) => {
     const sliderLabelL = useRef(null)
     const sliderLabelR = useRef(null)
 
-    const onChange = props.onChange
-    const onTouchEnd = props.onTouchEnd
-    const sliderLimsRef = props.sliderLimsRef
     // immutables
-    const [id] = useState(props.id)
-    const [sliderDomain] = useState(props.sliderDomain)
-    const [linearGradientString] = useState(props.linearGradientString)
+    const [id] = useState(idProp)
+    const [sliderDomain] = useState(sliderDomainProp)
+    const [linearGradientString] = useState(linearGradientStringProp)
 
     useEffect(() => {
         const updateLims = (begin, end) => {
@@ -64,7 +68,7 @@ export const FilterSlider = (props) => {
                     href='https://cdn.rawgit.com/RasmusFonseca/d3RangeSlider/master/d3RangeSlider.css'
                     rel='stylesheet'></link>
             </Helmet>
-            <div id={props.id} className='relative' style={{ height: 30 }} />
+            <div id={id} className='relative' style={{ height: 30 }} />
         </div>
     )
 }

@@ -17,6 +17,7 @@
   "rules": {
     "func-style": ["error", "declaration", { "allowArrowFunctions": true }],
     "react/prop-types": "off", // TODO: consider after TypeScript conversion
+    "react/destructuring-assignment": "error",
     "no-unused-vars": ["error", {"args": "after-used", "argsIgnorePattern": "^_"}],
     "no-var": "error",
     "import/no-default-export": "error",

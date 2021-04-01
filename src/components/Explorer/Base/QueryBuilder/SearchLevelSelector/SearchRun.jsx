@@ -1,11 +1,11 @@
 import React from 'react'
 
-export const SearchRun = (props) => {
+export const SearchRun = ({ run, setRun, onEnter }) => {
     const searchOnKeyUp = (e) => {
         if (e.keyCode === 13) {
-            props.onEnter(e.target.value)
+            onEnter(e.target.value)
         } else {
-            props.setRun(e.target.value)
+            setRun(e.target.value)
         }
     }
 
@@ -14,7 +14,7 @@ export const SearchRun = (props) => {
             className='rounded border border-gray-400 h-8 w-full px-2 m-1 focus:border-blue-600 focus:outline-none'
             type='text'
             placeholder='e.g. ERR2756788'
-            defaultValue={props.run}
+            defaultValue={run}
             onKeyUp={searchOnKeyUp}
         />
     )

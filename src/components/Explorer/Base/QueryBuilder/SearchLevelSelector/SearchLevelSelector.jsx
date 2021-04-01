@@ -74,17 +74,17 @@ export const SearchLevelSelector = ({
     )
 }
 
-const SearchLevelOption = (props) => {
+const SearchLevelOption = ({ className, value, checked, onChange, displayText }) => {
     return (
-        <div className={props.className}>
+        <div className={className}>
             <input
                 type='radio'
                 name='searchLevel'
-                value={props.value}
-                checked={props.checked}
-                onChange={props.onChange}
+                value={value}
+                checked={checked}
+                onChange={onChange}
             />
-            <span className='ml-1'>{props.displayText}</span>
+            <span className='ml-1'>{displayText}</span>
         </div>
     )
 }

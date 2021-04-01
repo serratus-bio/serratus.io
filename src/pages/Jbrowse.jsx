@@ -28,8 +28,8 @@ const getJbrowseConfig = (bam) => {
     }
 }
 
-export const Jbrowse = (props) => {
-    const urlParams = new URLSearchParams(props.location.search)
+export const Jbrowse = ({ location }) => {
+    const urlParams = new URLSearchParams(location.search)
     const bam = urlParams.get('bam')
     const loc = urlParams.get('loc')
 

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export const ExternalLink = (props) => {
+export const ExternalLink = ({ children, ...props }) => {
     return (
         <a {...props} target='_blank' rel='noopener noreferrer'>
-            {props.children}
+            {children}
         </a>
     )
 }
