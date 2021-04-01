@@ -53,6 +53,13 @@ If you want to use the live backend API (`api.serratus.io`) instead of running i
 - Create a topic branch from the `main` branch. We use the following branch naming structure:
 - Make commits of logical and atomic units, with meaningful messages.
 
+### Coding Conventions
+
+These are checked on pull requests (PRs) using a GitHub Actions workflow.
+
+- The build is set to break on a custom set of `eslint` rule violations. They should be fixed before merging a PR.
+- Run `npm run prettier` to standardize code style for a PR.
+
 ## Submitting Changes
 
 - Push your changes to a topic branch in your fork of the repository.
