@@ -7,9 +7,9 @@ export const FilterSlider = ({
     onChange,
     onTouchEnd,
     sliderLimsRef,
-    id: idProp,
+    id,
     sliderDomain: sliderDomainProp,
-    linearGradientString: linearGradientStringProp,
+    linearGradientString,
 }) => {
     // required props: id, sliderDomain, sliderLimsRef (mutable ref)
     // optional props: linearGradientString, onChange:callback, onTouchEnd:callback
@@ -19,9 +19,7 @@ export const FilterSlider = ({
     const sliderLabelR = useRef(null)
 
     // immutables
-    const [id] = useState(idProp)
     const [sliderDomain] = useState(sliderDomainProp)
-    const [linearGradientString] = useState(linearGradientStringProp)
 
     useEffect(() => {
         const updateLims = (begin, end) => {
