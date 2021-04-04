@@ -1,5 +1,6 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
+import { getAnalysisMicro } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
 
 export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {
@@ -12,6 +13,8 @@ export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
         return <RunLinkButtons run_id={searchLevelValue} />
     }
 }
+
+export const AnalysisIndex = 'TRUE'
 
 function FamilyLinkButtons({ family_name }) {
     let link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family_name}`
@@ -35,8 +38,11 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
+    const microAvailable = getAnalysisMicro(run_id)
+    console.log('Hello world!')
     return (
         <>
+            <div>{microAvailable.data}</div>
             <LinkButton
                 link={`https://www.ncbi.nlm.nih.gov/sra/?term=${run_id}`}
                 text='SRA'
@@ -60,6 +66,13 @@ function RunLinkButtons({ run_id }) {
                 text='.summary'
                 icon={downloadIcon}
                 download={true}
+            />
+            <LinkButton
+                link={`https://s3.amazonaws.com/lovelywater/assembly/micro/rdrp1/${run_id}.rdrp1.mu.fa`}
+                text='rdrp'
+                icon={downloadIcon}
+                download={true}
+                show={true}
             />
             <div className='inline-flex -ml-1'>
                 <ExternalLink href='https://github.com/ababaian/serratus/wiki/.summary-Reports'>
