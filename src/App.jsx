@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactGA from 'react-ga'
-import { useTransition } from 'react-spring'
-import { Route, useLocation, Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { Home } from './pages/Home'
 import { Navbar } from './components/Navbar'
 import { NucleotideExplorer } from './components/Explorer/Nucleotide'
@@ -19,13 +18,6 @@ export const App = () => {
         // track initial page load
         ReactGA.pageview(window.location.pathname + window.location.search)
     }, [])
-
-    const location = useLocation()
-    useTransition(location, (location) => location.pathname, {
-        from: { opacity: 0, transform: 'translate(100%, 0)' },
-        enter: { opacity: 1, transform: 'translate(0, 0)' },
-        leave: { opacity: 0, transform: 'translate(-100%, 0)' },
-    })
 
     return (
         <div>
