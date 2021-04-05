@@ -1,5 +1,6 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
+import { getAnalysisIndex } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
 
 export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {
@@ -35,6 +36,16 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
+    const baseUrl = window.location.origin
+    const [rdrpAvailable, setRdrpAvailable] = React.useState(false)
+
+    React.useEffect(() => {
+        async function setIndexButtons() {
+            const responseData = await getAnalysisIndex(run_id)
+            setRdrpAvailable(responseData.analysis_index.rsra)
+        }
+        setIndexButtons()
+    }, [])
     return (
         <>
             <LinkButton
@@ -48,6 +59,12 @@ function RunLinkButtons({ run_id }) {
                 text='Trace'
                 icon={externalLinkIcon}
                 newTab={true}
+            />
+            <LinkButton
+                link={`${baseUrl}/explorer-rdrp?run=${run_id}`}
+                text='RdRP'
+                icon={externalLinkIcon}
+                show={rdrpAvailable}
             />
             <LinkButton
                 link={`${window.location.origin}/jbrowse?bam=${run_id}`}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
-import { getAnalysisMicro } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
+import { getAnalysisIndex } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
 
 export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {
@@ -38,12 +38,15 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
+    const baseUrl = window.location.origin
     const [microAvailable, setMicroAvailable] = React.useState(false)
+    const [ntAvailable, setNtAvailable] = React.useState(false)
 
     React.useEffect(() => {
         async function setIndexButtons() {
-            const responseData = await getAnalysisMicro(run_id)
+            const responseData = await getAnalysisIndex(run_id)
             setMicroAvailable(responseData.analysis_index.micro)
+            setNtAvailable(responseData.analysis_index.nsra)
         }
         setIndexButtons()
     }, [])
@@ -51,7 +54,6 @@ function RunLinkButtons({ run_id }) {
     console.log('Hello world!')
     return (
         <>
-            <div>{microAvailable}</div>
             <LinkButton
                 link={`https://www.ncbi.nlm.nih.gov/sra/?term=${run_id}`}
                 text='SRA'
@@ -63,6 +65,12 @@ function RunLinkButtons({ run_id }) {
                 text='Trace'
                 icon={externalLinkIcon}
                 newTab={true}
+            />
+            <LinkButton
+                link={`${baseUrl}/explorer?run=${run_id}`}
+                text='NT'
+                icon={externalLinkIcon}
+                show={ntAvailable}
             />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}

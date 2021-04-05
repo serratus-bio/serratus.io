@@ -10,18 +10,11 @@ export const getAnalysisIndexUrl = (run_id) => {
     return `${baseUrl}/index/run=${run_id}`
 }
 
-export const getAnalysisMicro = async (run_id) => {
+export const getAnalysisIndex = async (run_id) => {
     const AnalysisUrl = getAnalysisIndexUrl(run_id)
     const response = await axios.get(AnalysisUrl)
     return response.data
 }
-
-//export const getAnalysisMicro2 = async (run_id) => {
-//    const AnalysisUrl = getAnalysisIndexUrl(run_id)
-//    const response = await axios.get(AnalysisUrl)
-//    console.log(response)
-//    return response
-//}
 
 export const getMatchesDownloadUrl = (
     searchType,
