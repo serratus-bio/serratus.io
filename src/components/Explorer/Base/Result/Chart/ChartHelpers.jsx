@@ -30,12 +30,12 @@ export function colorMap(value, d3InterpolateFunction) {
 
 export const sectionMargin = { top: 2, right: 230, bottom: 2, left: 200 }
 export const sectionWidth = 750
-export const sectionHeight = 20
+export const rowHeight = 20
 const headerTextHeight = 25
 const tooltipY = 15
 export const tableShiftY = headerTextHeight + tooltipY
 export const barWidth = sectionWidth - sectionMargin.left - sectionMargin.right
-export const barHeight = sectionHeight - sectionMargin.top - sectionMargin.bottom
+export const barHeight = rowHeight - sectionMargin.top - sectionMargin.bottom
 
 export const barBorder = { size: 1, color: '#999' }
 export const caretWidth = 25
@@ -147,7 +147,7 @@ export function addHeaders(gElement) {
 
 export function addColumns(gElement, colMap, summaryEntry = null) {
     const yShift = 15
-    const colHeight = sectionHeight
+    const colHeight = rowHeight
     const textG = gElement
         .append('g')
         .attr('transform', `translate(${sectionMargin.left + barWidth + 10}, ${yShift})`)

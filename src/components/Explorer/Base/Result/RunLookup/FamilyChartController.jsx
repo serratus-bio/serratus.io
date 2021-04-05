@@ -1,12 +1,21 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import { Chart, renderChart as renderRunChart } from './FamilyChartD3'
+import { FamilyChart } from '../Chart/FamilyChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 export const ChartController = ({ dataPromise, drilldownCallback }) => {
     const context = React.useContext(BaseContext)
     const [hasResults, setHasResults] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
+    const [chart] = React.useState(
+        () =>
+            new FamilyChart(
+                'run-family-lookup-chart',
+                context.result.colMap,
+                context.result.theme.d3InterpolateFunction,
+                drilldownCallback
+            )
+    )
 
     React.useEffect(() => {
         if (!dataPromise) return
@@ -17,18 +26,13 @@ export const ChartController = ({ dataPromise, drilldownCallback }) => {
                 setIsLoading(false)
                 setHasResults(data && data.length !== 0)
                 const resultItemsKey = 'result'
-                renderRunChart(
-                    data[resultItemsKey],
-                    context.result.colMap,
-                    context.result.theme.d3InterpolateFunction,
-                    drilldownCallback
-                )
+                chart.render(data[resultItemsKey])
             })
             .catch((_err) => {
                 // TODO: handle error
                 setIsLoading(false)
             })
-    }, [dataPromise, context.result, drilldownCallback])
+    }, [dataPromise, context.result])
 
     let loading = <div className='text-center'>Loading... (this might take a while)</div>
 
@@ -47,10 +51,12 @@ export const ChartController = ({ dataPromise, drilldownCallback }) => {
     )
 
     if (isLoading) {
-        return loading
+        // use component from React before chart component has been returned
+        if (!chart.componentLoaded()) return loading
+        chart.setLoading()
     }
     if (!hasResults) {
         return noResultsRun
     }
-    return <Chart />
+    return chart.component
 }

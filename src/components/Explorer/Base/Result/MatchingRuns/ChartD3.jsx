@@ -8,7 +8,7 @@ import {
     colorMap,
     sectionMargin,
     sectionWidth,
-    sectionHeight,
+    rowHeight,
     tableShiftY,
     barWidth,
     barHeight,
@@ -36,7 +36,7 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
     const columnTooltipSvgText = chartSvg.append('text').attr('id', 'tooltip')
     const columnHeadersG = chartSvg
         .append('g')
-        .attr('transform', `translate(0, ${tableShiftY - sectionHeight})`)
+        .attr('transform', `translate(0, ${tableShiftY - rowHeight})`)
     addHeaders(columnHeadersG)
     addColumns(columnHeadersG, colMap)
 
@@ -57,9 +57,9 @@ export const renderChart = (results, colMap, d3InterpolateFunction) => {
 function drawExpandableRow(gElement, name, heatSquareData, rowIndex, d3InterpolateFunction) {
     const entrySvg = gElement
         .append('svg')
-        .attr('y', rowIndex * sectionHeight)
+        .attr('y', rowIndex * rowHeight)
         .attr('width', sectionWidth)
-        .attr('height', sectionHeight)
+        .attr('height', rowHeight)
         .attr('border', barBorder.size)
         .style('display', 'block')
 
