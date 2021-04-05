@@ -38,11 +38,20 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
-    const microAvailable = getAnalysisMicro(run_id)
+    const [microAvailable, setMicroAvailable] = React.useState(false)
+
+    React.useEffect(() => {
+        async function setIndexButtons() {
+            const responseData = await getAnalysisMicro(run_id)
+            setMicroAvailable(responseData.analysis_index.micro)
+        }
+        setIndexButtons()
+    }, [])
+
     console.log('Hello world!')
     return (
         <>
-            <div>{microAvailable.data}</div>
+            <div>{microAvailable}</div>
             <LinkButton
                 link={`https://www.ncbi.nlm.nih.gov/sra/?term=${run_id}`}
                 text='SRA'
@@ -72,7 +81,7 @@ function RunLinkButtons({ run_id }) {
                 text='rdrp'
                 icon={downloadIcon}
                 download={true}
-                show={true}
+                show={microAvailable}
             />
             <div className='inline-flex -ml-1'>
                 <ExternalLink href='https://github.com/ababaian/serratus/wiki/.summary-Reports'>
