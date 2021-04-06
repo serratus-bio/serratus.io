@@ -14,8 +14,6 @@ export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     }
 }
 
-export const AnalysisIndex = 'TRUE'
-
 function FamilyLinkButtons({ family_name }) {
     let link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family_name}`
     let text = 'Taxonomy Browser'
@@ -38,20 +36,18 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
-    const baseUrl = window.location.origin
     const [microAvailable, setMicroAvailable] = React.useState(false)
     const [ntAvailable, setNtAvailable] = React.useState(false)
 
     React.useEffect(() => {
         async function setIndexButtons() {
-            const responseData = await getAnalysisIndex(run_id)
-            setMicroAvailable(responseData.analysis_index.micro)
-            setNtAvailable(responseData.analysis_index.nsra)
+            const analysisIndex = await getAnalysisIndex(run_id)
+            setMicroAvailable(analysisIndex.micro)
+            setNtAvailable(analysisIndex.nsra)
         }
         setIndexButtons()
     }, [])
 
-    console.log('Hello world!')
     return (
         <>
             <LinkButton
@@ -66,12 +62,7 @@ function RunLinkButtons({ run_id }) {
                 icon={externalLinkIcon}
                 newTab={true}
             />
-            <LinkButton
-                link={`${baseUrl}/explorer?run=${run_id}`}
-                text='NT'
-                icon={externalLinkIcon}
-                show={ntAvailable}
-            />
+            <LinkButton link={`/explorer?run=${run_id}`} text='NT Explorer' show={ntAvailable} />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}
                 text='.pro'

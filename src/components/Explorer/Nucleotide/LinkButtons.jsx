@@ -36,16 +36,16 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
-    const baseUrl = window.location.origin
     const [rdrpAvailable, setRdrpAvailable] = React.useState(false)
 
     React.useEffect(() => {
         async function setIndexButtons() {
-            const responseData = await getAnalysisIndex(run_id)
-            setRdrpAvailable(responseData.analysis_index.rsra)
+            const analysisIndex = await getAnalysisIndex(run_id)
+            setRdrpAvailable(analysisIndex.rsra)
         }
         setIndexButtons()
     }, [])
+
     return (
         <>
             <LinkButton
@@ -61,9 +61,8 @@ function RunLinkButtons({ run_id }) {
                 newTab={true}
             />
             <LinkButton
-                link={`${baseUrl}/explorer-rdrp?run=${run_id}`}
-                text='RdRP'
-                icon={externalLinkIcon}
+                link={`/explorer-rdrp?run=${run_id}`}
+                text='RdRP Explorer'
                 show={rdrpAvailable}
             />
             <LinkButton
