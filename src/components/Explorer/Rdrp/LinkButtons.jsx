@@ -1,5 +1,6 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
+import { getAnalysisIndex } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
 
 export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {
@@ -35,6 +36,18 @@ function SequenceLinkButtons({ sequence_accession }) {
 }
 
 function RunLinkButtons({ run_id }) {
+    const [microAvailable, setMicroAvailable] = React.useState(false)
+    const [ntAvailable, setNtAvailable] = React.useState(false)
+
+    React.useEffect(() => {
+        async function setIndexButtons() {
+            const analysisIndex = await getAnalysisIndex(run_id)
+            setMicroAvailable(analysisIndex.micro)
+            setNtAvailable(analysisIndex.nsra)
+        }
+        setIndexButtons()
+    }, [])
+
     return (
         <>
             <LinkButton
@@ -49,6 +62,7 @@ function RunLinkButtons({ run_id }) {
                 icon={externalLinkIcon}
                 newTab={true}
             />
+            <LinkButton link={`/explorer?run=${run_id}`} text='NT Explorer' show={ntAvailable} />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}
                 text='.pro'
@@ -60,6 +74,13 @@ function RunLinkButtons({ run_id }) {
                 text='.summary'
                 icon={downloadIcon}
                 download={true}
+            />
+            <LinkButton
+                link={`https://s3.amazonaws.com/lovelywater/assembly/micro/rdrp1/${run_id}.rdrp1.mu.fa`}
+                text='rdrp'
+                icon={downloadIcon}
+                download={true}
+                show={microAvailable}
             />
             <div className='inline-flex -ml-1'>
                 <ExternalLink href='https://github.com/ababaian/serratus/wiki/.summary-Reports'>

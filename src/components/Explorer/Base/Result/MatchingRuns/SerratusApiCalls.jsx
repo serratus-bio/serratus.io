@@ -2,6 +2,12 @@ import axios from 'axios'
 
 const baseUrl = process.env.REACT_APP_API_URL
 
+export const getAnalysisIndex = async (run_id) => {
+    const analysisUrl = `${baseUrl}/index/run=${run_id}`
+    const response = await axios.get(analysisUrl)
+    return response.data.analysis_index
+}
+
 export const getMatchesDownloadUrl = (
     searchType,
     searchLevel,
