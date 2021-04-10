@@ -23,6 +23,10 @@ export const NucleotideExplorer = ({ location }) => {
             identity: [75, 100],
             score: [0, 100],
         },
+        defaultFilterRanges: {
+            identity: [75, 100],
+            score: [50, 100],
+        },
         result: {
             addJbrowseLinks: true,
             colMap: {

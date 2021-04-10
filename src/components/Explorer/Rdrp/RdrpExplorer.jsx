@@ -23,6 +23,10 @@ export const RdrpExplorer = ({ location }) => {
             identity: [45, 100],
             score: [0, 100],
         },
+        defaultFilterRanges: {
+            identity: [45, 100],
+            score: [50, 100],
+        },
         result: {
             addJbrowseLinks: false,
             colMap: {

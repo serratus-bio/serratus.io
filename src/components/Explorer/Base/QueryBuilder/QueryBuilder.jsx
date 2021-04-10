@@ -74,14 +74,11 @@ export const QueryBuilder = ({
             setErrorMessage('Enter a search value.')
             return
         }
-        let params = new URLSearchParams()
-        params.set(searchLevel, searchLevelValue)
-        if (searchLevel !== 'run') {
-            const identity = constructRangeStr(...identityLimsRef.current)
-            params.set('identity', identity)
-            const score = constructRangeStr(...scoreLimsRef.current)
-            params.set('score', score)
-        }
+        const params = new URLSearchParams({
+            [searchLevel]: searchLevelValue,
+            identity: constructRangeStr(...identityLimsRef.current),
+            score: constructRangeStr(...scoreLimsRef.current),
+        })
         const base = window.location.pathname.slice(1)
         const searchUrl = `${base}?${params.toString()}#${resultSectionId}`
         window.location.href = searchUrl
