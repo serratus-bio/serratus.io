@@ -4,7 +4,7 @@ import { ChartController } from './SequenceChartController'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
-export const SequenceResult = ({ runId, propFamilyId }) => {
+export const SequenceResult = ({ runId, identityLims, scoreLims, propFamilyId }) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)
@@ -18,7 +18,15 @@ export const SequenceResult = ({ runId, propFamilyId }) => {
 
     React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, familyId)
+            fetchPagedRunMatches(
+                context.searchType,
+                runId,
+                pageNumber,
+                perPage,
+                identityLims,
+                scoreLims,
+                familyId
+            )
         )
     }, [context, runId, pageNumber, familyId])
 

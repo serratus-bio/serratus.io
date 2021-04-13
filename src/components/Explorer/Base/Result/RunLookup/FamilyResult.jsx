@@ -6,7 +6,7 @@ import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
 // for run -> family/sequence lookup
-export const FamilyResult = ({ runId, drilldownCallback }) => {
+export const FamilyResult = ({ runId, identityLims, scoreLims, drilldownCallback }) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
     const [pageNumber, setPageNumber] = React.useState(1)
@@ -21,7 +21,16 @@ export const FamilyResult = ({ runId, drilldownCallback }) => {
 
     React.useEffect(() => {
         if (!runId) return
-        setDataPromise(fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage))
+        setDataPromise(
+            fetchPagedRunMatches(
+                context.searchType,
+                runId,
+                pageNumber,
+                perPage,
+                identityLims,
+                scoreLims
+            )
+        )
     }, [context.searchType, runId, pageNumber])
 
     return (

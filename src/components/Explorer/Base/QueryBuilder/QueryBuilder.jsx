@@ -85,7 +85,6 @@ export const QueryBuilder = ({
     }
 
     const chartVisibility = searchLevel !== 'run' ? 'visible' : 'hidden'
-    const slidersVisibility = searchLevel !== 'run' ? 'visible' : 'hidden'
 
     return (
         <div className='flex-grow'>
@@ -97,7 +96,7 @@ export const QueryBuilder = ({
                 viewMatches={viewMatches}
             />
             <div className='max-w-xl m-auto'>
-                <div className={`${slidersVisibility} mb-10`}>
+                <div className='mb-10'>
                     <div className='mx-2'>
                         <div className='pt-6 text-center'>Alignment identity (%)</div>
                         <FilterSlider
