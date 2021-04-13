@@ -4,13 +4,21 @@ import { ChartController } from './ChartController'
 import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
+import { ResultPagination } from './types'
+import { Filters } from 'components/Explorer/types'
 
-export const SequenceResult = ({ runId, identityLims, scoreLims, propFamilyId }) => {
+type Props = {
+    runId: string
+    filters: Filters
+    propFamilyId: string
+}
+
+export const SequenceResult = ({ runId, filters, propFamilyId }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)
     const [pageNumber, setPageNumber] = React.useState(1)
-    const [dataPromise, setDataPromise] = React.useState()
+    const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
             new SequenceChart(
@@ -28,15 +36,7 @@ export const SequenceResult = ({ runId, identityLims, scoreLims, propFamilyId })
 
     React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(
-                context.searchType,
-                runId,
-                pageNumber,
-                perPage,
-                identityLims,
-                scoreLims,
-                familyId
-            )
+            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters, familyId)
         )
     }, [context, runId, pageNumber, familyId])
 

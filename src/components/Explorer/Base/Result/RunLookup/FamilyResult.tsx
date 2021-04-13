@@ -5,12 +5,20 @@ import { FamilyChart } from '../Chart/FamilyChart'
 import { getRunTitle } from '../ResultHelpers'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
+import { ResultPagination } from './types'
+import { Filters } from 'components/Explorer/types'
 
-export const FamilyResult = ({ runId, identityLims, scoreLims, drilldownCallback }) => {
+type Props = {
+    runId: string
+    filters: Filters
+    drilldownCallback: (_familyId: string) => void
+}
+
+export const FamilyResult = ({ runId, filters, drilldownCallback }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
     const [pageNumber, setPageNumber] = React.useState(1)
-    const [dataPromise, setDataPromise] = React.useState()
+    const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [pageTitle, setPageTitle] = React.useState()
     const [chart] = React.useState(
         () =>
@@ -31,14 +39,7 @@ export const FamilyResult = ({ runId, identityLims, scoreLims, drilldownCallback
     React.useEffect(() => {
         if (!runId) return
         setDataPromise(
-            fetchPagedRunMatches(
-                context.searchType,
-                runId,
-                pageNumber,
-                perPage,
-                identityLims,
-                scoreLims
-            )
+            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters)
         )
     }, [context.searchType, runId, pageNumber])
 

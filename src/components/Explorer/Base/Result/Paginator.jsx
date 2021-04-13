@@ -30,26 +30,25 @@ export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) =
         readDataPromise(dataPromise, perPage)
     }, [pageNumber, numPages, dataPromise, perPage])
 
+    if (loading || numPages === 0) return null
+
     return (
-        !loading &&
-        numPages !== 0 && (
-            <div className={centerButtons}>
-                {pageNumber === 1 ? (
-                    <button className={invisibleButton}></button>
-                ) : (
-                    <button className={visibleButton} onClick={prevPage}>
-                        prev
-                    </button>
-                )}
-                Page {pageNumber} out of {numPages}
-                {pageNumber === numPages ? (
-                    <button className={invisibleButton}></button>
-                ) : (
-                    <button className={visibleButton} onClick={nextPage}>
-                        next
-                    </button>
-                )}
-            </div>
-        )
+        <div className={centerButtons}>
+            {pageNumber === 1 ? (
+                <button className={invisibleButton}></button>
+            ) : (
+                <button className={visibleButton} onClick={prevPage}>
+                    prev
+                </button>
+            )}
+            Page {pageNumber} out of {numPages}
+            {pageNumber === numPages ? (
+                <button className={invisibleButton}></button>
+            ) : (
+                <button className={visibleButton} onClick={nextPage}>
+                    next
+                </button>
+            )}
+        </div>
     )
 }
