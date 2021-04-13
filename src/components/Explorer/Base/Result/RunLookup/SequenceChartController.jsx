@@ -3,6 +3,8 @@ import { ExternalLink } from 'common'
 import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
+const resultItemsKey = 'result'
+
 export const ChartController = ({ dataPromise }) => {
     const context = React.useContext(BaseContext)
     const [hasResults, setHasResults] = React.useState(false)
@@ -19,24 +21,19 @@ export const ChartController = ({ dataPromise }) => {
 
     React.useEffect(() => {
         if (!dataPromise) return
+        async function loadData() {
+            const data = await dataPromise
+            setHasResults(data && data[resultItemsKey].length !== 0)
+            chart.render(data[resultItemsKey])
+        }
         setIsLoading(true)
+        loadData() // TODO: handle error
+        setIsLoading(false)
+    }, [dataPromise])
 
-        dataPromise
-            .then((data) => {
-                setIsLoading(false)
-                setHasResults(data && data.length !== 0)
-                const resultItemsKey = 'result'
-                chart.render(data[resultItemsKey])
-            })
-            .catch((_err) => {
-                // TODO: handle error
-                setIsLoading(false)
-            })
-    }, [dataPromise, chart])
+    const loading = <div className='text-center'>Loading... (this might take a while)</div>
 
-    let loading = <div className='text-center'>Loading... (this might take a while)</div>
-
-    let noResultsRun = (
+    const noResultsRun = (
         <div className='text-center'>
             <span>This accession has not been processed... yet.</span>
             <br />
