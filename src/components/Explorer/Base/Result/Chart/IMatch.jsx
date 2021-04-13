@@ -107,15 +107,17 @@ export class IMatch {
             .style('stroke', rowBorder.color)
             .style('stroke-width', rowBorder.size)
 
-        mainG
-            .append('rect')
-            .attr('class', 'heatmap-click')
-            .attr('visibility', 'visible')
-            .attr('width', barWidth)
-            .attr('height', barHeight)
-            .style('opacity', 0)
-            .style('cursor', 'pointer')
-            .on('click', () => this.drilldownCallback(this.data[this.valueKey]))
+        if (this.drilldownCallback) {
+            mainG
+                .append('rect')
+                .attr('class', 'heatmap-click')
+                .attr('visibility', 'visible')
+                .attr('width', barWidth)
+                .attr('height', barHeight)
+                .style('opacity', 0)
+                .style('cursor', 'pointer')
+                .on('click', () => this.drilldownCallback(this.data[this.valueKey]))
+        }
     }
 
     addStats() {
