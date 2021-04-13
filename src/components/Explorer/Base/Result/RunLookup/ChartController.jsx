@@ -1,23 +1,11 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import { SequenceChart } from '../Chart/SequenceChart'
-import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 const resultItemsKey = 'result'
 
-export const ChartController = ({ dataPromise }) => {
-    const context = React.useContext(BaseContext)
+export const ChartController = ({ dataPromise, chart }) => {
     const [hasResults, setHasResults] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
-    const [chart] = React.useState(
-        () =>
-            new SequenceChart(
-                'run-sequence-lookup-chart',
-                context.result.colMap,
-                context.result.theme.d3InterpolateFunction,
-                context.result.addJbrowseLinks
-            )
-    )
 
     React.useEffect(() => {
         if (!dataPromise) return

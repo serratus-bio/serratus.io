@@ -1,17 +1,26 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
-import { ChartController } from './FamilyChartController'
+import { ChartController } from './ChartController'
+import { FamilyChart } from '../Chart/FamilyChart'
 import { getRunTitle } from '../ResultHelpers'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
-// for run -> family/sequence lookup
 export const FamilyResult = ({ runId, identityLims, scoreLims, drilldownCallback }) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState()
     const [pageTitle, setPageTitle] = React.useState()
+    const [chart] = React.useState(
+        () =>
+            new FamilyChart(
+                'run-family-lookup-chart',
+                context.result.colMap,
+                context.result.theme.d3InterpolateFunction,
+                drilldownCallback
+            )
+    )
     const LinkButtons = context.result.LinkButtons
 
     React.useEffect(() => {
@@ -53,7 +62,7 @@ export const FamilyResult = ({ runId, identityLims, scoreLims, drilldownCallback
                     setPageNumber={setPageNumber}
                     dataPromise={dataPromise}
                 />
-                <ChartController dataPromise={dataPromise} drilldownCallback={drilldownCallback} />
+                <ChartController dataPromise={dataPromise} chart={chart} />
             </div>
         </div>
     )

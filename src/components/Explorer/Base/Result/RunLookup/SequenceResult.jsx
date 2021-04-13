@@ -1,6 +1,7 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
-import { ChartController } from './SequenceChartController'
+import { ChartController } from './ChartController'
+import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
 
@@ -10,6 +11,15 @@ export const SequenceResult = ({ runId, identityLims, scoreLims, propFamilyId })
     const [familyId, setFamilyId] = React.useState(propFamilyId)
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState()
+    const [chart] = React.useState(
+        () =>
+            new SequenceChart(
+                'run-sequence-lookup-chart',
+                context.result.colMap,
+                context.result.theme.d3InterpolateFunction,
+                context.result.addJbrowseLinks
+            )
+    )
 
     React.useEffect(() => {
         setFamilyId(propFamilyId)
@@ -42,7 +52,7 @@ export const SequenceResult = ({ runId, identityLims, scoreLims, propFamilyId })
                     setPageNumber={setPageNumber}
                     dataPromise={dataPromise}
                 />
-                <ChartController dataPromise={dataPromise} />
+                <ChartController dataPromise={dataPromise} chart={chart} />
             </div>
         </div>
     )
