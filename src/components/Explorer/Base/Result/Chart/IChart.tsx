@@ -1,19 +1,25 @@
 import React from 'react'
 import * as d3 from 'd3'
 import { rowHeight, tableShiftY, drawLegend, addHeaders, addColumns } from './ChartHelpers'
+import { D3InterpolateFunction, ColMap } from './types'
 import { MatchResult } from '../types'
 
 export class IChart {
     chartId: string
-    colMap: any
+    colMap: ColMap
     viewBoxHeight: number
     viewBoxWidth: number
-    d3InterpolateFunction: any
+    d3InterpolateFunction: D3InterpolateFunction
     component: React.ReactElement
     rootSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
     matchesSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
 
-    constructor(chartId: string, colMap: any, viewBoxHeight: number, d3InterpolateFunction: any) {
+    constructor(
+        chartId: string,
+        colMap: ColMap,
+        viewBoxHeight: number,
+        d3InterpolateFunction: D3InterpolateFunction
+    ) {
         this.chartId = chartId
         this.colMap = colMap
         this.viewBoxHeight = viewBoxHeight

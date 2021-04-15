@@ -2,6 +2,7 @@ import React from 'react'
 import { FamilyResult } from './FamilyResult'
 import { SequenceResult } from './SequenceResult'
 import { getRunTitle } from '../ResultHelpers'
+import { DrilldownCallback } from '../Chart/types'
 import { RangeFilter } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
@@ -20,7 +21,7 @@ export const RunLookupResult = ({ runId, identityLims, scoreLims }: Props) => {
     }
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
     const [pageTitle, setPageTitle] = React.useState()
-    function drilldownCallback(familyId: string) {
+    let drilldownCallback: DrilldownCallback = function (familyId) {
         setSequenceResult(
             <div className='max-w-4xl m-auto'>
                 <div className='w-full text-center'>

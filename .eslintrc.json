@@ -15,7 +15,6 @@
   ],
   "parser": "@typescript-eslint/parser",
   "rules": {
-    "func-style": ["warn", "declaration", { "allowArrowFunctions": true }],
     "react/prop-types": "off", // TODO: consider after TypeScript conversion
     "react/destructuring-assignment": "warn",
     "no-unused-vars": ["warn", {"args": "after-used", "argsIgnorePattern": "^_"}],
