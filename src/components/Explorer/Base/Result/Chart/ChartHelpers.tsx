@@ -4,19 +4,19 @@ import { Match } from '../types'
 import { ColMap, D3InterpolateFunction, MatchCoverageCell } from './types'
 
 export const cvgCartoonMap: { [_: string]: number } = {
-    _: 0,
+    '_': 0,
     '.': 1,
     ':': 2,
-    u: 4,
-    w: 8,
-    a: 16,
-    o: 32,
-    m: 64,
-    U: 128,
-    W: 256,
-    A: 512,
-    O: 1024,
-    M: 2048,
+    'u': 4,
+    'w': 8,
+    'a': 16,
+    'o': 32,
+    'm': 64,
+    'U': 128,
+    'W': 256,
+    'A': 512,
+    'O': 1024,
+    'M': 2048,
     '^': 4096,
 }
 
