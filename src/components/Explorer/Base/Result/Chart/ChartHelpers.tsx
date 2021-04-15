@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 import * as d3 from 'd3'
+import { Match } from '../types'
+import { ColMap, D3InterpolateFunction, MatchCoverageCell } from './types'
 
-export const cvgCartoonMap = {
+export const cvgCartoonMap: { [_: string]: number } = {
     _: 0,
     '.': 1,
     ':': 2,
@@ -21,8 +23,8 @@ export const cvgCartoonMap = {
 const cvgLims = [0, 4096]
 
 const cvgLength = 25
-export const genomeBins = [...Array(cvgLength).keys()]
-export function colorMap(value, d3InterpolateFunction) {
+export const genomeBins = Array.from(Array(cvgLength).keys()).map(String)
+export function colorMap(value: number, d3InterpolateFunction: D3InterpolateFunction) {
     if (value === 0) return 'rgb(255, 255, 255)'
     const defaultColorMap = d3.scaleSequentialSymlog(d3InterpolateFunction).domain(cvgLims)
     return defaultColorMap(value)
@@ -40,7 +42,7 @@ export const barHeight = rowHeight - sectionMargin.top - sectionMargin.bottom
 export const barBorder = { size: 1, color: '#999' }
 export const caretWidth = 25
 
-function linspace(start, end, n) {
+function linspace(start: number, end: number, n: number) {
     const out = []
     const delta = (end - start) / (n - 1)
     let i = 0
@@ -53,7 +55,10 @@ function linspace(start, end, n) {
 }
 
 // adapted from https://bl.ocks.org/starcalibre/6cccfa843ed254aa0a0d
-export function drawLegend(svgElement, d3InterpolateFunction) {
+export function drawLegend(
+    svgElement: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
+    d3InterpolateFunction: D3InterpolateFunction
+) {
     const legendWidth = 80,
         legendHeight = 200,
         margin = { top: 10, right: 60, bottom: 10, left: 2 }
@@ -116,7 +121,7 @@ export function drawLegend(svgElement, d3InterpolateFunction) {
 }
 
 // TODO: combine with addColumns
-export function addHeaders(gElement) {
+export function addHeaders(gElement: d3.Selection<SVGGElement, unknown, HTMLElement, any>) {
     const yShift = 15
 
     let colText = 'Count'
@@ -145,7 +150,11 @@ export function addHeaders(gElement) {
         .attr('transform', `translate(${xShift}, ${yShift})`)
 }
 
-export function addColumns(gElement, colMap, summaryEntry = null) {
+export function addColumns(
+    gElement: d3.Selection<SVGGElement, unknown, HTMLElement, any>,
+    colMap: ColMap,
+    summaryEntry?: Match
+) {
     const yShift = 15
     const colHeight = rowHeight
     const textG = gElement
@@ -216,8 +225,8 @@ export function addColumns(gElement, colMap, summaryEntry = null) {
     })
 }
 
-export function getCoverageData(match, cvgKey = 'coverage_bins') {
-    const matchCoverageData = []
+export function getCoverageData(match: Match, cvgKey = 'coverage_bins') {
+    const matchCoverageData: MatchCoverageCell[] = []
     ;[...match[cvgKey]].forEach(function (bit, i) {
         matchCoverageData.push({
             bin: i,

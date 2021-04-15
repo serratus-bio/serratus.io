@@ -18,9 +18,11 @@ export class SequenceChart extends IChart {
     }
 
     addMatchRows(matches: Match[]) {
+        const matchesSvg = this.matchesSvg
+        if (!matchesSvg) throw new Error()
         matches.forEach((match, i) => {
             const matchRow = new SequenceMatchRow(
-                this.matchesSvg,
+                matchesSvg,
                 match,
                 i,
                 this.colMap,

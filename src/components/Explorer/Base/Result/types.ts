@@ -3,4 +3,7 @@ export type ResultPagination = {
     total: bigint
 }
 
-export type Match = any
+export type Match = {
+    [_: string]: any
+    // TODO: specify key names
+}

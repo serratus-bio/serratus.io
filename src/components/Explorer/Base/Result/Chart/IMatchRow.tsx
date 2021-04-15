@@ -1,4 +1,5 @@
 import * as d3 from 'd3'
+import { Match } from '../types'
 import {
     cvgCartoonMap,
     genomeBins,
@@ -12,20 +13,34 @@ import {
     addColumns,
     getCoverageData,
 } from './ChartHelpers'
+import { ColMap, D3InterpolateFunction, DrilldownCallback, MatchCoverageCell } from './types'
 
 const coverageKey = 'coverage_bins'
 
 export class IMatchRow {
+    data: Match
+    rowIndex: number
+    colMap: ColMap
+    searchLevel: string
+    value: string
+    linkValue: string
+    fullName: string
+    displayName: string
+    matchG: d3.Selection<SVGGElement, unknown, HTMLElement, any>
+    mainSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    d3InterpolateFunction: D3InterpolateFunction
+    drilldownCallback?: DrilldownCallback
+
     constructor(
-        searchLevel,
-        valueKey,
-        linkValueKey,
-        displayValueKey,
-        rootSvg,
-        data,
-        rowIndex,
-        colMap,
-        d3InterpolateFunction
+        searchLevel: string,
+        valueKey: string,
+        linkValueKey: string,
+        displayValueKey: string,
+        rootSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
+        data: Match,
+        rowIndex: number,
+        colMap: ColMap,
+        d3InterpolateFunction: D3InterpolateFunction
     ) {
         this.data = data
         this.rowIndex = rowIndex
@@ -36,12 +51,12 @@ export class IMatchRow {
         this.value = this.data[valueKey]
         this.linkValue = this.data[linkValueKey]
         this.fullName = this.data[displayValueKey]
+        this.displayName = this.fullName
         this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
         this.setDisplayName()
     }
 
     setDisplayName() {
-        this.displayName = this.fullName
         const maxLength = 18
         if (this.displayName.length > maxLength) {
             this.displayName = this.displayName.slice(0, maxLength) + '...'
@@ -75,23 +90,23 @@ export class IMatchRow {
             .style('cursor', 'pointer')
             .on('click', () => {
                 const link = `${window.location.pathname}?${this.searchLevel}=${this.linkValue}`
-                window.location = link
+                window.location.href = link
             })
             .append('svg:title')
             .text(this.fullName)
 
         const heatmapG = mainG.append('g').attr('class', 'heatmap')
 
-        // heatmap squares
+        // heatmap cells
         heatmapG
             .selectAll()
             .data(coverageData)
             .enter()
             .append('rect')
-            .attr('x', (d) => x(d.bin))
+            .attr('x', (d: MatchCoverageCell) => x(d.bin.toString()) as number)
             .attr('width', x.bandwidth())
             .attr('height', y.bandwidth())
-            .style('fill', (d) =>
+            .style('fill', (d: MatchCoverageCell) =>
                 colorMap(cvgCartoonMap[d.cartoonChar], this.d3InterpolateFunction)
             )
 
@@ -104,7 +119,8 @@ export class IMatchRow {
             .style('stroke', rowBorder.color)
             .style('stroke-width', rowBorder.size)
 
-        if (this.drilldownCallback) {
+        const callback = this.drilldownCallback
+        if (callback) {
             mainG
                 .append('rect')
                 .attr('class', 'heatmap-click')
@@ -113,15 +129,18 @@ export class IMatchRow {
                 .attr('height', barHeight)
                 .style('opacity', 0)
                 .style('cursor', 'pointer')
-                .on('click', () => this.drilldownCallback(this.value))
+                .on('click', () => callback(this.value))
         }
     }
 
     addStats() {
-        addColumns(this.mainSvg, this.colMap, this.data)
+        if (!this.mainSvg) throw new Error()
+        const statsG = this.mainSvg.append('g')
+        addColumns(statsG, this.colMap, this.data)
     }
 
     addJBrowseIcon() {
+        if (!this.mainSvg) throw new Error()
         const image = '/atcg.png'
         const link = `jbrowse?bam=${this.data.run_id}&loc=${this.value}`
         const iconWidth = 15
