@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ResultPagination } from './types'
+import { ResultPagination } from '../types'
 import { Filters } from 'components/Explorer/types'
 
 const baseUrl = process.env.REACT_APP_API_URL

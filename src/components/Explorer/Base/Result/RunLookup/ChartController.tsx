@@ -1,7 +1,7 @@
 import React from 'react'
 import { ExternalLink } from 'common'
 import { IChart } from '../Chart/IChart'
-import { ResultPagination } from './types'
+import { ResultPagination } from '../types'
 
 type Props = {
     dataPromise: Promise<ResultPagination> | undefined

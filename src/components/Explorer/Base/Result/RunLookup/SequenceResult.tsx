@@ -4,7 +4,7 @@ import { ChartController } from './ChartController'
 import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from './SerratusApiCalls'
-import { ResultPagination } from './types'
+import { ResultPagination } from '../types'
 import { Filters } from 'components/Explorer/types'
 
 type Props = {

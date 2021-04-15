@@ -1,37 +1,39 @@
 import React from 'react'
 import * as d3 from 'd3'
 import { rowHeight, tableShiftY, drawLegend, addHeaders, addColumns } from './ChartHelpers'
+import { MatchResult } from '../types'
 
 export class IChart {
-    constructor(chartId, colMap, viewBoxHeight, d3InterpolateFunction) {
+    chartId: string
+    colMap: any
+    viewBoxHeight: number
+    viewBoxWidth: number
+    d3InterpolateFunction: any
+    component: React.ReactElement
+    rootSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    matchesSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+
+    constructor(chartId: string, colMap: any, viewBoxHeight: number, d3InterpolateFunction: any) {
         this.chartId = chartId
         this.colMap = colMap
         this.viewBoxHeight = viewBoxHeight
         this.d3InterpolateFunction = d3InterpolateFunction
 
         this.component = <div id={this.chartId} />
-        this.rootSvg = null
         this.viewBoxWidth = 750
     }
 
     componentLoaded() {
-        return Boolean(this.rootSvg)
-    }
-
-    lazyInit() {
-        if (this.rootSvg) return
-        this.rootSvg = d3
-            .select(`#${this.chartId}`)
-            .append('svg')
-            .attr('viewBox', `0 0 ${this.viewBoxWidth} ${this.viewBoxHeight}`)
+        return this.rootSvg !== undefined
     }
 
     clearIfInit() {
-        if (!this.rootSvg) return
+        if (!this.rootSvg) throw new Error('render() must be called first')
         this.rootSvg.selectAll('*').remove()
     }
 
     setLoading() {
+        if (!this.rootSvg) throw new Error('render() must be called first')
         this.clearIfInit()
         this.rootSvg
             .append('text')
@@ -39,8 +41,13 @@ export class IChart {
             .text('Loading...')
     }
 
-    render(results) {
-        this.lazyInit()
+    render(results: MatchResult[]) {
+        if (!this.rootSvg) {
+            this.rootSvg = d3
+                .select(`#${this.chartId}`)
+                .append('svg')
+                .attr('viewBox', `0 0 ${this.viewBoxWidth} ${this.viewBoxHeight}`)
+        }
         this.clearIfInit()
         this.matchesSvg = this.rootSvg.append('svg').attr('y', tableShiftY)
 
@@ -57,4 +64,6 @@ export class IChart {
 
         this.addRows(results)
     }
+
+    addRows(_results: MatchResult[]) {}
 }
