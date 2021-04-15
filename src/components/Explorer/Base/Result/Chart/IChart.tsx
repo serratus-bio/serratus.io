@@ -11,8 +11,9 @@ export class IChart {
     viewBoxWidth: number
     d3InterpolateFunction: D3InterpolateFunction
     component: React.ReactElement
-    rootSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
-    matchesSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    rootSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    matchesSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    componentLoaded: boolean
 
     constructor(
         chartId: string,
@@ -27,20 +28,17 @@ export class IChart {
 
         this.component = <div id={this.chartId} />
         this.viewBoxWidth = 750
+        this.rootSvg = d3.select('#empty')
+        this.matchesSvg = d3.select('#empty')
+        this.componentLoaded = false
     }
 
-    componentLoaded() {
-        return this.rootSvg !== undefined
-    }
-
-    clearIfInit() {
-        if (!this.rootSvg) throw new Error('render() must be called first')
+    clear() {
         this.rootSvg.selectAll('*').remove()
     }
 
     setLoading() {
-        if (!this.rootSvg) throw new Error('render() must be called first')
-        this.clearIfInit()
+        this.clear()
         this.rootSvg
             .append('text')
             .attr('transform', `translate(${this.viewBoxWidth / 2}, ${tableShiftY})`)
@@ -48,13 +46,14 @@ export class IChart {
     }
 
     render(matches: Match[]) {
-        if (!this.rootSvg) {
+        if (!this.componentLoaded) {
             this.rootSvg = d3
                 .select(`#${this.chartId}`)
                 .append('svg')
                 .attr('viewBox', `0 0 ${this.viewBoxWidth} ${this.viewBoxHeight}`)
+            this.componentLoaded = true
         }
-        this.clearIfInit()
+        this.clear()
         this.matchesSvg = this.rootSvg.append('svg').attr('y', tableShiftY)
 
         drawLegend(this.matchesSvg, this.d3InterpolateFunction)
@@ -71,5 +70,7 @@ export class IChart {
         this.addMatchRows(matches)
     }
 
-    addMatchRows(_matches: Match[]) {}
+    addMatchRows(_matches: Match[]) {
+        if (!this.componentLoaded) throw new Error()
+    }
 }

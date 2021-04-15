@@ -42,7 +42,7 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
 
     if (isLoading) {
         // use component from React before chart component has been returned
-        if (!chart.componentLoaded()) return loading
+        if (!chart.componentLoaded) return loading
         chart.setLoading()
         return chart.component
     }

@@ -18,11 +18,10 @@ export class FamilyChart extends IChart {
     }
 
     addMatchRows(matches: Match[]) {
-        const matchesSvg = this.matchesSvg
-        if (!matchesSvg) throw new Error()
+        super.addMatchRows(matches)
         matches.forEach((match, i) => {
             const matchRow = new FamilyMatchRow(
-                matchesSvg,
+                this.matchesSvg,
                 match,
                 i,
                 this.colMap,

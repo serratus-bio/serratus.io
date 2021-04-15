@@ -19,7 +19,6 @@ const coverageKey = 'coverage_bins'
 
 export class IMatchRow {
     data: Match
-    rowIndex: number
     colMap: ColMap
     searchLevel: string
     value: string
@@ -27,7 +26,7 @@ export class IMatchRow {
     fullName: string
     displayName: string
     matchG: d3.Selection<SVGGElement, unknown, HTMLElement, any>
-    mainSvg?: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    mainSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
     d3InterpolateFunction: D3InterpolateFunction
     drilldownCallback?: DrilldownCallback
 
@@ -43,7 +42,6 @@ export class IMatchRow {
         d3InterpolateFunction: D3InterpolateFunction
     ) {
         this.data = data
-        this.rowIndex = rowIndex
         this.colMap = colMap
         this.d3InterpolateFunction = d3InterpolateFunction
 
@@ -52,8 +50,15 @@ export class IMatchRow {
         this.linkValue = this.data[linkValueKey]
         this.fullName = this.data[displayValueKey]
         this.displayName = this.fullName
-        this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
         this.setDisplayName()
+        this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
+        this.mainSvg = this.matchG
+            .append('svg')
+            .attr('y', rowIndex * rowHeight)
+            .attr('width', rowWidth)
+            .attr('height', rowHeight)
+            .attr('border', rowBorder.size)
+            .style('display', 'block')
     }
 
     setDisplayName() {
@@ -65,14 +70,6 @@ export class IMatchRow {
 
     addLinkAndHeatmap() {
         const coverageData = getCoverageData(this.data, coverageKey)
-
-        this.mainSvg = this.matchG
-            .append('svg')
-            .attr('y', this.rowIndex * rowHeight)
-            .attr('width', rowWidth)
-            .attr('height', rowHeight)
-            .attr('border', rowBorder.size)
-            .style('display', 'block')
 
         const mainG = this.mainSvg
             .append('g')
@@ -134,13 +131,11 @@ export class IMatchRow {
     }
 
     addStats() {
-        if (!this.mainSvg) throw new Error()
         const statsG = this.mainSvg.append('g')
         addColumns(statsG, this.colMap, this.data)
     }
 
     addJBrowseIcon() {
-        if (!this.mainSvg) throw new Error()
         const image = '/atcg.png'
         const link = `jbrowse?bam=${this.data.run_id}&loc=${this.value}`
         const iconWidth = 15
