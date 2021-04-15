@@ -32,18 +32,13 @@ export class IMatch {
         this.d3InterpolateFunction = d3InterpolateFunction
 
         this.searchLevel = searchLevel
-        this.valueKey = valueKey
-        this.displayValueKey = displayValueKey
-        this.searchLevelValue = this.data[this.valueKey]
-        this.matchG = rootSvg
-            .append('g')
-            .attr('class', this.searchLevel)
-            .attr('rowid', `${this.data[this.valueKey]}`)
+        this.value = this.data[valueKey]
+        this.fullName = this.data[displayValueKey]
+        this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
         this.setDisplayName()
     }
 
     setDisplayName() {
-        this.fullName = this.data[this.displayValueKey]
         this.displayName = this.fullName
         const maxLength = 18
         if (this.displayName.length > maxLength) {
@@ -77,11 +72,11 @@ export class IMatch {
             .style('fill', 'blue')
             .style('cursor', 'pointer')
             .on('click', () => {
-                const link = `${window.location.pathname}?${this.searchLevel}=${this.searchLevelValue}`
+                const link = `${window.location.pathname}?${this.searchLevel}=${this.value}`
                 window.location = link
             })
             .append('svg:title')
-            .text(() => this.fullName)
+            .text(this.fullName)
 
         const heatmapG = mainG.append('g').attr('class', 'heatmap')
 
@@ -116,7 +111,7 @@ export class IMatch {
                 .attr('height', barHeight)
                 .style('opacity', 0)
                 .style('cursor', 'pointer')
-                .on('click', () => this.drilldownCallback(this.data[this.valueKey]))
+                .on('click', () => this.drilldownCallback(this.value))
         }
     }
 
@@ -126,7 +121,7 @@ export class IMatch {
 
     addJBrowseIcon() {
         const image = '/atcg.png'
-        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`
+        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.value}`
         const iconWidth = 15
         const iconHeight = 15
         const xShift = 725 // TODO: compute from colMap
