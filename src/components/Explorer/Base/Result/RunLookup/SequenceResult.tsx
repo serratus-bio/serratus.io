@@ -10,10 +10,10 @@ import { Filters } from 'components/Explorer/types'
 type Props = {
     runId: string
     filters: Filters
-    propFamilyId: string
+    familyId: string
 }
 
-export const SequenceResult = ({ runId, filters, propFamilyId }: Props) => {
+export const SequenceResult = ({ runId, filters, familyId: propFamilyId }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)
@@ -22,7 +22,7 @@ export const SequenceResult = ({ runId, filters, propFamilyId }: Props) => {
     const [chart] = React.useState(
         () =>
             new SequenceChart(
-                'run-sequence-lookup-chart',
+                'sequence-matches',
                 context.result.colMap,
                 context.result.theme.d3InterpolateFunction,
                 context.result.addJbrowseLinks
@@ -48,19 +48,14 @@ export const SequenceResult = ({ runId, filters, propFamilyId }: Props) => {
     }, [context, runId, pageNumber, familyId])
 
     return (
-        <div className='max-w-4xl m-auto'>
-            <div className='w-full text-center'>
-                <div className='text-xl font-bold'>{familyId}</div>
-            </div>
-            <div className='p-6'>
-                <Paginator
-                    pageNumber={pageNumber}
-                    perPage={perPage}
-                    setPageNumber={setPageNumber}
-                    dataPromise={dataPromise}
-                />
-                <ChartController dataPromise={dataPromise} chart={chart} />
-            </div>
-        </div>
+        <>
+            <Paginator
+                pageNumber={pageNumber}
+                perPage={perPage}
+                setPageNumber={setPageNumber}
+                dataPromise={dataPromise}
+            />
+            <ChartController dataPromise={dataPromise} chart={chart} />
+        </>
     )
 }
