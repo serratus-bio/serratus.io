@@ -9,19 +9,24 @@ export const fetchPagedRunMatches = async (
     runId: string,
     page: number,
     perPage: number,
-    filters: Filters,
-    family: string | null = null
+    filters?: Filters,
+    family?: string
 ): Promise<ResultPagination> => {
-    const [identityMin, identityMax] = filters.identityLims
-    const [scoreMin, scoreMax] = filters.scoreLims
-    const params: any = {
+    let params: any = {
         run: runId,
         page: page,
         perPage: perPage,
-        scoreMin: scoreMin,
-        scoreMax: scoreMax,
-        identityMin: identityMin,
-        identityMax: identityMax,
+    }
+    if (filters) {
+        const [identityMin, identityMax] = filters.identityLims
+        const [scoreMin, scoreMax] = filters.scoreLims
+        params = {
+            ...params,
+            scoreMin: scoreMin,
+            scoreMax: scoreMax,
+            identityMin: identityMin,
+            identityMax: identityMax,
+        }
     }
     if (family) {
         // sequence-level matches

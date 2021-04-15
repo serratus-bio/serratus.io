@@ -36,7 +36,14 @@ export const SequenceResult = ({ runId, filters, propFamilyId }: Props) => {
 
     React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters, familyId)
+            fetchPagedRunMatches(
+                context.searchType,
+                runId,
+                pageNumber,
+                perPage,
+                undefined,
+                familyId
+            )
         )
     }, [context, runId, pageNumber, familyId])
 
