@@ -1,6 +1,6 @@
-import { MatchResult } from '../types'
+import { Match } from '../types'
 import { IChart } from './IChart'
-import { SequenceMatch } from './SequenceMatch'
+import { SequenceMatchRow } from './SequenceMatchRow'
 import { D3InterpolateFunction, ColMap } from './types'
 
 export class SequenceChart extends IChart {
@@ -17,19 +17,19 @@ export class SequenceChart extends IChart {
         this.addJbrowseLinks = addJbrowseLinks
     }
 
-    addRows(matchObjects: MatchResult[]) {
-        matchObjects.forEach((matchObject, i) => {
-            const match = new SequenceMatch(
+    addMatchRows(matches: Match[]) {
+        matches.forEach((match, i) => {
+            const matchRow = new SequenceMatchRow(
                 this.matchesSvg,
-                matchObject,
+                match,
                 i,
                 this.colMap,
                 this.d3InterpolateFunction
             )
-            match.addLinkAndHeatmap()
-            match.addStats()
+            matchRow.addLinkAndHeatmap()
+            matchRow.addStats()
             if (this.addJbrowseLinks) {
-                match.addJBrowseIcon()
+                matchRow.addJBrowseIcon()
             }
         })
     }

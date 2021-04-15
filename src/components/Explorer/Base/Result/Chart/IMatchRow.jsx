@@ -15,7 +15,7 @@ import {
 
 const coverageKey = 'coverage_bins'
 
-export class IMatch {
+export class IMatchRow {
     constructor(
         searchLevel,
         valueKey,

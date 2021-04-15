@@ -1,6 +1,6 @@
-import { IMatch } from './IMatch'
+import { IMatchRow } from './IMatchRow'
 
-export class SequenceMatch extends IMatch {
+export class SequenceMatchRow extends IMatchRow {
     constructor(rootSvg, data, rowIndex, colMap, d3InterpolateFunction) {
         const searchLevel = 'sequence'
         const valueKey = 'sequence_accession'

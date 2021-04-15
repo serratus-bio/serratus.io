@@ -2,7 +2,7 @@ import React from 'react'
 import * as d3 from 'd3'
 import { rowHeight, tableShiftY, drawLegend, addHeaders, addColumns } from './ChartHelpers'
 import { D3InterpolateFunction, ColMap } from './types'
-import { MatchResult } from '../types'
+import { Match } from '../types'
 
 export class IChart {
     chartId: string
@@ -47,7 +47,7 @@ export class IChart {
             .text('Loading...')
     }
 
-    render(results: MatchResult[]) {
+    render(matches: Match[]) {
         if (!this.rootSvg) {
             this.rootSvg = d3
                 .select(`#${this.chartId}`)
@@ -68,8 +68,8 @@ export class IChart {
         this.rootSvg.append('text').attr('id', 'tooltip')
         addColumns(columnHeadersG, this.colMap)
 
-        this.addRows(results)
+        this.addMatchRows(matches)
     }
 
-    addRows(_results: MatchResult[]) {}
+    addMatchRows(_matches: Match[]) {}
 }

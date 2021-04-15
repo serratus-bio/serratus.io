@@ -1,6 +1,6 @@
 export type ResultPagination = {
-    result: MatchResult[]
+    result: Match[]
     total: bigint
 }
 
-export type MatchResult = any
+export type Match = any

@@ -1,6 +1,6 @@
-import { IMatch } from './IMatch'
+import { IMatchRow } from './IMatchRow'
 
-export class FamilyMatch extends IMatch {
+export class FamilyMatchRow extends IMatchRow {
     constructor(rootSvg, data, rowIndex, colMap, d3InterpolateFunction, drilldownCallback) {
         const searchLevel = 'family'
         const valueKey = 'family_id'

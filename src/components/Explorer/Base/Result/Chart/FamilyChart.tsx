@@ -1,6 +1,6 @@
-import { MatchResult } from '../types'
+import { Match } from '../types'
 import { IChart } from './IChart'
-import { FamilyMatch } from './FamilyMatch'
+import { FamilyMatchRow } from './FamilyMatchRow'
 import { D3InterpolateFunction, DrilldownCallback, ColMap } from './types'
 
 export class FamilyChart extends IChart {
@@ -17,18 +17,18 @@ export class FamilyChart extends IChart {
         this.drilldownCallback = drilldownCallback
     }
 
-    addRows(matchObjects: MatchResult[]) {
-        matchObjects.forEach((matchObject, i) => {
-            const match = new FamilyMatch(
+    addMatchRows(matches: Match[]) {
+        matches.forEach((match, i) => {
+            const matchRow = new FamilyMatchRow(
                 this.matchesSvg,
-                matchObject,
+                match,
                 i,
                 this.colMap,
                 this.d3InterpolateFunction,
                 this.drilldownCallback
             )
-            match.addLinkAndHeatmap()
-            match.addStats()
+            matchRow.addLinkAndHeatmap()
+            matchRow.addStats()
         })
     }
 }
