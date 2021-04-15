@@ -9,7 +9,7 @@ import { Filters } from 'components/Explorer/types'
 
 type Props = {
     runId: string
-    filters: Filters
+    filters?: Filters
     familyId: string
 }
 
@@ -36,14 +36,7 @@ export const SequenceResult = ({ runId, filters, familyId: propFamilyId }: Props
 
     React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(
-                context.searchType,
-                runId,
-                pageNumber,
-                perPage,
-                undefined,
-                familyId
-            )
+            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters, familyId)
         )
     }, [context, runId, pageNumber, familyId])
 

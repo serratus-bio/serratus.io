@@ -27,7 +27,8 @@ export const RunLookupResult = ({ runId, identityLims, scoreLims }: Props) => {
                     <div className='text-xl font-bold'>{familyId}</div>
                 </div>
                 <div className='p-6'>
-                    <SequenceResult runId={runId} familyId={familyId} filters={filters} />
+                    {/* no filters for drilldown*/}
+                    <SequenceResult runId={runId} familyId={familyId} />
                 </div>
             </div>
         )
