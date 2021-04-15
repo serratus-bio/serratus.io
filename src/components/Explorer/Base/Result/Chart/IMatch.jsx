@@ -19,6 +19,7 @@ export class IMatch {
     constructor(
         searchLevel,
         valueKey,
+        linkValueKey,
         displayValueKey,
         rootSvg,
         data,
@@ -33,6 +34,7 @@ export class IMatch {
 
         this.searchLevel = searchLevel
         this.value = this.data[valueKey]
+        this.linkValue = this.data[linkValueKey]
         this.fullName = this.data[displayValueKey]
         this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
         this.setDisplayName()
@@ -72,7 +74,7 @@ export class IMatch {
             .style('fill', 'blue')
             .style('cursor', 'pointer')
             .on('click', () => {
-                const link = `${window.location.pathname}?${this.searchLevel}=${this.value}`
+                const link = `${window.location.pathname}?${this.searchLevel}=${this.linkValue}`
                 window.location = link
             })
             .append('svg:title')
