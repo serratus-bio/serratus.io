@@ -1,7 +1,7 @@
 import React from 'react'
 import { LinkButton, downloadIcon } from 'common'
 import { tryGetGenBankTitle, tryGetSraStudyName } from './EntrezApiCalls'
-import { getMatchesDownloadUrl } from './MatchingRuns/SerratusApiCalls'
+import { getMatchesDownloadUrl } from './SerratusApiCalls'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 export async function getRunTitle(run) {

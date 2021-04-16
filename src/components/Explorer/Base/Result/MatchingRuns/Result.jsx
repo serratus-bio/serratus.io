@@ -3,7 +3,7 @@ import { Paginator } from '../Paginator'
 import { ChartController } from './ChartController'
 import { getFamilyTitle, getSequenceName, getSequenceTitle, DownloadButton } from '../ResultHelpers'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
-import { fetchPagedMatches } from './SerratusApiCalls'
+import { fetchPagedMatches } from '../SerratusApiCalls'
 
 // for family/sequence -> run lookup
 export const MatchingRunsResult = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {

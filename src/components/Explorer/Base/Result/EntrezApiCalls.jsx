@@ -65,8 +65,8 @@ export const tryGetGenBankTitle = async (accession) => {
             .querySelector('eSummaryResult')
             .querySelector('DocSum')
             .querySelector('Item[Name=Title]').textContent
-        return title
+        return title || ''
     } catch (err) {
-        return
+        return ''
     }
 }

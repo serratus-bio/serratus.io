@@ -1,6 +1,6 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import { IChart } from '../Chart/IChart'
+import { IChart } from './IChart'
 import { ResultPagination } from '../types'
 
 type Props = {
@@ -14,14 +14,13 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
 
     React.useEffect(() => {
         if (!dataPromise) return
-        async function loadData() {
-            const data = (await dataPromise) as ResultPagination
+        setIsLoading(true)
+        dataPromise.then((data) => {
+            setIsLoading(false)
             setHasResults(data.result.length !== 0)
             chart.render(data.result)
-        }
-        setIsLoading(true)
-        loadData() // TODO: handle error
-        setIsLoading(false)
+        })
+        // TODO: handle error
     }, [dataPromise])
 
     const loading = <div className='text-center'>Loading... (this might take a while)</div>

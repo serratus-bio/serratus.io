@@ -1,9 +1,9 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
-import { ChartController } from './ChartController'
+import { ChartController } from '../Chart/ChartController'
 import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
-import { fetchPagedRunMatches } from './SerratusApiCalls'
+import { fetchPagedRunMatches } from '../SerratusApiCalls'
 import { ResultPagination } from '../types'
 import { Filters } from 'components/Explorer/types'
 

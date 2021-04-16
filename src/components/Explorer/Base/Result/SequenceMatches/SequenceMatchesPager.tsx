@@ -1,44 +1,49 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
 import { ChartController } from '../Chart/ChartController'
-import { FamilyChart } from '../Chart/FamilyChart'
-import { DrilldownCallback } from '../Chart/types'
+import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
-import { fetchPagedRunMatches } from '../SerratusApiCalls'
+import { fetchPagedMatches } from '../SerratusApiCalls'
 import { ResultPagination } from '../types'
 import { Filters } from 'components/Explorer/types'
 
 type Props = {
-    runId: string
+    sequenceId: string
     filters: Filters
-    drilldownCallback: DrilldownCallback
 }
 
-export const FamilyResult = ({ runId, filters, drilldownCallback }: Props) => {
+export const SequenceMatchesPager = ({ sequenceId, filters }: Props) => {
     const context = React.useContext(BaseContext)
-    const perPage = 10
+    const perPage = 20
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
-            new FamilyChart({
-                chartId: 'family-matches',
-                linkSearchLevel: 'family',
-                valueKey: 'family_id',
-                linkValueKey: 'family_name',
-                displayValueKey: 'family_id',
+            new SequenceChart({
+                chartId: 'sequence-matches',
+                linkSearchLevel: 'run',
+                valueKey: 'sequence_accession',
+                linkValueKey: 'run_id',
+                displayValueKey: 'run_id',
                 colMap: context.result.colMap,
                 d3InterpolateFunction: context.result.theme.d3InterpolateFunction,
-                drilldownCallback: drilldownCallback,
+                addJbrowseLinks: context.result.addJbrowseLinks,
             })
     )
 
     React.useEffect(() => {
-        if (!runId) return
         setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters)
+            fetchPagedMatches(
+                context.searchType,
+                'sequence',
+                sequenceId,
+                pageNumber,
+                perPage,
+                filters.identityLims,
+                filters.scoreLims
+            )
         )
-    }, [context.searchType, runId, pageNumber])
+    }, [context, sequenceId, pageNumber])
 
     return (
         <>
