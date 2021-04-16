@@ -13,7 +13,7 @@ type Props = {
     familyId: string
 }
 
-export const SequenceResult = ({ runId, filters, familyId: propFamilyId }: Props) => {
+export const SequenceMatchesPager = ({ runId, filters, familyId: propFamilyId }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)

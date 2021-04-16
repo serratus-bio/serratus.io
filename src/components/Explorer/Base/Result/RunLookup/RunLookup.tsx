@@ -1,6 +1,6 @@
 import React from 'react'
-import { FamilyResult } from './FamilyResult'
-import { SequenceResult } from './SequenceResult'
+import { FamilyMatchesPager } from './FamilyMatchesPager'
+import { SequenceMatchesPager } from './SequenceMatchesPager'
 import { getRunTitle } from '../ResultHelpers'
 import { DrilldownCallback } from '../Chart/types'
 import { RangeFilter } from 'components/Explorer/types'
@@ -13,7 +13,7 @@ type Props = {
 }
 
 // for run -> family/sequence lookup
-export const RunLookupResult = ({ runId, identityLims, scoreLims }: Props) => {
+export const RunLookup = ({ runId, identityLims, scoreLims }: Props) => {
     const context = React.useContext(BaseContext)
     const filters = {
         identityLims: identityLims,
@@ -29,7 +29,7 @@ export const RunLookupResult = ({ runId, identityLims, scoreLims }: Props) => {
                 </div>
                 <div className='p-6'>
                     {/* no filters for drilldown*/}
-                    <SequenceResult runId={runId} familyId={familyId} />
+                    <SequenceMatchesPager runId={runId} familyId={familyId} />
                 </div>
             </div>
         )
@@ -61,7 +61,7 @@ export const RunLookupResult = ({ runId, identityLims, scoreLims }: Props) => {
                     </div>
                 </div>
                 <div className='p-6'>
-                    <FamilyResult
+                    <FamilyMatchesPager
                         runId={runId}
                         filters={filters}
                         drilldownCallback={drilldownCallback}

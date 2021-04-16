@@ -1,6 +1,6 @@
 export type D3InterpolateFunction = (_t: number) => string
 
-export type DrilldownCallback = (_familyId: string) => void
+export type DrilldownCallback = (_otherId: string) => void
 
 export type ColMap = {
     [_: string]: ColInfo

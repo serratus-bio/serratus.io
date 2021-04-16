@@ -1,8 +1,7 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
 import { ChartController } from '../Chart/ChartController'
-import { FamilyChart } from '../Chart/FamilyChart'
-import { DrilldownCallback } from '../Chart/types'
+import { SequenceChart } from '../Chart/SequenceChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from '../SerratusApiCalls'
 import { ResultPagination } from '../types'
@@ -10,35 +9,47 @@ import { Filters } from 'components/Explorer/types'
 
 type Props = {
     runId: string
-    filters: Filters
-    drilldownCallback: DrilldownCallback
+    filters?: Filters
+    familyId: string
 }
 
-export const FamilyResult = ({ runId, filters, drilldownCallback }: Props) => {
+export const SequenceMatchesPager = ({ runId: propOtherId, filters, familyId }: Props) => {
     const context = React.useContext(BaseContext)
-    const perPage = 10
+    const perPage = 20
+    const [otherId, setOtherId] = React.useState(propOtherId)
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
-            new FamilyChart({
-                chartId: 'family-matches',
-                linkSearchLevel: 'family',
-                valueKey: 'family_id',
-                linkValueKey: 'family_name',
-                displayValueKey: 'family_id',
+            new SequenceChart({
+                chartId: 'sequence-matches',
+                linkSearchLevel: 'sequence',
+                valueKey: 'sequence_accession',
+                linkValueKey: 'sequence_accession',
+                displayValueKey: 'virus_name',
                 colMap: context.result.colMap,
                 d3InterpolateFunction: context.result.theme.d3InterpolateFunction,
-                drilldownCallback: drilldownCallback,
+                addJbrowseLinks: context.result.addJbrowseLinks,
             })
     )
 
     React.useEffect(() => {
-        if (!runId) return
+        setOtherId(propOtherId)
+        setPageNumber(1)
+    }, [propOtherId])
+
+    React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters)
+            fetchPagedRunMatches(
+                context.searchType,
+                otherId,
+                pageNumber,
+                perPage,
+                filters,
+                familyId
+            )
         )
-    }, [context.searchType, runId, pageNumber])
+    }, [context, otherId, pageNumber, familyId])
 
     return (
         <>

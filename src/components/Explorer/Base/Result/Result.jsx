@@ -1,16 +1,12 @@
 import React from 'react'
-import { MatchingRunsResult } from './MatchingRuns/Result'
+import { FamilyMatches } from './FamilyMatches'
 import { SequenceMatches } from './SequenceMatches'
-import { RunLookupResult } from './RunLookup/Result'
+import { RunLookup } from './RunLookup'
 
 export const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims }) => {
     if (searchLevel === 'run') {
         return (
-            <RunLookupResult
-                runId={searchLevelValue}
-                identityLims={identityLims}
-                scoreLims={scoreLims}
-            />
+            <RunLookup runId={searchLevelValue} identityLims={identityLims} scoreLims={scoreLims} />
         )
     }
     if (searchLevel === 'sequence') {
@@ -22,12 +18,14 @@ export const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims 
             />
         )
     }
-    return (
-        <MatchingRunsResult
-            searchLevel={searchLevel}
-            searchLevelValue={searchLevelValue}
-            identityLims={identityLims}
-            scoreLims={scoreLims}
-        />
-    )
+    if (searchLevel === 'family') {
+        return (
+            <FamilyMatches
+                familyId={searchLevelValue}
+                identityLims={identityLims}
+                scoreLims={scoreLims}
+            />
+        )
+    }
+    return null
 }
