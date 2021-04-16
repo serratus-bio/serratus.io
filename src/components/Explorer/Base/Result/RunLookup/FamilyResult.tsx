@@ -21,12 +21,16 @@ export const FamilyResult = ({ runId, filters, drilldownCallback }: Props) => {
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
-            new FamilyChart(
-                'family-matches',
-                context.result.colMap,
-                context.result.theme.d3InterpolateFunction,
-                drilldownCallback
-            )
+            new FamilyChart({
+                chartId: 'family-matches',
+                linkSearchLevel: 'family',
+                valueKey: 'family_id',
+                linkValueKey: 'family_name',
+                displayValueKey: 'family_id',
+                colMap: context.result.colMap,
+                d3InterpolateFunction: context.result.theme.d3InterpolateFunction,
+                drilldownCallback: drilldownCallback,
+            })
     )
 
     React.useEffect(() => {

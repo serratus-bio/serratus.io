@@ -23,3 +23,21 @@ export type MatchCoverageCell = {
     bin: number
     cartoonChar: string
 }
+
+export type IChartConfig = {
+    chartId: string
+    linkSearchLevel: string
+    valueKey: string
+    linkValueKey: string
+    displayValueKey: string
+    colMap: ColMap
+    d3InterpolateFunction: D3InterpolateFunction
+}
+
+export type SequenceChartConfig = IChartConfig & {
+    addJbrowseLinks: boolean
+}
+
+export type FamilyChartConfig = IChartConfig & {
+    drilldownCallback: DrilldownCallback
+}

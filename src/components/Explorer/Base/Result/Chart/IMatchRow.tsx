@@ -13,14 +13,20 @@ import {
     addColumns,
     getCoverageData,
 } from './ChartHelpers'
-import { ColMap, D3InterpolateFunction, DrilldownCallback, MatchCoverageCell } from './types'
+import {
+    ColMap,
+    D3InterpolateFunction,
+    DrilldownCallback,
+    IChartConfig,
+    MatchCoverageCell,
+} from './types'
 
 const coverageKey = 'coverage_bins'
 
 export class IMatchRow {
     data: Match
     colMap: ColMap
-    searchLevel: string
+    linkSearchLevel: string
     value: string
     linkValue: string
     fullName: string
@@ -31,27 +37,25 @@ export class IMatchRow {
     drilldownCallback?: DrilldownCallback
 
     constructor(
-        searchLevel: string,
-        valueKey: string,
-        linkValueKey: string,
-        displayValueKey: string,
+        chartConfig: IChartConfig,
         rootSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
         data: Match,
-        rowIndex: number,
-        colMap: ColMap,
-        d3InterpolateFunction: D3InterpolateFunction
+        rowIndex: number
     ) {
         this.data = data
-        this.colMap = colMap
-        this.d3InterpolateFunction = d3InterpolateFunction
+        this.colMap = chartConfig.colMap
+        this.d3InterpolateFunction = chartConfig.d3InterpolateFunction
 
-        this.searchLevel = searchLevel
-        this.value = this.data[valueKey]
-        this.linkValue = this.data[linkValueKey]
-        this.fullName = this.data[displayValueKey]
+        this.linkSearchLevel = chartConfig.linkSearchLevel
+        this.value = this.data[chartConfig.valueKey]
+        this.linkValue = this.data[chartConfig.linkValueKey]
+        this.fullName = this.data[chartConfig.displayValueKey]
         this.displayName = this.fullName
         this.setDisplayName()
-        this.matchG = rootSvg.append('g').attr('class', this.searchLevel).attr('row-id', this.value)
+        this.matchG = rootSvg
+            .append('g')
+            .attr('class', this.linkSearchLevel)
+            .attr('row-id', this.value)
         this.mainSvg = this.matchG
             .append('svg')
             .attr('y', rowIndex * rowHeight)
@@ -86,7 +90,7 @@ export class IMatchRow {
             .style('fill', 'blue')
             .style('cursor', 'pointer')
             .on('click', () => {
-                const link = `${window.location.pathname}?${this.searchLevel}=${this.linkValue}`
+                const link = `${window.location.pathname}?${this.linkSearchLevel}=${this.linkValue}`
                 window.location.href = link
             })
             .append('svg:title')

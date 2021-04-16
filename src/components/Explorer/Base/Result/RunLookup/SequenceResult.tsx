@@ -21,12 +21,16 @@ export const SequenceResult = ({ runId, filters, familyId: propFamilyId }: Props
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
-            new SequenceChart(
-                'sequence-matches',
-                context.result.colMap,
-                context.result.theme.d3InterpolateFunction,
-                context.result.addJbrowseLinks
-            )
+            new SequenceChart({
+                chartId: 'sequence-matches',
+                linkSearchLevel: 'sequence',
+                valueKey: 'sequence_accession',
+                linkValueKey: 'sequence_accession',
+                displayValueKey: 'virus_name',
+                colMap: context.result.colMap,
+                d3InterpolateFunction: context.result.theme.d3InterpolateFunction,
+                addJbrowseLinks: context.result.addJbrowseLinks,
+            })
     )
 
     React.useEffect(() => {

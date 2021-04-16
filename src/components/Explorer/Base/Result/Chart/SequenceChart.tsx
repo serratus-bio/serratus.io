@@ -1,35 +1,24 @@
 import { Match } from '../types'
 import { IChart } from './IChart'
 import { SequenceMatchRow } from './SequenceMatchRow'
-import { D3InterpolateFunction, ColMap } from './types'
+import { SequenceChartConfig } from './types'
 
 export class SequenceChart extends IChart {
-    addJbrowseLinks: boolean
+    config: SequenceChartConfig
 
-    constructor(
-        chartId: string,
-        colMap: ColMap,
-        d3InterpolateFunction: D3InterpolateFunction,
-        addJbrowseLinks: boolean
-    ) {
+    constructor(config: SequenceChartConfig) {
         const viewBoxHeight = 400
-        super(chartId, colMap, viewBoxHeight, d3InterpolateFunction)
-        this.addJbrowseLinks = addJbrowseLinks
+        super(config, viewBoxHeight)
+        this.config = config
     }
 
     addMatchRows(matches: Match[]) {
         super.addMatchRows(matches)
         matches.forEach((match, i) => {
-            const matchRow = new SequenceMatchRow(
-                this.matchesSvg,
-                match,
-                i,
-                this.colMap,
-                this.d3InterpolateFunction
-            )
+            const matchRow = new SequenceMatchRow(this.config, this.matchesSvg, match, i)
             matchRow.addLinkAndHeatmap()
             matchRow.addStats()
-            if (this.addJbrowseLinks) {
+            if (this.config.addJbrowseLinks) {
                 matchRow.addJBrowseIcon()
             }
         })
