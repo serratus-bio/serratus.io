@@ -1,6 +1,6 @@
 import React from 'react'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
-import { getSequenceTitle } from '../ResultHelpers'
+import { DownloadButton, getSequenceTitle } from '../ResultHelpers'
 import { RangeFilter } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
@@ -37,6 +37,12 @@ export const SequenceMatches = ({ sequenceId, identityLims, scoreLims }: Props) 
                     </div>
                     <div className='flex justify-center items-center my-2'>
                         <LinkButtons searchLevel='sequence' searchLevelValue={sequenceId} />
+                        <DownloadButton
+                            searchLevel='sequence'
+                            searchLevelValue={sequenceId}
+                            identityLims={identityLims}
+                            scoreLims={scoreLims}
+                        />
                     </div>
                 </div>
                 <div className='p-6'>

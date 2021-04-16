@@ -22,7 +22,7 @@ export async function getFamilyTitle(family) {
     if (family === 'AMR') {
         return 'The Comprehensive Antibiotic Resistance Database (CARD)'
     }
-    return null
+    return ''
 }
 
 export function getSequenceName(sequence) {

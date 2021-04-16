@@ -1,7 +1,7 @@
 import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
-import { getRunTitle } from '../ResultHelpers'
+import { DownloadButton, getFamilyTitle } from '../ResultHelpers'
 import { DrilldownCallback } from '../Chart/types'
 import { RangeFilter } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
@@ -20,7 +20,7 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
         scoreLims: scoreLims,
     }
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
-    const [pageTitle, setPageTitle] = React.useState()
+    const [pageTitle, setPageTitle] = React.useState('')
     let drilldownCallback: DrilldownCallback = function (runId) {
         setSequenceResult(
             <div className='max-w-4xl m-auto'>
@@ -37,7 +37,7 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
 
     React.useEffect(() => {
         if (!familyId) return
-        getRunTitle(familyId).then(setPageTitle)
+        getFamilyTitle(familyId).then(setPageTitle)
     }, [familyId])
 
     const LinkButtons = context.result.LinkButtons
@@ -58,6 +58,12 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
                     </div>
                     <div className='flex justify-center items-center my-2'>
                         <LinkButtons searchLevel='family' searchLevelValue={familyId} />
+                        <DownloadButton
+                            searchLevel='family'
+                            searchLevelValue={familyId}
+                            identityLims={identityLims}
+                            scoreLims={scoreLims}
+                        />
                     </div>
                 </div>
                 <div className='p-6'>
