@@ -15,12 +15,16 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
     React.useEffect(() => {
         if (!dataPromise) return
         setIsLoading(true)
-        dataPromise.then((data) => {
-            setIsLoading(false)
-            setHasResults(data.result.length !== 0)
-            chart.render(data.result)
-        })
-        // TODO: handle error
+        dataPromise
+            .then((data) => {
+                setIsLoading(false)
+                setHasResults(data.result.length !== 0)
+                chart.render(data.result)
+            })
+            .catch((_error) => {
+                setIsLoading(false)
+                setHasResults(false)
+            })
     }, [dataPromise])
 
     const loading = <div className='text-center'>Loading... (this might take a while)</div>
