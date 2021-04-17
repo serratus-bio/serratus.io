@@ -7,13 +7,13 @@ import { RangeFilter } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 type Props = {
-    familyId: string
+    familyName: string
     identityLims: RangeFilter
     scoreLims: RangeFilter
 }
 
 // for run -> family/sequence lookup
-export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
+export const FamilyMatches = ({ familyName, identityLims, scoreLims }: Props) => {
     const context = React.useContext(BaseContext)
     const filters = {
         identityLims: identityLims,
@@ -29,16 +29,16 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
                 </div>
                 <div className='p-6'>
                     {/* no filters for drilldown*/}
-                    <SequenceMatchesPager familyId={familyId} runId={runId} />
+                    <SequenceMatchesPager familyName={familyName} runId={runId} />
                 </div>
             </div>
         )
     }
 
     React.useEffect(() => {
-        if (!familyId) return
-        getFamilyTitle(familyId).then(setPageTitle)
-    }, [familyId])
+        if (!familyName) return
+        getFamilyTitle(familyName).then(setPageTitle)
+    }, [familyName])
 
     const LinkButtons = context.result.LinkButtons
 
@@ -52,15 +52,15 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
                 <div>
                     <div className='w-full text-center'>
                         <div>
-                            <div className='text-xl font-bold'>{familyId}</div>
+                            <div className='text-xl font-bold'>{familyName}</div>
                             {pageTitle && <div className='text-lg italic'>{pageTitle}</div>}
                         </div>
                     </div>
                     <div className='flex justify-center items-center my-2'>
-                        <LinkButtons searchLevel='family' searchLevelValue={familyId} />
+                        <LinkButtons searchLevel='family' searchLevelValue={familyName} />
                         <DownloadButton
                             searchLevel='family'
-                            searchLevelValue={familyId}
+                            searchLevelValue={familyName}
                             identityLims={identityLims}
                             scoreLims={scoreLims}
                         />
@@ -68,7 +68,7 @@ export const FamilyMatches = ({ familyId, identityLims, scoreLims }: Props) => {
                 </div>
                 <div className='p-6'>
                     <FamilyMatchesPager
-                        familyId={familyId}
+                        familyId={familyName}
                         filters={filters}
                         drilldownCallback={drilldownCallback}
                     />

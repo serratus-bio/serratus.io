@@ -10,10 +10,10 @@ import { Filters } from 'components/Explorer/types'
 type Props = {
     runId: string
     filters?: Filters
-    familyId: string
+    familyName: string
 }
 
-export const SequenceMatchesPager = ({ runId: propOtherId, filters, familyId }: Props) => {
+export const SequenceMatchesPager = ({ runId: propOtherId, filters, familyName }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [otherId, setOtherId] = React.useState(propOtherId)
@@ -46,10 +46,11 @@ export const SequenceMatchesPager = ({ runId: propOtherId, filters, familyId }: 
                 pageNumber,
                 perPage,
                 filters,
-                familyId
+                undefined, // familyId
+                familyName
             )
         )
-    }, [context, otherId, pageNumber, familyId])
+    }, [context, otherId, pageNumber, familyName])
 
     return (
         <>

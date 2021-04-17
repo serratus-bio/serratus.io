@@ -21,7 +21,7 @@ export const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims 
     if (searchLevel === 'family') {
         return (
             <FamilyMatches
-                familyId={searchLevelValue}
+                familyName={searchLevelValue}
                 identityLims={identityLims}
                 scoreLims={scoreLims}
             />

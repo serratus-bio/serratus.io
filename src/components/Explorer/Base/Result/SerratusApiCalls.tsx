@@ -62,7 +62,8 @@ export const fetchPagedRunMatches = async (
     page: number,
     perPage: number,
     filters?: Filters,
-    family?: string
+    familyId?: string,
+    familyName?: string
 ): Promise<ResultPagination> => {
     let params: any = {
         run: runId,
@@ -80,9 +81,13 @@ export const fetchPagedRunMatches = async (
             identityMax: identityMax,
         }
     }
-    if (family) {
+    if (familyName) {
         // sequence-level matches
-        params.family = family
+        params.familyName = familyName
+    }
+    if (familyId) {
+        // sequence-level matches
+        params.familyId = familyId
     }
     // else, family-level matches
     const response = await axios.get(`${baseUrl}/matches/${searchType}/run/paged`, {
