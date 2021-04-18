@@ -12,12 +12,12 @@ import {
     barBorder as rowBorder,
     addColumns,
     getCoverageData,
-} from './ChartHelpers'
+} from './_helpers'
 import {
     ColMap,
     D3InterpolateFunction,
     DrillDownCallback,
-    IChartConfig,
+    IMatchChartConfig,
     MatchCoverageCell,
 } from './types'
 
@@ -37,7 +37,7 @@ export class IMatchRow {
     drillDownCallback?: DrillDownCallback
 
     constructor(
-        chartConfig: IChartConfig,
+        chartConfig: IMatchChartConfig,
         rootSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
         data: Match,
         rowIndex: number

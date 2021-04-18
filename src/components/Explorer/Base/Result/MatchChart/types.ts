@@ -24,7 +24,7 @@ export type MatchCoverageCell = {
     cartoonChar: string
 }
 
-export type IChartConfig = {
+export type IMatchChartConfig = {
     chartId: string
     linkSearchLevel: string
     valueKey: string
@@ -34,10 +34,10 @@ export type IChartConfig = {
     d3InterpolateFunction: D3InterpolateFunction
 }
 
-export type SequenceChartConfig = IChartConfig & {
+export type SequenceMatchChartConfig = IMatchChartConfig & {
     addJbrowseLinks: boolean
 }
 
-export type FamilyChartConfig = IChartConfig & {
+export type FamilyMatchChartConfig = IMatchChartConfig & {
     drillDownCallback: DrillDownCallback
 }

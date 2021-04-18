@@ -1,12 +1,12 @@
 import { Match } from '../types'
-import { IChart } from './IChart'
+import { IMatchChart } from './IMatchChart'
 import { SequenceMatchRow } from './SequenceMatchRow'
-import { SequenceChartConfig } from './types'
+import { SequenceMatchChartConfig } from './types'
 
-export class SequenceChart extends IChart {
-    config: SequenceChartConfig
+export class SequenceMatchChart extends IMatchChart {
+    config: SequenceMatchChartConfig
 
-    constructor(config: SequenceChartConfig) {
+    constructor(config: SequenceMatchChartConfig) {
         const viewBoxHeight = 400
         super(config, viewBoxHeight)
         this.config = config

@@ -1,11 +1,11 @@
 import React from 'react'
 import * as d3 from 'd3'
-import { rowHeight, tableShiftY, drawLegend, addHeaders, addColumns } from './ChartHelpers'
-import { IChartConfig } from './types'
+import { rowHeight, tableShiftY, drawLegend, addHeaders, addColumns } from './_helpers'
+import { IMatchChartConfig } from './types'
 import { Match } from '../types'
 
-export class IChart {
-    config: IChartConfig
+export class IMatchChart {
+    config: IMatchChartConfig
     viewBoxHeight: number
     viewBoxWidth: number
     component: React.ReactElement
@@ -13,7 +13,7 @@ export class IChart {
     matchesSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
     componentLoaded: boolean
 
-    constructor(config: IChartConfig, viewBoxHeight: number) {
+    constructor(config: IMatchChartConfig, viewBoxHeight: number) {
         this.config = config
         this.viewBoxHeight = viewBoxHeight
 

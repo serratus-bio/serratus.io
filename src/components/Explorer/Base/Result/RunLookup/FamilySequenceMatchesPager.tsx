@@ -1,7 +1,7 @@
 import React from 'react'
 import { Paginator } from '../Paginator'
-import { ChartController } from '../Chart/ChartController'
-import { SequenceChart } from '../Chart/SequenceChart'
+import { MatchChartController } from '../MatchChart/MatchChartController'
+import { SequenceMatchChart } from '../MatchChart/SequenceMatchChart'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from '../SerratusApiCalls'
 import { ResultPagination } from '../types'
@@ -32,7 +32,7 @@ export const FamilySequenceMatchesPager = ({
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
-            new SequenceChart({
+            new SequenceMatchChart({
                 chartId: 'sequence-matches',
                 linkSearchLevel: 'sequence',
                 valueKey: 'sequence_accession',
@@ -76,7 +76,7 @@ export const FamilySequenceMatchesPager = ({
                 setPage={setPageNumber}
                 dataPromise={dataPromise}
             />
-            <ChartController dataPromise={dataPromise} chart={chart} />
+            <MatchChartController dataPromise={dataPromise} chart={chart} />
         </>
     )
 }

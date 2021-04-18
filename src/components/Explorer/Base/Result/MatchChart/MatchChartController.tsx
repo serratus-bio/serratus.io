@@ -1,14 +1,14 @@
 import React from 'react'
 import { ExternalLink } from 'common'
-import { IChart } from './IChart'
+import { IMatchChart } from './IMatchChart'
 import { ResultPagination } from '../types'
 
 type Props = {
     dataPromise: Promise<ResultPagination> | undefined
-    chart: IChart
+    chart: IMatchChart
 }
 
-export const ChartController = ({ dataPromise, chart }: Props) => {
+export const MatchChartController = ({ dataPromise, chart }: Props) => {
     const [hasResults, setHasResults] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true)
 
