@@ -14,11 +14,10 @@ export const getMatchesDownloadUrl = (
     searchType: string,
     searchLevel: string,
     searchLevelValue: string,
-    identityLims: RangeFilter,
-    scoreLims: RangeFilter
+    filters: Filters
 ) => {
-    const [identityMin, identityMax] = identityLims
-    const [scoreMin, scoreMax] = scoreLims
+    const [identityMin, identityMax] = filters.identityLims
+    const [scoreMin, scoreMax] = filters.scoreLims
     const params = {
         scoreMin: scoreMin.toString(),
         scoreMax: scoreMax.toString(),
@@ -64,7 +63,7 @@ export const fetchPagedRunMatches = async (
     filters?: Filters,
     familyId?: string,
     familyName?: string
-): Promise<ResultPagination> => {
+) => {
     let params: any = {
         run: runId,
         page: page,

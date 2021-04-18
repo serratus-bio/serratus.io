@@ -1,6 +1,6 @@
 export type ResultPagination = {
     result: Match[]
-    total: bigint
+    total: number
 }
 
 export type Match = {

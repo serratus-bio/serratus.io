@@ -1,24 +1,19 @@
 import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
-import { DownloadButton, getFamilyTitle } from '../ResultHelpers'
+import { getFamilyTitle } from '../ResultHelpers'
 import { DrilldownCallback } from '../Chart/types'
-import { RangeFilter } from 'components/Explorer/types'
+import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
+import { DownloadButton } from '../DownloadButton'
 
 type Props = {
     familyName: string
-    identityLims: RangeFilter
-    scoreLims: RangeFilter
+    filters: Filters
 }
 
-// for run -> family/sequence lookup
-export const FamilyMatches = ({ familyName, identityLims, scoreLims }: Props) => {
+export const FamilyMatches = ({ familyName, filters }: Props) => {
     const context = React.useContext(BaseContext)
-    const filters = {
-        identityLims: identityLims,
-        scoreLims: scoreLims,
-    }
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
     const [pageTitle, setPageTitle] = React.useState('')
     let drilldownCallback: DrilldownCallback = function (runId) {
@@ -61,8 +56,7 @@ export const FamilyMatches = ({ familyName, identityLims, scoreLims }: Props) =>
                         <DownloadButton
                             searchLevel='family'
                             searchLevelValue={familyName}
-                            identityLims={identityLims}
-                            scoreLims={scoreLims}
+                            filters={filters}
                         />
                     </div>
                 </div>

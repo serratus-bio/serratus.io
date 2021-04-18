@@ -3,24 +3,18 @@ import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
 import { getRunTitle } from '../ResultHelpers'
 import { DrilldownCallback } from '../Chart/types'
-import { RangeFilter } from 'components/Explorer/types'
+import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 type Props = {
     runId: string
-    identityLims: RangeFilter
-    scoreLims: RangeFilter
+    filters: Filters
 }
 
-// for run -> family/sequence lookup
-export const RunLookup = ({ runId, identityLims, scoreLims }: Props) => {
+export const RunLookup = ({ runId, filters }: Props) => {
     const context = React.useContext(BaseContext)
-    const filters = {
-        identityLims: identityLims,
-        scoreLims: scoreLims,
-    }
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
-    const [pageTitle, setPageTitle] = React.useState()
+    const [pageTitle, setPageTitle] = React.useState('')
     let drilldownCallback: DrilldownCallback = function (familyId) {
         setSequenceResult(
             <div className='max-w-4xl m-auto'>

@@ -1,22 +1,17 @@
 import React from 'react'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
-import { DownloadButton, getSequenceTitle } from '../ResultHelpers'
-import { RangeFilter } from 'components/Explorer/types'
+import { DownloadButton } from '../DownloadButton'
+import { getSequenceTitle } from '../ResultHelpers'
+import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
 type Props = {
     sequenceId: string
-    identityLims: RangeFilter
-    scoreLims: RangeFilter
+    filters: Filters
 }
 
-// for run -> family/sequence lookup
-export const SequenceMatches = ({ sequenceId, identityLims, scoreLims }: Props) => {
+export const SequenceMatches = ({ sequenceId, filters }: Props) => {
     const context = React.useContext(BaseContext)
-    const filters = {
-        identityLims: identityLims,
-        scoreLims: scoreLims,
-    }
     const [pageTitle, setPageTitle] = React.useState('')
 
     React.useEffect(() => {
@@ -40,8 +35,7 @@ export const SequenceMatches = ({ sequenceId, identityLims, scoreLims }: Props) 
                         <DownloadButton
                             searchLevel='sequence'
                             searchLevelValue={sequenceId}
-                            identityLims={identityLims}
-                            scoreLims={scoreLims}
+                            filters={filters}
                         />
                     </div>
                 </div>

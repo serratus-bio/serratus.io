@@ -1,9 +1,17 @@
 import React from 'react'
+import { ResultPagination } from './types'
 
 const resultTotalKey = 'total'
 
-export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) => {
-    const [numPages, setNumPages] = React.useState() // from dataPromise later
+type Props = {
+    pageNumber: number
+    perPage: number
+    setPageNumber: React.Dispatch<React.SetStateAction<number>>
+    dataPromise: Promise<ResultPagination> | undefined
+}
+
+export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }: Props) => {
+    const [numPages, setNumPages] = React.useState<number>() // from dataPromise later
     const [loading, setLoading] = React.useState(true)
 
     const visibleButton =
@@ -15,7 +23,7 @@ export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }) =
 
     const prevPage = () => setPageNumber(pageNumber - 1)
 
-    const readDataPromise = async (dataPromise, perPage) => {
+    const readDataPromise = async (dataPromise: Promise<ResultPagination>, perPage: number) => {
         if (!dataPromise) return
         dataPromise.then((data) => {
             const total = data[resultTotalKey]
