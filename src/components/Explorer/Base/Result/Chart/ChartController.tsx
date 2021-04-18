@@ -14,10 +14,9 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
 
     React.useEffect(() => {
         if (!dataPromise) return
-        setIsLoading(true)
         dataPromise
             .then((data) => {
-                setIsLoading(false)
+                setIsLoading(false) // must call before chart.render()
                 setHasResults(data.result.length !== 0)
                 chart.render(data.result)
             })
@@ -50,6 +49,7 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
         return chart.component
     }
     if (!hasResults) {
+        chart.remove()
         return noResults
     }
     return chart.component

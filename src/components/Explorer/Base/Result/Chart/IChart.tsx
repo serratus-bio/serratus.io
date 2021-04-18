@@ -28,6 +28,11 @@ export class IChart {
         this.rootSvg.selectAll('*').remove()
     }
 
+    remove() {
+        d3.select(`#${this.config.chartId}`).select('svg').remove()
+        this.componentLoaded = false
+    }
+
     setLoading() {
         this.clear()
         this.rootSvg
