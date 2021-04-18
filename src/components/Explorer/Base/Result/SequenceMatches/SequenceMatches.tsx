@@ -1,7 +1,7 @@
 import React from 'react'
 import { SequenceMatchesPager } from './SequenceMatchesPager'
 import { DownloadButton } from '../DownloadButton'
-import { getSequenceTitle } from '../ResultHelpers'
+import { getSequenceTitle } from '../TitleHelpers'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 

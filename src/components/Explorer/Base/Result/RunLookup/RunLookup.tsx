@@ -1,7 +1,7 @@
 import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
-import { getRunTitle } from '../ResultHelpers'
+import { getRunTitle } from '../TitleHelpers'
 import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
