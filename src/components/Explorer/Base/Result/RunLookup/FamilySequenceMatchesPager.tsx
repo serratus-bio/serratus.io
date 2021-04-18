@@ -15,18 +15,19 @@ type Props = {
 }
 
 export const FamilySequenceMatchesPager = ({
-    runId,
-    filters,
+    runId: propRunId,
     familyId: propFamilyId,
     familyName: propFamilyName,
+    filters,
 }: Props) => {
     if (propFamilyId && propFamilyName)
         throw new Error('only one of familyId/familyName should be set')
 
     const context = React.useContext(BaseContext)
     const perPage = 20
+    const [runId, setRunId] = React.useState(propRunId)
     const [familyId, setFamilyId] = React.useState(propFamilyId)
-    const [familyName, setFamilyName] = React.useState(propFamilyName)
+    const familyName = propFamilyName
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
@@ -49,9 +50,9 @@ export const FamilySequenceMatchesPager = ({
     }, [propFamilyId])
 
     React.useEffect(() => {
-        setFamilyName(propFamilyName)
+        setRunId(propRunId)
         setPageNumber(1)
-    }, [propFamilyName])
+    }, [propRunId])
 
     React.useEffect(() => {
         setDataPromise(
