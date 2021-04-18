@@ -2,7 +2,7 @@ import React from 'react'
 import { Paginator } from '../Paginator'
 import { ChartController } from '../Chart/ChartController'
 import { FamilyChart } from '../Chart/FamilyChart'
-import { DrilldownCallback } from '../Chart/types'
+import { DrillDownCallback } from '../Chart/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { fetchPagedRunMatches } from '../SerratusApiCalls'
 import { ResultPagination } from '../types'
@@ -11,10 +11,10 @@ import { Filters } from 'components/Explorer/types'
 type Props = {
     runId: string
     filters: Filters
-    drilldownCallback: DrilldownCallback
+    drillDownCallback: DrillDownCallback
 }
 
-export const FamilyMatchesPager = ({ runId, filters, drilldownCallback }: Props) => {
+export const FamilyMatchesPager = ({ runId, filters, drillDownCallback }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
     const [pageNumber, setPageNumber] = React.useState(1)
@@ -29,7 +29,7 @@ export const FamilyMatchesPager = ({ runId, filters, drilldownCallback }: Props)
                 displayValueKey: 'family_id',
                 colMap: context.result.colMap,
                 d3InterpolateFunction: context.result.theme.d3InterpolateFunction,
-                drilldownCallback: drilldownCallback,
+                drillDownCallback: drillDownCallback,
             })
     )
 

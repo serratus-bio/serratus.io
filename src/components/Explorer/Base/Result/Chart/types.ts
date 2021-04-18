@@ -1,6 +1,6 @@
 export type D3InterpolateFunction = (_t: number) => string
 
-export type DrilldownCallback = (_otherId: string) => void
+export type DrillDownCallback = (_otherId: string) => void
 
 export type ColMap = {
     [_: string]: ColInfo
@@ -39,5 +39,5 @@ export type SequenceChartConfig = IChartConfig & {
 }
 
 export type FamilyChartConfig = IChartConfig & {
-    drilldownCallback: DrilldownCallback
+    drillDownCallback: DrillDownCallback
 }

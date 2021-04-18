@@ -16,7 +16,7 @@ import {
 import {
     ColMap,
     D3InterpolateFunction,
-    DrilldownCallback,
+    DrillDownCallback,
     IChartConfig,
     MatchCoverageCell,
 } from './types'
@@ -34,7 +34,7 @@ export class IMatchRow {
     matchG: d3.Selection<SVGGElement, unknown, HTMLElement, any>
     mainSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
     d3InterpolateFunction: D3InterpolateFunction
-    drilldownCallback?: DrilldownCallback
+    drillDownCallback?: DrillDownCallback
 
     constructor(
         chartConfig: IChartConfig,
@@ -120,7 +120,7 @@ export class IMatchRow {
             .style('stroke', rowBorder.color)
             .style('stroke-width', rowBorder.size)
 
-        const callback = this.drilldownCallback
+        const callback = this.drillDownCallback
         if (callback) {
             mainG
                 .append('rect')

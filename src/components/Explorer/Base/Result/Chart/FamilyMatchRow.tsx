@@ -11,6 +11,6 @@ export class FamilyMatchRow extends IMatchRow {
         rowIndex: number
     ) {
         super(chartConfig, rootSvg, data, rowIndex)
-        this.drilldownCallback = chartConfig.drilldownCallback
+        this.drillDownCallback = chartConfig.drillDownCallback
     }
 }
