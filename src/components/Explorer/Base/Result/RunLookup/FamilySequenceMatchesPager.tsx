@@ -10,13 +10,23 @@ import { Filters } from 'components/Explorer/types'
 type Props = {
     runId: string
     filters?: Filters
-    familyId: string
+    familyId?: string
+    familyName?: string
 }
 
-export const SequenceMatchesPager = ({ runId, filters, familyId: propFamilyId }: Props) => {
+export const FamilySequenceMatchesPager = ({
+    runId,
+    filters,
+    familyId: propFamilyId,
+    familyName: propFamilyName,
+}: Props) => {
+    if (propFamilyId && propFamilyName)
+        throw new Error('only one of familyId/familyName should be set')
+
     const context = React.useContext(BaseContext)
     const perPage = 20
     const [familyId, setFamilyId] = React.useState(propFamilyId)
+    const [familyName, setFamilyName] = React.useState(propFamilyName)
     const [pageNumber, setPageNumber] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
@@ -39,10 +49,23 @@ export const SequenceMatchesPager = ({ runId, filters, familyId: propFamilyId }:
     }, [propFamilyId])
 
     React.useEffect(() => {
+        setFamilyName(propFamilyName)
+        setPageNumber(1)
+    }, [propFamilyName])
+
+    React.useEffect(() => {
         setDataPromise(
-            fetchPagedRunMatches(context.searchType, runId, pageNumber, perPage, filters, familyId)
+            fetchPagedRunMatches(
+                context.searchType,
+                runId,
+                pageNumber,
+                perPage,
+                filters,
+                familyId,
+                familyName
+            )
         )
-    }, [context, runId, pageNumber, familyId])
+    }, [context, runId, pageNumber, familyId, familyName])
 
     return (
         <>

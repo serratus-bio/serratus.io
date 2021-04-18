@@ -1,6 +1,6 @@
 import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
-import { SequenceMatchesPager } from './SequenceMatchesPager'
+import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
 import { getFamilyTitle } from '../ResultHelpers'
 import { DrilldownCallback } from '../Chart/types'
 import { Filters } from 'components/Explorer/types'
@@ -24,7 +24,7 @@ export const FamilyMatches = ({ familyName, filters }: Props) => {
                 </div>
                 <div className='p-6'>
                     {/* no filters for drilldown*/}
-                    <SequenceMatchesPager familyName={familyName} runId={runId} />
+                    <FamilySequenceMatchesPager familyName={familyName} runId={runId} />
                 </div>
             </div>
         )
