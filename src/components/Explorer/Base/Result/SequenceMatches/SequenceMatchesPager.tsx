@@ -15,7 +15,7 @@ type Props = {
 export const SequenceMatchesPager = ({ sequenceId, filters }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 20
-    const [pageNumber, setPageNumber] = React.useState(1)
+    const [page, setPage] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
@@ -37,22 +37,17 @@ export const SequenceMatchesPager = ({ sequenceId, filters }: Props) => {
                 context.searchType,
                 'sequence',
                 sequenceId,
-                pageNumber,
+                page,
                 perPage,
                 filters.identityLims,
                 filters.scoreLims
             )
         )
-    }, [context, sequenceId, pageNumber])
+    }, [context, sequenceId, page])
 
     return (
         <>
-            <Paginator
-                pageNumber={pageNumber}
-                perPage={perPage}
-                setPageNumber={setPageNumber}
-                dataPromise={dataPromise}
-            />
+            <Paginator page={page} setPage={setPage} perPage={perPage} dataPromise={dataPromise} />
             <ChartController dataPromise={dataPromise} chart={chart} />
         </>
     )

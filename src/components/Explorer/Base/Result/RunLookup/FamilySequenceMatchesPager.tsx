@@ -71,9 +71,9 @@ export const FamilySequenceMatchesPager = ({
     return (
         <>
             <Paginator
-                pageNumber={pageNumber}
+                page={pageNumber}
                 perPage={perPage}
-                setPageNumber={setPageNumber}
+                setPage={setPageNumber}
                 dataPromise={dataPromise}
             />
             <ChartController dataPromise={dataPromise} chart={chart} />

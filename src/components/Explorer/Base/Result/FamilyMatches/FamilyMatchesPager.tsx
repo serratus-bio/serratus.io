@@ -17,7 +17,7 @@ type Props = {
 export const FamilyMatchesPager = ({ familyId, filters, drillDownCallback }: Props) => {
     const context = React.useContext(BaseContext)
     const perPage = 10
-    const [pageNumber, setPageNumber] = React.useState(1)
+    const [page, setPage] = React.useState(1)
     const [dataPromise, setDataPromise] = React.useState<Promise<ResultPagination>>()
     const [chart] = React.useState(
         () =>
@@ -40,22 +40,17 @@ export const FamilyMatchesPager = ({ familyId, filters, drillDownCallback }: Pro
                 context.searchType,
                 'family',
                 familyId,
-                pageNumber,
+                page,
                 perPage,
                 filters.identityLims,
                 filters.scoreLims
             )
         )
-    }, [context.searchType, familyId, pageNumber])
+    }, [context.searchType, familyId, page])
 
     return (
         <>
-            <Paginator
-                pageNumber={pageNumber}
-                perPage={perPage}
-                setPageNumber={setPageNumber}
-                dataPromise={dataPromise}
-            />
+            <Paginator page={page} setPage={setPage} perPage={perPage} dataPromise={dataPromise} />
             <ChartController dataPromise={dataPromise} chart={chart} />
         </>
     )

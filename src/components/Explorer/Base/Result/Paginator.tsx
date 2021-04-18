@@ -1,26 +1,21 @@
 import React from 'react'
 import { ResultPagination } from './types'
 
-const resultTotalKey = 'total'
-
 type Props = {
-    pageNumber: number
+    page: number
+    setPage: React.Dispatch<React.SetStateAction<number>>
     perPage: number
-    setPageNumber: React.Dispatch<React.SetStateAction<number>>
     dataPromise: Promise<ResultPagination> | undefined
 }
 
-export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }: Props) => {
-    const [numPages, setNumPages] = React.useState(0) // from dataPromise later
+export const Paginator = ({ page, perPage, setPage, dataPromise }: Props) => {
+    const [numPages, setNumPages] = React.useState(0)
     const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
-        if (!dataPromise) return
         dataPromise
-            .then((data) => {
-                const total = data[resultTotalKey]
-                const numPages = Math.ceil(total / perPage)
-                setNumPages(numPages)
+            ?.then((data) => {
+                setNumPages(Math.ceil(data.total / perPage))
             })
             .catch((_error) => {
                 setNumPages(0)
@@ -28,31 +23,27 @@ export const Paginator = ({ pageNumber, perPage, setPageNumber, dataPromise }: P
             .finally(() => {
                 setLoading(false)
             })
-    }, [pageNumber, numPages, dataPromise, perPage])
+    }, [page, dataPromise, perPage])
 
     if (loading || numPages === 0) return null
 
-    const visibleButton =
+    const buttonStyle =
         'bg-gray-300 hover:bg-gray-500 mx-2 py-1 px-4 rounded inline-flex items-center'
-    const invisibleButton = 'invisible ' + visibleButton
+
+    const prevButtonProps =
+        page === 1
+            ? { className: `invisible ${buttonStyle}` }
+            : { className: buttonStyle, onClick: () => setPage(page - 1) }
+    const nextButtonProps =
+        page === numPages
+            ? { className: `invisible ${buttonStyle}` }
+            : { className: buttonStyle, onClick: () => setPage(page + 1) }
 
     return (
         <div className='flex flex-row justify-center items-center'>
-            {pageNumber === 1 ? (
-                <button className={invisibleButton}></button>
-            ) : (
-                <button className={visibleButton} onClick={() => setPageNumber(pageNumber - 1)}>
-                    prev
-                </button>
-            )}
-            Page {pageNumber} out of {numPages}
-            {pageNumber === numPages ? (
-                <button className={invisibleButton}></button>
-            ) : (
-                <button className={visibleButton} onClick={() => setPageNumber(pageNumber + 1)}>
-                    next
-                </button>
-            )}
+            <button {...prevButtonProps}>prev</button>
+            Page {page} out of {numPages}
+            <button {...nextButtonProps}>next</button>
         </div>
     )
 }

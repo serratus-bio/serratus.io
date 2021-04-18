@@ -13,9 +13,8 @@ export const ChartController = ({ dataPromise, chart }: Props) => {
     const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
-        if (!dataPromise) return
         dataPromise
-            .then((data) => {
+            ?.then((data) => {
                 setIsLoading(false) // must call before chart.render()
                 setHasResults(data.result.length !== 0)
                 chart.render(data.result)
