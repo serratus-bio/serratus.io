@@ -11,73 +11,33 @@ const switchSize = 'lg' // Tailwind prefix to switch between landscape/portrait 
 
 export const ExplorerBase = ({ location }) => {
     const context = React.useContext(BaseContext)
-    const searchLevelStaticRef = React.useRef()
-    const searchLevelValueStaticRef = React.useRef()
-    const identityLimsStaticRef = React.useRef()
-    const scoreLimsStaticRef = React.useRef()
 
-    let searchLevelFromParam = null
-    let searchLevelValueFromParam = null
-    let identityLimsFromParam = null
-    let scoreLimsFromParam = null
+    const searchLevels = Object.keys(context.defaultSearchLevelValues)
     const urlParams = new URLSearchParams(location.search)
-    Object.keys(context.defaultSearchLevelValues).forEach((searchLevel) => {
-        const searchLevelValue = urlParams.get(searchLevel)
-        // assuming mutually exclusive parameters
-        if (searchLevelValue) {
-            searchLevelFromParam = searchLevel
-            searchLevelValueFromParam = searchLevelValue
-        }
-    })
-    const searchLevelProvided = searchLevelFromParam !== null
-    const identityParamStr = urlParams.get('identity')
-    if (identityParamStr)
-        identityLimsFromParam = parseRange(identityParamStr, context.domain.identity)
-    const scoreParamStr = urlParams.get('score')
-    if (scoreParamStr) scoreLimsFromParam = parseRange(scoreParamStr, context.domain.score)
+    const [inputSearchLevel, inputSearchLevelValue] = getInputSearchLevel(searchLevels, urlParams)
+    const searchLevelProvided = Boolean(inputSearchLevel)
 
-    const willMount = React.useRef(true)
-    if (willMount.current) {
-        // set defaults
-        if (!identityLimsFromParam) {
-            identityLimsFromParam = context.domain.identity
-        }
-        if (!scoreLimsFromParam) {
-            scoreLimsFromParam = [50, 100]
-        }
-        // family must be valid for initial chart render
-        if (!searchLevelFromParam) {
-            searchLevelFromParam = 'family'
-        }
-        if (!searchLevelValueFromParam) {
-            searchLevelValueFromParam = 'Coronaviridae'
-        }
-
-        searchLevelStaticRef.current = searchLevelFromParam
-        searchLevelValueStaticRef.current = searchLevelValueFromParam
-        identityLimsStaticRef.current = identityLimsFromParam
-        scoreLimsStaticRef.current = scoreLimsFromParam
-
-        willMount.current = false
-    }
+    // set filter ranges / defaults
+    const inputIdentityLims =
+        parseRange(urlParams.get('identity'), context.domain.identity) ||
+        context.defaultFilterRanges.identity
+    const inputScoreLims =
+        parseRange(urlParams.get('score'), context.domain.score) ||
+        context.defaultFilterRanges.score
 
     // values that change with user input (QueryBuilder)
-    const [searchLevel, setSearchLevel] = React.useState(searchLevelStaticRef.current)
+    // family must be valid for initial chart render
+    const [searchLevel, setSearchLevel] = React.useState(inputSearchLevel || 'family')
     const [searchLevelValue, setSearchLevelValue] = React.useState(
-        searchLevelValueStaticRef.current
+        inputSearchLevelValue || 'Coronaviridae'
     )
-    const identityLimsRef = React.useRef(identityLimsStaticRef.current)
-    const scoreLimsRef = React.useRef(scoreLimsStaticRef.current)
+    const identityLimsRef = React.useRef(inputIdentityLims)
+    const scoreLimsRef = React.useRef(inputScoreLims)
 
     return (
         <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
             <Helmet>
-                <title>
-                    Serratus |{' '}
-                    {searchLevelValueStaticRef.current
-                        ? `${searchLevelValueStaticRef.current}`
-                        : 'Explorer'}
-                </title>
+                <title>Serratus | {inputSearchLevelValue || 'Explorer'}</title>
             </Helmet>
             <div
                 className={`flex flex-col px-4 py-2 w-full ${switchSize}:w-1/3 ${classesBoxBorder}`}>
@@ -102,10 +62,10 @@ export const ExplorerBase = ({ location }) => {
                     <context.intro />
                 ) : (
                     <Result
-                        searchLevel={searchLevelStaticRef.current}
-                        searchLevelValue={searchLevelValueStaticRef.current}
-                        identityLims={identityLimsStaticRef.current}
-                        scoreLims={scoreLimsStaticRef.current}
+                        searchLevel={inputSearchLevel}
+                        searchLevelValue={inputSearchLevelValue}
+                        identityLims={inputIdentityLims}
+                        scoreLims={inputScoreLims}
                     />
                 )}
                 <div className={`${switchSize}:hidden`}>
@@ -114,4 +74,10 @@ export const ExplorerBase = ({ location }) => {
             </div>
         </div>
     )
+}
+
+function getInputSearchLevel(searchLevels, urlParams) {
+    const searchLevel = searchLevels.find((searchLevel) => urlParams.get(searchLevel))
+    const searchLevelValue = urlParams.get(searchLevel)
+    return [searchLevel, searchLevelValue]
 }

@@ -1,41 +1,71 @@
 import * as d3 from 'd3'
+import { Match } from '../types'
 import {
     cvgCartoonMap,
     genomeBins,
     colorMap,
     sectionMargin,
     sectionWidth as rowWidth,
-    sectionHeight as rowHeight,
+    rowHeight as rowHeight,
     barWidth,
     barHeight,
     barBorder as rowBorder,
     addColumns,
     getCoverageData,
-} from './ChartHelpers'
+} from './_helpers'
+import {
+    ColMap,
+    D3InterpolateFunction,
+    DrillDownCallback,
+    IMatchChartConfig,
+    MatchCoverageCell,
+} from './types'
 
-const sequenceIdKey = 'sequence_accession'
-const sequenceNameKey = 'virus_name'
 const coverageKey = 'coverage_bins'
 
-export class SequenceMatch {
-    constructor(rootSvg, sequenceData, rowIndex, colMap, d3InterpolateFunction) {
-        this.data = sequenceData
-        this.rowIndex = rowIndex
-        this.colMap = colMap
-        this.d3InterpolateFunction = d3InterpolateFunction
+export class IMatchRow {
+    data: Match
+    colMap: ColMap
+    linkSearchLevel: string
+    value: string
+    linkValue: string
+    fullName: string
+    displayName: string
+    matchG: d3.Selection<SVGGElement, unknown, HTMLElement, any>
+    mainSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>
+    d3InterpolateFunction: D3InterpolateFunction
+    drillDownCallback?: DrillDownCallback
 
-        this.searchLevel = 'sequence'
-        this.searchLevelValue = this.data[sequenceIdKey]
-        this.sequenceG = rootSvg
-            .append('g')
-            .attr('class', 'sequence')
-            .attr('rowid', `${this.data[sequenceIdKey]}`)
+    constructor(
+        chartConfig: IMatchChartConfig,
+        rootSvg: d3.Selection<SVGSVGElement, unknown, HTMLElement, any>,
+        data: Match,
+        rowIndex: number
+    ) {
+        this.data = data
+        this.colMap = chartConfig.colMap
+        this.d3InterpolateFunction = chartConfig.d3InterpolateFunction
+
+        this.linkSearchLevel = chartConfig.linkSearchLevel
+        this.value = this.data[chartConfig.valueKey]
+        this.linkValue = this.data[chartConfig.linkValueKey]
+        this.fullName = this.data[chartConfig.displayValueKey]
+        this.displayName = this.fullName
         this.setDisplayName()
+        this.matchG = rootSvg
+            .append('g')
+            .attr('class', this.linkSearchLevel)
+            .attr('row-id', this.value)
+        this.mainSvg = this.matchG
+            .append('svg')
+            .attr('y', rowIndex * rowHeight)
+            .attr('width', rowWidth)
+            .attr('height', rowHeight)
+            .attr('border', rowBorder.size)
+            .style('display', 'block')
     }
 
     setDisplayName() {
-        this.fullName = this.data[sequenceNameKey]
-        this.displayName = this.fullName
         const maxLength = 18
         if (this.displayName.length > maxLength) {
             this.displayName = this.displayName.slice(0, maxLength) + '...'
@@ -44,14 +74,6 @@ export class SequenceMatch {
 
     addLinkAndHeatmap() {
         const coverageData = getCoverageData(this.data, coverageKey)
-
-        this.mainSvg = this.sequenceG
-            .append('svg')
-            .attr('y', this.rowIndex * rowHeight)
-            .attr('width', rowWidth)
-            .attr('height', rowHeight)
-            .attr('border', rowBorder.size)
-            .style('display', 'block')
 
         const mainG = this.mainSvg
             .append('g')
@@ -68,24 +90,24 @@ export class SequenceMatch {
             .style('fill', 'blue')
             .style('cursor', 'pointer')
             .on('click', () => {
-                const link = `${window.location.pathname}?${this.searchLevel}=${this.searchLevelValue}`
-                window.location = link
+                const link = `${window.location.pathname}?${this.linkSearchLevel}=${this.linkValue}`
+                window.location.href = link
             })
             .append('svg:title')
-            .text(() => this.fullName)
+            .text(this.fullName)
 
         const heatmapG = mainG.append('g').attr('class', 'heatmap')
 
-        // heatmap squares
+        // heatmap cells
         heatmapG
             .selectAll()
             .data(coverageData)
             .enter()
             .append('rect')
-            .attr('x', (d) => x(d.bin))
+            .attr('x', (d: MatchCoverageCell) => x(d.bin.toString()) as number)
             .attr('width', x.bandwidth())
             .attr('height', y.bandwidth())
-            .style('fill', (d) =>
+            .style('fill', (d: MatchCoverageCell) =>
                 colorMap(cvgCartoonMap[d.cartoonChar], this.d3InterpolateFunction)
             )
 
@@ -97,15 +119,29 @@ export class SequenceMatch {
             .style('fill', 'none')
             .style('stroke', rowBorder.color)
             .style('stroke-width', rowBorder.size)
+
+        const callback = this.drillDownCallback
+        if (callback) {
+            mainG
+                .append('rect')
+                .attr('class', 'heatmap-click')
+                .attr('visibility', 'visible')
+                .attr('width', barWidth)
+                .attr('height', barHeight)
+                .style('opacity', 0)
+                .style('cursor', 'pointer')
+                .on('click', () => callback(this.value))
+        }
     }
 
     addStats() {
-        addColumns(this.mainSvg, this.colMap, this.data)
+        const statsG = this.mainSvg.append('g')
+        addColumns(statsG, this.colMap, this.data)
     }
 
     addJBrowseIcon() {
         const image = '/atcg.png'
-        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.searchLevelValue}`
+        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.value}`
         const iconWidth = 15
         const iconHeight = 15
         const xShift = 725 // TODO: compute from colMap

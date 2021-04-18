@@ -1,6 +1,6 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
-import { getAnalysisIndex } from '../Base/Result/MatchingRuns/SerratusApiCalls.jsx'
+import { getAnalysisIndex } from '../Base/Result/SerratusApiCalls'
 
 export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'family') {

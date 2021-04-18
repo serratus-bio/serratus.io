@@ -10,6 +10,7 @@ export const infernoCssGradient =
 // filtering
 
 export const parseRange = (rangeStr, bounds) => {
+    if (!rangeStr) return null
     // parse
     let [low, high] = rangeStr.split('-').map((s) => {
         const intVal = +s
