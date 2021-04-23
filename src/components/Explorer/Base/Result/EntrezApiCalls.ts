@@ -44,7 +44,7 @@ export async function tryGetSraStudyName(runId: string) {
         const expObject = parse(decode(expXmlText), fastXmlParserOptions)
         const entrezStudyName: string = expObject?.Study?._name
         if (!entrezStudyName) throw 'Unable to retrieve study name from Entrez search.'
-        return entrezStudyName || ''
+        return entrezStudyName
     } catch (err) {
         console.info(err)
         return ''
