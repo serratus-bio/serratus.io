@@ -18,10 +18,10 @@ async function getESearchXmlResponse(db: string, term: string) {
     return <string>response.data
 }
 
-async function getESummaryXmlResponse(db: string, entrezId: string) {
+async function getESummaryXmlResponse(db: string, eSearchId: string) {
     const urlParams = new URLSearchParams({
         db: db,
-        id: entrezId,
+        id: eSearchId,
     })
     const response = await axios.get(`${eUtilsUrl}/esummary.fcgi?${urlParams}`, requestConfig)
     return <string>response.data
@@ -33,19 +33,20 @@ export async function tryGetSraStudyName(runId: string) {
         const db = 'sra'
         const eSearchXml = await getESearchXmlResponse(db, runId)
         const eSearchObject = parse(eSearchXml, fastXmlParserOptions)
-        const entrezId = eSearchObject?.eSearchResult?.IdList?.Id
+        const eSearchId = eSearchObject?.eSearchResult?.IdList?.Id
         // eSummary
-        if (!entrezId) return ''
-        const eSummaryXml = await getESummaryXmlResponse(db, entrezId)
+        if (!eSearchId) throw 'Invalid Entrez search.'
+        const eSummaryXml = await getESummaryXmlResponse(db, eSearchId)
         const eSummaryObject = parse(eSummaryXml, fastXmlParserOptions)
         const expXmlText = eSummaryObject?.eSummaryResult?.DocSum?.Item[0]?.['#text']
         // eSummary expXml
-        if (!expXmlText) return ''
+        if (!expXmlText) throw 'Unable to retrieve ExpXml from Entrez search.'
         const expObject = parse(decode(expXmlText), fastXmlParserOptions)
         const entrezStudyName: string = expObject?.Study?._name
+        if (!entrezStudyName) throw 'Unable to retrieve study name from Entrez search.'
         return entrezStudyName || ''
     } catch (err) {
-        console.error(err)
+        console.info(err)
         return ''
     }
 }
@@ -56,17 +57,18 @@ export async function tryGetGenBankTitle(genbankId: string) {
         const db = 'nuccore'
         const eSearchXml = await getESearchXmlResponse(db, genbankId)
         const eSearchObject = parse(eSearchXml, fastXmlParserOptions)
-        const entrezId = eSearchObject?.eSearchResult?.IdList?.Id
+        const eSearchId = eSearchObject?.eSearchResult?.IdList?.Id
         // eSummary
-        if (!entrezId) return ''
-        const eSummaryXml = await getESummaryXmlResponse(db, entrezId)
+        if (!eSearchId) throw 'Invalid Entrez search.'
+        const eSummaryXml = await getESummaryXmlResponse(db, eSearchId)
         const eSummaryObject = parse(eSummaryXml, fastXmlParserOptions)
         const title: string = eSummaryObject?.eSummaryResult?.DocSum?.Item?.filter(
             (item: any) => item['_Name'] === 'Title'
         )[0]?.['#text']
-        return title || ''
+        if (!title) throw 'Unable to retrieve title from Entrez search.'
+        return title
     } catch (err) {
-        console.error(err)
+        console.info(err)
         return ''
     }
 }
