@@ -38,13 +38,11 @@ export async function tryGetSraStudyName(runId: string) {
         if (!entrezId) return ''
         const eSummaryXml = await getESummaryXmlResponse(db, entrezId)
         const eSummaryObject = parse(eSummaryXml, fastXmlParserOptions)
-        let expXmlText: string = eSummaryObject?.eSummaryResult?.DocSum?.Item[0]?.['#text']
+        const expXmlText = eSummaryObject?.eSummaryResult?.DocSum?.Item[0]?.['#text']
         // eSummary expXml
         if (!expXmlText) return ''
-        const dummyTag = 'tag'
-        expXmlText = `<${dummyTag}>` + decode(expXmlText) + `</${dummyTag}>`
-        const expObject = parse(expXmlText, fastXmlParserOptions)
-        const entrezStudyName: string = expObject?.[dummyTag]?.Study?._name
+        const expObject = parse(decode(expXmlText), fastXmlParserOptions)
+        const entrezStudyName: string = expObject?.Study?._name
         return entrezStudyName || ''
     } catch (err) {
         console.error(err)
