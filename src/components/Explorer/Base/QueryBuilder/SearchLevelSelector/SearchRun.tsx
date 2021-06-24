@@ -1,8 +1,14 @@
 import React from 'react'
 
-export const SearchRun = ({ run, setRun, onEnter }) => {
-    const searchOnKeyUp = (e) => {
-        if (e.keyCode === 13) {
+type Props = {
+    run: string
+    setRun: (_run: string) => void
+    onEnter: (_run: string) => void
+}
+
+export const SearchRun = ({ run, setRun, onEnter }: Props) => {
+    const searchOnKeyUp = (e: React.KeyboardEvent & React.ChangeEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
             onEnter(e.target.value)
         } else {
             setRun(e.target.value)
