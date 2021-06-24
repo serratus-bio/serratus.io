@@ -32,9 +32,8 @@ export const Intro = () => {
 
             <div id='mascot' className='text-center'>
                 <button className='text-center m-auto' onClick={() => setShowMascot(!showMascot)}>
-                    <div align='center' id='Frank'>
+                    <div id='Frank'>
                         <img
-                            align='center'
                             className='h-64'
                             src='/Frank_Ginger.png'
                             alt='Frank and Ginger, the Serratus mascots'

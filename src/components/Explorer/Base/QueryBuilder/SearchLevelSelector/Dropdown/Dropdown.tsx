@@ -1,9 +1,23 @@
 import React from 'react'
+import { ValueType } from 'react-select'
 import AsyncSelect from 'react-select/async'
-import { getLoadOptions, getSelectedObject } from './GetValues'
+import { getLoadOptions, getSelectedObject, Selection } from './GetValues'
 
-export const Dropdown = ({ searchType, searchLevel, searchLevelValue, setSearchLevelValue }) => {
-    const [selected, setSelected] = React.useState()
+type Props = {
+    searchType: string
+    searchLevel: string
+    searchLevelValue: string
+    setSearchLevelValue: (_value: string) => void
+}
+
+export const Dropdown = ({
+    searchType,
+    searchLevel,
+    searchLevelValue,
+    setSearchLevelValue,
+}: Props) => {
+    const emptySelection = { label: '', value: '' }
+    const [selected, setSelected] = React.useState(emptySelection)
 
     React.useEffect(() => {
         async function setSelectionAsync() {
@@ -12,15 +26,14 @@ export const Dropdown = ({ searchType, searchLevel, searchLevelValue, setSearchL
         setSelectionAsync()
     }, [searchType, searchLevel, searchLevelValue])
 
-    function selectOnChange(newSelection) {
+    function selectOnChange(newSelection: ValueType<Selection, false>) {
+        if (!newSelection) return
         setSelected(newSelection)
-        if (newSelection.length !== 0) {
-            setSearchLevelValue(newSelection.value)
-        }
+        setSearchLevelValue(newSelection.value)
     }
 
     function onMenuOpen() {
-        setSelected(null)
+        setSelected(emptySelection)
     }
 
     async function onMenuClose() {

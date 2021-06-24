@@ -1,3 +1,5 @@
+import { RangeFilter } from '../types'
+
 // definitions
 export const resultSectionId = 'result'
 
@@ -9,7 +11,7 @@ export const infernoCssGradient =
 
 // filtering
 
-export const parseRange = (rangeStr, bounds) => {
+export const parseRange = (rangeStr: string | null, bounds: RangeFilter): RangeFilter | null => {
     if (!rangeStr) return null
     // parse
     let [low, high] = rangeStr.split('-').map((s) => {
@@ -30,6 +32,6 @@ export const parseRange = (rangeStr, bounds) => {
     return [low, high]
 }
 
-export const constructRangeStr = (begin, end) => {
+export const constructRangeStr = (begin: number, end: number) => {
     return `${begin}-${end}`
 }

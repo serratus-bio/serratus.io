@@ -1,34 +1,38 @@
 import React from 'react'
 import { ExplorerBase } from '../Base'
-import { BaseContext } from '../Base/BaseContext'
-import { viridisCssGradient } from '../Base/ExplorerHelpers'
-import { interpolateViridis, interpolateYlGnBu } from 'd3'
+import { BaseContext, BaseContextType } from '../Base/BaseContext'
+import { infernoCssGradient } from '../Base/ExplorerHelpers'
+import { interpolateInferno, interpolateYlOrRd } from 'd3'
 import { Intro } from './Intro'
 import { LinkButtons } from './LinkButtons'
 
-export const NucleotideExplorer = ({ location }) => {
-    const context = {
-        searchType: 'nucleotide',
+type Props = {
+    location: Location
+}
+
+export const RdrpExplorer = ({ location }: Props) => {
+    const context: BaseContextType = {
+        searchType: 'rdrp',
         defaultSearchLevelValues: {
             family: 'Coronaviridae',
-            sequence: 'NC_034446.1',
+            sequence: 'NC_001653',
             run: '',
         },
         theme: {
-            gradientString: viridisCssGradient,
-            d3InterpolateFunction: interpolateViridis,
+            gradientString: infernoCssGradient,
+            d3InterpolateFunction: interpolateInferno,
         },
         intro: Intro,
         domain: {
-            identity: [75, 100],
+            identity: [45, 100],
             score: [0, 100],
         },
         defaultFilterRanges: {
-            identity: [75, 100],
+            identity: [45, 100],
             score: [50, 100],
         },
         result: {
-            addJbrowseLinks: true,
+            addJbrowseLinks: false,
             colMap: {
                 score: {
                     name: 'Score',
@@ -40,15 +44,15 @@ export const NucleotideExplorer = ({ location }) => {
                 },
                 percent_identity: {
                     name: 'Identity',
-                    desc: 'Average read-alignment identity (nt)',
+                    desc: 'Alignment identity (aa)',
                     size: 70,
                     valueSuffix: '%',
-                    domain: [75, 100],
+                    domain: [45, 100],
                     fill: '#fdb53c',
                 },
                 n_reads: {
                     name: 'Reads',
-                    desc: 'Number of aligned reads (bowtie2)',
+                    desc: 'Number of alignments',
                     size: 70,
                     valueSuffix: '',
                     domain: [0, 1000],
@@ -57,7 +61,7 @@ export const NucleotideExplorer = ({ location }) => {
             },
             LinkButtons: LinkButtons,
             theme: {
-                d3InterpolateFunction: interpolateYlGnBu,
+                d3InterpolateFunction: interpolateYlOrRd,
             },
         },
     }
