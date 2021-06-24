@@ -59,7 +59,7 @@
     "eslint-plugin-react": "^7.23.1",
     "postcss-cli": "^7.1.1",
     "prettier": "2.2.1",
-    "tailwindcss": "^1.4.6",
+    "tailwindcss": "^2.2.4",
     "typescript": "^4.2.3"
   }
 }
