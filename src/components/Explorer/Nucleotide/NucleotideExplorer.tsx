@@ -1,34 +1,38 @@
 import React from 'react'
 import { ExplorerBase } from '../Base'
-import { BaseContext } from '../Base/BaseContext'
-import { infernoCssGradient } from '../Base/ExplorerHelpers'
-import { interpolateInferno, interpolateYlOrRd } from 'd3'
+import { BaseContext, BaseContextType } from '../Base/BaseContext'
+import { viridisCssGradient } from '../Base/ExplorerHelpers'
+import { interpolateViridis, interpolateYlGnBu } from 'd3'
 import { Intro } from './Intro'
 import { LinkButtons } from './LinkButtons'
 
-export const RdrpExplorer = ({ location }) => {
-    const context = {
-        searchType: 'rdrp',
+type Props = {
+    location: Location
+}
+
+export const NucleotideExplorer = ({ location }: Props) => {
+    const context: BaseContextType = {
+        searchType: 'nucleotide',
         defaultSearchLevelValues: {
             family: 'Coronaviridae',
-            sequence: 'NC_001653',
+            sequence: 'NC_034446.1',
             run: '',
         },
         theme: {
-            gradientString: infernoCssGradient,
-            d3InterpolateFunction: interpolateInferno,
+            gradientString: viridisCssGradient,
+            d3InterpolateFunction: interpolateViridis,
         },
         intro: Intro,
         domain: {
-            identity: [45, 100],
+            identity: [75, 100],
             score: [0, 100],
         },
         defaultFilterRanges: {
-            identity: [45, 100],
+            identity: [75, 100],
             score: [50, 100],
         },
         result: {
-            addJbrowseLinks: false,
+            addJbrowseLinks: true,
             colMap: {
                 score: {
                     name: 'Score',
@@ -40,15 +44,15 @@ export const RdrpExplorer = ({ location }) => {
                 },
                 percent_identity: {
                     name: 'Identity',
-                    desc: 'Alignment identity (aa)',
+                    desc: 'Average read-alignment identity (nt)',
                     size: 70,
                     valueSuffix: '%',
-                    domain: [45, 100],
+                    domain: [75, 100],
                     fill: '#fdb53c',
                 },
                 n_reads: {
                     name: 'Reads',
-                    desc: 'Number of alignments',
+                    desc: 'Number of aligned reads (bowtie2)',
                     size: 70,
                     valueSuffix: '',
                     domain: [0, 1000],
@@ -57,7 +61,7 @@ export const RdrpExplorer = ({ location }) => {
             },
             LinkButtons: LinkButtons,
             theme: {
-                d3InterpolateFunction: interpolateYlOrRd,
+                d3InterpolateFunction: interpolateYlGnBu,
             },
         },
     }

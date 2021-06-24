@@ -1,7 +1,16 @@
 import React from 'react'
 import { Dropdown } from './Dropdown'
 import { SearchRun } from './SearchRun'
+import { SearchLevelOption } from './SearchLevelOption'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
+
+type Props = {
+    searchLevel: string
+    setSearchLevel: React.Dispatch<React.SetStateAction<string>>
+    searchLevelValue: string
+    setSearchLevelValue: React.Dispatch<React.SetStateAction<string>>
+    viewMatches: (_run: string) => void
+}
 
 export const SearchLevelSelector = ({
     searchLevel,
@@ -9,7 +18,7 @@ export const SearchLevelSelector = ({
     searchLevelValue,
     setSearchLevelValue,
     viewMatches,
-}) => {
+}: Props) => {
     const context = React.useContext(BaseContext)
     const [values, setValues] = React.useState(context.defaultSearchLevelValues)
 
@@ -26,7 +35,7 @@ export const SearchLevelSelector = ({
         setSearchLevelValue(values[searchLevel])
     }, [values, searchLevel, setSearchLevelValue])
 
-    const searchLevelChange = (e) => {
+    const searchLevelChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newSearchLevel = e.target.value
         setSearchLevel(newSearchLevel)
         setSearchLevelValue(values[newSearchLevel])
@@ -40,7 +49,6 @@ export const SearchLevelSelector = ({
                         className='mx-2'
                         key={type}
                         value={type}
-                        displayText={displayName[type]}
                         checked={searchLevel === type}
                         onChange={searchLevelChange}
                     />
@@ -49,7 +57,7 @@ export const SearchLevelSelector = ({
             {searchLevel === 'run' ? (
                 <SearchRun
                     run={values['run']}
-                    setRun={(newValue) => {
+                    setRun={(newValue: string) => {
                         setValues((oldValues) => ({
                             ...oldValues,
                             run: newValue,
@@ -62,7 +70,7 @@ export const SearchLevelSelector = ({
                     searchType={context.searchType}
                     searchLevel={searchLevel}
                     searchLevelValue={values[searchLevel]}
-                    setSearchLevelValue={(newValue) => {
+                    setSearchLevelValue={(newValue: string) => {
                         setValues((oldValues) => ({
                             ...oldValues,
                             [searchLevel]: newValue,
@@ -72,27 +80,4 @@ export const SearchLevelSelector = ({
             )}
         </div>
     )
-}
-
-const SearchLevelOption = ({ className, value, checked, onChange, displayText }) => {
-    return (
-        <div className={className}>
-            <input
-                type='radio'
-                name='searchLevel'
-                value={value}
-                checked={checked}
-                onChange={onChange}
-            />
-            <span className='ml-1'>{displayText}</span>
-        </div>
-    )
-}
-
-const displayName = {
-    phylum: 'Phylum',
-    family: 'Family',
-    genbank: 'GenBank',
-    sequence: 'GenBank',
-    run: 'SRA Run',
 }

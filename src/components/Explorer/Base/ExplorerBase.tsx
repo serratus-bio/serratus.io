@@ -9,7 +9,7 @@ import { BaseContext } from './BaseContext'
 
 const switchSize = 'lg' // Tailwind prefix to switch between landscape/portrait mode
 
-export const ExplorerBase = ({ location }) => {
+export const ExplorerBase = ({ location }: { location: Location }) => {
     const context = React.useContext(BaseContext)
 
     const searchLevels = Object.keys(context.defaultSearchLevelValues)
@@ -62,8 +62,8 @@ export const ExplorerBase = ({ location }) => {
                     <context.intro />
                 ) : (
                     <Result
-                        searchLevel={inputSearchLevel}
-                        searchLevelValue={inputSearchLevelValue}
+                        searchLevel={inputSearchLevel as string}
+                        searchLevelValue={inputSearchLevelValue as string}
                         identityLims={inputIdentityLims}
                         scoreLims={inputScoreLims}
                     />
@@ -76,8 +76,8 @@ export const ExplorerBase = ({ location }) => {
     )
 }
 
-function getInputSearchLevel(searchLevels, urlParams) {
+function getInputSearchLevel(searchLevels: string[], urlParams: URLSearchParams) {
     const searchLevel = searchLevels.find((searchLevel) => urlParams.get(searchLevel))
-    const searchLevelValue = urlParams.get(searchLevel)
+    const searchLevelValue = searchLevel && urlParams.get(searchLevel)
     return [searchLevel, searchLevelValue]
 }

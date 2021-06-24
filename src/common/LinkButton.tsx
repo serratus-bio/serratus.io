@@ -1,13 +1,22 @@
 import React from 'react'
 
+type Props = {
+    link: string
+    text: string
+    icon?: React.ReactElement
+    download?: string | boolean
+    newTab?: boolean
+    show?: boolean
+}
+
 export const LinkButton = ({
     link,
     text,
-    icon,
-    download = undefined,
+    icon = undefined,
+    download = false,
     newTab = false,
     show = true,
-}) => {
+}: Props) => {
     let aAttrs = {}
     if (newTab) {
         aAttrs = {
@@ -15,7 +24,7 @@ export const LinkButton = ({
             rel: 'noopener noreferrer',
         }
     }
-    if (!show) return null
+    if (!show) return <div />
     return (
         <button className='bg-gray-200 hover:bg-gray-400 mx-2 py-1 px-4 rounded inline-flex items-center'>
             <a className='text-blue-500' {...aAttrs} href={link} download={download}>

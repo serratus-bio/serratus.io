@@ -2,9 +2,14 @@ import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
 import { getAnalysisIndex } from '../Base/Result/SerratusApiCalls'
 
-export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
+type Props = {
+    searchLevel: string
+    searchLevelValue: string
+}
+
+export const LinkButtons = ({ searchLevel, searchLevelValue }: Props) => {
     if (searchLevel === 'family') {
-        return <FamilyLinkButtons family={searchLevelValue} />
+        return <FamilyLinkButtons family_name={searchLevelValue} />
     }
     if (searchLevel === 'sequence') {
         return <SequenceLinkButtons sequence_accession={searchLevelValue} />
@@ -12,9 +17,10 @@ export const LinkButtons = ({ searchLevel, searchLevelValue }) => {
     if (searchLevel === 'run') {
         return <RunLinkButtons run_id={searchLevelValue} />
     }
+    return <div />
 }
 
-function FamilyLinkButtons({ family_name }) {
+function FamilyLinkButtons({ family_name }: { family_name: string }) {
     let link = `https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?name=${family_name}`
     let text = 'Taxonomy Browser'
     if (family_name === 'AMR') {
@@ -24,7 +30,7 @@ function FamilyLinkButtons({ family_name }) {
     return <LinkButton link={link} text={text} icon={externalLinkIcon} newTab={true} />
 }
 
-function SequenceLinkButtons({ sequence_accession }) {
+function SequenceLinkButtons({ sequence_accession }: { sequence_accession: string }) {
     return (
         <LinkButton
             link={`https://www.ncbi.nlm.nih.gov/nuccore/${sequence_accession}`}
@@ -35,7 +41,7 @@ function SequenceLinkButtons({ sequence_accession }) {
     )
 }
 
-function RunLinkButtons({ run_id }) {
+function RunLinkButtons({ run_id }: { run_id: string }) {
     const [rdrpAvailable, setRdrpAvailable] = React.useState(false)
 
     React.useEffect(() => {
