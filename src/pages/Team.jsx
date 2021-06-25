@@ -12,7 +12,7 @@ export const Team = () => {
     )
 
     return (
-        <div className='p-4 lg:px-24 min-h-screen sm:bg-gray-200'>
+        <div className='p-4 lg:px-24 min-h-screen sm:bg-gray-100'>
             {headTags}
             <div className={`p-2 ${classesBoxBorder}`}>
                 <div className='text-left md:text-center'>
