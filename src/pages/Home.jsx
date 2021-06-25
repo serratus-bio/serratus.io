@@ -19,8 +19,12 @@ export const Home = () => {
             />
             <div className='h-screen w-screen fixed flex flex-col items-center justify-center'>
                 <div className='flex flex-col z-10 items-center text-white px-4'>
-                    <h1 className='text-5xl font-montserrat font-light'>Welcome to Serratus</h1>
-                    <h2 className='text-xl font-thin'>An open-science viral discovery platform</h2>
+                    <h1 className='text-5xl font-montserrat font-light mt-1'>
+                        Welcome to Serratus
+                    </h1>
+                    <h2 className='text-xl font-thin mt-4'>
+                        An open-science viral discovery platform
+                    </h2>
                     <NavLink
                         to='/explorer'
                         className='border border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white mt-8'>
