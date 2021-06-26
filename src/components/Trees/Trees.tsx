@@ -61,13 +61,36 @@ export const Trees = () => {
                         download={true}
                     />
                 </div>
-                <div className='flex justify-center my-2'>
-                    <span className={loading ? '' : 'hidden'}>Loading...</span>
-                    <img
-                        className={loading ? 'invisible' : 'w-3/4 lg:w-1/3'}
-                        src={treeImage}
-                        onLoad={() => setLoading(false)}
-                    />
+                <div className='flex flex-col justify-center my-2'>
+                    <span className={loading ? 'text-center' : 'hidden'}>Loading...</span>
+                    <div
+                        className={
+                            loading
+                                ? 'invisible'
+                                : 'flex flex-row justify-center items-center w-full'
+                        }>
+                        <img
+                            className='w-3/4 lg:w-1/3'
+                            src={treeImage}
+                            onLoad={() => setLoading(false)}
+                        />
+                        <div className='flex flex-col'>
+                            <div className='flex flex-row'>
+                                <span
+                                    className='w-5 h-5 mr-2'
+                                    style={{ backgroundColor: '#017500' }}
+                                />
+                                known species
+                            </div>
+                            <div className='flex flex-row'>
+                                <span
+                                    className='w-5 h-5 mr-2'
+                                    style={{ backgroundColor: '#ff03ff' }}
+                                />
+                                novel species found by Serratus
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
