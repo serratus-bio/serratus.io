@@ -6,6 +6,7 @@ import { defaultFamily, defaultOrder, getLevelValues } from './config'
 import { LinkButton, downloadIcon } from 'common'
 
 export const Trees = () => {
+    const [loading, setLoading] = React.useState(true)
     const [searchLevel, setSearchLevel] = React.useState('order')
     const [selected, setSelected] = React.useState({
         order: defaultOrder,
@@ -13,6 +14,10 @@ export const Trees = () => {
     } as {
         [key: string]: any
     })
+
+    React.useEffect(() => {
+        setLoading(true)
+    }, [searchLevel, selected])
 
     const headTags = (
         <Helmet>
@@ -57,7 +62,12 @@ export const Trees = () => {
                     />
                 </div>
                 <div className='flex justify-center my-2'>
-                    <img src={treeImage} />
+                    <span className={loading ? '' : 'hidden'}>Loading...</span>
+                    <img
+                        className={loading ? 'invisible' : ''}
+                        src={treeImage}
+                        onLoad={() => setLoading(false)}
+                    />
                 </div>
             </div>
         </>
