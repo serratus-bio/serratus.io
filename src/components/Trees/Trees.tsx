@@ -64,7 +64,7 @@ export const Trees = () => {
                 <div className='flex justify-center my-2'>
                     <span className={loading ? '' : 'hidden'}>Loading...</span>
                     <img
-                        className={loading ? 'invisible' : ''}
+                        className={loading ? 'invisible' : 'w-3/4 lg:w-1/3'}
                         src={treeImage}
                         onLoad={() => setLoading(false)}
                     />
