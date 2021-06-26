@@ -28,7 +28,7 @@ export const Paginator = ({ page, perPage, setPage, dataPromise }: Props) => {
     if (loading || numPages === 0) return null
 
     const buttonStyle =
-        'bg-gray-300 hover:bg-gray-500 mx-2 py-1 px-4 rounded inline-flex items-center'
+        'bg-gray-200 hover:bg-gray-500 mx-2 py-1 px-4 rounded inline-flex items-center'
 
     const prevButtonProps =
         page === 1

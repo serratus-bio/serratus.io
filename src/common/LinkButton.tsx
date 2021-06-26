@@ -26,7 +26,7 @@ export const LinkButton = ({
     }
     if (!show) return <div />
     return (
-        <button className='bg-gray-200 hover:bg-gray-400 mx-2 py-1 px-4 rounded inline-flex items-center'>
+        <button className='bg-gray-100 hover:bg-gray-300 mx-2 py-1 px-4 rounded inline-flex items-center'>
             <a className='text-blue-500' {...aAttrs} href={link} download={download}>
                 {text}
                 {icon}

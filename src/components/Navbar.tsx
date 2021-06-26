@@ -5,12 +5,12 @@ import { ExternalLink } from 'common'
 export const Navbar = () => {
     return (
         <div className='flex font-montserrat font-medium'>
-            <div className='flex sm:hidden w-full justify-center items-center text-center h-16 bg-gray-100 border-b-2 border-gray-300'>
+            <div className='flex sm:hidden w-full justify-center items-center text-center h-16 bg-gray-50 border-b-2 border-gray-200'>
                 <NavLink exact to='/' className='block w-20 h-8 m-auto'>
                     <img src='/logo.png' alt='logo' />
                 </NavLink>
             </div>
-            <div className='hidden sm:flex flex-row w-screen bg-gray-100 sm:p-4 justify-between z-10 border-b-2  border-gray-300'>
+            <div className='hidden sm:flex flex-row w-screen bg-gray-50 sm:p-4 justify-between z-10 border-b-2  border-gray-200'>
                 <NavLink exact to='/' className='ml-10 w-20 h-8 '>
                     <img src='/logo.png' alt='logo'></img>
                 </NavLink>

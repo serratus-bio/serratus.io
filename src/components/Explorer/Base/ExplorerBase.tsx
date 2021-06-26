@@ -35,7 +35,7 @@ export const ExplorerBase = ({ location }: { location: Location }) => {
     const scoreLimsRef = React.useRef(inputScoreLims)
 
     return (
-        <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-200`}>
+        <div className={`flex flex-col ${switchSize}:flex-row p-4 min-h-screen sm:bg-gray-100`}>
             <Helmet>
                 <title>Serratus | {inputSearchLevelValue || 'Explorer'}</title>
             </Helmet>
