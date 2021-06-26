@@ -29,7 +29,7 @@ export const Trees = () => {
                 <div className='text-center text-xl'>Trees</div>
                 <Selector searchLevel={searchLevel} setSearchLevel={setSearchLevel} />
                 <div className='flex justify-center my-2'>
-                    <div className='lg:w-64'>
+                    <div className='w-64'>
                         <Dropdown
                             values={getLevelValues(searchLevel)}
                             selected={selected[searchLevel]}
