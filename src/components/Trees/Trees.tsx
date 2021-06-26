@@ -50,7 +50,7 @@ export const Trees = () => {
                 <div className='flex justify-center my-2'>
                     <LinkButton
                         link={`https://s3.amazonaws.com/serratus.io/tree/${selected[searchLevel]}.newick`}
-                        text='Tree'
+                        text='Newick'
                         icon={downloadIcon}
                         download={true}
                     />
