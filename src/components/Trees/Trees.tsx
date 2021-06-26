@@ -20,7 +20,7 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const treeImage = `https://textoverimage.moesif.com/image?image_url=https%3A%2F%2Fi.pinimg.com%2Foriginals%2Fd0%2F04%2F28%2Fd00428efa0bf27b9edd37eac32dfd2c1.png&text=${selected[searchLevel]}&text_color=f46923ff&text_size=64&margin=0&y_align=middle&x_align=center`
+    const treeImage = `https://s3.amazonaws.com/serratus.io/svg/${selected[searchLevel]}.svg`
 
     return (
         <>
@@ -44,13 +44,13 @@ export const Trees = () => {
                 </div>
                 <div className='flex justify-center my-2'>
                     <LinkButton
-                        link={'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg'}
+                        link={`https://s3.amazonaws.com/serratus.io/tree/${selected[searchLevel]}.newick`}
                         text='Tree'
                         icon={downloadIcon}
                         download={true}
                     />
                     <LinkButton
-                        link={'https://i.ytimg.com/vi/dQw4w9WgXcQ/mqdefault.jpg'}
+                        link={`https://s3.amazonaws.com/serratus.io/msa/${selected[searchLevel]}.fasta`}
                         text='MSA'
                         icon={downloadIcon}
                         download={true}
