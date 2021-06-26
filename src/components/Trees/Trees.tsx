@@ -31,7 +31,7 @@ export const Trees = () => {
         <>
             <div className='mx-4 my-2'>
                 {headTags}
-                <div className='text-center text-xl'>Trees</div>
+                <div className='text-center text-xl mb-2'>Trees and Alignments</div>
                 <Selector searchLevel={searchLevel} setSearchLevel={setSearchLevel} />
                 <div className='flex justify-center my-2'>
                     <div className='w-64'>
