@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { Dropdown } from './Dropdown'
 import { Selector } from './Selector'
 import { defaultFamily, defaultOrder, getLevelValues } from './config'
-import { LinkButton, downloadIcon, externalLinkIcon } from 'common'
+import { LinkButton, downloadIcon, externalLinkIcon, ExternalLink, helpIcon } from 'common'
 
 export const Trees = () => {
     const [loading, setLoading] = React.useState(true)
@@ -100,6 +100,9 @@ export const Trees = () => {
                         icon={externalLinkIcon}
                         newTab={true}
                     />
+                    <ExternalLink href='https://github.com/ababaian/serratus/wiki/Trees-and-alignments-for-Ribovirus-orders-and-families'>
+                        {helpIcon}
+                    </ExternalLink>
                 </div>
                 <div className='flex flex-col justify-center my-2'>
                     <span className={loading ? 'text-center' : 'hidden'}>Loading...</span>
