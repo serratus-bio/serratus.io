@@ -25,7 +25,7 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const treeImage = `https://s3.amazonaws.com/serratus.io/svg/${selected[searchLevel]}.svg`
+    const treeImage = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
 
     return (
         <>
@@ -49,13 +49,13 @@ export const Trees = () => {
                 </div>
                 <div className='flex justify-center my-2'>
                     <LinkButton
-                        link={`https://s3.amazonaws.com/serratus.io/tree/${selected[searchLevel]}.newick`}
+                        link={`https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`}
                         text='Newick'
                         icon={downloadIcon}
                         download={true}
                     />
                     <LinkButton
-                        link={`https://s3.amazonaws.com/serratus.io/msa/${selected[searchLevel]}.fasta`}
+                        link={`https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`}
                         text='MSA'
                         icon={downloadIcon}
                         download={true}
