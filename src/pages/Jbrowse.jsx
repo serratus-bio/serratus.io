@@ -44,6 +44,22 @@ export const Jbrowse = ({ location }) => {
                 },
             },
         },
+        displays: [
+            {
+                type: 'LinearAlignmentsDisplay',
+                displayId: `${bam}-LinearAlignmentsDisplay`,
+                pileupDisplay: {
+                    type: 'LinearPileupDisplay',
+                    maxDisplayedBpPerPx: 4,
+                    displayId: `${bam}-LinearPileupDisplay`,
+                },
+                snpCoverageDisplay: {
+                    type: 'LinearSNPCoverageDisplay',
+                    maxDisplayedBpPerPx: 4,
+                    displayId: `${bam}-LinearSNPCoverageDisplay`,
+                },
+            },
+        ],
     }
 
     const defaultSession = {
@@ -69,7 +85,7 @@ export const Jbrowse = ({ location }) => {
                     displays: [
                         {
                             type: 'LinearAlignmentsDisplay',
-                            configuration: `${track.trackId}-LinearAlignmentsDisplay`,
+                            configuration: `${bam}-LinearAlignmentsDisplay`,
                             height: 300,
                         },
                     ],
