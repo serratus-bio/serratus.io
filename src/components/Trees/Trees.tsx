@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet'
 import { Dropdown } from './Dropdown'
 import { Selector } from './Selector'
 import { defaultFamily, defaultOrder, getLevelValues } from './config'
-import { LinkButton, downloadIcon } from 'common'
+import { LinkButton, downloadIcon, externalLinkIcon } from 'common'
 
 export const Trees = () => {
     const [loading, setLoading] = React.useState(true)
@@ -25,7 +25,41 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const treeImage = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
+    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
+    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`
+    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`
+    const reactMsaViewParams = {
+        msaview: {
+            data: {},
+            id: 'YbZqQjM4G',
+            type: 'MsaView',
+            height: 550,
+            treeAreaWidth: 400,
+            treeWidth: 300,
+            rowHeight: 20,
+            scrollY: 0,
+            scrollX: 0,
+            blockSize: 1000,
+            selectedStructures: [],
+            labelsAlignRight: false,
+            colWidth: 16,
+            showBranchLen: true,
+            bgColor: true,
+            drawTree: true,
+            drawNodeBubbles: true,
+            colorSchemeName: 'maeditor',
+            treeFilehandle: {
+                uri: msaNewickLink,
+            },
+            msaFilehandle: { uri: msaFastaLink },
+            currentAlignment: 0,
+            collapsed: [],
+        },
+        nglSelection: '',
+    }
+    const reactMsaViewLink = `https://gmod.github.io/react-msaview/?data=${encodeURIComponent(
+        JSON.stringify(reactMsaViewParams)
+    )}#`
 
     return (
         <>
@@ -49,16 +83,22 @@ export const Trees = () => {
                 </div>
                 <div className='flex justify-center my-2'>
                     <LinkButton
-                        link={`https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`}
+                        link={msaNewickLink}
                         text='Newick'
                         icon={downloadIcon}
                         download={true}
                     />
                     <LinkButton
-                        link={`https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`}
+                        link={msaFastaLink}
                         text='MSA'
                         icon={downloadIcon}
                         download={true}
+                    />
+                    <LinkButton
+                        link={reactMsaViewLink}
+                        text='MSA Viewer'
+                        icon={externalLinkIcon}
+                        newTab={true}
                     />
                 </div>
                 <div className='flex flex-col justify-center my-2'>
@@ -71,7 +111,7 @@ export const Trees = () => {
                         }>
                         <img
                             className='w-3/4 lg:w-1/3'
-                            src={treeImage}
+                            src={msaSvgLink}
                             onLoad={() => setLoading(false)}
                         />
                         <div className='flex flex-col'>
