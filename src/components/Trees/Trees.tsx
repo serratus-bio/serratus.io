@@ -80,14 +80,14 @@ export const Trees = () => {
                                     className='w-5 h-5 mr-2'
                                     style={{ backgroundColor: '#017500' }}
                                 />
-                                known species
+                                GenBank / Known RdRP
                             </div>
                             <div className='flex flex-row'>
                                 <span
                                     className='w-5 h-5 mr-2'
                                     style={{ backgroundColor: '#ff03ff' }}
                                 />
-                                novel species found by Serratus
+                                Serratus RdRP
                             </div>
                         </div>
                     </div>
