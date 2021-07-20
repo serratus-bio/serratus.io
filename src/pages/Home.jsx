@@ -2,6 +2,7 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { NavLink } from 'react-router-dom'
 import { searchIcon, externalLinkIcon, ExternalLink } from 'common'
+import { routes } from 'common/routes'
 
 export const Home = () => {
     const headTags = (
@@ -26,7 +27,7 @@ export const Home = () => {
                         An open-science viral discovery platform
                     </h2>
                     <NavLink
-                        to='/explorer'
+                        to={routes.nucleotideExplorer.path}
                         className='border border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white mt-8'>
                         {searchIcon} Explore
                     </NavLink>
