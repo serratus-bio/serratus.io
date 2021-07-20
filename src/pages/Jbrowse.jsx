@@ -1,31 +1,25 @@
 import React from 'react'
+import { createViewState, JBrowseLinearGenomeView } from '@jbrowse/react-linear-genome-view'
 
 const bamBucket = 'lovelywater'
 const faFile = 'https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa'
 const faiFile = 'https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai'
 
-const getJbrowseConfig = (bam) => {
-    return {
-        containerID: 'GenomeBrowser',
-        refSeqs: {
-            url: faiFile,
+const assembly = {
+    name: 'Cov3ma',
+    sequence: {
+        type: 'ReferenceSequenceTrack',
+        trackId: 'Cov3ma-ReferenceSequenceTrack',
+        adapter: {
+            type: 'IndexedFastaAdapter',
+            fastaLocation: {
+                uri: faFile,
+            },
+            faiLocation: {
+                uri: faiFile,
+            },
         },
-        tracks: [
-            {
-                key: 'Cov3ma Reference Sequence',
-                label: 'Cov3ma Reference Sequence',
-                urlTemplate: faFile,
-            },
-            {
-                urlTemplate: `https://${bamBucket}.s3.amazonaws.com/bam/${bam}.bam`,
-                storeClass: 'JBrowse/Store/SeqFeature/BAM',
-                label: bam,
-                type: 'JBrowse/View/Track/Alignments2',
-                chunkSizeLimit: 40000000,
-            },
-        ],
-        includes: null,
-    }
+    },
 }
 
 export const Jbrowse = ({ location }) => {
@@ -33,31 +27,78 @@ export const Jbrowse = ({ location }) => {
     const bam = urlParams.get('bam')
     const loc = urlParams.get('loc')
 
-    // Instatiate JBrowse
-    React.useEffect(() => {
-        console.log('reload')
-        const config = getJbrowseConfig(bam)
-        window.addEventListener('load', () => {
-            window.JBrowse = new window.Browser(config)
-            window.JBrowse.navigateTo(loc)
-            window.localStorage.setItem('GenomeBrowser-refseq-', loc)
-            window.localStorage.setItem('GenomeBrowser-tracks-', `Cov3ma Reference Sequence,${bam}`)
-            console.log(window.JBrowse)
-        })
-    }, [bam, loc])
+    const track = {
+        type: 'AlignmentsTrack',
+        trackId: bam,
+        name: bam,
+        assemblyNames: [assembly.name],
+        adapter: {
+            type: 'BamAdapter',
+            bamLocation: {
+                uri: `https://${bamBucket}.s3.amazonaws.com/bam/${bam}.bam`,
+            },
+            index: {
+                indexType: 'BAI',
+                location: {
+                    uri: `https://${bamBucket}.s3.amazonaws.com/bam/${bam}.bam.bai`,
+                },
+            },
+        },
+        displays: [
+            {
+                type: 'LinearAlignmentsDisplay',
+                displayId: `${bam}-LinearAlignmentsDisplay`,
+                pileupDisplay: {
+                    type: 'LinearPileupDisplay',
+                    maxDisplayedBpPerPx: 4,
+                    displayId: `${bam}-LinearPileupDisplay`,
+                },
+                snpCoverageDisplay: {
+                    type: 'LinearSNPCoverageDisplay',
+                    maxDisplayedBpPerPx: 4,
+                    displayId: `${bam}-LinearSNPCoverageDisplay`,
+                },
+            },
+        ],
+    }
 
-    return (
-        <div className='App'>
-            <h1 className='text-center text-2xl'>SRA: {bam}</h1>
-            <div
-                style={{ width: '100%', height: 800 }}
-                className='jbrowse'
-                id='GenomeBrowser'
-                data-config='"updateBrowserURL": true'>
-                <div id='LoadingScreen'>
-                    <h1>Loading...</h1>
-                </div>
-            </div>
-        </div>
-    )
+    const defaultSession = {
+        name: 'Default session',
+        view: {
+            id: 'linearGenomeView',
+            type: 'LinearGenomeView',
+            tracks: [
+                {
+                    type: assembly.sequence.type,
+                    configuration: assembly.sequence.trackId,
+                    displays: [
+                        {
+                            type: 'LinearReferenceSequenceDisplay',
+                            configuration: `${assembly.name}-${assembly.sequence.type}-LinearReferenceSequenceDisplay`,
+                            height: 50,
+                        },
+                    ],
+                },
+                {
+                    type: track.type,
+                    configuration: track.trackId,
+                    displays: [
+                        {
+                            type: 'LinearAlignmentsDisplay',
+                            configuration: `${bam}-LinearAlignmentsDisplay`,
+                            height: 300,
+                        },
+                    ],
+                },
+            ],
+        },
+    }
+
+    const state = createViewState({
+        assembly: assembly,
+        tracks: [track],
+        location: loc,
+        defaultSession,
+    })
+    return <JBrowseLinearGenomeView viewState={state} />
 }
