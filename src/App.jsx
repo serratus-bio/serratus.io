@@ -16,7 +16,7 @@ export const App = () => {
         <div>
             <Navbar></Navbar>
             <Switch>
-                {routes.map((route) => (
+                {Object.values(routes).map((route) => (
                     <Route
                         exact={route.exact}
                         path={route.path}

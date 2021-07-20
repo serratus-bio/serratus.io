@@ -1,6 +1,7 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
 import { getAnalysisIndex } from '../Base/Result/SerratusApiCalls'
+import { routes } from 'common/routes'
 
 type Props = {
     searchLevel: string
@@ -68,7 +69,11 @@ function RunLinkButtons({ run_id }: { run_id: string }) {
                 icon={externalLinkIcon}
                 newTab={true}
             />
-            <LinkButton link={`/explorer?run=${run_id}`} text='NT Explorer' show={ntAvailable} />
+            <LinkButton
+                link={`${routes.nucleotideExplorer.path}?run=${run_id}`}
+                text='NT Explorer'
+                show={ntAvailable}
+            />
             <LinkButton
                 link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}
                 text='.pro'

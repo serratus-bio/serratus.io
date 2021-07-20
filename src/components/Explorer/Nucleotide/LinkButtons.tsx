@@ -1,6 +1,7 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon, helpIcon } from 'common'
 import { getAnalysisIndex } from '../Base/Result/SerratusApiCalls'
+import { routes } from 'common/routes'
 
 type Props = {
     searchLevel: string
@@ -67,7 +68,7 @@ function RunLinkButtons({ run_id }: { run_id: string }) {
                 newTab={true}
             />
             <LinkButton
-                link={`/explorer-rdrp?run=${run_id}`}
+                link={`${routes.rdrpExplorer.path}?run=${run_id}`}
                 text='RdRP Explorer'
                 show={rdrpAvailable}
             />

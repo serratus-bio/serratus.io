@@ -1,6 +1,7 @@
 import React from 'react'
 import { LinkButton, ExternalLink, externalLinkIcon, downloadIcon } from 'common'
 import { RunData } from './types'
+import { routes } from 'common/routes'
 
 type Props = {
     selectedPoints: RunData[] | undefined
@@ -29,7 +30,7 @@ export const SelectionInfo = ({ selectedPoints }: Props) => {
                     <tr key={point.run_id}>
                         <td className={tdClasses}>
                             <ExternalLink
-                                href={`/explorer-rdrp?run=${point.run_id}`}
+                                href={`${routes.rdrpExplorer.path}?run=${point.run_id}`}
                                 className='text-blue-600'>
                                 {point.run_id}
                                 {externalLinkIcon}
