@@ -17,11 +17,11 @@ export const routes = {
         exact: true,
     },
     nucleotideExplorer: {
-        path: '/explorer',
+        path: '/explorer/nt',
         component: NucleotideExplorer,
     },
     rdrpExplorer: {
-        path: '/explorer-rdrp',
+        path: '/explorer/rdrp',
         component: RdrpExplorer,
     },
     about: {
@@ -44,20 +44,13 @@ export const routes = {
         path: '/access',
         component: Access,
     },
-    family: {
-        path: '/family',
-        component: () => <Redirect to='/explorer' />,
+    explorer: {
+        path: '/explorer',
+        component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/nt' }} />,
+        exact: true,
     },
-    explore: {
-        path: '/explore',
-        component: () => <Redirect to='/explorer' />,
-    },
-    query: {
-        path: '/query',
-        component: () => <Redirect to='/explorer' />,
-    },
-    nucleotideExplorer2: {
-        path: '/explorer-nt',
-        component: () => <Redirect to='/explorer' />,
+    explorerRdrpOld: {
+        path: '/explorer-rdrp',
+        component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/rdrp' }} />,
     },
 }
