@@ -79,7 +79,7 @@ export const QueryBuilder = ({
             identity: constructRangeStr(...identityLimsRef.current),
             score: constructRangeStr(...scoreLimsRef.current),
         })
-        const base = window.location.pathname.slice(1)
+        const base = window.location.pathname.split('/').pop()
         const searchUrl = `${base}?${params.toString()}#${resultSectionId}`
         window.location.href = searchUrl
     }
