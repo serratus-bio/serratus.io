@@ -39,6 +39,13 @@ export const Navbar = () => {
                     </NavLink>
                     <NavLink
                         exact
+                        to={routes.trees.path}
+                        className='ml-10 hover:text-blue-800'
+                        activeClassName='text-blue-600'>
+                        Trees (beta)
+                    </NavLink>
+                    <NavLink
+                        exact
                         to={routes.about.path}
                         className='ml-10 hover:text-blue-800'
                         activeClassName='text-blue-600'>

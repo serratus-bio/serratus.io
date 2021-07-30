@@ -6,6 +6,7 @@ import { NucleotideExplorer } from '../components/Explorer/Nucleotide'
 import { RdrpExplorer } from '../components/Explorer/Rdrp'
 import { About } from '../pages/About'
 import { Team } from '../pages/Team'
+import { Trees } from '../components/Trees'
 import { Jbrowse } from '../pages/Jbrowse'
 import { Access } from '../pages/Access'
 import { Geo } from '../components/Geo'
@@ -31,6 +32,10 @@ export const routes = {
     team: {
         path: '/team',
         component: Team,
+    },
+    trees: {
+        path: '/trees',
+        component: Trees,
     },
     jbrowse: {
         path: '/jbrowse',
