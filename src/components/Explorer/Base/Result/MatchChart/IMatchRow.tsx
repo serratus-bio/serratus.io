@@ -141,7 +141,7 @@ export class IMatchRow {
 
     addJBrowseIcon() {
         const image = '/atcg.png'
-        const link = `jbrowse?bam=${this.data.run_id}&loc=${this.value}`
+        const link = `/jbrowse?bam=${this.data.run_id}&loc=${this.value}`
         const iconWidth = 15
         const iconHeight = 15
         const xShift = 725 // TODO: compute from colMap
