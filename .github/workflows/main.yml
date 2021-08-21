@@ -5,15 +5,11 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  version:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: npm --version
   build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - run: nvm install 14
     - run: npm ci
     - run: npm run build
   eslint:
