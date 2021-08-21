@@ -4,12 +4,9 @@ frontend:
     preBuild:
       commands:
         - nvm install 14
-        - nvm use 14
         - npm ci
     build:
       commands:
-        - nvm install 14
-        - nvm use 14
         - npm run build
   artifacts:
     baseDirectory: build
