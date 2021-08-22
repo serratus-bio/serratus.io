@@ -13,6 +13,7 @@ import { ExternalLink, helpIcon } from 'common'
 import { SearchLevelSelector } from './SearchLevelSelector'
 import { fetchMatchCounts } from './SerratusApiCalls'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
+import { debounce } from './debounce'
 
 export const QueryBuilder = ({
     identityLimsRef,
@@ -24,6 +25,7 @@ export const QueryBuilder = ({
 }) => {
     const context = React.useContext(BaseContext)
     const [errorMessage, setErrorMessage] = React.useState('')
+    const debounceTime = 50
 
     // initial chart render
     const chartRendered = React.useRef(false)
@@ -103,8 +105,8 @@ export const QueryBuilder = ({
                             id='sliderIdentity'
                             sliderDomain={context.domain.identity}
                             sliderLimsRef={identityLimsRef}
-                            onChange={updateX}
-                            onTouchEnd={updateY}
+                            onChange={debounce(updateX, debounceTime)}
+                            onTouchEnd={() => setTimeout(updateY, debounceTime)}
                         />
                     </div>
                     <div className='mx-2'>
@@ -114,8 +116,8 @@ export const QueryBuilder = ({
                             sliderDomain={context.domain.score}
                             sliderLimsRef={scoreLimsRef}
                             linearGradientString={context.theme.gradientString}
-                            onChange={updateZ}
-                            onTouchEnd={updateY}
+                            onChange={debounce(updateZ, debounceTime)}
+                            onTouchEnd={() => setTimeout(updateY, debounceTime)}
                         />
                     </div>
                 </div>
