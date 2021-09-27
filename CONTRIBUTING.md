@@ -22,10 +22,19 @@ serratus.io is under active development. This document is in place to make it ea
 
 Prerequisites:
 
-1. Make sure you have `npm` installed.
+1. Make sure you have `npm` with `tailwind` installed.
 2. Clone this repository
 3. Setup environment
+
     ```sh
+    # 1. Install npm / tailwind
+    sudo apt-get install npm
+    npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
+    
+    # 2. Clone repository
+    git clone https://github.com/serratus-bio/serratus.io.git
+
+    # 3. Setup environment
     cd path/to/serratus.io
     npm install
 
