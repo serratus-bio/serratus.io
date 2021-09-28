@@ -10,30 +10,50 @@ export const Palmid = () => {
     )
 
     const parseFasta = () => {
-        var fastaInput = document.getElementById("fastaInput") as HTMLInputElement
-        var fastaText = fastaInput.value
+        const fastaInput = document.getElementById('fastaInput') as HTMLInputElement
+        let fastaText = fastaInput.value
 
-        // Parse first sequence in case of multiple fasta
-        fastaText = fastaText.split('>')[1]
+        var header_text
+        var seq_text
+        var parsed_seq_text 
 
-        // first element is header
-        if (fastaText.split('\n')[0] == undefined){
-            var header_text = ">Serratus_palmid"
+        if ( fastaText.search(">") >= 0) {
+            // Parse with header
+            // Parse first sequence in case of multiple fasta
+            fastaText = fastaText.split('>')[1]
+
+            header_text = fastaText.split('\n')[0]
+            header_text = '>' + header_text
+
+            // rest is protein sequence
+            seq_text = fastaText.split('\n')
+            seq_text.shift()
+            parsed_seq_text = seq_text.join()
+
         } else {
-            header_text = ">" + fastaText.split('\n')[0]
-        }
-            
-        // rest is protein sequence
-        var seq_text = fastaText.split('\n')
-        seq_text.shift()
-        var parsed_seq_text = seq_text.join()
+            // Parse without header
+            header_text = '>Serratus_palmid'
 
+            // All is protein sequence
+            parsed_seq_text = fastaText
+
+        }
+
+        // Parse Fasta Sequence
         // remove all non alpha-characters
         parsed_seq_text = parsed_seq_text.replace(/[^A-Za-z]/g, '').toUpperCase()
 
         // Parsed Fasta Testing (Visual)
+        var parsedFasta = header_text.concat('\n', parsed_seq_text)
+
         document.getElementById('faHeader')!.innerHTML = header_text
         document.getElementById('faSeq')!.innerHTML = parsed_seq_text
+        document.getElementById('parsedFa')!.innerHTML = parsedFasta
+
+
+    }
+
+    const postFasta = () => {
 
     }
 
@@ -52,7 +72,8 @@ export const Palmid = () => {
                             cols={72}
                             className='field-element'
                             placeholder='>Enter your sequence (DNA / Protein)'
-                            aria-required='true'></textarea>
+                            aria-required='true'
+                            onChange={parseFasta}></textarea>
                     </div>
                 </form>
 
@@ -65,6 +86,9 @@ export const Palmid = () => {
                 <p>Parsed Fasta:</p>
                 <p id='faHeader'> </p>
                 <p id='faSeq'> </p>
+                <p> ============ </p>
+                <p> API Submission Fasta: </p>
+                <p id='parsedFa' ></p>
 
 
             </div>
