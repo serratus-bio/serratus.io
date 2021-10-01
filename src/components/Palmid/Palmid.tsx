@@ -29,7 +29,7 @@ export function fakeSubmit(faSubmit: string) {
 }
 
 export function wrap(s: string) {
-    return s.replace(/(.{50})/g, '$1\n')
+    return s.replace(/(.{50})/g, '$1<br>')
 }
 
 // Webpage
