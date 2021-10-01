@@ -1,8 +1,43 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { classesBoxBorder, ExternalLink } from 'common'
+import axios from 'axios'
 
+// Global variables for webpage
+let PARSEDFASTA ='no_fasta_input'
+let FAHASH = 'no_api_response'
+let REPORTURL = 'NA'
+const OV = 'https://s3.amazonaws.com/openvirome.com/'
+
+// API
+const apiUrl = 'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda'
+
+
+export async function submitFasta(faSubmit: string) {
+    const response = await axios.post(`${apiUrl}`, {
+        sequence: faSubmit
+    })
+    return response.data
+}
+
+// Fake API call because I'm a newb
+export function fakeSubmit(faSubmit: string) {
+
+    // An API call which returns the hash of submit sequence
+    // goes here
+
+    return '3xample'
+}
+
+export function wrap(s: string) {
+    return s.replace(
+    /(.{50})/g, '$1\n')
+}
+
+// Webpage
 export const Palmid = () => {
+    const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true)
+
     const headTags = (
         <Helmet>
             <title>Serratus | palmID</title>
@@ -16,7 +51,6 @@ export const Palmid = () => {
         var header_text = '>Serratus_palmid'
         var seq_text
         var parsed_seq_text
-        var parsedFasta = '---'
 
         if ( fastaText.search(">") >= 0) {
             // Parse with header
@@ -45,103 +79,141 @@ export const Palmid = () => {
         parsed_seq_text = parsed_seq_text.replace(/[^A-Za-z]/g, '').toUpperCase()
 
         // Parsed Fasta Testing (Visual)
-        parsedFasta = header_text.concat('\n', parsed_seq_text)
+        PARSEDFASTA = header_text.concat('\n', parsed_seq_text)
+
+        //return(PARSEDFASTA)
 
         document.getElementById('faHeader')!.innerHTML = header_text
-        document.getElementById('faSeq')!.innerHTML = parsed_seq_text
-        document.getElementById('parsedFa')!.innerHTML = parsedFasta
-    }
-
-/*    const postFasta = () => {
-        var newSrc="placeholder_for_response"
-
-        var data_call = { ["sequence"]: sequence_text_right };
-        postData('https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda', data_call)
-        .then(data => {
-        newSrc = "https://s3.amazonaws.com/openvirome.com/" + SHA1(sequence_text_right) + ".html";
-        document.getElementById("iframe").src=newSrc;
-        document.getElementById("download_button").href=newSrc;
-        document.getElementById('iframe').contentWindow.location.reload()}
-      );   
+        document.getElementById('faSeq')!.innerHTML = wrap(parsed_seq_text)
+        //document.getElementById('faSubmit')!.innerHTML = PARSEDFASTA
 
     }
-*/
 
     const postFasta = () => {
-        var hashResponse="placeholder_for_response"
-        //var fastaData = { ["sequence"]: parsedFasta };
+        //PARSEDFASTA = parseFasta()
+        FAHASH = fakeSubmit(PARSEDFASTA)
+        document.getElementById('postApi')!.innerHTML =  FAHASH
+
+        //Redirect to hash search page
+        window.location.search = '?hash='
+    }
+
+    // Parse URL-Search & Display Report
+
+    var urlParams = new URLSearchParams(document.location.search.substring(1))
+    var pageHash = urlParams.get("hash")
+
+    const showReport = () => {
+        if (pageHash == null){
+            // Show Fasta Submission Form
+            // Default
+
+            // Hide PalmID Report window
+            document.getElementById('palmReport')!.style.height = "0"
+            document.getElementById('palmReport')!.style.width = "0%"
+
+            REPORTURL = '/Frank_Ginger.png'
+            document.getElementById('reportUrl')!.innerHTML = REPORTURL
+            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
+
+
+
+        } else {
+            // Hide Fasta Submission Form
+            setIsCollapsed(!isCollapsed)
+
+            // Show PalmID Report window
+            document.getElementById('palmReport')!.style.height = "400"
+            document.getElementById('palmReport')!.style.width = "100%"
+
+
+            REPORTURL = OV.concat(pageHash, ".html")
+            // FOR DEV USE STATIC IMAGE
+            REPORTURL = '/Frank_Ginger.png'
+
+            document.getElementById('reportUrl')!.innerHTML = REPORTURL
+            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
+
+
+        }
 
     }
 
-    const getHash = () => {
-        var hash = document.getElementById('parsedFa')!.innerHTML
-        var hashUrl = '?hash='
-        hashUrl = hashUrl.concat(hash)
+    window.onload = function() {
+       showReport()
     }
 
     return (
+
         <div className='min-h-screen w-full sm:bg-gray-100 py-4'>
             {headTags}
-            <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-                <h1 className='text-3xl font-bold text-center'>palmID: Viral-RdRP Analysis </h1>
-                <p className='my-3'>Sequence, in FASTA format</p>
+            {/*HEADER*/}
+            <h1 className='text-3xl font-bold text-center'>
+                palmID: Viral-RdRP Analysis
+            </h1>
 
-                <form id='submissionForm'>
-                    <div id='sequenceSec' className='form-item field textarea required'>
-                        <textarea
-                            id='fastaInput'
-                            rows={4}
-                            cols={72}
-                            className='field-element'
-                            placeholder='>Enter your sequence (DNA / Protein)'
-                            aria-required='true'
-                            onChange={parseFasta}></textarea>
-                    </div>
-                </form>
+            <p> [DEV] URL hash : {pageHash} </p>
+
+            {/*FASTA Submission Box*/}
+
+            <div id='faSubmissionBox' className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
 
                 <button
-                    className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                    onClick={parseFasta}>
-                    Analyze Sequence
+                    className='text-left collapse-button'
+                    onClick={() => setIsCollapsed(!isCollapsed)}>
+                    [Sequence Submission]
                 </button>
 
-                <p>Parsed Fasta:</p>
-                <p id='faHeader'> </p>
-                <p id='faSeq'> </p>
-                <p> ============ </p>
-                <p> API Submission Fasta: </p>
-                <p id='parsedFa' ></p>
-                <p> ============ </p>
+                <div id = 'faSubmissionForm'
+                    className={`collapse-content ${!isCollapsed ? 'collapsed' : 'expanded'}`}
+                    aria-expanded = {isCollapsed} >
+                    {/*Fasta parsing and submission form*/}               
+                    <p className='my-3'>Sequence, in FASTA format</p>
 
-                <button
-                className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                onClick={postFasta}>
-                Post Fasta
-                </button>
-                <p>Post API:</p>
+                    <form id='submissionForm'>
+                        <div id='sequenceSec' className='form-item field textarea required'>
+                            <textarea
+                                id='fastaInput'
+                                rows={4}
+                                cols={72}
+                                className='field-element'
+                                placeholder='>Enter your sequence (DNA / Protein)'
+                                aria-required='true'
+                                onChange={parseFasta}></textarea>
+                        </div>
+
+                        <p>Parsed Fasta:</p>
+                        <code id='faHeader'> </code>
+                        <p></p>
+                        <code id='faSeq'> </code>
+                        <p></p>
+
+                        <button
+                            className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                            onClick={postFasta}>
+                            Analyze Sequence
+                        </button>
+                    </form>
+
+                </div>
+
+                <p>[DEV] Post API:</p>
                 <p id='postApi'> </p>
 
             </div>
 
             <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-            <a className='text-blue-600' href='?hash=ERR2756788'>
-            Frank the Bat (ERR2756788)</a>
-            <p> ---------------------- </p>
-            <button
-                className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                onClick={postFasta}>
-                Retrieve Report
-            </button>
+            <p>[DEV] Report URL: </p>
+            <p id = 'reportUrl'></p>
+
             <iframe id="palmReport"
                 title="Inline Frame Example"
-                width="100%"
+                width="25%"
                 height="400"
-                //src="https://s3.amazonaws.com/openvirome.com/3xample.html"
-                src="https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&layer=mapnik">
+                src="/load_palmid.gif">
             </iframe>
+
             </div>
-
-
 
         </div>
     )
