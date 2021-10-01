@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Iframe from 'react-iframe'
 import { SpinningCircles } from 'react-loading-icons'
-import { useFasta } from './hooks/usePostFasta'
+import { useFasta } from './hooks/useFasta'
 
 export const Palmid_advanced = () => {
     const { fastaHash, isPostFastaLoading, isPostFastaError, getReport, postFasta } = useFasta()
