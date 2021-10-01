@@ -1,25 +1,54 @@
 import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
-import { classesBoxBorder, ExternalLink } from 'common'
-import {usePostFasta} from './hooks/usePostFasta'
+import { classesBoxBorder } from 'common'
+import axios from 'axios'
+// Global variables for webpage
+let PARSEDFASTA = 'no_fasta_input'
+let FAHASH = 'no_api_response'
+let REPORTURL = 'NA'
+const OV = 'https://s3.amazonaws.com/openvirome.com/'
 
+// API
+const apiUrl = 'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda'
+
+export async function submitFasta(faSubmit: string) {
+    const response = await axios.post(`${apiUrl}`, {
+        sequence: faSubmit,
+    })
+    return response.data
+}
+
+// Fake API call because I'm a newb
+export function fakeSubmit(faSubmit: string) {
+    // An API call which returns the hash of submit sequence
+    // goes here
+    faSubmit = '3xample'
+
+    return faSubmit
+}
+
+export function wrap(s: string) {
+    return s.replace(/(.{50})/g, '$1<br>')
+}
+
+// Webpage
 export const Palmid = () => {
+    const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true)
+
     const headTags = (
         <Helmet>
             <title>Serratus | palmID</title>
         </Helmet>
     )
-const [rnaSequence, setRnaSequence] = useState<string>('');    const [fastaHash,isPostFastaLoading,isPostFastaError,postFasta] = usePostFasta();
     const parseFasta = () => {
         const fastaInput = document.getElementById('fastaInput') as HTMLInputElement
         let fastaText = fastaInput.value
 
-        var header_text = '>Serratus_palmid'
-        var seq_text
-        var parsed_seq_text
-        var parsedFasta = '---'
+        let header_text = '>Serratus_palmid'
+        let seq_text
+        let parsed_seq_text
 
-        if ( fastaText.search(">") >= 0) {
+        if (fastaText.search('>') >= 0) {
             // Parse with header
             // Parse first sequence in case of multiple fasta
             fastaText = fastaText.split('>')[1]
@@ -31,14 +60,12 @@ const [rnaSequence, setRnaSequence] = useState<string>('');    const [fastaHash,
             seq_text = fastaText.split('\n')
             seq_text.shift()
             parsed_seq_text = seq_text.join()
-
         } else {
             // Parse without header
             //header_text = '>Serratus_palmid'
 
             // All is protein sequence
             parsed_seq_text = fastaText
-
         }
 
         // Parse Fasta Sequenceg
@@ -46,104 +73,122 @@ const [rnaSequence, setRnaSequence] = useState<string>('');    const [fastaHash,
         parsed_seq_text = parsed_seq_text.replace(/[^A-Za-z]/g, '').toUpperCase()
 
         // Parsed Fasta Testing (Visual)
-        parsedFasta = header_text.concat('\n', parsed_seq_text)
+        PARSEDFASTA = header_text.concat('\n', parsed_seq_text)
+
+        //return(PARSEDFASTA)
 
         document.getElementById('faHeader')!.innerHTML = header_text
-        document.getElementById('faSeq')!.innerHTML = parsed_seq_text
-        document.getElementById('parsedFa')!.innerHTML = parsedFasta
+        document.getElementById('faSeq')!.innerHTML = wrap(parsed_seq_text)
+        //document.getElementById('faSubmit')!.innerHTML = PARSEDFASTA
     }
 
-//    const postFasta = () => {
-//         var newSrc="placeholder_for_response"
+    const postFasta = () => {
+        //PARSEDFASTA = parseFasta()
+        FAHASH = fakeSubmit(PARSEDFASTA)
+        document.getElementById('postApi')!.innerHTML = FAHASH
 
-//         var data_call = { ["sequence"]: sequence_text_right };
-//         postData('https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda', data_call)
-//         .then((data:any) => {
-//         // newSrc = "https://s3.amazonaws.com/openvirome.com/" + SHA1(sequence_text_right) + ".html";
-//         // document.getElementById("iframe").src=newSrc;
-//         // document.getElementById("download_button").href=newSrc;
-//         // document.getElementById('iframe').contentWindow.location.reload()
-//             console.log('data:',data)
-//     }
-//       );   
+        //Redirect to hash search page
+        window.location.search = '?hash='
+    }
 
-//     }
+    // Parse URL-Search & Display Report
+    let urlParams = new URLSearchParams(document.location.search.substring(1))
+    let pageHash = urlParams.get('hash')
 
+    const showReport = () => {
+        if (pageHash == null) {
+            // Show Fasta Submission Form
+            // Default
 
-    const getHash = () => {
-        var hash = document.getElementById('parsedFa')!.innerHTML
-        var hashUrl = '?hash='
-        hashUrl = hashUrl.concat(hash)
+            // Hide PalmID Report window
+            document.getElementById('palmReport')!.style.height = '0'
+            document.getElementById('palmReport')!.style.width = '0%'
+
+            REPORTURL = '/Frank_Ginger.png'
+            document.getElementById('reportUrl')!.innerHTML = REPORTURL
+            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
+        } else {
+            // Hide Fasta Submission Form
+            setIsCollapsed(!isCollapsed)
+
+            // Show PalmID Report window
+            document.getElementById('palmReport')!.style.height = '400'
+            document.getElementById('palmReport')!.style.width = '100%'
+
+            REPORTURL = OV.concat(pageHash, '.html')
+            // FOR DEV USE STATIC IMAGE
+            REPORTURL = '/Frank_Ginger.png'
+            document.getElementById('reportUrl')!.innerHTML = REPORTURL
+            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
+        }
+    }
+
+    window.onload = function () {
+        showReport()
     }
 
     return (
         <div className='min-h-screen w-full sm:bg-gray-100 py-4'>
             {headTags}
-            <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-                <h1 className='text-3xl font-bold text-center'>palmID: Viral-RdRP Analysis </h1>
-                <p className='my-3'>Sequence, in FASTA format</p>
+            {/*HEADER*/}
+            <h1 className='text-3xl font-bold text-center'>palmID: Viral-RdRP Analysis</h1>
 
-                <form id='submissionForm'>
-                    <div id='sequenceSec' className='form-item field textarea required'>
-                        <textarea
-                            id='fastaInput'
-                            value={rnaSequence}
-                            rows={4}
-                            cols={72}
-                            className='field-element'
-                            placeholder='>Enter your sequence (DNA / Protein)'
-                            aria-required='true'
-                            onChange={parseFasta}></textarea>
-                    </div>
-                </form>
+            <p> [DEV] URL hash : {pageHash} </p>
 
+            {/*FASTA Submission Box*/}
+            <div id='faSubmissionBox' className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
                 <button
-                    className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                    onClick={parseFasta}>
-                    Analyze Sequence
+                    className='text-left collapse-button'
+                    onClick={() => setIsCollapsed(!isCollapsed)}>
+                    [Sequence Submission]
                 </button>
 
-                <p>Parsed Fasta:</p>
-                <p id='faHeader'> </p>
-                <p id='faSeq'> </p>
-                <p> ============ </p>
-                <p> API Submission Fasta: </p>
-                <p id='parsedFa' ></p>
-                <p> ============ </p>
+                <div
+                    id='faSubmissionForm'
+                    className={`collapse-content ${!isCollapsed ? 'collapsed' : 'expanded'}`}
+                    aria-expanded={isCollapsed}>
+                    {/*Fasta parsing and submission form*/}
+                    <p className='my-3'>Sequence, in FASTA format</p>
 
-                <button
-                className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                onClick={async ()=>{
-                    await postFasta('')
-                }}>
-                Post Fasta
-                </button>
-                <p>Post API:</p>
+                    <form id='submissionForm'>
+                        <div id='sequenceSec' className='form-item field textarea required'>
+                            <textarea
+                                id='fastaInput'
+                                rows={4}
+                                cols={72}
+                                className='field-element'
+                                placeholder='>Enter your sequence (DNA / Protein)'
+                                aria-required='true'
+                                onChange={parseFasta}></textarea>
+                        </div>
+
+                        <p>Parsed Fasta:</p>
+                        <code id='faHeader'> </code>
+                        <p></p>
+                        <code id='faSeq'> </code>
+                        <p></p>
+
+                        <button
+                            className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                            onClick={postFasta}>
+                            Analyze Sequence
+                        </button>
+                    </form>
+                </div>
+                <p>[DEV] Post API:</p>
                 <p id='postApi'> </p>
-
             </div>
 
             <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-            <a className='text-blue-600' href='?hash=ERR2756788'>
-            Frank the Bat (ERR2756788)</a>
-            <p> ---------------------- </p>
-            <button
-                className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                onClick={async ()=>{
-                    await postFasta('')
-                }}>
-                Retrieve Report
-            </button>
-            <iframe id="palmReport"
-                title="Inline Frame Example"
-                width="100%"
-                height="400"
-                src="https://s3.amazonaws.com/openvirome.com/9afe3a5a2fadb13f709a7b9e148495092bb9f727.html">
-            </iframe>
+                <p>[DEV] Report URL: </p>
+                <p id='reportUrl'></p>
+                <iframe
+                    id='palmReport'
+                    title='Inline Frame Example'
+                    width='25%'
+                    height='400'
+                    src='/load_palmid.gif'></iframe>
             </div>
-
-
-
         </div>
     )
 }
