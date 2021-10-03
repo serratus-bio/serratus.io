@@ -20,6 +20,7 @@ export function useFasta(): FastaHook {
         setIsPostFastaError(false)
         setIsPostFastaLoading(false)
     }
+
     async function postFasta(rnaSequence: string) {
         try {
             setIsReportReady(false)

@@ -37,7 +37,8 @@ export const Palmid_advanced = () => {
 
     return (
         <>
-            <div className='m-4 p-4'>
+            <h1 className='text-3xl m-2 font-bold text-center '>palmID: Viral-RdRP Analysis</h1>
+            <div className='flex flex-col m-4 p-4 justify-center items-center'>
                 <textarea
                     className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
                     id='fastaInput'
@@ -51,23 +52,25 @@ export const Palmid_advanced = () => {
                     }}></textarea>
 
                 <br></br>
-                <button
-                    className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                    onClick={async () => {
-                        setShowIframe(true)
-                        await postFasta(fastaInput)
-                    }}>
-                    Analyze Sequence
-                </button>
-                <button
-                    className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                    onClick={async () => {
-                        setShowIframe(false)
-                        setFastaInput('')
-                        clear()
-                    }}>
-                    Clear
-                </button>
+                <div>
+                    <button
+                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        onClick={async () => {
+                            setShowIframe(true)
+                            await postFasta(fastaInput)
+                        }}>
+                        Analyze Sequence
+                    </button>
+                    <button
+                        className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        onClick={async () => {
+                            setShowIframe(false)
+                            setFastaInput('')
+                            clear()
+                        }}>
+                        Clear
+                    </button>
+                </div>
             </div>
             {showIframe && (
                 <div className='min-h-screen m-8 p-4 border-2 rounded flex justify-center items-center'>
