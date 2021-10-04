@@ -5,6 +5,11 @@ interface FastaParse {
     parsedFastaSequenceHeader: string
     parsedFastaSequenceText: string
 }
+
+export function wrap(s: string) {
+    return s.replace(/(.{50})/g, '$1\n')
+}
+
 export function useFastaParse(fastaText: string): FastaParse {
     const [parsedFasta, setParsedFasta] = useState<string>('')
     const [parsedFastaSequenceHeader, setParsedFastaSequnceHeader] = useState<string>('')
@@ -53,7 +58,7 @@ export function useFastaParse(fastaText: string): FastaParse {
         // Parsed Fasta Testing (Visual)
         setParsedFasta(header_text.concat('\n', parsed_seq_text))
         setParsedFastaSequnceHeader(header_text)
-        setparsedFastaSequenceText(parsed_seq_text)
+        setparsedFastaSequenceText(wrap(parsed_seq_text))
     }
 
     return { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText }
