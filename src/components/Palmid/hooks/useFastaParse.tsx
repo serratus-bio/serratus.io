@@ -14,6 +14,10 @@ export function useFastaParse(fastaText: string): FastaParse {
     useEffect(() => {
         if (fastaText) {
             parseFasta(fastaText)
+        } else {
+            setParsedFasta('')
+            setParsedFastaSequnceHeader('')
+            setparsedFastaSequenceText('')
         }
     }, [fastaText])
 
