@@ -67,16 +67,25 @@ export const Palmid_advanced = () => {
                         <br></br>
                         {parsedFastaSequenceText}
                     </pre>
+                    <code> hash: {fastaHash}</code>
                 </div>
                 <br></br>
                 <div>
                     <button
-                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 disabled:cursor-not-allowed disabled:bg-gray-500'
+                        disabled={!fastaInput}
                         onClick={async () => {
                             setShowIframe(true)
                             await postFasta(parsedFasta)
                         }}>
                         Analyze Sequence
+                    </button>
+                    <button
+                        className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        onClick={async () => {
+                            window.location.search = '?hash=3xample'
+                        }}>
+                        Load Example
                     </button>
                     <button
                         className='ml-4 w-300 m-auto rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4'
@@ -88,7 +97,6 @@ export const Palmid_advanced = () => {
                         }}>
                         Clear
                     </button>
-                    <code> hash: {fastaHash}</code>
                 </div>
             </div>
             {showIframe && (

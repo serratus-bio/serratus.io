@@ -10,4 +10,10 @@ module.exports = {
             yellow: colors.yellow,
         },
     },
+    variants: {
+        backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+        textColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+        cursor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+    },
+    plugins: [],
 }
