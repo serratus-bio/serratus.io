@@ -73,8 +73,8 @@ export const Palmid_advanced = () => {
                     </button>
                 </div>
             </div>
-            {showIframe && (
-                <div className='min-h-screen m-8 p-4 border-2 rounded flex justify-center items-center'>
+            {!showIframe && (
+                <div className='min-h-screen flex-col m-8 p-4 border-2 rounded flex justify-center items-center'>
                     {isReportReady ? (
                         <Iframe
                             url={`https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`}
@@ -84,17 +84,22 @@ export const Palmid_advanced = () => {
                             position='relative'
                         />
                     ) : (
-                        <div className=''>
-                            <SpinningCircles
-                                fill='#0EA5FD'
-                                fillOpacity={1}
-                                width={200}
-                                speed={1}
-                                stroke='#0EA5FD'
-                                strokeOpacity={1}
-                                strokeWidth={2}
-                            />
-                        </div>
+                        <>
+                            <div className=''>
+                                <SpinningCircles
+                                    fill='#0EA5FD'
+                                    fillOpacity={1}
+                                    width={200}
+                                    speed={1}
+                                    stroke='#0EA5FD'
+                                    strokeOpacity={1}
+                                    strokeWidth={2}
+                                />
+                            </div>
+                            <div className='text-blue-500 text-lg m-2 animate-pulse'>
+                                Loading...
+                            </div>
+                        </>
                     )}
                 </div>
             )}

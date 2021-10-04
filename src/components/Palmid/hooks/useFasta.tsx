@@ -47,15 +47,13 @@ export function useFasta(): FastaHook {
 
     async function checkReport() {
         try {
-            if (!isReportReady) {
-                const response = await fetch(
-                    `https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`
-                )
-                if (response.status === 200) {
-                    setIsReportReady(true)
-                } else {
-                    setIsReportReady(false)
-                }
+            const response = await fetch(
+                `https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`
+            )
+            if (response.status === 200) {
+                setIsReportReady(true)
+            } else {
+                setIsReportReady(false)
             }
         } catch (error) {
             console.log(error)

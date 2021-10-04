@@ -10,6 +10,7 @@ export function useFastaParse(fastaText: string): FastaParse {
     const [parsedFastaSequenceHeader, setParsedFastaSequnceHeader] = useState<string>('')
     const [parsedFastaSequenceText, setparsedFastaSequenceText] = useState<string>('')
     const header_text = '>Serratus_palmid'
+
     useEffect(() => {
         if (fastaText) {
             parseFasta(fastaText)
