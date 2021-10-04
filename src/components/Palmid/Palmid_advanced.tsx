@@ -37,6 +37,7 @@ export const Palmid_advanced = () => {
         <>
             <h1 className='text-3xl m-2 font-bold text-center '>palmID: Viral-RdRP Analysis</h1>
             <div className='m-4 p-4'>
+                <p className='my-3'>Sequence, in FASTA format</p>
                 <textarea
                     className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
                     id='fastaInput'
@@ -48,9 +49,9 @@ export const Palmid_advanced = () => {
                     onChange={(e) => {
                         setFastaInput(e.target.value)
                     }}></textarea>
-                <div>
-                    <p>{`Sequence Header: ${parsedFastaSequenceHeader}`}</p>
-                    <p>{`Sequence Text: ${parsedFastaSequenceText}`}</p>
+                <div className='white-space: pre-line'>
+                    <p>{`Parsed FASTA: `}</p>
+                    <pre>{parsedFastaSequenceHeader}<br></br>{parsedFastaSequenceText}</pre>
                 </div>
                 <br></br>
                 <div>
