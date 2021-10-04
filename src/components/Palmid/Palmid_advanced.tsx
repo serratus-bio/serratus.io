@@ -73,7 +73,7 @@ export const Palmid_advanced = () => {
                     </button>
                 </div>
             </div>
-            {!showIframe && (
+            {showIframe && (
                 <div className='min-h-screen flex-col m-8 p-4 border-2 rounded flex justify-center items-center'>
                     {isReportReady ? (
                         <Iframe
