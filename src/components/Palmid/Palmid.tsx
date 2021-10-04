@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Helmet } from 'react-helmet'
 import { classesBoxBorder } from 'common'
 import axios from 'axios'
-
 // Global variables for webpage
 let PARSEDFASTA = 'no_fasta_input'
 let FAHASH = 'no_api_response'
@@ -41,7 +40,6 @@ export const Palmid = () => {
             <title>Serratus | palmID</title>
         </Helmet>
     )
-
     const parseFasta = () => {
         const fastaInput = document.getElementById('fastaInput') as HTMLInputElement
         let fastaText = fastaInput.value

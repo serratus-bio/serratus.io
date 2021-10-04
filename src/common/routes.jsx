@@ -11,6 +11,7 @@ import { Jbrowse } from '../pages/Jbrowse'
 import { Access } from '../pages/Access'
 import { Geo } from '../components/Geo'
 import { Palmid } from '../components/Palmid'
+import { Palmid_advanced } from '../components/Palmid/Palmid_advanced'
 
 export const routes = {
     home: {
@@ -49,6 +50,10 @@ export const routes = {
     palmid: {
         path: '/palmid',
         component: Palmid,
+    },
+    palmida: {
+        path: '/palmida',
+        component: Palmid_advanced,
     },
     access: {
         path: '/access',
