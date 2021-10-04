@@ -20,6 +20,7 @@ export function useFasta(): FastaHook {
         setIsReportReady(false)
         setIsPostFastaError(false)
         setIsPostFastaLoading(false)
+        window.history.replaceState({}, 'RdRP Report', '')
     }
 
     async function postFasta(rnaSequence: string) {
@@ -66,7 +67,7 @@ export function useFasta(): FastaHook {
         let urlParams = new URLSearchParams(document.location.search.substring(1))
         let urlHash = urlParams.get('hash')
 
-        if (urlHash != null){
+        if (urlHash != null) {
             setFastaHash(urlHash)
             checkReport()
             return true

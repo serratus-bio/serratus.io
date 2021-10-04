@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Iframe from 'react-iframe'
-import { SpinningCircles } from 'react-loading-icons'
+//import { SpinningCircles } from 'react-loading-icons'
 import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
 
@@ -18,7 +18,7 @@ export const Palmid_advanced = () => {
         let interval: any
         if (fastaHash) {
             // Change URL to display hash search. No Refresh
-            window.history.replaceState( {} , 'RdRP Report', '?hash=' + fastaHash);
+            window.history.replaceState({}, 'RdRP Report', '?hash=' + fastaHash)
             if (!isReportReady) {
                 // first call
                 checkReport()
@@ -39,7 +39,7 @@ export const Palmid_advanced = () => {
         let hashExists = false
         hashExists = loadUrlHash()
 
-        if (hashExists){
+        if (hashExists) {
             setShowIframe(true)
         }
     }
@@ -66,8 +66,6 @@ export const Palmid_advanced = () => {
                         {parsedFastaSequenceHeader}
                         <br></br>
                         {parsedFastaSequenceText}
-                        <br></br>
-                        hash: {fastaHash}
                     </pre>
                 </div>
                 <br></br>
@@ -83,12 +81,14 @@ export const Palmid_advanced = () => {
                     <button
                         className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
                         onClick={async () => {
+                            window.history.replaceState({}, '', '')
                             setShowIframe(false)
                             setFastaInput('')
                             clear()
                         }}>
                         Clear
                     </button>
+                    <code> hash: {fastaHash}</code>
                 </div>
             </div>
             {showIframe && (
@@ -103,8 +103,8 @@ export const Palmid_advanced = () => {
                         />
                     ) : (
                         <>
-                            <div className=''>
-                                <SpinningCircles
+                            <div className='justify-center'>
+                                {/*<SpinningCircles
                                     fill='#0EA5FD'
                                     fillOpacity={1}
                                     width={200}
@@ -112,10 +112,15 @@ export const Palmid_advanced = () => {
                                     stroke='#0EA5FD'
                                     strokeOpacity={1}
                                     strokeWidth={2}
-                                />
+                                />*/}
+                                <img
+                                    src='/load_palmid.gif'
+                                    alt='Loading gif'
+                                    width='100%'
+                                    height='100%'></img>
                             </div>
                             <div className='text-blue-500 text-lg m-2 animate-pulse'>
-                                Loading...
+                                Analyzing RdRP...
                             </div>
                         </>
                     )}
