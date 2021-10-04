@@ -48,11 +48,11 @@ export const routes = {
         component: Geo,
     },
     palmid: {
-        path: '/palmid',
+        path: '/palmid_old',
         component: Palmid,
     },
     palmida: {
-        path: '/palmida',
+        path: '/palmid',
         component: Palmid_advanced,
     },
     access: {
