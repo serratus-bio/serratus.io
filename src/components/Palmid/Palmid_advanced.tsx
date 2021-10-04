@@ -43,7 +43,7 @@ export const Palmid_advanced = () => {
                     value={fastaInput}
                     rows={4}
                     cols={72}
-                    placeholder='Enter your sequence (DNA / Protein)'
+                    placeholder='>Enter your sequence (DNA / Protein)'
                     aria-required='true'
                     onChange={(e) => {
                         setFastaInput(e.target.value)
