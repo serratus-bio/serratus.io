@@ -13,6 +13,7 @@ export const Palmid_advanced = () => {
     const { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText } = useFastaParse(
         fastaInput
     )
+    const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
 
     useEffect(() => {
         let interval: any
@@ -41,13 +42,24 @@ export const Palmid_advanced = () => {
 
         if (hashExists) {
             setShowIframe(true)
+            setIsFastaCollapsed(!isFastaCollapsed)
         }
     }
 
     return (
         <>
             <h1 className='text-3xl m-2 font-bold text-center '>palmID: Viral-RdRP Analysis</h1>
-            <div className='m-4 p-4'>
+
+            <button
+                className='m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 collapse-button'
+                onClick={() => setIsFastaCollapsed(!isFastaCollapsed)}>
+                Sequence Submission
+            </button>
+            <div
+                id='fastaSubmission'
+                className={`m-4 p-4 collapse-content ${!isFastaCollapsed ? 'collapsed' : 'expanded'}`}
+                    aria-expanded={isFastaCollapsed}>
+
                 <p className='my-3'>Sequence, in FASTA format</p>
                 <textarea
                     className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
@@ -72,7 +84,7 @@ export const Palmid_advanced = () => {
                 <br></br>
                 <div>
                     <button
-                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 disabled:cursor-not-allowed disabled:bg-gray-500'
+                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-200'
                         disabled={!fastaInput}
                         onClick={async () => {
                             setShowIframe(true)
