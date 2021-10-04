@@ -1,6 +1,7 @@
 import { useState } from 'react'
 interface FastaHook {
     fastaHash: string
+    loadUrlHash: () => boolean
     isPostFastaLoading: boolean
     isPostFastaError: boolean
     isReportReady: boolean
@@ -60,8 +61,23 @@ export function useFasta(): FastaHook {
         }
     }
 
+    function loadUrlHash() {
+        // Parse URL-Search & Display Report
+        let urlParams = new URLSearchParams(document.location.search.substring(1))
+        let urlHash = urlParams.get('hash')
+
+        if (urlHash != null){
+            setFastaHash(urlHash)
+            checkReport()
+            return true
+        } else {
+            return false
+        }
+    }
+
     return {
         fastaHash,
+        loadUrlHash,
         isPostFastaLoading,
         isPostFastaError,
         isReportReady,

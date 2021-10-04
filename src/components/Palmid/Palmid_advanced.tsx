@@ -5,9 +5,9 @@ import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
 
 export const Palmid_advanced = () => {
-    const REQUEST_INTERVAL = 10000 // 10 sec
+    const REQUEST_INTERVAL = 5000 // 5 sec
 
-    const { fastaHash, isReportReady, checkReport, postFasta, clear } = useFasta()
+    const { fastaHash, loadUrlHash, isReportReady, checkReport, postFasta, clear } = useFasta()
     const [fastaInput, setFastaInput] = useState<string>('')
     const [showIframe, setShowIframe] = useState<boolean>(false)
     const { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText } = useFastaParse(
@@ -17,6 +17,8 @@ export const Palmid_advanced = () => {
     useEffect(() => {
         let interval: any
         if (fastaHash) {
+            // Change URL to display hash search. No Refresh
+            window.history.replaceState( {} , 'RdRP Report', '?hash=' + fastaHash);
             if (!isReportReady) {
                 // first call
                 checkReport()
@@ -32,6 +34,15 @@ export const Palmid_advanced = () => {
             }
         }
     }, [fastaHash, isReportReady])
+
+    window.onload = function () {
+        let hashExists = false
+        hashExists = loadUrlHash()
+
+        if (hashExists){
+            setShowIframe(true)
+        }
+    }
 
     return (
         <>
@@ -51,7 +62,13 @@ export const Palmid_advanced = () => {
                     }}></textarea>
                 <div className='white-space: pre-line'>
                     <p>{`Parsed FASTA: `}</p>
-                    <pre>{parsedFastaSequenceHeader}<br></br>{parsedFastaSequenceText}</pre>
+                    <pre>
+                        {parsedFastaSequenceHeader}
+                        <br></br>
+                        {parsedFastaSequenceText}
+                        <br></br>
+                        hash: {fastaHash}
+                    </pre>
                 </div>
                 <br></br>
                 <div>
