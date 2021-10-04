@@ -79,7 +79,7 @@ export const Palmid_advanced = () => {
                         Analyze Sequence
                     </button>
                     <button
-                        className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        className='ml-4 w-300 m-auto rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4'
                         onClick={async () => {
                             window.history.replaceState({}, '', '')
                             setShowIframe(false)
