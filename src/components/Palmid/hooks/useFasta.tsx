@@ -42,7 +42,7 @@ export function useFasta(): FastaHook {
                 const result = await response.text()
                 setFastaHash(result)
             }
-        } catch (error:any) {
+        } catch (error: any) {
             setIsPostFastaError(error)
         }
     }

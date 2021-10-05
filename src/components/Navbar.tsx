@@ -32,6 +32,13 @@ export const Navbar = () => {
                     </NavLink>
                     <NavLink
                         exact
+                        to={routes.palmid.path}
+                        className='ml-10 hover:text-blue-800'
+                        activeClassName='text-blue-600'>
+                        palmID (beta)
+                    </NavLink>
+                    <NavLink
+                        exact
                         to={routes.geo.path}
                         className='ml-10 hover:text-blue-800'
                         activeClassName='text-blue-600'>
