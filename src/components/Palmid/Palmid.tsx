@@ -104,6 +104,7 @@ export const Palmid = () => {
                         disabled={!fastaInput}
                         onClick={async () => {
                             setShowIframe(true)
+                            setIsFastaCollapsed(!isFastaCollapsed)
                             await postFasta(parsedFasta)
                         }}>
                         Analyze Sequence
@@ -130,16 +131,18 @@ export const Palmid = () => {
             {isCheckReportTimedOut && (
                 <div className='m-4 p-4 flex flex-col items-center justify-center'>
                     <p className='text-yellow-900 text-xl animate-pulse'>
-                        Request timed out. Please try again later.
+                        Request timed out...
                     </p>
+                    <p> No viral RdRP identified in input sequence (or a server error occured). </p>
+                    <br />
                     <p>
-                        You can raise an issue{' '}
+                        If you think this is an error, please{' '}
                         <a
                             href='https://github.com/serratus-bio/serratus.io/issues'
                             className='text-blue-500'>
-                            here
+                            open an issue
                         </a>{' '}
-                        with below details
+                        with the following details to help improve palmID: 
                     </p>
                     <br />
                     <p>{`Hash: ${fastaHash}`}</p>
@@ -158,7 +161,10 @@ export const Palmid = () => {
                         />
                     ) : (
                         <>
-                            <div className='justify-center'>
+                            <div
+                                id='myLoad'
+                                className='justify-center'
+                                >
                                 {/*<SpinningCircles
                                     fill='#0EA5FD'
                                     fillOpacity={1}
