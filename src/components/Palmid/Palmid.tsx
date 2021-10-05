@@ -7,22 +7,29 @@ import { useFastaParse } from './hooks/useFastaParse'
 export const Palmid = () => {
     const REQUEST_INTERVAL = 5000 // 5 sec
 
-    const { fastaHash, loadUrlHash, isReportReady, checkReport, postFasta, clear } = useFasta()
+    const {
+        fastaHash,
+        loadUrlHash,
+        isReportReady,
+        isCheckReportTimedOut,
+        checkReport,
+        postFasta,
+        clear,
+    } = useFasta()
     const [fastaInput, setFastaInput] = useState<string>('')
     const [showIframe, setShowIframe] = useState<boolean>(false)
     const { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText } = useFastaParse(
         fastaInput
     )
     const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
-    const [isCheckReportTimedOut, setIsCheckReportTimedOut] = useState<boolean>(false)
-    const [fiveMinutesPastRequest, setFiveMinutesPastRequest] = useState<boolean>(false)
 
     useEffect(() => {
         let interval: any
+
         if (fastaHash) {
             // Change URL to display hash search. No Refresh
             window.history.replaceState({}, 'RdRP Report', '?hash=' + fastaHash)
-            if (!isReportReady) {
+            if (!isReportReady && !isCheckReportTimedOut) {
                 // first call
                 checkReport()
 
@@ -36,21 +43,14 @@ export const Palmid = () => {
                 clearInterval(interval)
             }
         }
-    }, [fastaHash, isReportReady])
+    }, [fastaHash, isReportReady, isCheckReportTimedOut])
 
     // Request timeout after 5 minutes
     useEffect(() => {
-        setTimeout(() => {
-            setFiveMinutesPastRequest(true)
-        }, 300000)
-    }, [])
-
-    useEffect(() => {
-        if (fiveMinutesPastRequest && !isReportReady) {
-            setIsCheckReportTimedOut(true)
+        if (isCheckReportTimedOut && !isReportReady) {
             setShowIframe(false)
         }
-    }, [fiveMinutesPastRequest])
+    }, [isCheckReportTimedOut, isReportReady])
 
     useEffect(() => {
         let hashExists = false
@@ -128,11 +128,9 @@ export const Palmid = () => {
                     </button>
                 </div>
             </div>
-            {isCheckReportTimedOut && (
+            {isCheckReportTimedOut && !isReportReady && (
                 <div className='m-4 p-4 flex flex-col items-center justify-center'>
-                    <p className='text-yellow-900 text-xl animate-pulse'>
-                        Request timed out...
-                    </p>
+                    <p className='text-yellow-900 text-xl animate-pulse'>Request timed out...</p>
                     <p> No viral RdRP identified in input sequence (or a server error occured). </p>
                     <br />
                     <p>
@@ -142,7 +140,7 @@ export const Palmid = () => {
                             className='text-blue-500'>
                             open an issue
                         </a>{' '}
-                        with the following details to help improve palmID: 
+                        with the following details to help improve palmID:
                     </p>
                     <br />
                     <p>{`Hash: ${fastaHash}`}</p>
@@ -161,10 +159,7 @@ export const Palmid = () => {
                         />
                     ) : (
                         <>
-                            <div
-                                id='myLoad'
-                                className='justify-center'
-                                >
+                            <div id='myLoad' className='justify-center'>
                                 {/*<SpinningCircles
                                     fill='#0EA5FD'
                                     fillOpacity={1}

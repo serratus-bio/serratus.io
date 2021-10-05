@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 interface FastaHook {
     fastaHash: string
-    loadUrlHash: () => boolean
     isPostFastaLoading: boolean
     isPostFastaError: boolean
     isReportReady: boolean
+    isCheckReportTimedOut: boolean
     checkReport: () => void
+    loadUrlHash: () => boolean
     postFasta: (rnaSequence: string) => void
     clear: () => void
 }
@@ -14,14 +15,24 @@ export function useFasta(): FastaHook {
     const [isPostFastaError, setIsPostFastaError] = useState<boolean>(false)
     const [isReportReady, setIsReportReady] = useState<boolean>(false)
     const [fastaHash, setFastaHash] = useState<string>('')
+    const [checkReportRequestCount, setCheckReportRequestCount] = useState<number>(0)
+    const [isCheckReportTimedOut, setIsCheckReportTimedOut] = useState<boolean>(false)
 
     function clear() {
         setFastaHash('')
         setIsReportReady(false)
         setIsPostFastaError(false)
         setIsPostFastaLoading(false)
+        setCheckReportRequestCount(0)
+        setIsCheckReportTimedOut(false)
         window.history.replaceState({}, 'RdRP Report', '')
     }
+
+    useEffect(() => {
+        if (checkReportRequestCount >= 60) {
+            setIsCheckReportTimedOut(true)
+        }
+    }, [checkReportRequestCount])
 
     async function postFasta(rnaSequence: string) {
         try {
@@ -52,6 +63,7 @@ export function useFasta(): FastaHook {
             const response = await fetch(
                 `https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`
             )
+            setCheckReportRequestCount((count) => count + 1)
             if (response.status === 200) {
                 setIsReportReady(true)
             } else {
@@ -78,6 +90,7 @@ export function useFasta(): FastaHook {
     return {
         fastaHash,
         loadUrlHash,
+        isCheckReportTimedOut,
         isPostFastaLoading,
         isPostFastaError,
         isReportReady,
