@@ -7,7 +7,7 @@ interface FastaHook {
     isCheckReportTimedOut: boolean
     checkReport: () => void
     loadUrlHash: () => boolean
-    postFasta: (rnaSequence: string) => void
+    postFasta: (_rnaSequence: string) => void
     clear: () => void
 }
 export function useFasta(): FastaHook {
