@@ -1,194 +1,187 @@
-import React, { useState } from 'react'
-import { Helmet } from 'react-helmet'
-import { classesBoxBorder } from 'common'
-import axios from 'axios'
-// Global variables for webpage
-let PARSEDFASTA = 'no_fasta_input'
-let FAHASH = 'no_api_response'
-let REPORTURL = 'NA'
-const OV = 'https://s3.amazonaws.com/openvirome.com/'
+import React, { useEffect, useState } from 'react'
+import Iframe from 'react-iframe'
+//import { SpinningCircles } from 'react-loading-icons'
+import { useFasta } from './hooks/useFasta'
+import { useFastaParse } from './hooks/useFastaParse'
 
-// API
-const apiUrl = 'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda'
-
-export async function submitFasta(faSubmit: string) {
-    const response = await axios.post(`${apiUrl}`, {
-        sequence: faSubmit,
-    })
-    return response.data
-}
-
-// Fake API call because I'm a newb
-export function fakeSubmit(faSubmit: string) {
-    // An API call which returns the hash of submit sequence
-    // goes here
-    faSubmit = '3xample'
-
-    return faSubmit
-}
-
-export function wrap(s: string) {
-    return s.replace(/(.{50})/g, '$1<br>')
-}
-
-// Webpage
 export const Palmid = () => {
-    const [isCollapsed, setIsCollapsed] = React.useState<boolean>(true)
+    const REQUEST_INTERVAL = 5000 // 5 sec
 
-    const headTags = (
-        <Helmet>
-            <title>Serratus | palmID</title>
-        </Helmet>
+    const { fastaHash, loadUrlHash, isReportReady, checkReport, postFasta, clear } = useFasta()
+    const [fastaInput, setFastaInput] = useState<string>('')
+    const [showIframe, setShowIframe] = useState<boolean>(false)
+    const { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText } = useFastaParse(
+        fastaInput
     )
-    const parseFasta = () => {
-        const fastaInput = document.getElementById('fastaInput') as HTMLInputElement
-        let fastaText = fastaInput.value
+    const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
+    const [isCheckReportTimedOut, setIsCheckReportTimedOut] = useState<boolean>(false)
+    const [fiveMinutesPastRequest, setFiveMinutesPastRequest] = useState<boolean>(false)
 
-        let header_text = '>Serratus_palmid'
-        let seq_text
-        let parsed_seq_text
+    useEffect(() => {
+        let interval: any
+        if (fastaHash) {
+            // Change URL to display hash search. No Refresh
+            window.history.replaceState({}, 'RdRP Report', '?hash=' + fastaHash)
+            if (!isReportReady) {
+                // first call
+                checkReport()
 
-        if (fastaText.search('>') >= 0) {
-            // Parse with header
-            // Parse first sequence in case of multiple fasta
-            fastaText = fastaText.split('>')[1]
-
-            header_text = fastaText.split('\n')[0]
-            header_text = '>' + header_text
-
-            // rest is protein sequence
-            seq_text = fastaText.split('\n')
-            seq_text.shift()
-            parsed_seq_text = seq_text.join()
-        } else {
-            // Parse without header
-            //header_text = '>Serratus_palmid'
-
-            // All is protein sequence
-            parsed_seq_text = fastaText
+                //later calls
+                interval = setInterval(() => {
+                    checkReport()
+                }, REQUEST_INTERVAL)
+                return () => clearInterval(interval)
+            } else {
+                // stop the api call to check for report
+                clearInterval(interval)
+            }
         }
+    }, [fastaHash, isReportReady])
 
-        // Parse Fasta Sequenceg
-        // remove all non alpha-characters
-        parsed_seq_text = parsed_seq_text.replace(/[^A-Za-z]/g, '').toUpperCase()
+    // Request timeout after 5 minutes
+    useEffect(() => {
+        setTimeout(() => {
+            setFiveMinutesPastRequest(true)
+        }, 300000)
+    }, [])
 
-        // Parsed Fasta Testing (Visual)
-        PARSEDFASTA = header_text.concat('\n', parsed_seq_text)
-
-        //return(PARSEDFASTA)
-
-        document.getElementById('faHeader')!.innerHTML = header_text
-        document.getElementById('faSeq')!.innerHTML = wrap(parsed_seq_text)
-        //document.getElementById('faSubmit')!.innerHTML = PARSEDFASTA
-    }
-
-    const postFasta = () => {
-        //PARSEDFASTA = parseFasta()
-        FAHASH = fakeSubmit(PARSEDFASTA)
-        document.getElementById('postApi')!.innerHTML = FAHASH
-
-        //Redirect to hash search page
-        window.location.search = '?hash='
-    }
-
-    // Parse URL-Search & Display Report
-    let urlParams = new URLSearchParams(document.location.search.substring(1))
-    let pageHash = urlParams.get('hash')
-
-    const showReport = () => {
-        if (pageHash == null) {
-            // Show Fasta Submission Form
-            // Default
-
-            // Hide PalmID Report window
-            document.getElementById('palmReport')!.style.height = '0'
-            document.getElementById('palmReport')!.style.width = '0%'
-
-            REPORTURL = '/Frank_Ginger.png'
-            document.getElementById('reportUrl')!.innerHTML = REPORTURL
-            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
-        } else {
-            // Hide Fasta Submission Form
-            setIsCollapsed(!isCollapsed)
-
-            // Show PalmID Report window
-            document.getElementById('palmReport')!.style.height = '400'
-            document.getElementById('palmReport')!.style.width = '100%'
-
-            REPORTURL = OV.concat(pageHash, '.html')
-            // FOR DEV USE STATIC IMAGE
-            REPORTURL = '/Frank_Ginger.png'
-            document.getElementById('reportUrl')!.innerHTML = REPORTURL
-            document.getElementById('palmReport')!.setAttribute('src', REPORTURL)
+    useEffect(() => {
+        if (fiveMinutesPastRequest && !isReportReady) {
+            setIsCheckReportTimedOut(true)
+            setShowIframe(false)
         }
-    }
+    }, [fiveMinutesPastRequest])
 
-    window.onload = function () {
-        showReport()
-    }
+    useEffect(() => {
+        let hashExists = false
+        hashExists = loadUrlHash()
+        if (hashExists) {
+            setShowIframe(true)
+            setIsFastaCollapsed(!isFastaCollapsed)
+        }
+    }, [])
 
     return (
-        <div className='min-h-screen w-full sm:bg-gray-100 py-4'>
-            {headTags}
-            {/*HEADER*/}
-            <h1 className='text-3xl font-bold text-center'>palmID: Viral-RdRP Analysis</h1>
+        <>
+            <h1 className='text-3xl m-2 font-bold text-center '>palmID: Viral-RdRP Analysis</h1>
 
-            <p> [DEV] URL hash : {pageHash} </p>
-
-            {/*FASTA Submission Box*/}
-            <div id='faSubmissionBox' className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-                <button
-                    className='text-left collapse-button'
-                    onClick={() => setIsCollapsed(!isCollapsed)}>
-                    [Sequence Submission]
-                </button>
-
-                <div
-                    id='faSubmissionForm'
-                    className={`collapse-content ${!isCollapsed ? 'collapsed' : 'expanded'}`}
-                    aria-expanded={isCollapsed}>
-                    {/*Fasta parsing and submission form*/}
-                    <p className='my-3'>Sequence, in FASTA format</p>
-
-                    <form id='submissionForm'>
-                        <div id='sequenceSec' className='form-item field textarea required'>
-                            <textarea
-                                id='fastaInput'
-                                rows={4}
-                                cols={72}
-                                className='field-element'
-                                placeholder='>Enter your sequence (DNA / Protein)'
-                                aria-required='true'
-                                onChange={parseFasta}></textarea>
-                        </div>
-
-                        <p>Parsed Fasta:</p>
-                        <code id='faHeader'> </code>
-                        <p></p>
-                        <code id='faSeq'> </code>
-                        <p></p>
-
-                        <button
-                            className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                            onClick={postFasta}>
-                            Analyze Sequence
-                        </button>
-                    </form>
+            <button
+                className='m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 collapse-button'
+                onClick={() => setIsFastaCollapsed(!isFastaCollapsed)}>
+                Sequence Submission
+            </button>
+            <div
+                id='fastaSubmission'
+                className={`m-4 p-4 collapse-content ${
+                    !isFastaCollapsed ? 'collapsed' : 'expanded'
+                }`}
+                aria-expanded={isFastaCollapsed}>
+                <p className='my-3'>Sequence, in FASTA format</p>
+                <textarea
+                    className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
+                    id='fastaInput'
+                    value={fastaInput}
+                    rows={4}
+                    cols={72}
+                    placeholder='>Enter your sequence (DNA / Protein)'
+                    aria-required='true'
+                    onChange={(e) => {
+                        setFastaInput(e.target.value)
+                    }}></textarea>
+                <div className='white-space: pre-line'>
+                    <p>{`Parsed FASTA: `}</p>
+                    <pre>
+                        {parsedFastaSequenceHeader}
+                        <br></br>
+                        {parsedFastaSequenceText}
+                    </pre>
+                    <code> hash: {fastaHash}</code>
                 </div>
-                <p>[DEV] Post API:</p>
-                <p id='postApi'> </p>
+                <br></br>
+                <div>
+                    <button
+                        className='w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 disabled:cursor-not-allowed disabled:bg-gray-500 disabled:text-gray-200'
+                        disabled={!fastaInput}
+                        onClick={async () => {
+                            setShowIframe(true)
+                            setIsFastaCollapsed(!isFastaCollapsed)
+                            await postFasta(parsedFasta)
+                        }}>
+                        Analyze Sequence
+                    </button>
+                    <button
+                        className='ml-4 w-300 m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
+                        onClick={async () => {
+                            window.location.search = '?hash=3xample'
+                        }}>
+                        Load Example
+                    </button>
+                    <button
+                        className='ml-4 w-300 m-auto rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4'
+                        onClick={async () => {
+                            window.history.replaceState({}, '', '')
+                            setShowIframe(false)
+                            setFastaInput('')
+                            clear()
+                        }}>
+                        Clear
+                    </button>
+                </div>
             </div>
-
-            <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
-                <p>[DEV] Report URL: </p>
-                <p id='reportUrl'></p>
-                <iframe
-                    id='palmReport'
-                    title='Inline Frame Example'
-                    width='25%'
-                    height='400'
-                    src='/load_palmid.gif'></iframe>
-            </div>
-        </div>
+            {isCheckReportTimedOut && (
+                <div className='m-4 p-4 flex flex-col items-center justify-center'>
+                    <p className='text-yellow-900 text-xl animate-pulse'>Request timed out...</p>
+                    <p> No viral RdRP identified in input sequence (or a server error occured). </p>
+                    <br />
+                    <p>
+                        If you think this is an error, please{' '}
+                        <a
+                            href='https://github.com/serratus-bio/serratus.io/issues'
+                            className='text-blue-500'>
+                            open an issue
+                        </a>{' '}
+                        with the following details to help improve palmID:
+                    </p>
+                    <br />
+                    <p>{`Hash: ${fastaHash}`}</p>
+                    <p>{`Submission time (ISO): ${new Date().toISOString()}`}</p>
+                </div>
+            )}
+            {showIframe && (
+                <div className='min-h-screen flex-col m-8 p-4 b order-2 rounded flex justify-center items-center'>
+                    {isReportReady ? (
+                        <Iframe
+                            url={`https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`}
+                            width='100%'
+                            id='myId'
+                            className='min-h-screen'
+                            position='relative'
+                        />
+                    ) : (
+                        <>
+                            <div id='myLoad' className='justify-center'>
+                                {/*<SpinningCircles
+                                    fill='#0EA5FD'
+                                    fillOpacity={1}
+                                    width={200}
+                                    speed={1}
+                                    stroke='#0EA5FD'
+                                    strokeOpacity={1}
+                                    strokeWidth={2}
+                                />*/}
+                                <img
+                                    src='/load_palmid.gif'
+                                    alt='Loading gif'
+                                    width='100%'
+                                    height='100%'></img>
+                            </div>
+                            <div className='text-blue-500 text-lg m-2 animate-pulse'>
+                                Analyzing RdRP...
+                            </div>
+                        </>
+                    )}
+                </div>
+            )}
+        </>
     )
 }

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 interface FastaHook {
     fastaHash: string
+    loadUrlHash: () => boolean
     isPostFastaLoading: boolean
     isPostFastaError: boolean
     isReportReady: boolean
@@ -19,6 +20,7 @@ export function useFasta(): FastaHook {
         setIsReportReady(false)
         setIsPostFastaError(false)
         setIsPostFastaLoading(false)
+        window.history.replaceState({}, 'RdRP Report', '')
     }
 
     async function postFasta(rnaSequence: string) {
@@ -40,7 +42,7 @@ export function useFasta(): FastaHook {
                 const result = await response.text()
                 setFastaHash(result)
             }
-        } catch (error) {
+        } catch (error: any) {
             setIsPostFastaError(error)
         }
     }
@@ -60,8 +62,22 @@ export function useFasta(): FastaHook {
         }
     }
 
+    function loadUrlHash() {
+        // Parse URL-Search & Display Report
+        let urlParams = new URLSearchParams(document.location.search.substring(1))
+        let urlHash = urlParams.get('hash')
+
+        if (urlHash != null) {
+            setFastaHash(urlHash)
+            return true
+        } else {
+            return false
+        }
+    }
+
     return {
         fastaHash,
+        loadUrlHash,
         isPostFastaLoading,
         isPostFastaError,
         isReportReady,
