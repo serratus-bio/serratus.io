@@ -22,7 +22,7 @@ serratus.io is under active development. This document is in place to make it ea
 
 Prerequisites:
 
-1. Make sure you have `npm` with `tailwind` installed.
+1. Make sure you have `npm` and `nodejs` (> 12.x)  installed.
 2. Clone this repository
 3. Setup environment
 
