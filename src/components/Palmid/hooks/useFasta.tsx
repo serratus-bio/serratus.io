@@ -42,7 +42,7 @@ export function useFasta(): FastaHook {
                 const result = await response.text()
                 setFastaHash(result)
             }
-        } catch (error) {
+        } catch (error:any) {
             setIsPostFastaError(error)
         }
     }
@@ -69,7 +69,6 @@ export function useFasta(): FastaHook {
 
         if (urlHash != null) {
             setFastaHash(urlHash)
-            checkReport()
             return true
         } else {
             return false
