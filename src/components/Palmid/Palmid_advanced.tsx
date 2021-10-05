@@ -14,6 +14,8 @@ export const Palmid_advanced = () => {
         fastaInput
     )
     const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
+    const [isCheckReportTimedOut, setIsCheckReportTimedOut] = useState<boolean>(false)
+    const [fiveMinutesPastRequest, setFiveMinutesPastRequest] = useState<boolean>(false)
 
     useEffect(() => {
         let interval: any
@@ -36,15 +38,28 @@ export const Palmid_advanced = () => {
         }
     }, [fastaHash, isReportReady])
 
-    window.onload = function () {
+    // Request timeout after 5 minutes
+    useEffect(() => {
+        setTimeout(() => {
+            setFiveMinutesPastRequest(true)
+        }, 300000)
+    }, [])
+
+    useEffect(() => {
+        if (fiveMinutesPastRequest && !isReportReady) {
+            setIsCheckReportTimedOut(true)
+            setShowIframe(false)
+        }
+    }, [fiveMinutesPastRequest])
+
+    useEffect(() => {
         let hashExists = false
         hashExists = loadUrlHash()
-
         if (hashExists) {
             setShowIframe(true)
             setIsFastaCollapsed(!isFastaCollapsed)
         }
-    }
+    }, [])
 
     return (
         <>
@@ -57,9 +72,10 @@ export const Palmid_advanced = () => {
             </button>
             <div
                 id='fastaSubmission'
-                className={`m-4 p-4 collapse-content ${!isFastaCollapsed ? 'collapsed' : 'expanded'}`}
-                    aria-expanded={isFastaCollapsed}>
-
+                className={`m-4 p-4 collapse-content ${
+                    !isFastaCollapsed ? 'collapsed' : 'expanded'
+                }`}
+                aria-expanded={isFastaCollapsed}>
                 <p className='my-3'>Sequence, in FASTA format</p>
                 <textarea
                     className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
@@ -111,8 +127,27 @@ export const Palmid_advanced = () => {
                     </button>
                 </div>
             </div>
+            {isCheckReportTimedOut && (
+                <div className='m-4 p-4 flex flex-col items-center justify-center'>
+                    <p className='text-yellow-900 text-xl animate-pulse'>
+                        Request timed out. Please try again later.
+                    </p>
+                    <p>
+                        You can raise an issue{' '}
+                        <a
+                            href='https://github.com/serratus-bio/serratus.io/issues'
+                            className='text-blue-500'>
+                            here
+                        </a>{' '}
+                        with below details
+                    </p>
+                    <br />
+                    <p>{`Hash: ${fastaHash}`}</p>
+                    <p>{`Submission time (ISO): ${new Date().toISOString()}`}</p>
+                </div>
+            )}
             {showIframe && (
-                <div className='min-h-screen flex-col m-8 p-4 border-2 rounded flex justify-center items-center'>
+                <div className='min-h-screen flex-col m-8 p-4 b order-2 rounded flex justify-center items-center'>
                     {isReportReady ? (
                         <Iframe
                             url={`https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`}
