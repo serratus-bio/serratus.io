@@ -4,7 +4,7 @@ import Iframe from 'react-iframe'
 import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
 
-export const Palmid_advanced = () => {
+export const Palmid = () => {
     const REQUEST_INTERVAL = 5000 // 5 sec
 
     const { fastaHash, loadUrlHash, isReportReady, checkReport, postFasta, clear } = useFasta()
