@@ -1,32 +1,28 @@
 {
-  "env": {
-    "browser": true,
-    "node": true,
-    "jest/globals": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:jest/recommended",
-    "plugin:react/recommended",
-    "plugin:prettier/recommended"
-  ],
-  "plugins": [
-    "import",
-    "prettier",
-    "react"
-  ],
-  "parser": "@typescript-eslint/parser",
-  "rules": {
-    "react/prop-types": "off", // TODO: consider after TypeScript conversion
-    "react/destructuring-assignment": "warn",
-    "no-unused-vars": ["warn", {"args": "after-used", "argsIgnorePattern": "^_"}],
-    "no-var": "warn",
-    "import/no-default-export": "warn",
-    "prettier/prettier": "warn" // always last
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
+    "env": {
+        "browser": true,
+        "node": true,
+        "jest/globals": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:jest/recommended",
+        "plugin:react/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "plugins": ["import", "prettier", "react"],
+    "parser": "@typescript-eslint/parser",
+    "rules": {
+        "react/prop-types": "off", // TODO: consider after TypeScript conversion
+        "react/destructuring-assignment": "warn",
+        "no-unused-vars": ["warn", { "args": "none", "argsIgnorePattern": "^_" }],
+        "no-var": "warn",
+        "import/no-default-export": "warn",
+        "prettier/prettier": "warn" // always last
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
-  }
 }
