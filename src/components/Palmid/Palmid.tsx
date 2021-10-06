@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Iframe from 'react-iframe'
 import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
+import { helpIcon } from 'common'
+
 // Global variables for webpage
 const s3Url = 'https://s3.amazonaws.com/openvirome.com'
 
@@ -22,6 +24,7 @@ export const Palmid = () => {
     const { parsedFasta, parsedFastaSequenceHeader, parsedFastaSequenceText } = useFastaParse(
         fastaInput
     )
+    const [isInfoCollapsed, setIsInfoCollapsed] = React.useState<boolean>(true)
     const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
 
     useEffect(() => {
@@ -66,11 +69,72 @@ export const Palmid = () => {
         <>
             <h1 className='text-3xl m-2 font-bold text-center '>palmID: Viral-RdRP Analysis</h1>
 
+            {/* Fasta Submission Form -------- */}
             <button
                 className='m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-0.5 collapse-button'
                 onClick={() => setIsFastaCollapsed(!isFastaCollapsed)}>
                 Sequence Submission
             </button>
+
+            {/* Help Information -------------- */}
+            <button
+                className='text-left collapse-button'
+                onClick={() => setIsInfoCollapsed(!isInfoCollapsed)}>
+                {helpIcon} Info
+            </button>
+            <div
+                className={`m-4 collapse-content ${isInfoCollapsed ? 'collapsed' : 'expanded'}`}
+                aria-expanded={isInfoCollapsed}>
+                <div className='grid grid-cols-2 gap-2'>
+                    <div>
+                        <br />
+                        <p>
+                            <code>palmID</code> [1] is an analysis suite for the classification and
+                            analysis of viral RNA-dependent RNA Polymerase (RdRP) input sequences,
+                            based on the <b>palmprint</b> barcoding sub-sequence [2].
+                        </p>
+                        <br />
+                        <p>
+                            Input sequence are cross-referenced to 145,000 species-level (clustered
+                            at 90% aa-identity) RdRP-palmprints in <code>palmDB</code> [3]. Each
+                            palmDB match is then cross-referenced to 5.7 million public sequencing
+                            libraries in the Sequence Read Archive to retrieve sample meta-data.
+                        </p>
+                        <br />
+                        <p>
+                            <b>References:</b>
+                        </p>
+                        <p>
+                            <u>
+                                <a href='https://github.com/ababaian/palmid'>[1] palmid Source</a>
+                            </u>
+                        </p>
+                        <p>
+                            <u>
+                                <a href='https://www.biorxiv.org/content/10.1101/2021.03.02.433648v1'>
+                                    [2] Ribovirus classification by a polymerase barcode sequence.
+                                    Babaian and Edgar, 2021.
+                                </a>
+                            </u>
+                        </p>
+                        <p>
+                            <u>
+                                <a href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'>
+                                    [3] Petabase-scale sequence alignment catalyses viral discovery.
+                                    Edgar et al, 2021.
+                                </a>
+                            </u>
+                        </p>
+                    </div>
+                    <div>
+                        <img
+                            src='/palm_structure_figure.png'
+                            alt='Palmprint'
+                            className='items-center justify-center'></img>
+                    </div>
+                </div>
+            </div>
+
             <div
                 id='fastaSubmission'
                 className={`m-4 p-4 collapse-content ${
@@ -129,6 +193,8 @@ export const Palmid = () => {
                     </button>
                 </div>
             </div>
+
+            {/* Report iFrame ------------- */}
             {isCheckReportTimedOut && !isReportReady && (
                 <div className='m-4 p-4 flex flex-col items-center justify-center'>
                     <p className='text-yellow-900 text-xl animate-pulse'>Request timed out...</p>
