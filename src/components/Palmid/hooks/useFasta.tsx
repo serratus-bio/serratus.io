@@ -37,6 +37,9 @@ export function useFasta(): FastaHook {
     async function postFasta(rnaSequence: string) {
         try {
             setIsReportReady(false)
+            setCheckReportRequestCount(0)
+            setIsCheckReportTimedOut(false)
+
             const response = await fetch(
                 'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda',
                 {
