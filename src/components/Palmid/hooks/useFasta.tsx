@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react'
+// Global variables for webpage
+const s3Url = 'https://s3.amazonaws.com/openvirome.com'
+const apiUrl = 'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda'
+
 interface FastaHook {
     fastaHash: string
     isPostFastaLoading: boolean
@@ -40,18 +44,15 @@ export function useFasta(): FastaHook {
             setCheckReportRequestCount(0)
             setIsCheckReportTimedOut(false)
 
-            const response = await fetch(
-                'https://3niuza5za3.execute-api.us-east-1.amazonaws.com/default/api-lambda',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        sequence: rnaSequence,
-                    }),
-                }
-            )
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    sequence: rnaSequence,
+                }),
+            })
             if (response.status === 200) {
                 const result = await response.text()
                 setFastaHash(result)
@@ -63,9 +64,7 @@ export function useFasta(): FastaHook {
 
     async function checkReport() {
         try {
-            const response = await fetch(
-                `https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`
-            )
+            const response = await fetch(`${s3Url}/${fastaHash}.html`)
             setCheckReportRequestCount((count) => count + 1)
             if (response.status === 200) {
                 setIsReportReady(true)

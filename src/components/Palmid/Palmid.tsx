@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Iframe from 'react-iframe'
-//import { SpinningCircles } from 'react-loading-icons'
 import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
+// Global variables for webpage
+const s3Url = 'https://s3.amazonaws.com/openvirome.com'
 
 export const Palmid = () => {
     const REQUEST_INTERVAL = 5000 // 5 sec
@@ -151,7 +152,7 @@ export const Palmid = () => {
                 <div className='min-h-screen flex-col m-8 p-4 b order-2 rounded flex justify-center items-center'>
                     {isReportReady ? (
                         <Iframe
-                            url={`https://s3.amazonaws.com/openvirome.com/${fastaHash}.html`}
+                            url={`${s3Url}/${fastaHash}.html`}
                             width='100%'
                             id='myId'
                             className='min-h-screen'
