@@ -170,6 +170,7 @@ export const Palmid = () => {
                         onClick={async () => {
                             setShowIframe(true)
                             setIsFastaCollapsed(!isFastaCollapsed)
+                            setIsInfoCollapsed(true)
                             await postFasta(parsedFasta)
                         }}>
                         Analyze Sequence
