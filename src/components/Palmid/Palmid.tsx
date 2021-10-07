@@ -95,10 +95,11 @@ export const Palmid = () => {
                         </p>
                         <br />
                         <p>
-                            Input sequence are cross-referenced to 145,000 species-level (clustered
-                            at 90% aa-identity) RdRP-palmprints in <code>palmDB</code> [3]. Each
-                            palmDB match is then cross-referenced to 5.7 million public sequencing
-                            libraries in the Sequence Read Archive to retrieve sample meta-data.
+                            Input sequence are cross-referenced to 145,000 species-level
+                            RdRP-palmprints in <code>palmDB</code> (clustered at 90% aa-identity)
+                            [3]. Each palmDB match is then cross-referenced to 5.7 million public
+                            sequencing libraries in the Sequence Read Archive to retrieve sample
+                            meta-data.
                         </p>
                         <br />
                         <p>
