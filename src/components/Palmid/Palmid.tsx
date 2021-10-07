@@ -228,15 +228,6 @@ export const Palmid = () => {
                     ) : (
                         <>
                             <div id='myLoad' className='justify-center'>
-                                {/*<SpinningCircles
-                                    fill='#0EA5FD'
-                                    fillOpacity={1}
-                                    width={200}
-                                    speed={1}
-                                    stroke='#0EA5FD'
-                                    strokeOpacity={1}
-                                    strokeWidth={2}
-                                />*/}
                                 <img
                                     src='/load_palmid.gif'
                                     alt='Loading gif'
