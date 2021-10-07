@@ -7,6 +7,13 @@ module.exports = {
             white: colors.white,
             gray: colors.blueGray,
             blue: colors.sky,
+            yellow: colors.yellow,
         },
     },
+    variants: {
+        backgroundColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+        textColor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+        cursor: ['responsive', 'hover', 'focus', 'active', 'disabled'],
+    },
+    plugins: [],
 }

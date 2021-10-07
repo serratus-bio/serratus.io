@@ -10,6 +10,7 @@ import { Trees } from '../components/Trees'
 import { Jbrowse } from '../pages/Jbrowse'
 import { Access } from '../pages/Access'
 import { Geo } from '../components/Geo'
+import { Palmid } from '../components/Palmid'
 
 export const routes = {
     home: {
@@ -44,6 +45,10 @@ export const routes = {
     geo: {
         path: '/geo',
         component: Geo,
+    },
+    palmid: {
+        path: '/palmid',
+        component: Palmid,
     },
     access: {
         path: '/access',
