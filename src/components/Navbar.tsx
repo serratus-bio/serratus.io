@@ -18,17 +18,10 @@ export const Navbar = () => {
                 <div className='justify-flex-end mt-1 mr-10'>
                     <NavLink
                         exact
-                        to={routes.nucleotideExplorer.path}
+                        to={routes.explorerIntro.path}
                         className='ml-10 hover:text-blue-800'
                         activeClassName='text-blue-600'>
-                        Explorer (NT)
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.rdrpExplorer.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Explorer (RdRP)
+                        Explorer
                     </NavLink>
                     <NavLink
                         exact

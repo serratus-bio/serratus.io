@@ -2,6 +2,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { Home } from '../components/Home'
+import { ExplorerIntro } from '../components/Explorer/ExplorerIntro'
 import { NucleotideExplorer } from '../components/Explorer/Nucleotide'
 import { RdrpExplorer } from '../components/Explorer/Rdrp'
 import { About } from '../components/About'
@@ -16,6 +17,11 @@ export const routes = {
     home: {
         path: '/',
         component: Home,
+        exact: true,
+    },
+    explorerIntro: {
+        path: '/explorer',
+        component: ExplorerIntro,
         exact: true,
     },
     nucleotideExplorer: {
@@ -53,11 +59,6 @@ export const routes = {
     access: {
         path: '/access',
         component: Access,
-    },
-    explorer: {
-        path: '/explorer',
-        component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/nt' }} />,
-        exact: true,
     },
     explorerRdrpOld: {
         path: '/explorer-rdrp',
