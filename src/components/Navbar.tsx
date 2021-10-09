@@ -25,24 +25,10 @@ export const Navbar = () => {
                     </NavLink>
                     <NavLink
                         exact
-                        to={routes.palmid.path}
+                        to={routes.beta.path}
                         className='ml-10 hover:text-blue-800'
                         activeClassName='text-blue-600'>
-                        palmID (beta)
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.geo.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Map (beta)
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.trees.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Trees (beta)
+                        Beta Tools
                     </NavLink>
                     <NavLink
                         exact
