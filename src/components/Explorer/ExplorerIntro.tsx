@@ -26,7 +26,7 @@ export const ExplorerIntro = () => {
             <div className='flex flex-col lg:flex-row'>
                 <AboutCard
                     link={routes.nucleotideExplorer.path}
-                    title='Explore Nucleotide (NT) search'
+                    title='Explore NT Search'
                     imgTop='/nt_search.png'
                     imgTopAlt='serratus nucleotide search'>
                     <p className='my-2'>
@@ -52,9 +52,9 @@ export const ExplorerIntro = () => {
                 <hr className='block sm:hidden' />
                 <AboutCard
                     link={routes.rdrpExplorer.path}
-                    title='Explore RdRP search'
+                    title='Explore RdRP Search'
                     imgTop='/rdrp_search.png'
-                    imgTopAlt='serratus nucleotide search'>
+                    imgTopAlt='serratus rdrp search'>
                     <p className='my-2'>
                         In January 2021, we aligned 5,686,715 runs against known viral RdRP amino
                         acid sequences, completing this search within 11 days.
@@ -86,7 +86,9 @@ const AboutCard = ({ link, imgTop, imgTopAlt, title, children }: Props) => {
     return (
         <div className={`m-4 sm:py-10 lg:w-1/2 ${classesBoxBorder}`}>
             <div className='font-bold text-xl mb-2 text-center text-blue-600'>
-                <NavLink to={link}>{title}</NavLink>
+                <button className='bg-gray-100 hover:bg-gray-300 mx-2 py-1 px-4 rounded'>
+                    <NavLink to={link}>{title}</NavLink>
+                </button>
             </div>
             <img className='m-auto' src={imgTop} alt={imgTopAlt} />
             <div className='m-6'>
