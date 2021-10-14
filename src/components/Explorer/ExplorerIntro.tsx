@@ -16,10 +16,9 @@ export const ExplorerIntro = () => {
             <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
                 <h1 className='text-3xl font-bold text-center'>Serratus Explorer</h1>
                 <p className='my-3 text-xl'>
-                    Our search space spans data deposited over 13 years from every continent and
-                    ocean, and all kingdoms of life. We applied Serratus in two of many possible
-                    configurations. Serratus Explorer currently serves these results in an
-                    interactive web browser.
+                    Explore the raw sequencing virome of millions of samples collected by the world
+                    biological community. This data spans the past 13 years from every continent,
+                    ocean and kingdom of life.
                 </p>
             </div>
             <hr className='block sm:hidden' />
@@ -30,24 +29,23 @@ export const ExplorerIntro = () => {
                     imgTop='/nt_search.png'
                     imgTopAlt='serratus nucleotide search'>
                     <p className='my-2'>
-                        To create a collection of viral pangenomes, a comprehensive set of complete
-                        and partial genomes representing the genetic diversity of each vertebrate
-                        viral family, we used two approaches.
+                        The <b>NT Search</b> is a high-sensitivity nucleotide search of known
+                        complete genomes from all RefSeq vertebrate viruses (N = 2,849) (excluding
+                        retroviruses) and GenBank Coronaviridae sequences (N = 10,101). Sequences
+                        are masked for low-complexity regions and plasmid contaminants.
                     </p>
                     <p className='my-2'>
-                        {
-                            'For Coronaviridae, we combined all RefSeq (n = 64) and GenBank (n = 37,451) records matching the NCBI Nucleotid server query "txid11118[Organism:exp]" (date accessed: June 1st 2020). Sequences <200 nt were excluded as well as sequences identified to contain non-CoV contaminants during preliminary testing (such as plasmid DNA or ribosomal RNA fragments). Remaining sequences were clustered at 99% identity with UCLUST and masked by Dustmasker with --window 30 and --window 64. The final query contained 10,101 CoV sequences.'
-                        }
+                        3.8 million SRA sequencing libraries were aligned to <i>cov3ma</i> using
+                        <i>bowtie2</i>.
                     </p>
-                    <p className='my-2'>
-                        {
-                            'For all other vertebrate viral family pangenomes, RefSeq sequences (n = 2,849) were downloaded from the NCBI Nucleotide server with the query "Viruses[Organism] AND srcdb_refseq[PROP] NOT wgs[PROP] NOT cellular organisms[ORGN] NOT AC_000001:AC_999999[PACC] AND ("vhost human"[Filter] AND "vhost vertebrates"[Filter])" (date accessed: May 17th 2020). Retroviruses (n = 80) were excluded as preliminary testing yielded excessive numbers of alignments to transcribed endogenous retroviruses. Each sequence was annotated with its taxonomic family according to its RefSeq record; those for which no family was assigned by RefSeq (n = 81) were designated as "unknown".'
-                        }
-                    </p>
-                    <p className='my-2'>
-                        All AMR sequences associated with the CARD database were clustered at 95%
-                        nucleotide identity and included.
-                    </p>
+                    <a
+                        href='https://github.com/ababaian/serratus/wiki/ref_cov3ma'
+                        rel='noreferrer'
+                        target='_blank'>
+                        <u>
+                            More detail on the <i>cov3ma</i> search query.
+                        </u>
+                    </a>
                 </AboutCard>
                 <hr className='block sm:hidden' />
                 <AboutCard
@@ -56,18 +54,23 @@ export const ExplorerIntro = () => {
                     imgTop='/rdrp_search.png'
                     imgTopAlt='serratus rdrp search'>
                     <p className='my-2'>
-                        In January 2021, we aligned 5,686,715 runs against known viral RdRP amino
-                        acid sequences, completing this search within 11 days.
+                        The <b>RdRP Search</b> is a deep search for novel RNA viruses focusing on
+                        the hallmark gene RNA-dependent RNA Polymerase (RdRP). All publicly
+                        available and full-length RdRP sequences were taken and clustered at 90%
+                        amino-acid identity to yield <i>rdrp1</i> (N = 14,653).
                     </p>
                     <p className='my-2'>
-                        Viral RdRP is a hallmark gene of RNA viruses which lack a DNA stage of
-                        replication. We identified RdRP by a well-conserved amino acid sub-sequence
-                        we call the “palmprint”. Palmprints are delineated by three essential motifs
-                        which together form the catalytic core in the RdRP structure. We constructed
-                        species-like operational taxonomic units (sOTUs) by clustering palmprints at
-                        a threshold of 90% amino-acid identity, chosen to approximate taxonomic
-                        species.
+                        5.7 million SRA sequencing libraries were aligned to <i>rdrp1</i> using
+                        <i>DIAMOND</i>.
                     </p>
+                    <a
+                        href='https://github.com/ababaian/serratus/wiki/ref_rdrp1'
+                        rel='noreferrer'
+                        target='_blank'>
+                        <u>
+                            More detail on the <i>rdrp1</i> search query.
+                        </u>
+                    </a>
                 </AboutCard>
             </div>
         </div>
