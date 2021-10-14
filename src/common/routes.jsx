@@ -5,7 +5,7 @@ import { Home } from '../components/Home'
 import { ExplorerIntro } from '../components/Explorer/ExplorerIntro'
 import { NucleotideExplorer } from '../components/Explorer/Nucleotide'
 import { RdrpExplorer } from '../components/Explorer/Rdrp'
-import { BetaIntro } from '../components/BetaIntro'
+import { ToolIntro } from '../components/ToolIntro'
 import { About } from '../components/About'
 import { Team } from '../components/Team'
 import { Trees } from '../components/Trees'
@@ -33,9 +33,9 @@ export const routes = {
         path: '/explorer/rdrp',
         component: RdrpExplorer,
     },
-    beta: {
-        path: '/beta-tools',
-        component: BetaIntro,
+    toolkit: {
+        path: '/toolkit',
+        component: ToolIntro,
     },
     about: {
         path: '/about',

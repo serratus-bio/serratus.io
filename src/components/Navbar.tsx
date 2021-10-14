@@ -25,10 +25,10 @@ export const Navbar = () => {
                     </NavLink>
                     <NavLink
                         exact
-                        to={routes.beta.path}
+                        to={routes.toolkit.path}
                         className='ml-10 hover:text-blue-800'
                         activeClassName='text-blue-600'>
-                        Beta Tools
+                        Toolkit
                     </NavLink>
                     <NavLink
                         exact
