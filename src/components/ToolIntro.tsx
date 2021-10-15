@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
-import { classesBoxBorder } from 'common'
+import { classesBoxBorder, ExternalLink, externalLinkIcon } from 'common'
 import { routes } from 'common/routes'
 
 export const ToolIntro = () => {
@@ -56,6 +56,7 @@ export const ToolIntro = () => {
                 <hr className='block sm:hidden' />
                 <AboutCard
                     link='https://github.com/rcedgar/palmscan'
+                    external={true}
                     title='palmscan: RdRP Barcode Identification'
                     imgTop='/palm_structure_figure.png'
                     imgTopAlt='palmprint structure'>
@@ -66,6 +67,7 @@ export const ToolIntro = () => {
                 </AboutCard>
                 <AboutCard
                     link='https://github.com/rcedgar/palmdb'
+                    external={true}
                     title='palmDB: RdRP Palmprint Database'
                     imgTop='/palmdb_icon.png'
                     imgTopAlt='palmdb icon'>
@@ -92,17 +94,23 @@ export const ToolIntro = () => {
 
 type Props = {
     link: string
+    external?: boolean
     imgTop: string
     imgTopAlt: string
     title: string
     children: any
 }
 
-const AboutCard = ({ link, imgTop, imgTopAlt, title, children }: Props) => {
+const AboutCard = ({ link, external, imgTop, imgTopAlt, title, children }: Props) => {
     return (
         <div className={`m-4 sm:py-10 lg:w-1/3 ${classesBoxBorder}`}>
             <div className='font-bold text-xl mb-2 text-center text-blue-600'>
-                <NavLink to={link}>{title}</NavLink>
+                {!external && <NavLink to={link}>{title}</NavLink>}
+                {external && (
+                    <ExternalLink href={link}>
+                        {title} {externalLinkIcon}
+                    </ExternalLink>
+                )}
             </div>
             <img className='w-5/6 m-auto' src={imgTop} alt={imgTopAlt} />
             <div className='m-6'>
