@@ -5,17 +5,71 @@ import { routes } from 'common/routes'
 
 export const Navbar = () => {
     return (
-        <div className='flex font-montserrat font-medium'>
-            <div className='flex sm:hidden w-full justify-center items-center text-center h-16 bg-gray-50 border-b-2 border-gray-200'>
-                <NavLink exact to={routes.home.path} className='block w-20 h-8 m-auto'>
-                    <img src='/logo.png' alt='logo' />
-                </NavLink>
+        <>
+            <div className='flex font-montserrat font-medium'>
+                <div className='hidden w-full justify-center items-center text-center h-16 bg-gray-50 border-b-2 border-gray-200'>
+                    <NavLink exact to={routes.home.path} className='block w-20 h-8 m-auto'>
+                        <img src='/logo.png' alt='logo' />
+                    </NavLink>
+                </div>
+                <div className='hidden lg:flex flex-row w-screen bg-gray-50 sm:p-4 justify-between z-10 border-b-2  border-gray-200'>
+                    <NavLink exact to={routes.home.path} className='ml-10 w-20 h-8 '>
+                        <img src='/logo.png' alt='logo'></img>
+                    </NavLink>
+                    <div className='justify-flex-end mt-1 mr-10'>
+                        <NavLink
+                            exact
+                            to={routes.explorerIntro.path}
+                            className='ml-10 hover:text-blue-800'
+                            activeClassName='text-blue-600'>
+                            Explorer
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.toolkit.path}
+                            className='ml-10 hover:text-blue-800'
+                            activeClassName='text-blue-600'>
+                            Toolkit
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.about.path}
+                            className='ml-10 hover:text-blue-800'
+                            activeClassName='text-blue-600'>
+                            About
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.team.path}
+                            className='ml-10 hover:text-blue-800'
+                            activeClassName='text-blue-600'>
+                            Team
+                        </NavLink>
+                        <ExternalLink
+                            href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'
+                            className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
+                            Preprint
+                        </ExternalLink>
+                        <ExternalLink
+                            href='https://github.com/ababaian/serratus/wiki'
+                            className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
+                            Wiki
+                        </ExternalLink>
+                    </div>
+                </div>
             </div>
-            <div className='hidden sm:flex flex-row w-screen bg-gray-50 sm:p-4 justify-between z-10 border-b-2  border-gray-200'>
-                <NavLink exact to={routes.home.path} className='ml-10 w-20 h-8 '>
-                    <img src='/logo.png' alt='logo'></img>
-                </NavLink>
-                <div className='justify-flex-end mt-1 mr-10'>
+            <div className='flex flex-col min-w-full lg:hidden'>
+                <div className='flex justify-end'>
+                    <button id='hamburger'>
+                        <img
+                            className='toggle block'
+                            src='https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png'
+                            width='40'
+                            height='40'
+                        />
+                    </button>
+                </div>
+                <div className='lg:hidden flex flex-col'>
                     <NavLink
                         exact
                         to={routes.explorerIntro.path}
@@ -46,16 +100,16 @@ export const Navbar = () => {
                     </NavLink>
                     <ExternalLink
                         href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'
-                        className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
+                        className='ml-10 hover:text-blue-800'>
                         Preprint
                     </ExternalLink>
                     <ExternalLink
                         href='https://github.com/ababaian/serratus/wiki'
-                        className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
+                        className='ml-10 hover:text-blue-800'>
                         Wiki
                     </ExternalLink>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
