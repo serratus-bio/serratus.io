@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import { NavLink } from 'react-router-dom'
 import { searchIcon, externalLinkIcon, ExternalLink } from 'common'
 import { routes } from 'common/routes'
+import { Navbar } from './Navbar'
 
 export const Home = () => {
     const headTags = (
@@ -13,6 +14,8 @@ export const Home = () => {
     return (
         <div>
             {headTags}
+            <Navbar></Navbar>
+
             <img
                 src='/serratus.jpg'
                 alt='serratus mountain'
