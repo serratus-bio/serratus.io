@@ -13,7 +13,7 @@ export const Navbar = () => {
                         id='hamburger'
                         onClick={() => setHamburgerPressed(!hamburgerButtonPressed)}>
                         <img
-                            className='toggle block'
+                            className='block'
                             src='https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png'
                             width='40'
                             height='40'
@@ -23,13 +23,13 @@ export const Navbar = () => {
                 <div
                     className={`${
                         hamburgerButtonPressed ? 'flex flex-col' : 'hidden'
-                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-4 items-center lg:justify-between gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
-                    <div className='w-20 h-8 flex justify-items-center align-middle'>
+                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-4 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
+                    <div className='w-20 h-8 flex align-middle'>
                         <NavLink exact to={routes.home.path}>
                             <img src='/logo.png' alt='logo'></img>
                         </NavLink>
                     </div>
-                    <div className='flex flex-col items-center gap-y-2 lg:flex-row mt-1 mr-10'>
+                    <div className='flex flex-col gap-y-2 lg:flex-row mt-1 mr-10 items-center'>
                         <NavLink
                             exact
                             to={routes.explorerIntro.path}

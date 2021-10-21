@@ -3,6 +3,8 @@ import ReactGA from 'react-ga'
 import { Route, Switch } from 'react-router-dom'
 import { routes } from './common/routes'
 import { Footer } from './components/Footer'
+import { Navbar } from './components/Navbar'
+
 import './styles/main.css'
 
 export const App = () => {
@@ -13,6 +15,7 @@ export const App = () => {
 
     return (
         <div>
+            <Navbar></Navbar>
             <Switch>
                 {Object.values(routes).map((route) => (
                     <Route
