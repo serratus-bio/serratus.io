@@ -33,39 +33,39 @@ export const Navbar = () => {
                         <NavLink
                             exact
                             to={routes.explorerIntro.path}
-                            className='ml-10 hover:text-blue-800'
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
                             activeClassName='text-blue-600'>
                             Explorer
                         </NavLink>
                         <NavLink
                             exact
                             to={routes.toolkit.path}
-                            className='ml-10 hover:text-blue-800'
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
                             activeClassName='text-blue-600'>
                             Toolkit
                         </NavLink>
                         <NavLink
                             exact
                             to={routes.about.path}
-                            className='ml-10 hover:text-blue-800'
+                            className='ml-10 hover:text-blue-800 rounded transition duration-300 ease-in-out'
                             activeClassName='text-blue-600'>
                             About
                         </NavLink>
                         <NavLink
                             exact
                             to={routes.team.path}
-                            className='ml-10 hover:text-blue-800'
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
                             activeClassName='text-blue-600'>
                             Team
                         </NavLink>
                         <ExternalLink
                             href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'
-                            className='ml-10 hover:text-blue-800 lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
                             Preprint
                         </ExternalLink>
                         <ExternalLink
                             href='https://github.com/ababaian/serratus/wiki'
-                            className='ml-10 hover:text-blue-800 lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
                             Wiki
                         </ExternalLink>
                     </div>
