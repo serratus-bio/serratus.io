@@ -1,14 +1,16 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-import { Home } from '../pages/Home'
+import { Home } from '../components/Home'
+import { ExplorerIntro } from '../components/Explorer/ExplorerIntro'
 import { NucleotideExplorer } from '../components/Explorer/Nucleotide'
 import { RdrpExplorer } from '../components/Explorer/Rdrp'
-import { About } from '../pages/About'
-import { Team } from '../pages/Team'
+import { ToolIntro } from '../components/ToolIntro'
+import { About } from '../components/About'
+import { Team } from '../components/Team'
 import { Trees } from '../components/Trees'
-import { Jbrowse } from '../pages/Jbrowse'
-import { Access } from '../pages/Access'
+import { Jbrowse } from '../components/Jbrowse'
+import { Access } from '../components/Access'
 import { Geo } from '../components/Geo'
 import { Palmid } from '../components/Palmid'
 
@@ -18,6 +20,11 @@ export const routes = {
         component: Home,
         exact: true,
     },
+    explorerIntro: {
+        path: '/explorer',
+        component: ExplorerIntro,
+        exact: true,
+    },
     nucleotideExplorer: {
         path: '/explorer/nt',
         component: NucleotideExplorer,
@@ -25,6 +32,10 @@ export const routes = {
     rdrpExplorer: {
         path: '/explorer/rdrp',
         component: RdrpExplorer,
+    },
+    toolkit: {
+        path: '/toolkit',
+        component: ToolIntro,
     },
     about: {
         path: '/about',
@@ -53,11 +64,6 @@ export const routes = {
     access: {
         path: '/access',
         component: Access,
-    },
-    explorer: {
-        path: '/explorer',
-        component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/nt' }} />,
-        exact: true,
     },
     explorerRdrpOld: {
         path: '/explorer-rdrp',
