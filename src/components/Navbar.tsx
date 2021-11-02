@@ -10,7 +10,7 @@ export const Navbar = () => {
         <>
             <div className='min-h-full z-10'>
                 <div className='flex lg:hidden justify-between items-center'>
-                    <div className='w-20 h-8 m-3 flex'>
+                    <div className='w-20 h-8 m-3'>
                         <NavLink exact to={routes.home.path}>
                             <img src='/logo.png' alt='logo'></img>
                         </NavLink>
