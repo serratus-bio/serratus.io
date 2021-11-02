@@ -28,7 +28,7 @@ export const Home = () => {
                     </h2>
                     <NavLink
                         to={routes.explorerIntro.path}
-                        className='border border-white flex text-xl justify-center items-center w-auto  px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white mt-8'>
+                        className='border border-white flex text-xl justify-center items-center w-auto px-4 py-2 rounded-md hover:text-blue-600 hover:bg-white mt-8'>
                         {searchIcon} Explore
                     </NavLink>
                     <ExternalLink
