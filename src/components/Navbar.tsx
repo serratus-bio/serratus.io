@@ -2,23 +2,21 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ExternalLink } from 'common'
 import { routes } from 'common/routes'
+import Hamburger from 'hamburger-react'
 
 export const Navbar = () => {
     const [hamburgerButtonPressed, setHamburgerPressed] = useState<boolean>(false)
     return (
         <>
-            <div className='relative min-h-full z-10'>
-                <div className='absolute top-0 right-0 lg:hidden'>
-                    <button
-                        id='hamburger'
-                        onClick={() => setHamburgerPressed(!hamburgerButtonPressed)}>
-                        <img
-                            className='block'
-                            src='https://img.icons8.com/fluent-systems-regular/2x/menu-squared-2.png'
-                            width='40'
-                            height='40'
-                        />
-                    </button>
+            <div className='min-h-full z-10'>
+                <div className='flex lg:hidden justify-between items-center'>
+                    <div className='w-20 h-8 m-3 flex'>
+                        <NavLink exact to={routes.home.path}>
+                            <img src='/logo.png' alt='logo'></img>
+                        </NavLink>
+                    </div>
+                    <Hamburger
+                        onToggle={() => setHamburgerPressed(!hamburgerButtonPressed)}></Hamburger>
                 </div>
                 <div
                     className={`${
