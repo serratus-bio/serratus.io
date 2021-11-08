@@ -22,13 +22,12 @@ export const Navbar = () => {
                     className={`${
                         hamburgerButtonPressed ? 'flex flex-col' : 'hidden'
                     } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-4 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
-                    {!hamburgerButtonPressed && (
-                        <div className='w-20 h-8 flex align-middle'>
-                            <NavLink exact to={routes.home.path}>
-                                <img src='/logo.png' alt='logo'></img>
-                            </NavLink>
-                        </div>
-                    )}
+                    <div className='hidden w-20 h-8 lg:flex align-middle'>
+                        <NavLink exact to={routes.home.path}>
+                            <img src='/logo.png' alt='logo'></img>
+                        </NavLink>
+                    </div>
+
                     <div className='flex flex-col gap-y-2 lg:flex-row mt-1 mr-10 items-center'>
                         <NavLink
                             exact
