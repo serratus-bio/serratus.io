@@ -110,8 +110,16 @@ export const Trees = () => {
                         className={
                             loading
                                 ? 'invisible'
-                                : 'flex flex-row justify-center items-center w-full'
+                                : 'flex flex-col justify-center items-center w-full'
                         }>
+                        <div className='text-center my-2'>
+                            Some of these trees are large. To read tip labels, you may have to the
+                            SVG image file{' '}
+                            <ExternalLink href={msaSvgLink} className='text-blue-600'>
+                                here
+                            </ExternalLink>
+                            .
+                        </div>
                         <img
                             className='w-3/4 lg:w-1/3'
                             src={msaSvgLink}
