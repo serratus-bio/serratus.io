@@ -25,7 +25,7 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
+    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg-2021-11-20/${selected[searchLevel]}.svg`
     const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`
     const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`
     const reactMsaViewParams = {
