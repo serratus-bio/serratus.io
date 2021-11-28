@@ -21,7 +21,7 @@ export const Navbar = () => {
                 <div
                     className={`${
                         hamburgerButtonPressed ? 'flex flex-col' : 'hidden'
-                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-4 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
+                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-2 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
                     <div className='hidden w-20 h-8 lg:flex align-middle'>
                         <NavLink exact to={routes.home.path}>
                             <img src='/logo.png' alt='logo'></img>
