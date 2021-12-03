@@ -5,7 +5,8 @@
             "members": [
                 {
                     "name": "Artem Babaian",
-                    "email": "ababaian AT bccrc DOT com",
+                    "affiliation": "University of Cambridge",
+                    "email": "ab27788 AT cam DOT ac DOT uk",
                     "github": "ababaian"
                 },
                 {
@@ -71,6 +72,11 @@
                     "affiliation": "University of British Columbia",
                     "email": "gnovakovsky AT cmmt DOT ubc DOT ca",
                     "github": "fransilvion"
+                },
+                {
+                    "name": "Binoy Subhakumar",
+                    "email": "binoyskumar AT gmail DOT com",
+                    "github": "binoyskumar92"
                 }
             ]
         },
