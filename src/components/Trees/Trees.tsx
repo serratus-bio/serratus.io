@@ -25,10 +25,9 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg-2021-11-21/svg_noscale/${selected[searchLevel]}.svg`
-    const msaSvgScaledLink = `https://s3.amazonaws.com/serratus.io/trees/svg-2021-11-21/svg_scale/${selected[searchLevel]}.svg`
-    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`
-    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`
+    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/svg/${selected[searchLevel]}.svg`
+    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
+    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -96,6 +95,13 @@ export const Trees = () => {
                         download={true}
                     />
                     <LinkButton
+                        link={msaSvgLink}
+                        text='SVG'
+                        icon={downloadIcon}
+                        download={true}
+                        newTab={true}
+                    />
+                    <LinkButton
                         link={reactMsaViewLink}
                         text='MSA Viewer'
                         icon={externalLinkIcon}
@@ -114,16 +120,8 @@ export const Trees = () => {
                                 : 'flex flex-col justify-center items-center w-full'
                         }>
                         <div className='text-center my-2'>
-                            Some of these trees are large. To read tip labels, you may have to the
-                            SVG image file{' '}
-                            <ExternalLink href={msaSvgLink} className='text-blue-600'>
-                                here (constant size)
-                            </ExternalLink>
-                            or{' '}
-                            <ExternalLink href={msaSvgScaledLink} className='text-blue-600'>
-                                here (size scaled to # leaves)
-                            </ExternalLink>
-                            .
+                            Some of these trees are large. To read tip labels, use the buttons above
+                            to open the external MSA Viewer or download the SVG.
                         </div>
                         <img
                             className='w-3/4 lg:w-1/3'
