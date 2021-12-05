@@ -25,9 +25,9 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
-    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`
-    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`
+    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/svg/${selected[searchLevel]}.svg`
+    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
+    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -95,6 +95,13 @@ export const Trees = () => {
                         download={true}
                     />
                     <LinkButton
+                        link={msaSvgLink}
+                        text='SVG'
+                        icon={downloadIcon}
+                        download={true}
+                        newTab={true}
+                    />
+                    <LinkButton
                         link={reactMsaViewLink}
                         text='MSA Viewer'
                         icon={externalLinkIcon}
@@ -110,29 +117,17 @@ export const Trees = () => {
                         className={
                             loading
                                 ? 'invisible'
-                                : 'flex flex-row justify-center items-center w-full'
+                                : 'flex flex-col justify-center items-center w-full'
                         }>
+                        <div className='text-center my-2'>
+                            Some of these trees are large. To read tip labels, use the buttons above
+                            to open the external MSA Viewer or download the SVG.
+                        </div>
                         <img
                             className='w-3/4 lg:w-1/3'
                             src={msaSvgLink}
                             onLoad={() => setLoading(false)}
                         />
-                        <div className='flex flex-col'>
-                            <div className='flex flex-row'>
-                                <span
-                                    className='w-5 h-5 mr-2'
-                                    style={{ backgroundColor: '#017500' }}
-                                />
-                                GenBank / Known RdRP
-                            </div>
-                            <div className='flex flex-row'>
-                                <span
-                                    className='w-5 h-5 mr-2'
-                                    style={{ backgroundColor: '#ff03ff' }}
-                                />
-                                Serratus RdRP
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
