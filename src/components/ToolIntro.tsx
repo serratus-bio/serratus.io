@@ -43,7 +43,7 @@ export const ToolIntro = () => {
                 <AboutCard
                     link={routes.trees.path}
                     title='Trees and Alignments (beta)'
-                    imgTop='/tree_orders.png'
+                    imgTop='/trees_screenshot.png'
                     imgTopAlt='trees screenshot'>
                     <p className='my-2'>
                         Wade through the procedurally phylogenetic trees and multiple-sequence
