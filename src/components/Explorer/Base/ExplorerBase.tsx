@@ -26,10 +26,10 @@ export const ExplorerBase = ({ location }: { location: Location }) => {
     // set filter ranges / defaults
     const inputIdentityLims =
         parseRange(urlParams.get('identity'), context.domain.identity) ||
-        context.defaultFilterRanges.identity
+        context.defaultFilterRangesBySearchLevel[searchLevel].identity
     const inputScoreLims =
         parseRange(urlParams.get('score'), context.domain.score) ||
-        context.defaultFilterRanges.score
+        context.defaultFilterRangesBySearchLevel[searchLevel].score
     const identityLimsRef = React.useRef(inputIdentityLims)
     const scoreLimsRef = React.useRef(inputScoreLims)
 
