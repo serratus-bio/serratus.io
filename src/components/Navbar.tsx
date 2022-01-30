@@ -58,9 +58,9 @@ export const Navbar = () => {
                             Team
                         </NavLink>
                         <ExternalLink
-                            href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'
+                            href='https://www.nature.com/articles/s41586-021-04332-2'
                             className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
-                            Preprint
+                            Paper
                         </ExternalLink>
                         <ExternalLink
                             href='https://github.com/ababaian/serratus/wiki'
