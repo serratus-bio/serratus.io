@@ -17,6 +17,12 @@ export const ExplorerBase = ({ location }: { location: Location }) => {
     const [inputSearchLevel, inputSearchLevelValue] = getInputSearchLevel(searchLevels, urlParams)
     const searchLevelProvided = Boolean(inputSearchLevel)
 
+    // values that change with user input (QueryBuilder)
+    // family must be valid for initial chart render
+    const [searchLevel, setSearchLevel] = React.useState(inputSearchLevel || 'family')
+    const [searchLevelValue, setSearchLevelValue] = React.useState(
+        inputSearchLevelValue || 'Coronaviridae'
+    )
     // set filter ranges / defaults
     const inputIdentityLims =
         parseRange(urlParams.get('identity'), context.domain.identity) ||
@@ -24,13 +30,6 @@ export const ExplorerBase = ({ location }: { location: Location }) => {
     const inputScoreLims =
         parseRange(urlParams.get('score'), context.domain.score) ||
         context.defaultFilterRanges.score
-
-    // values that change with user input (QueryBuilder)
-    // family must be valid for initial chart render
-    const [searchLevel, setSearchLevel] = React.useState(inputSearchLevel || 'family')
-    const [searchLevelValue, setSearchLevelValue] = React.useState(
-        inputSearchLevelValue || 'Coronaviridae'
-    )
     const identityLimsRef = React.useRef(inputIdentityLims)
     const scoreLimsRef = React.useRef(inputScoreLims)
 
