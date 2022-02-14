@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
 import { getRunTitle } from '../TitleHelpers'
 import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
+import * as Utils from 'common/utils'
 
+import SimpleTable from 'components/Commons/SimpleTable'
 type Props = {
     runId: string
     filters: Filters
@@ -13,6 +15,16 @@ type Props = {
 
 export const RunLookup = ({ runId, filters }: Props) => {
     const context = React.useContext(BaseContext)
+    const headerData = {
+        run_id: 'Run_Id',
+        assembly_node: 'Node',
+        palm_id: 'Palm_Id',
+        percent_identity: 'Identity',
+        evalue: 'Evalue',
+        coverage: 'Coverage',
+    }
+
+    const [tableData, setTableData] = useState<JSON[]>()
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
     const [pageTitle, setPageTitle] = React.useState('')
     const drillDownCallback: DrillDownCallback = function (familyId) {
@@ -32,9 +44,21 @@ export const RunLookup = ({ runId, filters }: Props) => {
     React.useEffect(() => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
+        callApi(runId).then((data) => {
+            const filteredData = Utils.filterObject(data, Object.keys(headerData))
+            setTableData(filteredData)
+        })
+        return () => {
+            setTableData([])
+        }
     }, [runId])
 
     const LinkButtons = context.result.LinkButtons
+
+    async function callApi(runId: string) {
+        const result = await fetch(`https://api.serratus.io/palmprint/run=${runId}`)
+        return result.json()
+    }
 
     const instructions = (
         <div className='text-center'>Click a family heatmap to view sequence-level matches</div>
@@ -62,6 +86,8 @@ export const RunLookup = ({ runId, filters }: Props) => {
                     />
                 </div>
             </div>
+            <SimpleTable data={tableData} header={headerData}></SimpleTable>
+
             <hr className='mb-4' />
             {!sequenceResult ? instructions : sequenceResult}
         </>

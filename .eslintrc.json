@@ -18,7 +18,13 @@
         "no-unused-vars": ["warn", { "args": "after-used", "argsIgnorePattern": "^_" }],
         "no-var": "warn",
         "import/no-default-export": "warn",
-        "prettier/prettier": "warn" // always last
+
+        "prettier/prettier": [
+            "warn", // always last
+            {
+                "endOfLine": "auto"
+            }
+        ]
     },
     "settings": {
         "react": {
