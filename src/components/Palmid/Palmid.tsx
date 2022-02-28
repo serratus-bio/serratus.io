@@ -26,7 +26,17 @@ export const Palmid = () => {
     )
     const [isInfoCollapsed, setIsInfoCollapsed] = React.useState<boolean>(true)
     const [isFastaCollapsed, setIsFastaCollapsed] = React.useState<boolean>(true)
-
+    const search = window.location.search
+    const params = new URLSearchParams(search)
+    const input = params.get('fastaInput')
+    useEffect(() => {
+        if (input) {
+            setFastaInput(input)
+        }
+        return () => {
+            setFastaInput('')
+        }
+    }, [input])
     useEffect(() => {
         let interval: any
 

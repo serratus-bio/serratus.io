@@ -5,9 +5,9 @@ import { getRunTitle } from '../TitleHelpers'
 import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
-import * as Utils from 'common/utils'
 
-import SimpleTable from 'components/Commons/SimpleTable'
+import PalmPrintsTable from './PalmPrintsTable'
+
 type Props = {
     runId: string
     filters: Filters
@@ -45,8 +45,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
         callApi(runId).then((data) => {
-            const filteredData = Utils.filterObject(data, Object.keys(headerData))
-            setTableData(filteredData)
+            setTableData(data)
         })
         return () => {
             setTableData([])
@@ -93,7 +92,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
             <div className='text-center font-semibold text-lg p-2'>
                 RdRp Palmprints in {`${runId}`}
             </div>
-            <SimpleTable data={tableData} header={headerData}></SimpleTable>
+            <PalmPrintsTable data={tableData} header={headerData}></PalmPrintsTable>
         </>
     )
 }
