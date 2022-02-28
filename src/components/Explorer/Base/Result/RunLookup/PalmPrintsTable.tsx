@@ -9,9 +9,8 @@ interface PalmPrintsTableProps {
     header: { [key: string]: string }
 }
 
-const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
+export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
     const [filteredData, setFilteredData] = useState<any>([])
-    const [sequence, setSequence] = useState<string>('')
     useEffect(() => {
         if (data && data.length > 0) {
             setFilteredData(Utils.filterObject(data, Object.keys(header)))
@@ -28,7 +27,7 @@ const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                                     <table className='min-w-full divide-y border-2 border-orange-200  divide-gray-200 table-fixed dark:divide-gray-700'>
                                         <thead className='bg-orange-200 dark:bg-gray-700'>
                                             <tr>
-                                                {Object.values(header).map((e, index) => {
+                                                {Object.values(header).map((e) => {
                                                     return (
                                                         <>
                                                             <th
@@ -109,5 +108,3 @@ const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
         </>
     )
 }
-
-export default PalmPrintsTable

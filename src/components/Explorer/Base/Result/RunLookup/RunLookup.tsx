@@ -6,7 +6,7 @@ import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 
-import PalmPrintsTable from './PalmPrintsTable'
+import { PalmPrintsTable } from './PalmPrintsTable'
 
 type Props = {
     runId: string

@@ -1,5 +1,5 @@
 export const filterObject = (data: any[], keys: string[]): any[] => {
-    var newObjArr: any[] = []
+    let newObjArr: any[] = []
     data.forEach((e) => {
         let newObj: any = new Object()
         keys.forEach((k) => {
