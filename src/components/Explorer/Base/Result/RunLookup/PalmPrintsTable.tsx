@@ -74,7 +74,7 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                                                                                         className='py-4 px-6 text-sm font-medium text-right whitespace-nowrap'>
                                                                                         <NavLink
                                                                                             className='text-blue-600 dark:text-blue-500 hover:underline'
-                                                                                            to={`%3E${routes.palmid.path}?fastaInput=${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}>
+                                                                                            to={`${routes.palmid.path}?fastaInput=%3E${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}>
                                                                                             Analyse
                                                                                         </NavLink>
                                                                                     </td>
