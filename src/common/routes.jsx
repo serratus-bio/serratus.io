@@ -69,4 +69,11 @@ export const routes = {
         path: '/explorer-rdrp',
         component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/rdrp' }} />,
     },
+    community: {
+        path: '/community',
+        component: () => {
+            window.location.href = 'https://forms.gle/jq5V5TqvAAT7bfuf9'
+            return null
+        },
+    },
 }
