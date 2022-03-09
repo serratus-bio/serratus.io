@@ -1,8 +1,8 @@
 import * as React from 'react'
-import * as Utils from '../../../../../common/utils'
+import * as Utils from 'common/utils'
 import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
-import { routes } from '../../../../../common/routes'
+import { routes } from 'common/routes'
 
 interface PalmPrintsTableProps {
     data: any[] | undefined

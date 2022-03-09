@@ -88,7 +88,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
 
             <hr className='mb-4' />
             {!sequenceResult ? instructions : sequenceResult}
-            <hr className='m-4' />
+            <hr className='my-4' />
             <div className='text-center font-semibold text-lg p-2'>
                 RdRp Palmprints in {`${runId}`}
             </div>
