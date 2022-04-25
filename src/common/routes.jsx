@@ -65,6 +65,10 @@ export const routes = {
         path: '/access',
         component: Access,
     },
+    access2: {
+        path: '/access.',
+        component: Access,
+    },
     explorerRdrpOld: {
         path: '/explorer-rdrp',
         component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/rdrp' }} />,
