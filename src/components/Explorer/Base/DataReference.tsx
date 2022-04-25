@@ -16,12 +16,12 @@ export const DataReference = () => {
             <div>If this data assists your research, please consider citing us:</div>
             <span className='text-gray-600'>
                 Edgar, R. C. <i>et al</i>. Petabase-scale sequence alignment catalyses viral
-                discovery. <i>bioRxiv</i> 2020.08.07.241729 (2020){' '}
+                discovery. <i>Nature</i> <b>602</b>, 142–147 (2022).{' '}
             </span>
             <ExternalLink
-                href='https://doi.org/10.1101/2020.08.07.241729'
+                href='https://doi.org/10.1038/s41586-021-04332-2'
                 className='text-blue-600'>
-                doi:10.1101/2020.08.07.241729
+                doi:10.1038/s41586-021-04332-2
             </ExternalLink>
         </div>
     )
