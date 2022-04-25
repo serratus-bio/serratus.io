@@ -63,7 +63,10 @@ export const routes = {
     },
     access: {
         path: '/access',
-        component: Access,
+        component: () => {
+            window.location.href = 'https://github.com/ababaian/serratus/wiki/Access-Data-Release'
+            return null
+        
     },
     explorerRdrpOld: {
         path: '/explorer-rdrp',
