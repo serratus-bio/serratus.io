@@ -28,6 +28,9 @@ export const Trees = () => {
     const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/svg/${selected[searchLevel]}.svg`
     const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
     const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
+
+    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(msaNewickLink)}&ladderizeTree=false`
+
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -60,6 +63,7 @@ export const Trees = () => {
     const reactMsaViewLink = `https://gmod.github.io/react-msaview/?data=${encodeURIComponent(
         JSON.stringify(reactMsaViewParams)
     )}#`
+    
 
     return (
         <>
@@ -99,6 +103,12 @@ export const Trees = () => {
                         text='SVG'
                         icon={downloadIcon}
                         download={true}
+                        newTab={true}
+                    />
+                    <LinkButton
+                        link={msaTaxoniumLink}
+                        text='Tree viewer'
+                        icon={externalLinkIcon}
                         newTab={true}
                     />
                     <LinkButton
