@@ -29,8 +29,6 @@ export const Trees = () => {
     const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
     const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
 
-    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(msaNewickLink)}&ladderizeTree=false`
-
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -63,7 +61,12 @@ export const Trees = () => {
     const reactMsaViewLink = `https://gmod.github.io/react-msaview/?data=${encodeURIComponent(
         JSON.stringify(reactMsaViewParams)
     )}#`
-    
+
+    const msaTaxoniumConfig = { title: "Serratus: " + selected[searchLevel] }
+    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(msaNewickLink)}&ladderizeTree=false&config=${encodeURIComponent(
+        JSON.stringify(msaTaxoniumConfig)
+    )}`
+
 
     return (
         <>
@@ -106,14 +109,14 @@ export const Trees = () => {
                         newTab={true}
                     />
                     <LinkButton
-                        link={msaTaxoniumLink}
-                        text='Tree viewer'
+                        link={reactMsaViewLink}
+                        text='MSA Viewer'
                         icon={externalLinkIcon}
                         newTab={true}
                     />
                     <LinkButton
-                        link={reactMsaViewLink}
-                        text='MSA Viewer'
+                        link={msaTaxoniumLink}
+                        text='Tree Viewer'
                         icon={externalLinkIcon}
                         newTab={true}
                     />
