@@ -134,7 +134,7 @@ export const Trees = () => {
                         }>
                         <div className='text-center my-2'>
                             Some of these trees are large. To read tip labels, use the buttons above
-                            to open the external MSA Viewer or download the SVG.
+                            to open the external MSA Viewer, Tree Viewer, or download the SVG.
                         </div>
                         <img
                             className='w-3/4 lg:w-1/3'
