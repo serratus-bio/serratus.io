@@ -62,11 +62,10 @@ export const Trees = () => {
         JSON.stringify(reactMsaViewParams)
     )}#`
 
-    const msaTaxoniumConfig = { title: "Serratus: " + selected[searchLevel] }
-    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(msaNewickLink)}&ladderizeTree=false&config=${encodeURIComponent(
-        JSON.stringify(msaTaxoniumConfig)
-    )}`
-
+    const msaTaxoniumConfig = { title: 'Serratus: ' + selected[searchLevel] }
+    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(
+        msaNewickLink
+    )}&ladderizeTree=false&config=${encodeURIComponent(JSON.stringify(msaTaxoniumConfig))}`
 
     return (
         <>
