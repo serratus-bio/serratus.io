@@ -201,7 +201,7 @@ export const Palmid = () => {
                     <button
                         className='ml-4 w-300 m-auto rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4'
                         onClick={async () => {
-                            window.history.pushState({}, document.title, '/' + 'palmid');
+                            window.history.pushState({}, document.title, '/' + 'palmid')
                             setShowIframe(false)
                             setFastaInput('')
                             clear()
