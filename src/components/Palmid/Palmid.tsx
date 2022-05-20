@@ -10,10 +10,10 @@ const s3Url = 'https://s3.amazonaws.com/openvirome.com'
 export const Palmid = () => {
     const REQUEST_INTERVAL = 5000 // 5 sec
 
-    const urlString = window.location.search;
-    const urlParams = new URLSearchParams(urlString);
-    var faHeaderURL = urlParams.get('head')
-    var faSeqURL = urlParams.get('seq')
+    const urlString = window.location.search
+    const urlParams = new URLSearchParams(urlString)
+    let faHeaderURL = urlParams.get('head')
+    let faSeqURL = urlParams.get('seq')
 
     const {
         fastaHash,
@@ -24,14 +24,14 @@ export const Palmid = () => {
         postFasta,
         clear,
     } = useFasta()
-    var [fastaInput, setFastaInput] = useState<string>('')
+    let [fastaInput, setFastaInput] = useState<string>('')
     const [showIframe, setShowIframe] = useState<boolean>(false)
 
     // If the URL search window has defined `seq` and `header
     // use pre-parsed parameters as the default input
-    if (faSeqURL != null){
+    if (faSeqURL != null) {
         fastaInput = faSeqURL
-        if (faHeaderURL != null){
+        if (faHeaderURL != null) {
             fastaInput = '>' + faHeaderURL + '\n' + faSeqURL
         }
     }
@@ -201,7 +201,7 @@ export const Palmid = () => {
                     <button
                         className='ml-4 w-300 m-auto rounded bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-4'
                         onClick={async () => {
-                            window.history.pushState({}, document.title, "/" + "palmid");
+                            window.history.pushState({}, document.title, '/' + 'palmid');
                             setShowIframe(false)
                             setFastaInput('')
                             clear()
