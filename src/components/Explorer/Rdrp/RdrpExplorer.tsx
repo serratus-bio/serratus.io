@@ -27,9 +27,19 @@ export const RdrpExplorer = ({ location }: Props) => {
             identity: [45, 100],
             score: [0, 100],
         },
-        defaultFilterRanges: {
-            identity: [45, 100],
-            score: [50, 100],
+        defaultFilterRangesBySearchLevel: {
+            family: {
+                identity: [45, 100],
+                score: [50, 100],
+            },
+            sequence: {
+                identity: [45, 100],
+                score: [50, 100],
+            },
+            run: {
+                identity: [45, 100],
+                score: [0, 100],
+            },
         },
         result: {
             addJbrowseLinks: false,

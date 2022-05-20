@@ -65,8 +65,19 @@ export const routes = {
         path: '/access',
         component: Access,
     },
+    access2: {
+        path: '/access.',
+        component: Access,
+    },
     explorerRdrpOld: {
         path: '/explorer-rdrp',
         component: ({ location }) => <Redirect to={{ ...location, pathname: '/explorer/rdrp' }} />,
+    },
+    community: {
+        path: '/community',
+        component: () => {
+            window.location.href = 'https://forms.gle/jq5V5TqvAAT7bfuf9'
+            return null
+        },
     },
 }

@@ -1,61 +1,75 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ExternalLink } from 'common'
 import { routes } from 'common/routes'
+import Hamburger from 'hamburger-react'
 
 export const Navbar = () => {
+    const [hamburgerButtonPressed, setHamburgerPressed] = useState<boolean>(false)
     return (
-        <div className='flex font-montserrat font-medium'>
-            <div className='flex sm:hidden w-full justify-center items-center text-center h-16 bg-gray-50 border-b-2 border-gray-200'>
-                <NavLink exact to={routes.home.path} className='block w-20 h-8 m-auto'>
-                    <img src='/logo.png' alt='logo' />
-                </NavLink>
-            </div>
-            <div className='hidden sm:flex flex-row w-screen bg-gray-50 sm:p-4 justify-between z-10 border-b-2  border-gray-200'>
-                <NavLink exact to={routes.home.path} className='ml-10 w-20 h-8 '>
-                    <img src='/logo.png' alt='logo'></img>
-                </NavLink>
-                <div className='justify-flex-end mt-1 mr-10'>
-                    <NavLink
-                        exact
-                        to={routes.explorerIntro.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Explorer
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.toolkit.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Toolkit
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.about.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        About
-                    </NavLink>
-                    <NavLink
-                        exact
-                        to={routes.team.path}
-                        className='ml-10 hover:text-blue-800'
-                        activeClassName='text-blue-600'>
-                        Team
-                    </NavLink>
-                    <ExternalLink
-                        href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'
-                        className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
-                        Preprint
-                    </ExternalLink>
-                    <ExternalLink
-                        href='https://github.com/ababaian/serratus/wiki'
-                        className='ml-6 bg-white font-mono font-normal border-2 border-gray-600 rounded-lg p-2 hover:text-blue-600 hover:border-blue-600'>
-                        Wiki
-                    </ExternalLink>
+        <>
+            <div className='min-h-full z-10'>
+                <div className='flex bg-gray-50 lg:hidden justify-between items-center'>
+                    <div className='w-20 h-8 m-3'>
+                        <NavLink exact to={routes.home.path}>
+                            <img src='/logo.png' alt='logo'></img>
+                        </NavLink>
+                    </div>
+                    <Hamburger
+                        onToggle={() => setHamburgerPressed(!hamburgerButtonPressed)}></Hamburger>
+                </div>
+                <div
+                    className={`${
+                        hamburgerButtonPressed ? 'flex flex-col' : 'hidden'
+                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-2 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
+                    <div className='hidden w-20 h-8 lg:flex align-middle'>
+                        <NavLink exact to={routes.home.path}>
+                            <img src='/logo.png' alt='logo'></img>
+                        </NavLink>
+                    </div>
+
+                    <div className='flex flex-col gap-y-2 lg:flex-row mt-1 mr-10 items-center'>
+                        <NavLink
+                            exact
+                            to={routes.explorerIntro.path}
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
+                            activeClassName='text-blue-600'>
+                            Explorer
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.toolkit.path}
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
+                            activeClassName='text-blue-600'>
+                            Toolkit
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.about.path}
+                            className='ml-10 hover:text-blue-800 rounded transition duration-300 ease-in-out'
+                            activeClassName='text-blue-600'>
+                            About
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.team.path}
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
+                            activeClassName='text-blue-600'>
+                            Team
+                        </NavLink>
+                        <ExternalLink
+                            href='https://www.nature.com/articles/s41586-021-04332-2'
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
+                            Paper
+                        </ExternalLink>
+                        <ExternalLink
+                            href='https://github.com/ababaian/serratus/wiki'
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out lg:ml-6 lg:bg-white lg:font-mono lg:font-normal lg:border-2 lg:border-gray-600 lg:rounded-lg lg:p-2 lg:hover:text-blue-600 lg:hover:border-blue-600'>
+                            Wiki
+                        </ExternalLink>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

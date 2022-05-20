@@ -25,9 +25,10 @@ export const Trees = () => {
         </Helmet>
     )
 
-    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees/svg/${selected[searchLevel]}.svg`
-    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees/tree/${selected[searchLevel]}.newick`
-    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees/msa/${selected[searchLevel]}.fasta`
+    const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/svg/${selected[searchLevel]}.svg`
+    const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
+    const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
+
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -60,6 +61,24 @@ export const Trees = () => {
     const reactMsaViewLink = `https://gmod.github.io/react-msaview/?data=${encodeURIComponent(
         JSON.stringify(reactMsaViewParams)
     )}#`
+
+    const msaTSVurl = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/metadata/${selected[searchLevel]}.tsv`
+    const msaTaxoniumConfig = {
+        title: 'Serratus: ' + selected[searchLevel],
+        colorMapping: { None: [50, 50, 180] },
+        metadataTypes: { meta_sequence: 'sequence', meta_BLAST: 'link' },
+        colorBy: { colorByOptions: ['None'] },
+        search_types: [
+            { name: 'name', label: 'Name', type: 'text_match' },
+            { name: 'meta_sequence', label: 'Sequence', type: 'text_match' },
+        ],
+        defaultColorByField: 'None',
+    }
+    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(
+        msaNewickLink
+    )}&metaUrl=${encodeURIComponent(msaTSVurl)}&ladderizeTree=false&config=${encodeURIComponent(
+        JSON.stringify(msaTaxoniumConfig)
+    )}`
 
     return (
         <>
@@ -95,8 +114,21 @@ export const Trees = () => {
                         download={true}
                     />
                     <LinkButton
+                        link={msaSvgLink}
+                        text='SVG'
+                        icon={downloadIcon}
+                        download={true}
+                        newTab={true}
+                    />
+                    <LinkButton
                         link={reactMsaViewLink}
                         text='MSA Viewer'
+                        icon={externalLinkIcon}
+                        newTab={true}
+                    />
+                    <LinkButton
+                        link={msaTaxoniumLink}
+                        text='Tree Viewer'
                         icon={externalLinkIcon}
                         newTab={true}
                     />
@@ -110,29 +142,17 @@ export const Trees = () => {
                         className={
                             loading
                                 ? 'invisible'
-                                : 'flex flex-row justify-center items-center w-full'
+                                : 'flex flex-col justify-center items-center w-full'
                         }>
+                        <div className='text-center my-2'>
+                            Some of these trees are large. To read tip labels, use the buttons above
+                            to open the external MSA Viewer, Tree Viewer, or download the SVG.
+                        </div>
                         <img
                             className='w-3/4 lg:w-1/3'
                             src={msaSvgLink}
                             onLoad={() => setLoading(false)}
                         />
-                        <div className='flex flex-col'>
-                            <div className='flex flex-row'>
-                                <span
-                                    className='w-5 h-5 mr-2'
-                                    style={{ backgroundColor: '#017500' }}
-                                />
-                                GenBank / Known RdRP
-                            </div>
-                            <div className='flex flex-row'>
-                                <span
-                                    className='w-5 h-5 mr-2'
-                                    style={{ backgroundColor: '#ff03ff' }}
-                                />
-                                Serratus RdRP
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

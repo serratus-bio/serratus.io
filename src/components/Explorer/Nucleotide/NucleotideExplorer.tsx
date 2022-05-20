@@ -27,9 +27,19 @@ export const NucleotideExplorer = ({ location }: Props) => {
             identity: [75, 100],
             score: [0, 100],
         },
-        defaultFilterRanges: {
-            identity: [75, 100],
-            score: [50, 100],
+        defaultFilterRangesBySearchLevel: {
+            family: {
+                identity: [75, 100],
+                score: [50, 100],
+            },
+            sequence: {
+                identity: [75, 100],
+                score: [50, 100],
+            },
+            run: {
+                identity: [75, 100],
+                score: [0, 100],
+            },
         },
         result: {
             addJbrowseLinks: true,

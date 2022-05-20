@@ -20,9 +20,11 @@ export type BaseContextType = {
         identity: RangeFilter
         score: RangeFilter
     }
-    defaultFilterRanges: {
-        identity: RangeFilter
-        score: RangeFilter
+    defaultFilterRangesBySearchLevel: {
+        [key: string]: {
+            identity: RangeFilter
+            score: RangeFilter
+        }
     }
     result: {
         addJbrowseLinks: boolean
