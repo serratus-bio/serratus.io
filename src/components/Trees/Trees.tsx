@@ -62,10 +62,23 @@ export const Trees = () => {
         JSON.stringify(reactMsaViewParams)
     )}#`
 
-    const msaTaxoniumConfig = { title: 'Serratus: ' + selected[searchLevel] }
+    const msaTSVurl = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/metadata/${selected[searchLevel]}.tsv`
+    const msaTaxoniumConfig = {
+        title: 'Serratus: ' + selected[searchLevel],
+        colorMapping: { None: [50, 50, 180] },
+        metadataTypes: { meta_sequence: 'sequence', meta_BLAST: 'link' },
+        colorBy: { colorByOptions: ['None'] },
+        search_types: [
+            { name: 'name', label: 'Name', type: 'text_match' },
+            { name: 'meta_sequence', label: 'Sequence', type: 'text_match' },
+        ],
+        defaultColorByField: 'None',
+    }
     const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(
         msaNewickLink
-    )}&ladderizeTree=false&config=${encodeURIComponent(JSON.stringify(msaTaxoniumConfig))}`
+    )}&metaUrl=${encodeURIComponent(msaTSVurl)}&ladderizeTree=false&config=${encodeURIComponent(
+        JSON.stringify(msaTaxoniumConfig)
+    )}`
 
     return (
         <>
