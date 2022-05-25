@@ -28,6 +28,7 @@ export const Trees = () => {
     const msaSvgLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/svg/${selected[searchLevel]}.svg`
     const msaNewickLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/newick/${selected[searchLevel]}.newick`
     const msaFastaLink = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/msa/${selected[searchLevel]}.fasta`
+
     const reactMsaViewParams = {
         msaview: {
             data: {},
@@ -60,6 +61,24 @@ export const Trees = () => {
     const reactMsaViewLink = `https://gmod.github.io/react-msaview/?data=${encodeURIComponent(
         JSON.stringify(reactMsaViewParams)
     )}#`
+
+    const msaTSVurl = `https://s3.amazonaws.com/serratus.io/trees-2021-11-27/metadata/${selected[searchLevel]}.tsv`
+    const msaTaxoniumConfig = {
+        title: 'Serratus: ' + selected[searchLevel],
+        colorMapping: { None: [50, 50, 180] },
+        metadataTypes: { meta_sequence: 'sequence', meta_BLAST: 'link' },
+        colorBy: { colorByOptions: ['None'] },
+        search_types: [
+            { name: 'name', label: 'Name', type: 'text_match' },
+            { name: 'meta_sequence', label: 'Sequence', type: 'text_match' },
+        ],
+        defaultColorByField: 'None',
+    }
+    const msaTaxoniumLink = `https://taxonium.org/?treeUrl=${encodeURIComponent(
+        msaNewickLink
+    )}&metaUrl=${encodeURIComponent(msaTSVurl)}&ladderizeTree=false&config=${encodeURIComponent(
+        JSON.stringify(msaTaxoniumConfig)
+    )}`
 
     return (
         <>
@@ -107,6 +126,12 @@ export const Trees = () => {
                         icon={externalLinkIcon}
                         newTab={true}
                     />
+                    <LinkButton
+                        link={msaTaxoniumLink}
+                        text='Tree Viewer'
+                        icon={externalLinkIcon}
+                        newTab={true}
+                    />
                     <ExternalLink href='https://github.com/ababaian/serratus/wiki/Trees-and-alignments-for-Ribovirus-orders-and-families'>
                         {helpIcon}
                     </ExternalLink>
@@ -121,7 +146,7 @@ export const Trees = () => {
                         }>
                         <div className='text-center my-2'>
                             Some of these trees are large. To read tip labels, use the buttons above
-                            to open the external MSA Viewer or download the SVG.
+                            to open the external MSA Viewer, Tree Viewer, or download the SVG.
                         </div>
                         <img
                             className='w-3/4 lg:w-1/3'
