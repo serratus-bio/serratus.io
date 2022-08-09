@@ -120,9 +120,9 @@ export const Palmid = () => {
                         </p>
                         <p>
                             <u>
-                                <a href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'>
+                                <a href='https://www.nature.com/articles/s41586-021-04332-2'>
                                     [3] Petabase-scale sequence alignment catalyses viral discovery.
-                                    Edgar et al, 2021.
+                                    Edgar et al, 2022.
                                 </a>
                             </u>
                         </p>
