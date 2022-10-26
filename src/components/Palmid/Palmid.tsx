@@ -114,9 +114,9 @@ export const Palmid = () => {
                         </p>
                         <p>
                             <u>
-                                <ExternalLink href='https://www.biorxiv.org/content/10.1101/2021.03.02.433648v1'>
+                                <ExternalLink href='https://peerj.com/articles/14055/'>
                                     [2] Ribovirus classification by a polymerase barcode sequence.
-                                    Babaian and Edgar, 2021.
+                                    Babaian and Edgar, 2022.
                                 </ExternalLink>
                             </u>
                         </p>
