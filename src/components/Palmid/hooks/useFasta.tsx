@@ -33,7 +33,7 @@ export function useFasta(): FastaHook {
     }
 
     useEffect(() => {
-        if (checkReportRequestCount >= 60) {
+        if (checkReportRequestCount >= 120) {
             setIsCheckReportTimedOut(true)
         }
     }, [checkReportRequestCount])
