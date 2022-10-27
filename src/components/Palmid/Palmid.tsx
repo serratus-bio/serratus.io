@@ -202,7 +202,7 @@ export const Palmid = () => {
             {isCheckReportTimedOut && !isReportReady && (
                 <div className='m-4 p-4 flex flex-col items-center justify-center'>
                     <p className='text-yellow-900 text-xl animate-pulse'>Request timed out...</p>
-                    <p> No viral RdRP identified in input sequence (or a server error occured). </p>
+                    <p>palmID server has run out of resources. Please try this job locally.</p>
                     <br />
                     <p>
                         If you think this is an error, please{' '}
