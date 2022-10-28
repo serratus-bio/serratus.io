@@ -33,7 +33,9 @@ export function useFasta(): FastaHook {
     }
 
     useEffect(() => {
-        if (checkReportRequestCount >= 60) {
+        // This translates to 120 requests * 5 seconds per request = 10 minutes.
+        // This should represent the maximum execution time of the Lambda function.
+        if (checkReportRequestCount >= 120) {
             setIsCheckReportTimedOut(true)
         }
     }, [checkReportRequestCount])
