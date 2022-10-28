@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { routes } from 'common/routes'
-import { filterObject } from 'common/utils'
+import { filterObjects } from 'common/utils'
 
 interface PalmPrintsTableProps {
     data: any[] | undefined
@@ -12,7 +12,7 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
     const [filteredData, setFilteredData] = React.useState<any>([])
     React.useEffect(() => {
         if (data && data.length > 0) {
-            setFilteredData(filterObject(data, Object.keys(header)))
+            setFilteredData(filterObjects(data, Object.keys(header)))
         }
     }, [data])
     return (
