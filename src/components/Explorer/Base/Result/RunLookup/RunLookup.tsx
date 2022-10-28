@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
 import { getRunTitle } from '../TitleHelpers'
@@ -24,7 +24,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
         coverage: 'Coverage',
     }
 
-    const [tableData, setTableData] = useState<JSON[]>()
+    const [tableData, setTableData] = React.useState<JSON[]>()
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
     const [pageTitle, setPageTitle] = React.useState('')
     const drillDownCallback: DrillDownCallback = function (familyId) {
