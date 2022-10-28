@@ -1,8 +1,7 @@
-import * as React from 'react'
-import * as Utils from 'common/utils'
-import { useEffect, useState } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { routes } from 'common/routes'
+import { filterObject } from 'common/utils'
 
 interface PalmPrintsTableProps {
     data: any[] | undefined
@@ -10,10 +9,10 @@ interface PalmPrintsTableProps {
 }
 
 export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
-    const [filteredData, setFilteredData] = useState<any>([])
-    useEffect(() => {
+    const [filteredData, setFilteredData] = React.useState<any>([])
+    React.useEffect(() => {
         if (data && data.length > 0) {
-            setFilteredData(Utils.filterObject(data, Object.keys(header)))
+            setFilteredData(filterObject(data, Object.keys(header)))
         }
     }, [data])
     return (
