@@ -23,7 +23,7 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                         <table className='min-w-full divide-y border-2 border-orange-200 overflow-x-scroll  divide-gray-200 table-fixed dark:divide-gray-700'>
                             <thead className='bg-orange-200 dark:bg-gray-700'>
                                 <tr>
-                                    {Object.values(header).map((e, i) => {
+                                    {Object.values(header).map((e, _i) => {
                                         return (
                                             <>
                                                 <th
