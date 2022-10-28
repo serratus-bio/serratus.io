@@ -46,7 +46,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
         getPalmprintInfo(runId).then(setTableData)
-        return () => {
+        return function cleanup() {
             setTableData([])
         }
     }, [runId])

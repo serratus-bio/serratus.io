@@ -33,7 +33,7 @@ export const Palmid = () => {
         if (input) {
             setFastaInput(input)
         }
-        return () => {
+        return function cleanup() {
             setFastaInput('')
         }
     }, [input])
