@@ -2,6 +2,7 @@ import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
 import { getRunTitle } from '../TitleHelpers'
+import { getPalmprintInfo } from '../SerratusApiCalls'
 import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
@@ -44,18 +45,13 @@ export const RunLookup = ({ runId, filters }: Props) => {
     React.useEffect(() => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
-        callApi(runId).then(setTableData)
+        getPalmprintInfo(runId).then(setTableData)
         return () => {
             setTableData([])
         }
     }, [runId])
 
     const LinkButtons = context.result.LinkButtons
-
-    async function callApi(runId: string) {
-        const result = await fetch(`https://api.serratus.io/palmprint/run=${runId}`)
-        return result.json()
-    }
 
     const instructions = (
         <div className='text-center'>Click a family heatmap to view sequence-level matches</div>

@@ -94,3 +94,9 @@ export const fetchPagedRunMatches = async (
     })
     return response.data as ResultPagination
 }
+
+export const getPalmprintInfo = async (runId: string) => {
+    const palmprintUrl = `${baseUrl}/palmprint/run=${runId}`
+    const response = await axios.get(palmprintUrl)
+    return response.data
+}
