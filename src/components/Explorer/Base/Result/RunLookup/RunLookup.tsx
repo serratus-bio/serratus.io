@@ -44,9 +44,7 @@ export const RunLookup = ({ runId, filters }: Props) => {
     React.useEffect(() => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
-        callApi(runId).then((data) => {
-            setTableData(data)
-        })
+        callApi(runId).then(setTableData)
         return () => {
             setTableData([])
         }
