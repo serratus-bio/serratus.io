@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { ExternalLink } from 'common'
 import { routes } from 'common/routes'
 import Hamburger from 'hamburger-react'
+import { Footer } from 'components/Footer'
 
 export const Navbar = () => {
     const [hamburgerButtonPressed, setHamburgerPressed] = useState<boolean>(false)
@@ -69,6 +70,7 @@ export const Navbar = () => {
                         </ExternalLink>
                     </div>
                 </div>
+                {<Footer />}
             </div>
         </>
     )

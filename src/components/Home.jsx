@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet'
 import { NavLink } from 'react-router-dom'
 import { searchIcon, externalLinkIcon, ExternalLink } from 'common'
 import { routes } from 'common/routes'
+import { Footer } from 'components/Footer'
 
 export const Home = () => {
     const headTags = (
@@ -44,6 +45,7 @@ export const Home = () => {
                     </h3>
                 </div>
             </div>
+            {<Footer />}
         </div>
     )
 }
