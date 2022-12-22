@@ -45,7 +45,9 @@ export const Home = () => {
                     </h3>
                 </div>
             </div>
-            {<Footer />}
+            <div className='fixed'>
+                {<Footer />}
+            </div>
         </div>
     )
 }

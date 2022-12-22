@@ -70,7 +70,7 @@ export const Navbar = () => {
                         </ExternalLink>
                     </div>
                 </div>
-                {<Footer />}
+                {/* {<Footer />} # Across-website Announcement Banner */}
             </div>
         </>
     )
