@@ -57,22 +57,21 @@ If you want to use the live backend API (`api.serratus.io`) instead of running i
 
 ## Making Changes
 
-- Make sure you have a [GitHub account](https://github.com/join).
-- Fork the repository on GitHub.
-- Create a topic branch from the `main` branch. We use the following branch naming structure:
-- Make commits of logical and atomic units, with meaningful messages.
+1. Make sure you have a [GitHub account](https://github.com/join).
+2. [Fork this repository on GitHub](https://github.com/serratus-bio/serratus.io/fork).
+3. Create a new branch from the `main` branch.
+4. Make commits of logical and atomic units, with meaningful messages.
 
 ### Coding Conventions
 
-These are checked on pull requests (PRs) using a GitHub Actions workflow.
+Custom [ESLint](https://eslint.org/) rules and [Prettier](https://prettier.io/) options are set to warn on violations. Warnings don't block local builds, but they should be fixed before merging a pull request.
 
-- The build is set to break on a custom set of `eslint` rule violations. They should be fixed before merging a PR.
-- Run `npm run prettier` to standardize code style for a PR.
+To fix prettier warnings, run `npm run prettier:write`. Be sure to commit these changes.
 
 ## Submitting Changes
 
-- Push your changes to a topic branch in your fork of the repository.
-- Submit a pull request to the repository in the `serratus-bio` organization.
+1. Push your changes to a topic branch in your fork of the repository.
+2. Submit a pull request to the repository in the `serratus-bio` organization.
 
 ## Other Resources
 

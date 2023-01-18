@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Iframe from 'react-iframe'
 import { useFasta } from './hooks/useFasta'
 import { useFastaParse } from './hooks/useFastaParse'
-import { helpIcon } from 'common'
+import { ExternalLink, helpIcon } from 'common'
 
 // Global variables for webpage
 const s3Url = 'https://s3.amazonaws.com/openvirome.com'
@@ -122,23 +122,25 @@ export const Palmid = () => {
                         </p>
                         <p>
                             <u>
-                                <a href='https://github.com/ababaian/palmid'>[1] palmid Source</a>
+                                <ExternalLink href='https://github.com/ababaian/palmid'>
+                                    [1] palmid Source
+                                </ExternalLink>
                             </u>
                         </p>
                         <p>
                             <u>
-                                <a href='https://www.biorxiv.org/content/10.1101/2021.03.02.433648v1'>
+                                <ExternalLink href='https://peerj.com/articles/14055/'>
                                     [2] Ribovirus classification by a polymerase barcode sequence.
-                                    Babaian and Edgar, 2021.
-                                </a>
+                                    Babaian and Edgar, 2022.
+                                </ExternalLink>
                             </u>
                         </p>
                         <p>
                             <u>
-                                <a href='https://www.biorxiv.org/content/10.1101/2020.08.07.241729v2'>
+                                <ExternalLink href='https://www.nature.com/articles/s41586-021-04332-2'>
                                     [3] Petabase-scale sequence alignment catalyses viral discovery.
-                                    Edgar et al, 2021.
-                                </a>
+                                    Edgar et al, 2022.
+                                </ExternalLink>
                             </u>
                         </p>
                     </div>
@@ -215,7 +217,7 @@ export const Palmid = () => {
             {isCheckReportTimedOut && !isReportReady && (
                 <div className='m-4 p-4 flex flex-col items-center justify-center'>
                     <p className='text-yellow-900 text-xl animate-pulse'>Request timed out...</p>
-                    <p> No viral RdRP identified in input sequence (or a server error occured). </p>
+                    <p>palmID server has run out of resources. Please try this job locally.</p>
                     <br />
                     <p>
                         If you think this is an error, please{' '}
