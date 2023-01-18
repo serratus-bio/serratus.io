@@ -144,7 +144,7 @@ export const Palmid = () => {
                     !isFastaCollapsed ? 'collapsed' : 'expanded'
                 }`}
                 aria-expanded={isFastaCollapsed}>
-                <p className='my-3'>Sequence, in FASTA format</p>
+                <p className='my-3'>Sequence, in FASTA format (known bug: Please use amino-acid sequences)</p>
                 <textarea
                     className='border-2 focus:ring-1 rounded focus: outline-none resize-none  mb-2 p-2'
                     id='fastaInput'
