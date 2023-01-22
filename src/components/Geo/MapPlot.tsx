@@ -6,26 +6,30 @@ import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
 
 type Props = {
+    selectedSpecies: String[] | undefined
     setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
-export const MapPlot = ({ setSelectedPoints }: Props) => {
+export const MapPlot = ({ selectedSpecies, setSelectedPoints }: Props) => {
+    console.log('MapPlot selectedSpecies...', selectedSpecies)
+
     const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
         data: [],
     })
 
     React.useEffect(() => {
         async function render() {
-            setConfig({ data: await getData() })
+            setConfig({ data: await getData(selectedSpecies) })
         }
         render()
-    }, [])
+    }, [selectedSpecies])
 
     if (!config.data || !config.data.length) return null
 
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
         const points = selectedData.points.map((point) => point.customdata) as RunData[]
+        console.log('onSelected points...', points)
         setSelectedPoints(points)
     }
 
@@ -48,9 +52,13 @@ const layout: Partial<Plotly.Layout> = {
     clickmode: 'event+select',
 }
 
-async function getData(): Promise<PlotlyData[]> {
+async function getData(selectedSpecies: String[] | undefined): Promise<PlotlyData[]> {
     // TODO: use type annotation
-    const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunData[]
+    let rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunData[]
+    if (selectedSpecies && selectedSpecies.length > 0) {
+        rows = rows.filter((row) => selectedSpecies.includes(row.scientific_name))
+    }
+    console.log('getData rows...', rows.length)
     function unpack(rows: RunData[], key: string) {
         return rows.map((row) => {
             if (key === 'coordinate_x' || key === 'coordinate_y') {
