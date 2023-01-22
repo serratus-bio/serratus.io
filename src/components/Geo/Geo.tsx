@@ -1,5 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
+import { SpeciesSelect } from './SpeciesSelect'
 import { MapPlot } from './MapPlot'
 import { SelectionInfo } from './SelectionInfo'
 import { RunData } from './types'
@@ -7,7 +8,10 @@ import { helpIcon } from 'common'
 
 export const Geo = () => {
     const [selectedPoints, setSelectedPoints] = React.useState<RunData[]>()
+    const [selectedSpecies, setSelectedSpecies] = React.useState<String[]>()
     const [isCollapsed, setIsCollapsed] = React.useState<boolean>(false)
+
+    console.log('Geo selectedSpecies', selectedSpecies)
 
     const headTags = (
         <Helmet>
@@ -42,7 +46,10 @@ export const Geo = () => {
             </div>
 
             <div className='my-2'>
-                <MapPlot setSelectedPoints={setSelectedPoints} />
+                <SpeciesSelect setSelectedSpecies={setSelectedSpecies} />
+            </div>
+            <div className='my-2'>
+                <MapPlot setSelectedPoints={setSelectedPoints} selectedSpecies={selectedSpecies} />
             </div>
 
             <div className='text-left text-gray-600'>
