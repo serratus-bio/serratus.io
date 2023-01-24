@@ -18,9 +18,13 @@ export const SpeciesSelect = ({ allUniqueSpecies, setSelectedSpecies }: Props) =
     }
 
     const handleRemoveSpecies = (selectedList: String[], selectedItem: String) => {
-        setSelectedSpecies((prevSpeciesList) =>
-            prevSpeciesList.filter((species) => species !== selectedItem)
-        )
+        setSelectedSpecies((prevSpeciesList) => {
+            if (prevSpeciesList) {
+                prevSpeciesList.filter((species) => species !== selectedItem)
+            } else {
+                return prevSpeciesList
+            }
+        })
     }
 
     return (

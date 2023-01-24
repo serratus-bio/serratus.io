@@ -7,19 +7,19 @@ type Props = {
     selectedRows: RunData[] | undefined
 }
 
-const createTimePlot = (dataObject: any) => {
+const createTimePlot = (dataObject: { [key: string]: number }) => {
+    const data = [
+        {
+            x: Object.keys(dataObject),
+            y: Object.values(dataObject),
+            mode: 'markers',
+        },
+    ]
     return (
         <Plot
             useResizeHandler
             style={{ width: '100%', height: '100%', minHeight: '500px' }}
-            data={[
-                {
-                    type: 'bar',
-                    x: Object.keys(dataObject),
-                    y: Object.values(dataObject),
-                    mode: 'markers',
-                },
-            ]}
+            data={data}
             layout={{
                 xaxis: {
                     title: 'Release Date',
@@ -42,7 +42,9 @@ export const TimePlot = ({ allRowsTimePlot, selectedRows }: Props) => {
         let selectedRowsTimePlot: { [key: string]: number } = {}
 
         // Initialize the selectedRowsTimePlot to have each month correspond to a 0
-        Object.keys(allRowsTimePlot).forEach((month) => (selectedRowsTimePlot[month] = 0))
+        if (allRowsTimePlot) {
+            Object.keys(allRowsTimePlot).forEach((month) => (selectedRowsTimePlot[month] = 0))
+        }
 
         // Add to the months array +1 for each month that's in alignment
         if (selectedRows) {
