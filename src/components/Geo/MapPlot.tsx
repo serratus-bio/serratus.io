@@ -13,7 +13,6 @@ export const MapPlot = ({ allPossibleRows, selectedSpecies, setSelectedPoints }:
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
         const points = selectedData.points.map((point) => point.customdata) as RunData[]
-        console.log('onSelected points...', points)
         setSelectedPoints(points)
     }
 

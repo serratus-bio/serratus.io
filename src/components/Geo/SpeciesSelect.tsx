@@ -6,6 +6,12 @@ type Props = {
     setSelectedSpecies: React.Dispatch<React.SetStateAction<String[] | undefined>>
 }
 
+/**
+ * This component:
+ * - Allows for multi-select of all species within the rdrpPosTsv file.
+ * - Selecting any number of species is reflected in the MapPlot, TimePlot, and SelectionInfo components below.
+ */
+
 export const SpeciesSelect = ({ allUniqueSpecies, setSelectedSpecies }: Props) => {
     const handleAddSpecies = (selectedList: String[], selectedItem: String) => {
         setSelectedSpecies((prevSpeciesList) => [...(prevSpeciesList || []), selectedItem])
