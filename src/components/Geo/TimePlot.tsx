@@ -32,6 +32,11 @@ const createTimePlot = (dataObject: any) => {
     )
 }
 
+/**
+ * This component:
+ * - Displays a bar chart with the x-axis the same regardless of props passed in, which is the total number of months represented in the rdrpPosTsv file.
+ * - The y-axis and number of bars reflect selected points if there are any, and if not then all points are shown.
+ */
 export const TimePlot = ({ allRowsTimePlot, selectedRows }: Props) => {
     if (selectedRows && selectedRows.length > 0) {
         let selectedRowsTimePlot: { [key: string]: number } = {}
