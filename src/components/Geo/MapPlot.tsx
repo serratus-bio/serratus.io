@@ -1,31 +1,15 @@
 import React from 'react'
 import Plotly from 'plotly.js'
 import Plot from 'react-plotly.js'
-import * as d3 from 'd3'
 import { RunData } from './types'
-import rdrpPosTsv from './rdrp_pos.tsv'
 
 type Props = {
+    allPossibleRows: RunData[] | undefined
     selectedSpecies: String[] | undefined
     setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
-export const MapPlot = ({ selectedSpecies, setSelectedPoints }: Props) => {
-    console.log('MapPlot selectedSpecies...', selectedSpecies)
-
-    const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
-        data: [],
-    })
-
-    React.useEffect(() => {
-        async function render() {
-            setConfig({ data: await getData(selectedSpecies) })
-        }
-        render()
-    }, [selectedSpecies])
-
-    if (!config.data || !config.data.length) return null
-
+export const MapPlot = ({ allPossibleRows, selectedSpecies, setSelectedPoints }: Props) => {
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
         const points = selectedData.points.map((point) => point.customdata) as RunData[]
@@ -33,16 +17,31 @@ export const MapPlot = ({ selectedSpecies, setSelectedPoints }: Props) => {
         setSelectedPoints(points)
     }
 
-    return (
-        <Plot
-            data={config.data}
-            layout={layout}
-            useResizeHandler
-            style={{ width: '100%', height: '100%', minHeight: '500px' }}
-            onSelected={onSelected}
-            onUpdate={(figure) => setConfig(figure)}
-        />
-    )
+    if (allPossibleRows) {
+        const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
+            data: [],
+        })
+
+        React.useEffect(() => {
+            async function render() {
+                setConfig({ data: await getData(allPossibleRows, selectedSpecies) })
+            }
+            render()
+        }, [selectedSpecies])
+
+        if (!config.data || !config.data.length) return null
+
+        return (
+            <Plot
+                data={config.data}
+                layout={layout}
+                useResizeHandler
+                style={{ width: '100%', height: '100%', minHeight: '500px' }}
+                onSelected={onSelected}
+                onUpdate={(figure) => setConfig(figure)}
+            />
+        )
+    } else return null
 }
 
 const layout: Partial<Plotly.Layout> = {
@@ -52,13 +51,15 @@ const layout: Partial<Plotly.Layout> = {
     clickmode: 'event+select',
 }
 
-async function getData(selectedSpecies: String[] | undefined): Promise<PlotlyData[]> {
+async function getData(
+    allPossibleRows: RunData[],
+    selectedSpecies: String[] | undefined
+): Promise<PlotlyData[]> {
     // TODO: use type annotation
-    let rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunData[]
-    if (selectedSpecies && selectedSpecies.length > 0) {
+    let rows = allPossibleRows
+    if (rows && selectedSpecies && selectedSpecies.length > 0) {
         rows = rows.filter((row) => selectedSpecies.includes(row.scientific_name))
     }
-    console.log('getData rows...', rows.length)
     function unpack(rows: RunData[], key: string) {
         return rows.map((row) => {
             if (key === 'coordinate_x' || key === 'coordinate_y') {
