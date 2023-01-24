@@ -60,24 +60,28 @@ async function getData(
         rows = rows.filter((row) => selectedSpecies.includes(row.scientific_name))
     }
     function unpack(rows: RunData[] | undefined, key: string) {
-        return rows.map((row) => {
-            if (key === 'coordinate_x' || key === 'coordinate_y') {
-                // +(0~111) meters per https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
-                return parseFloat(row[key]) + 0.001 * Math.random()
-            }
-            return row[key]
-        })
+        if (rows) {
+            return rows.map((row) => {
+                if (key === 'coordinate_x' || key === 'coordinate_y') {
+                    // +(0~111) meters per https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
+                    return parseFloat(row[key]) + 0.001 * Math.random()
+                }
+                return row[key]
+            })
+        }
     }
 
     function getHoverText(rows: RunData[] | undefined): string[] {
-        return rows.map((row) => {
-            let text = `${row.run_id}
-                <br>Organism: ${row.scientific_name}`
-            if (row.from_text) {
-                text += `<br>Inferred location: "${row.from_text}"`
-            }
-            return text
-        })
+        if (rows) {
+            return rows.map((row) => {
+                let text = `${row.run_id}
+                    <br>Organism: ${row.scientific_name}`
+                if (row.from_text) {
+                    text += `<br>Inferred location: "${row.from_text}"`
+                }
+                return text
+            })
+        } else return []
     }
 
     return [
