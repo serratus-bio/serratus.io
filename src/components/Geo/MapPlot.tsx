@@ -51,7 +51,7 @@ const layout: Partial<Plotly.Layout> = {
 }
 
 async function getData(
-    allPossibleRows: RunData[],
+    allPossibleRows: RunData[] | undefined,
     selectedSpecies: String[] | undefined
 ): Promise<PlotlyData[]> {
     // TODO: use type annotation
@@ -59,7 +59,7 @@ async function getData(
     if (rows && selectedSpecies && selectedSpecies.length > 0) {
         rows = rows.filter((row) => selectedSpecies.includes(row.scientific_name))
     }
-    function unpack(rows: RunData[], key: string) {
+    function unpack(rows: RunData[] | undefined, key: string) {
         return rows.map((row) => {
             if (key === 'coordinate_x' || key === 'coordinate_y') {
                 // +(0~111) meters per https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
@@ -69,7 +69,7 @@ async function getData(
         })
     }
 
-    function getHoverText(rows: RunData[]): string[] {
+    function getHoverText(rows: RunData[] | undefined): string[] {
         return rows.map((row) => {
             let text = `${row.run_id}
                 <br>Organism: ${row.scientific_name}`
