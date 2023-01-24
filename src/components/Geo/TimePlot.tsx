@@ -41,7 +41,7 @@ export const TimePlot = ({ allRowsTimePlot, selectedRows }: Props) => {
     if (selectedRows && selectedRows.length > 0) {
         let selectedRowsTimePlot: { [key: string]: number } = {}
 
-        // Initialize the selectedRowsTimePlot to have each month correspond to a 0
+        //  Initialize the selectedRowsTimePlot to have each month correspond to a 0
         if (allRowsTimePlot) {
             Object.keys(allRowsTimePlot).forEach((month) => (selectedRowsTimePlot[month] = 0))
         }
