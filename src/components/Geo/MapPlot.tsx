@@ -1,44 +1,46 @@
 import React from 'react'
 import Plotly from 'plotly.js'
 import Plot from 'react-plotly.js'
-import * as d3 from 'd3'
 import { RunData } from './types'
-import rdrpPosTsv from './rdrp_pos.tsv'
 
 type Props = {
+    allPossibleRows: RunData[] | undefined
+    selectedSpecies: String[] | undefined
     setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
-export const MapPlot = ({ setSelectedPoints }: Props) => {
-    const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
-        data: [],
-    })
-
-    React.useEffect(() => {
-        async function render() {
-            setConfig({ data: await getData() })
-        }
-        render()
-    }, [])
-
-    if (!config.data || !config.data.length) return null
-
+export const MapPlot = ({ allPossibleRows, selectedSpecies, setSelectedPoints }: Props) => {
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
         // TODO: use type annotation
         const points = selectedData.points.map((point) => point.customdata) as RunData[]
         setSelectedPoints(points)
     }
 
-    return (
-        <Plot
-            data={config.data}
-            layout={layout}
-            useResizeHandler
-            style={{ width: '100%', height: '100%', minHeight: '500px' }}
-            onSelected={onSelected}
-            onUpdate={(figure) => setConfig(figure)}
-        />
-    )
+    if (allPossibleRows) {
+        const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({
+            data: [],
+        })
+
+        React.useEffect(() => {
+            async function render() {
+                setConfig({ data: await getData(allPossibleRows, selectedSpecies) })
+            }
+            render()
+        }, [selectedSpecies])
+
+        if (!config.data || !config.data.length) return null
+
+        return (
+            <Plot
+                data={config.data}
+                layout={layout}
+                useResizeHandler
+                style={{ width: '100%', height: '100%', minHeight: '500px' }}
+                onSelected={onSelected}
+                onUpdate={(figure) => setConfig(figure)}
+            />
+        )
+    } else return null
 }
 
 const layout: Partial<Plotly.Layout> = {
@@ -48,28 +50,38 @@ const layout: Partial<Plotly.Layout> = {
     clickmode: 'event+select',
 }
 
-async function getData(): Promise<PlotlyData[]> {
+async function getData(
+    allPossibleRows: RunData[] | undefined,
+    selectedSpecies: String[] | undefined
+): Promise<PlotlyData[]> {
     // TODO: use type annotation
-    const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunData[]
-    function unpack(rows: RunData[], key: string) {
-        return rows.map((row) => {
-            if (key === 'coordinate_x' || key === 'coordinate_y') {
-                // +(0~111) meters per https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
-                return parseFloat(row[key]) + 0.001 * Math.random()
-            }
-            return row[key]
-        })
+    let rows = allPossibleRows
+    if (rows && selectedSpecies && selectedSpecies.length > 0) {
+        rows = rows.filter((row) => selectedSpecies.includes(row.scientific_name))
+    }
+    function unpack(rows: RunData[] | undefined, key: string) {
+        if (rows) {
+            return rows.map((row) => {
+                if (key === 'coordinate_x' || key === 'coordinate_y') {
+                    // +(0~111) meters per https://www.usna.edu/Users/oceano/pguth/md_help/html/approx_equivalents.htm
+                    return parseFloat(row[key]) + 0.001 * Math.random()
+                }
+                return row[key]
+            })
+        }
     }
 
-    function getHoverText(rows: RunData[]): string[] {
-        return rows.map((row) => {
-            let text = `${row.run_id}
-                <br>Organism: ${row.scientific_name}`
-            if (row.from_text) {
-                text += `<br>Inferred location: "${row.from_text}"`
-            }
-            return text
-        })
+    function getHoverText(rows: RunData[] | undefined): string[] {
+        if (rows) {
+            return rows.map((row) => {
+                let text = `${row.run_id}
+                    <br>Organism: ${row.scientific_name}`
+                if (row.from_text) {
+                    text += `<br>Inferred location: "${row.from_text}"`
+                }
+                return text
+            })
+        } else return []
     }
 
     return [
