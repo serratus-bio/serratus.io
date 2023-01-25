@@ -2,9 +2,12 @@ import React from 'react'
 import { FamilyMatchesPager } from './FamilyMatchesPager'
 import { FamilySequenceMatchesPager } from './FamilySequenceMatchesPager'
 import { getRunTitle } from '../TitleHelpers'
+import { getPalmprintInfo } from '../SerratusApiCalls'
 import { DrillDownCallback } from '../MatchChart/types'
 import { Filters } from 'components/Explorer/types'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
+
+import { PalmPrintsTable } from './PalmPrintsTable'
 
 type Props = {
     runId: string
@@ -13,6 +16,16 @@ type Props = {
 
 export const RunLookup = ({ runId, filters }: Props) => {
     const context = React.useContext(BaseContext)
+    const headerData = {
+        run_id: 'Run_Id',
+        assembly_node: 'Node',
+        palm_id: 'Palm_Id',
+        percent_identity: 'Identity',
+        evalue: 'Evalue',
+        coverage: 'Coverage',
+    }
+
+    const [tableData, setTableData] = React.useState<JSON[]>()
     const [sequenceResult, setSequenceResult] = React.useState<React.ReactElement>()
     const [pageTitle, setPageTitle] = React.useState('')
     const drillDownCallback: DrillDownCallback = function (familyId) {
@@ -32,6 +45,10 @@ export const RunLookup = ({ runId, filters }: Props) => {
     React.useEffect(() => {
         if (!runId) return
         getRunTitle(runId).then(setPageTitle)
+        getPalmprintInfo(runId).then(setTableData)
+        return function cleanup() {
+            setTableData([])
+        }
     }, [runId])
 
     const LinkButtons = context.result.LinkButtons
@@ -62,8 +79,14 @@ export const RunLookup = ({ runId, filters }: Props) => {
                     />
                 </div>
             </div>
+
             <hr className='mb-4' />
             {!sequenceResult ? instructions : sequenceResult}
+            <hr className='my-4' />
+            <div className='text-center font-semibold text-lg p-2'>
+                RdRp Palmprints in {`${runId}`}
+            </div>
+            <PalmPrintsTable data={tableData} header={headerData}></PalmPrintsTable>
         </>
     )
 }
