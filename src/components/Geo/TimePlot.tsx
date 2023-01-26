@@ -87,6 +87,10 @@ export const TimePlot = ({ allRowsTimePlot, rowsToDisplay, speciesColors }: Prop
                     type: 'bar',
                     marker: { color: speciesColors[row.scientific_name] },
                     name: row.scientific_name,
+                    hovertemplate:
+                        `<b>Scientific Name: </b>${row.scientific_name}<br>` +
+                        '<b>Month</b>: %{x}<br>' +
+                        '<b>Count Per Month: </b>%{y}',
                 }
                 const rowDate: string = row.release_date.split(' ')[0].slice(0, -3)
                 rowsToDisplayData[row.scientific_name].y[allMonthsArr.indexOf(rowDate)] = 1
