@@ -4,15 +4,15 @@ import { RunData } from './types'
 import { routes } from 'common/routes'
 
 type Props = {
-    selectedRows: RunData[] | undefined
+    rowsToDisplay: RunData[] | undefined
 }
 
-export const SelectionInfo = ({ selectedRows }: Props) => {
-    if (selectedRows === undefined) return null
-    else if (selectedRows && selectedRows.length > 0) {
+export const SelectionInfo = ({ rowsToDisplay }: Props) => {
+    if (rowsToDisplay === undefined) return null
+    else if (rowsToDisplay && rowsToDisplay.length > 0) {
         const maxRows = 50
         const displayRows =
-            selectedRows.length > maxRows ? selectedRows.slice(0, maxRows) : selectedRows
+            rowsToDisplay.length > maxRows ? rowsToDisplay.slice(0, maxRows) : rowsToDisplay
 
         const tdClasses = 'border px-4 py-2'
         const resultsTable = (
@@ -63,7 +63,7 @@ export const SelectionInfo = ({ selectedRows }: Props) => {
             </table>
         )
 
-        const downloadData = selectedRows.map((row) => row.run_id).join('%0A')
+        const downloadData = rowsToDisplay.map((row) => row.run_id).join('%0A')
         const downloadButton = (
             <>
                 <LinkButton
@@ -77,9 +77,9 @@ export const SelectionInfo = ({ selectedRows }: Props) => {
 
         return (
             <div className='mx-8 my-4'>
-                {displayRows.length}/{selectedRows.length} results displayed.
-                {selectedRows.length !== 0 && downloadButton}
-                {selectedRows.length !== 0 && resultsTable}
+                {displayRows.length}/{rowsToDisplay.length} results displayed.
+                {rowsToDisplay.length !== 0 && downloadButton}
+                {rowsToDisplay.length !== 0 && resultsTable}
             </div>
         )
     } else return null
