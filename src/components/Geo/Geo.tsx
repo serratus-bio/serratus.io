@@ -9,6 +9,7 @@ import { helpIcon } from 'common'
 import * as d3 from 'd3'
 import rdrpPosTsv from './rdrp_pos.tsv'
 import { DateTime } from 'luxon'
+import chroma from 'chroma-js'
 
 async function retrieveAllPossibleRows(
     inputFile: any,
@@ -28,19 +29,29 @@ async function retrieveAllPossibleRows(
 
 export const Geo = () => {
     const [allPossibleRows, setAllPossibleRows] = React.useState<RunData[]>()
-    const [allUniqueSpecies, setAllUniqueSpecies] = React.useState<string[]>()
+    const [speciesColors, setSpeciesColors] = React.useState<{ [key: string]: string }>()
     const [allRowsTimePlot, setAllRowsTimePlot] = React.useState<{ [key: string]: number }>()
 
     const [selectedPoints, setSelectedPoints] = React.useState<RunData[]>()
-    const [selectedSpecies, setSelectedSpecies] = React.useState<String[]>()
-    const [selectedRows, setSelectedRows] = React.useState<RunData[]>()
+    const [selectedSpecies, setSelectedSpecies] = React.useState<string[]>()
+    const [rowsToDisplay, setRowsToDisplay] = React.useState<RunData[]>()
     const [isCollapsed, setIsCollapsed] = React.useState<boolean>(false)
 
     // Retrieve all possible rows from the rdrpPosTsv file
     if (allPossibleRows === undefined) retrieveAllPossibleRows(rdrpPosTsv, setAllPossibleRows)
-    // From all of the possible rows, distill the unique species to be passed into the SpeciesSelect component
-    if (allPossibleRows && allUniqueSpecies === undefined)
-        setAllUniqueSpecies([...new Set(allPossibleRows.map((d) => d.scientific_name))].sort())
+    // From all of the possible rows, create a set of unique species and from that create a dictionary with key: value pairs of species name to its color value
+    if (allPossibleRows && speciesColors === undefined) {
+        const uniqueSpecies = [...new Set(allPossibleRows.map((d) => d.scientific_name))].sort()
+        const speciesColorsInit: { [key: string]: string } = {}
+
+        for (let i = 0; i < uniqueSpecies.length; i++) {
+            speciesColorsInit[uniqueSpecies[i]] = chroma
+                .hsl((i / uniqueSpecies.length) * 360, 1, 0.5)
+                .hex()
+        }
+        setSpeciesColors(() => speciesColorsInit)
+        console.log('speciesColors', speciesColors)
+    }
     // Create an object with key:value pairs corresponding to all months from earliest to latest release date and the number of species' release dates per month
     if (allPossibleRows && allRowsTimePlot === undefined) {
         // Create an array of months spanning the earliest one within all rows on to the latest
@@ -74,14 +85,20 @@ export const Geo = () => {
     // Derive new selected rows from selectedSpecies and selectedPoints so that changes in either one informs the other
     useEffect(() => {
         if (allPossibleRows) {
+            // If there are selectedPoints but no selectedSpecies
             if (selectedPoints && (!selectedSpecies || selectedSpecies.length === 0)) {
-                setSelectedRows(() => selectedPoints)
-            } else if (selectedPoints && selectedSpecies) {
-                setSelectedRows(() =>
+                setRowsToDisplay(() => selectedPoints)
+            }
+            // If there are both selectedPoints and selectedSpecies
+            // TODO: Is this one necessary?
+            else if (selectedPoints && selectedSpecies) {
+                setRowsToDisplay(() =>
                     selectedPoints.filter((row) => selectedSpecies.includes(row.scientific_name))
                 )
-            } else if (selectedSpecies && (!selectedPoints || selectedPoints.length === 0)) {
-                setSelectedRows(() =>
+            }
+            // If there are only selectedSpecies and no points selected on MapPlot
+            else if (selectedSpecies && (!selectedPoints || selectedPoints.length === 0)) {
+                setRowsToDisplay(() =>
                     allPossibleRows.filter((row) => selectedSpecies.includes(row.scientific_name))
                 )
             }
@@ -122,7 +139,7 @@ export const Geo = () => {
 
             <div className='my-2'>
                 <SpeciesSelect
-                    allUniqueSpecies={allUniqueSpecies}
+                    speciesColors={speciesColors}
                     setSelectedSpecies={setSelectedSpecies}
                 />
             </div>
@@ -138,8 +155,12 @@ export const Geo = () => {
                 Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
                 <b>`Lasso Select`</b> icons in the top-right.
             </div>
-            <TimePlot allRowsTimePlot={allRowsTimePlot} selectedRows={selectedRows} />
-            <SelectionInfo selectedRows={selectedRows} />
+            <TimePlot
+                allRowsTimePlot={allRowsTimePlot}
+                rowsToDisplay={rowsToDisplay}
+                speciesColors={speciesColors}
+            />
+            <SelectionInfo rowsToDisplay={rowsToDisplay} />
         </div>
     )
 }

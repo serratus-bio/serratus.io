@@ -5,7 +5,7 @@ import { RunData } from './types'
 
 type Props = {
     allPossibleRows: RunData[] | undefined
-    selectedSpecies: String[] | undefined
+    selectedSpecies: string[] | undefined
     setSelectedPoints: React.Dispatch<React.SetStateAction<RunData[] | undefined>>
 }
 
@@ -52,7 +52,7 @@ const layout: Partial<Plotly.Layout> = {
 
 async function getData(
     allPossibleRows: RunData[] | undefined,
-    selectedSpecies: String[] | undefined
+    selectedSpecies: string[] | undefined
 ): Promise<PlotlyData[]> {
     // TODO: use type annotation
     let rows = allPossibleRows
@@ -94,7 +94,7 @@ async function getData(
             text: getHoverText(rows),
             hoverinfo: 'text',
             marker: { color: 'Maroon', size: 5, opacity: 1 },
-            selected: { marker: { color: 'Purple', size: 7, opacity: 1 } },
+            selected: { marker: { color: 'Blue', size: 7, opacity: 1 } },
         },
     ]
 }
