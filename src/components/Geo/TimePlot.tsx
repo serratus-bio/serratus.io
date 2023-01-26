@@ -62,6 +62,8 @@ const createTimePlotAll = (dataObject: { [key: string]: number }) => {
  * - The y-axis and number of bars reflect selected points if there are any, and if not then all points are shown.
  */
 export const TimePlot = ({ allRowsTimePlot, rowsToDisplay, speciesColors }: Props) => {
+    console.log('in timeplot rows to display', rowsToDisplay)
+
     // If specific rows are selected
     // Create a different data object for each species,
     /**

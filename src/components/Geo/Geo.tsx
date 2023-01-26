@@ -85,19 +85,33 @@ export const Geo = () => {
     // Derive new selected rows from selectedSpecies and selectedPoints so that changes in either one informs the other
     useEffect(() => {
         if (allPossibleRows) {
+            console.log('selected points', selectedPoints)
+            console.log('selected species', selectedSpecies)
+            console.log('rows to display', rowsToDisplay)
+
             // If there are selectedPoints but no selectedSpecies
-            if (selectedPoints && (!selectedSpecies || selectedSpecies.length === 0)) {
+            if (
+                selectedPoints &&
+                selectedPoints.length > 0 &&
+                (!selectedSpecies || selectedSpecies.length === 0)
+            ) {
+                console.log('in if statement')
+
                 setRowsToDisplay(() => selectedPoints)
             }
             // If there are both selectedPoints and selectedSpecies
             // TODO: Is this one necessary?
             else if (selectedPoints && selectedSpecies) {
+                console.log('in first else if')
+
                 setRowsToDisplay(() =>
                     selectedPoints.filter((row) => selectedSpecies.includes(row.scientific_name))
                 )
             }
             // If there are only selectedSpecies and no points selected on MapPlot
             else if (selectedSpecies && (!selectedPoints || selectedPoints.length === 0)) {
+                console.log('in second else if')
+
                 setRowsToDisplay(() =>
                     allPossibleRows.filter((row) => selectedSpecies.includes(row.scientific_name))
                 )
@@ -150,10 +164,11 @@ export const Geo = () => {
                     setSelectedPoints={setSelectedPoints}
                 />
             </div>
-
-            <div className='text-left text-gray-600'>
-                Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
-                <b>`Lasso Select`</b> icons in the top-right.
+            <div className='d-flex justify-content-between'>
+                <div className='d-inline text-left text-gray-600'>
+                    Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
+                    <b>`Lasso Select`</b> icons in the top-right.
+                </div>
             </div>
             <TimePlot
                 allRowsTimePlot={allRowsTimePlot}
