@@ -43,14 +43,18 @@ function SequenceLinkButtons({ sequence_accession }: { sequence_accession: strin
 }
 
 function RunLinkButtons({ run_id }: { run_id: string }) {
+    const [assemblyAvailable, setAssemblyAvailable] = React.useState(false)
     const [microAvailable, setMicroAvailable] = React.useState(false)
     const [ntAvailable, setNtAvailable] = React.useState(false)
+    const [assemblyPath, setAssemblyPath] = React.useState(false)
 
     React.useEffect(() => {
         async function setIndexButtons() {
             const analysisIndex = await getAnalysisIndex(run_id)
+            setAssemblyAvailable(analysisIndex.assembly)
             setMicroAvailable(analysisIndex.micro)
             setNtAvailable(analysisIndex.nsra)
+            setAssemblyPath(analysisIndex.assembly_file)
         }
         setIndexButtons()
     }, [])
@@ -92,6 +96,13 @@ function RunLinkButtons({ run_id }: { run_id: string }) {
                 icon={downloadIcon}
                 download={true}
                 show={microAvailable}
+            />
+            <LinkButton
+                link={`https://s3.amazonaws.com/lovelywater/assembly/contigs/${assemblyPath}`}
+                text='assembly'
+                icon={downloadIcon}
+                download={true}
+                show={assemblyAvailable}
             />
             <div className='inline-flex -ml-1'>
                 <ExternalLink href='https://github.com/ababaian/serratus/wiki/.summary-Reports'>
