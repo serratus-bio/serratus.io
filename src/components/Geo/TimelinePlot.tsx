@@ -35,19 +35,11 @@ const fetchDataFromTSV = async () => {
   //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
 
   const findMaxMinDates = (rows: RunDataHistogram[]) => {
+    //2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,
     const validDates = rows.filter(row => !isNaN(new Date(row.release_date).getTime()));
 
-    const maxDate = validDates.reduce((accu, row) => {
-      return Math.max(accu, new Date(row.release_date).getTime());
-    }, new Date("1970-01-01T00:00:00.000Z").getTime());
-
-    //2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,
-
-    //const minDate = new Date(Math.min(...rows.map(e => new Date(e.release_date))))
-    const minDate = validDates.reduce((accu, row) => {
-      return Math.min(accu, new Date(row.release_date).getTime());
-    }, new Date("9999-01-01T00:00:00.000Z").getTime()); //returning NaN
-
+    const maxDate = d3.max(validDates, row => new Date(row.release_date).getTime())
+    const minDate = d3.min(validDates, row => new Date(row.release_date).getTime())
     console.log(`MaxDate = ${maxDate} & MinDate = ${minDate}`)
     return { maxDate, minDate }
   }
