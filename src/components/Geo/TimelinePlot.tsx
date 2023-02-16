@@ -5,6 +5,8 @@
 // maximum height of points selected.
 
 //[] TODO: Data should be fetched in parent component and passed to both TimelinePlot and MapPlot children
+//[] TODO: Fix this type issue with PlotlyData
+//[] TODO: Display only points from selectedPoints
 
 import React from "react"
 import * as d3 from 'd3'
@@ -13,10 +15,8 @@ import Plot from 'react-plotly.js'
 import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
 
-// temp fix pending https://github.com/DefinitelyTyped/DefinitelyTyped/pull/44030
 type PlotlyData = any
 //Plotly.Data
-//[] TODO: Fix this type issue
 
 type RunDataHistogram = Plotly.Datum & {
   [key: string]: string
@@ -27,28 +27,30 @@ type RunDataHistogram = Plotly.Datum & {
 
 
 type Props = {
-  selectedPoints?: RunData[]
+  selectedPoints?: RunData[] | undefined
 }
 
-const fetchDataFromTSV = async () => {
-  const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
-  //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
+const fetchDataFromTSV = async ({selectedPoints}: Props) => {
+    let rows: RunDataHistogram[] | undefined
 
-  const findMaxMinDates = (rows: RunDataHistogram[]) => {
+    if (selectedPoints === undefined){
+        rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
+    } else {
+        rows = selectedPoints as RunDataHistogram[]
+    }
+    //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
+
+    const findMaxMinDates = (rows: RunDataHistogram[]) => {
     //2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,
     const validDates = rows.filter(row => !isNaN(new Date(row.release_date).getTime()));
 
     const maxDate = d3.max(validDates, row => new Date(row.release_date).getTime())
     const minDate = d3.min(validDates, row => new Date(row.release_date).getTime())
-    console.log(`MaxDate = ${maxDate} & MinDate = ${minDate}`)
     return { maxDate, minDate }
-  }
+    }
 
-  const { maxDate, minDate } = findMaxMinDates(rows)
-  //const yearMonthFormat = d3.timeFormat("%Y-%m")
-
-  //nbinsx is 12 months * # of years
-  return [{
+    const { maxDate, minDate } = findMaxMinDates(rows)
+    return [{
     type: 'histogram',
     x: rows.map((row) => row.release_date),
     autobinx: false,
@@ -57,30 +59,31 @@ const fetchDataFromTSV = async () => {
         size: "M1",
         start: minDate
     },
-    marker: { color: 'Maroon' }
-  }]
+    xaxis: {title:{text:"SRA count"}},
+    yaxis: {title:{text:"release date"}},
+    marker: { color: 'Purple' }
+    }]
 
 }
 
 export const HistogramTimeline = ({ selectedPoints }: Props) => {
-  //[] TODO: Display only points from selectedPoints
 
   const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({data: []});
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchDataFromTSV();
+      const data = await fetchDataFromTSV({selectedPoints});
       setConfig({ data });
     };
     fetchData();
   }, []);
 
   if (!config.data || !config.data.length) return null
-
+ 
   return (
     <Plot
       data={config.data}
-      layout={{ width: 320, height: 420}}
+      layout={{}} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
     />
   )
 }
