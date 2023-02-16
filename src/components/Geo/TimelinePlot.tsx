@@ -14,6 +14,7 @@ import Plotly from 'plotly.js'
 import Plot from 'react-plotly.js'
 import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
+import { pointer } from "d3"
 
 type PlotlyData = any
 //Plotly.Data
@@ -30,14 +31,8 @@ type Props = {
   selectedPoints?: RunData[] | undefined
 }
 
-const fetchDataFromTSV = async ({selectedPoints}: Props) => {
-    let rows: RunDataHistogram[] | undefined
-
-    if (selectedPoints === undefined){
-        rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
-    } else {
-        rows = selectedPoints as RunDataHistogram[]
-    }
+const fetchDataFromTSV = async () => {
+    const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
     //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
 
     const findMaxMinDates = (rows: RunDataHistogram[]) => {
@@ -59,8 +54,6 @@ const fetchDataFromTSV = async ({selectedPoints}: Props) => {
         size: "M1",
         start: minDate
     },
-    xaxis: {title:{text:"SRA count"}},
-    yaxis: {title:{text:"release date"}},
     marker: { color: 'Purple' }
     }]
 
@@ -72,18 +65,34 @@ export const HistogramTimeline = ({ selectedPoints }: Props) => {
 
   React.useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchDataFromTSV({selectedPoints});
+      const data = await fetchDataFromTSV();
       setConfig({ data });
     };
     fetchData();
   }, []);
+
+  React.useEffect(() => {
+    if (selectedPoints) {
+
+        const overlayHistogram = {
+            type: "histogram",
+            x: selectedPoints.map((point)=> point.release_date),
+            marker: {color: "Orange"}
+        }
+        setConfig(prevState => ({...prevState, data: [...prevState.data, overlayHistogram]}))
+      }
+  }, [selectedPoints])
 
   if (!config.data || !config.data.length) return null
  
   return (
     <Plot
       data={config.data}
-      layout={{}} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
+      layout={{
+        barmode: "overlay",
+        xaxis: {title: "release date"},
+        yaxis: {title: "SRA count"},
+    }} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
     />
   )
 }
