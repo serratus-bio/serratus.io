@@ -52,7 +52,7 @@ export const Geo = () => {
             </div>
 
             <div className='my-2'>
-              <HistogramTimeline selectedPoints={selectedPoints}/>
+                <HistogramTimeline selectedPoints={selectedPoints} />
             </div>
 
             <SelectionInfo selectedPoints={selectedPoints} />
