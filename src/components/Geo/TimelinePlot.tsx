@@ -6,7 +6,7 @@
 
 //[] TODO: Data should be fetched in parent component and passed to both TimelinePlot and MapPlot children
 //[] TODO: Fix this type issue with PlotlyData
-//[] TODO: Display only points from selectedPoints
+//[X] TODO: Display only points from selectedPoints
 
 import React from "react"
 import * as d3 from 'd3'
@@ -16,7 +16,6 @@ import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
 
 type PlotlyData = any
-//Plotly.Data
 
 type RunDataHistogram = Plotly.Datum & {
   [key: string]: string
@@ -32,14 +31,13 @@ type Props = {
 
 const fetchDataFromTSV = async () => {
     const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
-    //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
+    //Sample format
     //2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,
     const validDates = rows.filter(row => !isNaN(new Date(row.release_date).getTime()));
     const maxDate = d3.max(validDates, row => new Date(row.release_date).getTime())
     const minDate = d3.min(validDates, row => new Date(row.release_date).getTime())
  
     return {
-        rawFetchedData: rows,
         histogramConfig: {
             type: 'histogram',
             x: rows.map((row) => row.release_date),
@@ -102,7 +100,7 @@ export const HistogramTimeline = ({ selectedPoints }: Props) => {
                 range: [histogramData?.xbins?.start, histogramData?.xbins?.end]
             },
             yaxis: {title: "SRA count"}
-        }} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
+        }}
     />
   )
 }
