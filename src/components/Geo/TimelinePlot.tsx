@@ -14,7 +14,6 @@ import Plotly from 'plotly.js'
 import Plot from 'react-plotly.js'
 import { RunData } from './types'
 import rdrpPosTsv from './rdrp_pos.tsv'
-import { pointer } from "d3"
 
 type PlotlyData = any
 //Plotly.Data
@@ -34,65 +33,76 @@ type Props = {
 const fetchDataFromTSV = async () => {
     const rows = ((await d3.tsv(rdrpPosTsv)) as object) as RunDataHistogram[]
     //console.log(`ROWS >> ${rows.map((row) => row.release_date)}\n`)
-
-    const findMaxMinDates = (rows: RunDataHistogram[]) => {
     //2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,2019-10-10 14:22:46,
     const validDates = rows.filter(row => !isNaN(new Date(row.release_date).getTime()));
-
     const maxDate = d3.max(validDates, row => new Date(row.release_date).getTime())
     const minDate = d3.min(validDates, row => new Date(row.release_date).getTime())
-    return { maxDate, minDate }
+ 
+    return {
+        rawFetchedData: rows,
+        histogramConfig: {
+            type: 'histogram',
+            x: rows.map((row) => row.release_date),
+            autobinx: false,
+            xbins: {
+                end: maxDate,
+                size: "M1",
+                start: minDate
+            },
+            marker: { color: 'Purple' }
+        }
     }
-
-    const { maxDate, minDate } = findMaxMinDates(rows)
-    return [{
-    type: 'histogram',
-    x: rows.map((row) => row.release_date),
-    autobinx: false,
-    xbins: {
-        end: maxDate,
-        size: "M1",
-        start: minDate
-    },
-    marker: { color: 'Purple' }
-    }]
 
 }
 
 export const HistogramTimeline = ({ selectedPoints }: Props) => {
+    const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({data: []});
+    const [dataFetched, setDataFetched] = React.useState(false)
+    const [histogramData, setHistogramData] = React.useState<PlotlyData>()
 
-  const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({data: []});
-
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const data = await fetchDataFromTSV();
-      setConfig({ data });
-    };
-    fetchData();
-  }, []);
-
-  React.useEffect(() => {
-    if (selectedPoints) {
-
-        const overlayHistogram = {
-            type: "histogram",
-            x: selectedPoints.map((point)=> point.release_date),
-            marker: {color: "Orange"}
+    React.useEffect(() => {
+        if (!dataFetched) {
+            const fetchData = async () => {
+                const {histogramConfig} = await fetchDataFromTSV();
+                setHistogramData(histogramConfig)
+                setDataFetched(true)
+            };
+            fetchData();
         }
-        setConfig(prevState => ({...prevState, data: [...prevState.data, overlayHistogram]}))
-      }
-  }, [selectedPoints])
+    }, [dataFetched]);
 
-  if (!config.data || !config.data.length) return null
- 
-  return (
+    React.useEffect(() => {
+        if (!selectedPoints && histogramData){
+            setConfig({data: [histogramData]})
+        } else if (selectedPoints && histogramData){
+            const overlayHistogram = {
+                type: "histogram",
+                x: selectedPoints.map((point)=> point.release_date),
+                autobinx: false,
+                xbins: {
+                    end: histogramData.xbins.end,
+                    size: histogramData.xbins.size,
+                    start: histogramData.xbins.start
+                },
+                marker: {color: "Orange"}
+            }
+            setConfig({data: [overlayHistogram]})
+        }
+    }, [selectedPoints, histogramData])
+
+    if (!config.data || !config.data.length) return null
+
+    return (
     <Plot
-      data={config.data}
-      layout={{
-        barmode: "overlay",
-        xaxis: {title: "release date"},
-        yaxis: {title: "SRA count"},
-    }} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
+        data={config.data}
+        layout={{
+            barmode: "overlay",
+            xaxis: {
+                title: "release date",
+                range: [histogramData?.xbins?.start, histogramData?.xbins?.end]
+            },
+            yaxis: {title: "SRA count"}
+        }} //Setting as {} to avoid having to calculate container size and setting width/height to number based on this
     />
   )
 }
