@@ -1,6 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { MapPlot } from './MapPlot'
+import { HistogramTimeline } from './TimelinePlot'
 import { SelectionInfo } from './SelectionInfo'
 import { RunData } from './types'
 import { helpIcon } from 'common'
@@ -48,6 +49,10 @@ export const Geo = () => {
             <div className='text-left text-gray-600'>
                 Use <b>`Shift`</b>-click to select multiple points or the <b>`Box Select`</b> or{' '}
                 <b>`Lasso Select`</b> icons in the top-right.
+            </div>
+
+            <div className='my-2'>
+              <HistogramTimeline selectedPoints={selectedPoints}/>
             </div>
 
             <SelectionInfo selectedPoints={selectedPoints} />
