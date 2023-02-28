@@ -52,7 +52,7 @@ const fetchDataFromTSV = async () => {
 }
 
 export const HistogramTimeline = ({ selectedPoints }: Props) => {
-    const [config, setConfig] = React.useState<{ data: PlotlyData[] }>({ data: [] })
+    const [configuration, setConfiguration] = React.useState<{ data: PlotlyData[] }>({ data: [] })
     const [dataFetched, setDataFetched] = React.useState(false)
     const [histogramData, setHistogramData] = React.useState<PlotlyData>()
 
@@ -69,7 +69,7 @@ export const HistogramTimeline = ({ selectedPoints }: Props) => {
 
     React.useEffect(() => {
         if (!selectedPoints && histogramData) {
-            setConfig({ data: [histogramData] })
+            setConfiguration({ data: [histogramData] })
         } else if (selectedPoints && histogramData) {
             const overlayHistogram = {
                 type: 'histogram',
@@ -82,15 +82,15 @@ export const HistogramTimeline = ({ selectedPoints }: Props) => {
                 },
                 marker: { color: 'Orange' },
             }
-            setConfig({ data: [overlayHistogram] })
+            setConfiguration({ data: [overlayHistogram] })
         }
     }, [selectedPoints, histogramData])
 
-    if (!config.data || !config.data.length) return null
+    if (!configuration.data || !configuration.data.length) return null
 
     return (
         <Plot
-            data={config.data}
+            data={configuration.data}
             layout={{
                 barmode: 'overlay',
                 xaxis: {
@@ -99,6 +99,8 @@ export const HistogramTimeline = ({ selectedPoints }: Props) => {
                 },
                 yaxis: { title: 'SRA count' },
             }}
+            useResizeHandler
+            style={{ width: '90%', height: '90%' }}
         />
     )
 }
