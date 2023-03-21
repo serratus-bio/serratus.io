@@ -95,6 +95,17 @@ export const fetchPagedRunMatches = async (
     return response.data as ResultPagination
 }
 
+export const fetchPagedGeoMatches = async (searchType: string, page: number, perPage: number) => {
+    const params: any = {
+        page: page,
+        perPage: perPage,
+    }
+    const response = await axios.get(`${baseUrl}/geo/${searchType}/paged`, {
+        params: params,
+    })
+    return response.data as ResultPagination
+}
+
 export const getPalmprintInfo = async (runId: string) => {
     const palmprintUrl = `${baseUrl}/palmprint/run=${runId}`
     const response = await axios.get(palmprintUrl)

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { MapPlot } from './MapPlot'
+import { MemoizedMapPlot } from './MapPlot'
 import { SelectionInfo } from './SelectionInfo'
 import { RunData } from './types'
 import { helpIcon } from 'common'
@@ -42,7 +42,7 @@ export const Geo = () => {
             </div>
 
             <div className='my-2'>
-                <MapPlot setSelectedPoints={setSelectedPoints} />
+                <MemoizedMapPlot setSelectedPoints={setSelectedPoints} />
             </div>
 
             <div className='text-left text-gray-600'>
