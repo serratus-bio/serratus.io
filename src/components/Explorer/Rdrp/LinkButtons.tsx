@@ -79,26 +79,26 @@ function RunLinkButtons({ run_id }: { run_id: string }) {
                 show={ntAvailable}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/rpro/${run_id}.pro.gz`}
+                link={`https://s3.amazonaws.com/lovelywater2/rpro/${run_id}.pro.gz`}
                 text='.pro'
                 icon={downloadIcon}
                 download={true}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/rsummary/${run_id}.psummary`}
+                link={`https://s3.amazonaws.com/lovelywater2/rsummary/${run_id}.psummary`}
                 text='.summary'
                 icon={downloadIcon}
                 download={true}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/assembly/micro/rdrp1/${run_id}.rdrp1.mu.fa`}
+                link={`https://s3.amazonaws.com/lovelywater2/assembly/micro/rdrp1/${run_id}.rdrp1.mu.fa`}
                 text='rdrp'
                 icon={downloadIcon}
                 download={true}
                 show={microAvailable}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/assembly/contigs/${assemblyPath}`}
+                link={`https://s3.amazonaws.com/lovelywater2/assembly/contigs/${assemblyPath}`}
                 text='assembly'
                 icon={downloadIcon}
                 download={true}
