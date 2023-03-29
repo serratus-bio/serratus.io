@@ -79,13 +79,13 @@ function RunLinkButtons({ run_id }: { run_id: string }) {
                 newTab={true}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/bam/${run_id}.bam`}
+                link={`https://s3.amazonaws.com/lovelywater2/bam/${run_id}.bam`}
                 text='.bam'
                 icon={downloadIcon}
                 download={true}
             />
             <LinkButton
-                link={`https://s3.amazonaws.com/lovelywater/summary2/${run_id}.summary`}
+                link={`https://s3.amazonaws.com/lovelywater2/summary2/${run_id}.summary`}
                 text='.summary'
                 icon={downloadIcon}
                 download={true}

@@ -61,7 +61,7 @@ const info = (
                 (wiki)
             </ExternalLink>{' '}
             <ExternalLink
-                href='https://s3.amazonaws.com/lovelywater/seq/cov3ma/cov3ma.fa'
+                href='https://s3.amazonaws.com/lovelywater2/seq/cov3ma/cov3ma.fa'
                 className='text-blue-600'>
                 (cov3ma.fa)
             </ExternalLink>
