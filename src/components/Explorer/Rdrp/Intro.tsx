@@ -59,7 +59,7 @@ const info = (
                 (wiki)
             </ExternalLink>{' '}
             <ExternalLink
-                href='https://s3.amazonaws.com/lovelywater/seq/rdrp1/rdrp1.fa'
+                href='https://s3.amazonaws.com/lovelywater2/seq/rdrp1/rdrp1.fa'
                 className='text-blue-600'>
                 (rdrp1.fa)
             </ExternalLink>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { createViewState, JBrowseLinearGenomeView } from '@jbrowse/react-linear-genome-view'
 
-const bamBucket = 'lovelywater'
-const faFile = 'https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa'
-const faiFile = 'https://lovelywater.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai'
+const bamBucket = 'lovelywater2'
+const faFile = 'https://lovelywater2.s3.amazonaws.com/seq/cov3ma/cov3ma.fa'
+const faiFile = 'https://lovelywater2.s3.amazonaws.com/seq/cov3ma/cov3ma.fa.fai'
 
 const assembly = {
     name: 'Cov3ma',
