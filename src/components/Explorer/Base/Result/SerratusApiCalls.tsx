@@ -26,7 +26,7 @@ export const getMatchesDownloadUrl = (
         [searchLevel]: searchLevelValue,
     }
     const urlParams = new URLSearchParams(params)
-    return `${baseUrl}/matches/${searchType}?${urlParams}`
+    return `${baseUrl}/matches/${searchType}/download?${urlParams}`
 }
 
 export const fetchPagedMatches = async (
