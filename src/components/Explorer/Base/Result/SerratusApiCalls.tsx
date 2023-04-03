@@ -29,6 +29,27 @@ export const getMatchesDownloadUrl = (
     return `${baseUrl}/matches/${searchType}/download?${urlParams}`
 }
 
+export const fetchMatches = async (
+    searchType: string,
+    searchLevel: string,
+    searchLevelValue: string,
+    filters: Filters,
+    columns: string[]
+) => {
+    const [identityMin, identityMax] = filters.identityLims
+    const [scoreMin, scoreMax] = filters.scoreLims
+    const params = {
+        scoreMin: scoreMin.toString(),
+        scoreMax: scoreMax.toString(),
+        identityMin: identityMin.toString(),
+        identityMax: identityMax.toString(),
+        [searchLevel]: searchLevelValue,
+        columns: columns.join(','),
+    }
+    const response = await axios.get(`${baseUrl}/matches/${searchType}`, { params })
+    return response.data
+}
+
 export const fetchPagedMatches = async (
     searchType: string,
     searchLevel: string,
@@ -95,10 +116,16 @@ export const fetchPagedRunMatches = async (
     return response.data as ResultPagination
 }
 
-export const fetchPagedGeoMatches = async (searchType: string, page: number, perPage: number) => {
+export const fetchPagedGeoMatches = async (
+    searchType: string,
+    page: number,
+    perPage: number,
+    runIds?: string[]
+) => {
     const params: any = {
         page: page,
         perPage: perPage,
+        run: runIds?.length ? runIds.join(',') : '',
     }
     const response = await axios.get(`${baseUrl}/geo/${searchType}/paged`, {
         params: params,

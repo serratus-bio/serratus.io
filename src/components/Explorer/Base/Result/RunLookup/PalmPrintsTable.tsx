@@ -2,6 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { routes } from 'common/routes'
 import { filterObjects } from 'common/utils'
+import { externalLinkIcon } from 'common'
 
 interface PalmPrintsTableProps {
     data: any[] | undefined
@@ -68,7 +69,8 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                                                                             <NavLink
                                                                                 className='text-blue-600 dark:text-blue-500 hover:underline'
                                                                                 to={`${routes.palmid.path}?fastaInput=%3E${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}>
-                                                                                Analyse
+                                                                                Palmprint{' '}
+                                                                                {externalLinkIcon}
                                                                             </NavLink>
                                                                         </td>
                                                                     </>

@@ -19,8 +19,17 @@ export function getColorFromSelectedIndex(
     return selectedIndex >= 0 ? getColorFromIndex(selectedIndex) : defaultColor
 }
 
-export function getRunDataFromPaginatedData(paginatedRunData: { [page: string]: RunData[] }) {
-    return Object.values(paginatedRunData).flat()
+export function getRunDataFromPaginatedData(
+    paginatedRunData: { [page: string]: RunData[] },
+    filterRunIds?: string[]
+) {
+    const results = Object.values(paginatedRunData).flat()
+    if (!filterRunIds || filterRunIds?.length === 0) {
+        return results
+    }
+    const set = new Set(filterRunIds)
+
+    return results.filter((row) => set.has(row.run_id))
 }
 
 export function getBioIdsFromRunData(selectedPoints: RunData[]) {
