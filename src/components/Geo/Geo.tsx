@@ -16,12 +16,14 @@ import {
 } from './GeoHelpers'
 import { SpeciesSelect } from './SpeciesSelect'
 import { TimePlot } from './TimePlot'
+import { LoadIcon } from 'common/LoadIcon'
 
 type Props = {
     runIds?: string[]
+    isEmbedded?: boolean
 }
 
-export const Geo = ({ runIds }: Props) => {
+export const Geo = ({ runIds, isEmbedded = false }: Props) => {
     const [isCollapsed, setIsCollapsed] = React.useState<boolean>(false)
     const [isFetching, setIsFetching] = React.useState<boolean>(true)
     const [paginatedRunData, setPaginatedRunData] = React.useState<{
@@ -148,16 +150,18 @@ export const Geo = ({ runIds }: Props) => {
         return transformToTimePlotData(groupedCounter, selectedSpecies)
     }, [filteredAndSelectedRows])
 
-    const loading = <div className='text-center'>Loading... (this might take a while)</div>
-
     return (
         <div className='mx-14 my-2'>
-            <Helmet>
-                <title>Serratus | Planetary RNA Virome</title>
-            </Helmet>
-            <div className='text-center text-xl my-4'>The Planetary RNA Virome</div>
+            {isEmbedded ? null : (
+                <>
+                    <Helmet>
+                        <title>Serratus | Planetary RNA Virome</title>
+                    </Helmet>
+                    <div className='text-center text-xl my-4'>The Planetary RNA Virome</div>
+                </>
+            )}
             {!runData.length || isFetching ? (
-                loading
+                <LoadIcon />
             ) : (
                 <>
                     <div className='flex my-4'>

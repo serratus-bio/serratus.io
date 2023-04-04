@@ -69,7 +69,7 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                                                                             <NavLink
                                                                                 className='text-blue-600 dark:text-blue-500 hover:underline'
                                                                                 to={`${routes.palmid.path}?fastaInput=%3E${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}>
-                                                                                Palmprint{' '}
+                                                                                palmID{' '}
                                                                                 {externalLinkIcon}
                                                                             </NavLink>
                                                                         </td>

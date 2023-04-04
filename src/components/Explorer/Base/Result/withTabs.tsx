@@ -1,9 +1,10 @@
 import React from 'react'
 import { Geo } from 'components/Geo'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
+import { LoadIcon } from 'common/LoadIcon'
 import { Filters } from 'components/Explorer/types'
 import { fetchMatches } from './SerratusApiCalls'
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
 
 type Props = {
@@ -31,8 +32,6 @@ export const withTabs = ({ component, searchLevel, searchLevelValue, filters }: 
         onMount()
     }, [])
 
-    const loading = <div className='text-center'>Loading... (this might take a while)</div>
-
     return (
         <Tabs>
             <TabList>
@@ -40,7 +39,9 @@ export const withTabs = ({ component, searchLevel, searchLevelValue, filters }: 
                 <Tab disabled={runIds.length === 0}>Geo</Tab>
             </TabList>
             <TabPanel>{component}</TabPanel>
-            <TabPanel>{runIds.length ? <Geo runIds={runIds} /> : loading}</TabPanel>
+            <TabPanel>
+                {runIds.length ? <Geo isEmbedded={true} runIds={runIds} /> : <LoadIcon />}
+            </TabPanel>
         </Tabs>
     )
 }

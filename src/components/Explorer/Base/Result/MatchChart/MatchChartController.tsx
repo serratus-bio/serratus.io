@@ -2,6 +2,7 @@ import React from 'react'
 import { ExternalLink } from 'common'
 import { IMatchChart } from './IMatchChart'
 import { ResultPagination } from '../types'
+import { LoadIcon } from 'common/LoadIcon'
 
 type Props = {
     dataPromise: Promise<ResultPagination> | undefined
@@ -25,8 +26,6 @@ export const MatchChartController = ({ dataPromise, chart }: Props) => {
             })
     }, [dataPromise])
 
-    const loading = <div className='text-center'>Loading... (this might take a while)</div>
-
     const noResults = (
         <div className='text-center'>
             <span>This search did not return any results.</span>
@@ -43,7 +42,7 @@ export const MatchChartController = ({ dataPromise, chart }: Props) => {
 
     if (isLoading) {
         // use component from React before chart component has been returned
-        if (!chart.componentLoaded) return loading
+        if (!chart.componentLoaded) return <LoadIcon />
         chart.setLoading()
         return chart.component
     }

@@ -4,6 +4,7 @@ import { Dropdown } from './Dropdown'
 import { Selector } from './Selector'
 import { defaultFamily, defaultOrder, getLevelValues } from './config'
 import { LinkButton, downloadIcon, externalLinkIcon, ExternalLink, helpIcon } from 'common'
+import { LoadIcon } from 'common/LoadIcon'
 
 export const Trees = () => {
     const [loading, setLoading] = React.useState(true)
@@ -137,7 +138,9 @@ export const Trees = () => {
                     </ExternalLink>
                 </div>
                 <div className='flex flex-col justify-center my-2'>
-                    <span className={loading ? 'text-center' : 'hidden'}>Loading...</span>
+                    <span className={loading ? 'text-center' : 'hidden'}>
+                        <LoadIcon />{' '}
+                    </span>
                     <div
                         className={
                             loading
