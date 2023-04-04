@@ -74,7 +74,7 @@ function convertMapCoordinates(row: RunData, key: string) {
 
 function getMapHoverText(row: RunData): string {
     let text = `${row.run_id}
-        <br>Organism: ${row[RunDataKey.ScientificName]}`
+        <br>Scientific Name: ${row[RunDataKey.ScientificName]}`
     if (row.from_text) {
         text += `<br>Inferred location: "${row.from_text}"`
     }
@@ -187,17 +187,26 @@ export function transformToTimePlotData(
     }
     return selectedSpecies.map((speciesName) => {
         const color = getColorFromSelectedIndex(speciesName, selectedSpecies)
+        const xValues = []
+        const yValues = []
+        for (const [date, counter] of Object.entries(dateCounter)) {
+            if (counter[speciesName]) {
+                xValues.push(date)
+                yValues.push(counter[speciesName])
+            }
+        }
         return {
-            x: Object.keys(dateCounter),
-            y: Object.values(dateCounter).map((counter) => counter[speciesName] ?? 0),
-            name: speciesName,
+            x: xValues,
+            y: yValues,
             type: 'bar',
             marker: { color: color },
             showlegend: false,
+            name: speciesName,
             hovertemplate:
-                `<b>Scientific Name: </b>${speciesName}<br>` +
+                `<b>Scientific Name</b>: ${speciesName}<br>` +
                 '<b>Month</b>: %{x}<br>' +
-                '<b>Count Per Month: </b>%{y}',
+                '<b>Count Per Month: </b>%{y}' +
+                `<extra></extra>`,
         }
     })
 }
