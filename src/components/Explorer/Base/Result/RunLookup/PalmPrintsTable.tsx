@@ -68,8 +68,22 @@ export const PalmPrintsTable = ({ data, header }: PalmPrintsTableProps) => {
                                                                             className='py-4 px-6 text-sm font-medium text-right whitespace-nowrap'>
                                                                             <NavLink
                                                                                 className='text-blue-600 dark:text-blue-500 hover:underline'
-                                                                                to={`${routes.palmid.path}?fastaInput=%3E${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}>
-                                                                                palmID{' '}
+                                                                                to={`${routes.palmid.path}?fastaInput=%3E${data[eIndex]['run_id']}_${data[eIndex]['assembly_node']}_${data[eIndex]['palm_id']}%0A${data[eIndex]['q_sequence']}`}
+                                                                                target='_blank'>
+                                                                                palmID
+                                                                                {externalLinkIcon}
+                                                                            </NavLink>
+                                                                        </td>
+                                                                        <td
+                                                                            key={index + 2}
+                                                                            className='py-4 px-6 text-sm font-medium text-right whitespace-nowrap'>
+                                                                            <NavLink
+                                                                                className='text-blue-600 dark:text-blue-500 hover:underline'
+                                                                                to={{
+                                                                                    pathname: `https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastSearch&USER_FORMAT_DEFAULTS=on&SET_SAVED_SEARCH=true&PAGE=Proteins&PROGRAM=blastp&QUERY=${data[eIndex]['q_sequence']}&JOB_TITLE=palmID_${data[eIndex]['palm_id']}&GAPCOSTS=11%201&DATABASE=nr&BLAST_PROGRAMS=blastp&MAX_NUM_SEQ=100&SHORT_QUERY_ADJUST=on&EXPECT=0.05&WORD_SIZE=6&MATRIX_NAME=BLOSUM62&COMPOSITION_BASED_STATISTICS=2&PROG_DEFAULTS=on&SHOW_OVERVIEW=on&SHOW_LINKOUT=on&ALIGNMENT_VIEW=Pairwise&MASK_CHAR=2&MASK_COLOR=1&GET_SEQUENCE=on&NEW_VIEW=on&NUM_OVERVIEW=100&DESCRIPTIONS=100&ALIGNMENTS=100&FORMAT_OBJECT=Alignment&FORMAT_TYPE=HTML`,
+                                                                                }}
+                                                                                target='_blank'>
+                                                                                BLAST
                                                                                 {externalLinkIcon}
                                                                             </NavLink>
                                                                         </td>
