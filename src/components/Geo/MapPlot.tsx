@@ -23,7 +23,7 @@ export const MapPlot = ({ setSelectedPoints, plotData }: Props) => {
     })
 
     React.useEffect(() => {
-        setConfig((prevConfig) => ({ ...prevConfig, data: plotData }))
+        setConfig((prevState) => ({ ...prevState, data: plotData }))
     }, [plotData])
 
     function onSelected(selectedData: Readonly<Plotly.PlotSelectionEvent>) {
@@ -43,7 +43,12 @@ export const MapPlot = ({ setSelectedPoints, plotData }: Props) => {
                     data: plotData,
                 } as PlotParams)
             }
-            onUpdate={(figure) => setConfig(figure as PlotParams)}
+            onUpdate={(figure) =>
+                setConfig({
+                    ...figure,
+                    data: plotData,
+                } as PlotParams)
+            }
             useResizeHandler
             style={{ width: '100%', height: '100%', minHeight: '500px' }}
             onSelected={onSelected}

@@ -22,6 +22,7 @@
         "react-router-dom": "^5.2.0",
         "react-scripts": "^4.0.3",
         "react-select": "^3.1.0",
+        "react-tabs": "^4.2.1",
         "react-windowed-select": "^5.1.0"
     },
     "scripts": {
@@ -56,6 +57,7 @@
         "@types/react-plotly.js": "^2.2.4",
         "@types/react-router-dom": "^5.1.7",
         "@types/react-select": "^4.0.16",
+        "@types/react-tabs": "^2.3.4",
         "@types/react-window": "^1.8.5",
         "@typescript-eslint/eslint-plugin": "^4.28.0",
         "@typescript-eslint/parser": "^4.28.0",
