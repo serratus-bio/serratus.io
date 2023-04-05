@@ -3,6 +3,7 @@ import { FamilyMatches } from './FamilyMatches'
 import { SequenceMatches } from './SequenceMatches'
 import { RunLookup } from './RunLookup'
 import { RangeFilter } from 'components/Explorer/types'
+import { withTabs } from './withTabs'
 
 type Props = {
     searchLevel: string
@@ -20,10 +21,20 @@ export const Result = ({ searchLevel, searchLevelValue, identityLims, scoreLims 
         return <RunLookup runId={searchLevelValue} filters={filters} />
     }
     if (searchLevel === 'sequence') {
-        return <SequenceMatches sequenceId={searchLevelValue} filters={filters} />
+        return withTabs({
+            component: <SequenceMatches sequenceId={searchLevelValue} filters={filters} />,
+            searchLevel,
+            searchLevelValue,
+            filters,
+        })
     }
     if (searchLevel === 'family') {
-        return <FamilyMatches familyName={searchLevelValue} filters={filters} />
+        return withTabs({
+            component: <FamilyMatches familyName={searchLevelValue} filters={filters} />,
+            searchLevel,
+            searchLevelValue,
+            filters,
+        })
     }
     return null
 }
