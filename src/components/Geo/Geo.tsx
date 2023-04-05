@@ -41,13 +41,6 @@ export const Geo = ({ runIds, isEmbedded = false }: Props) => {
         onMount()
     }, [])
 
-    React.useEffect(() => {
-        async function onMount() {
-            fetchRunData()
-        }
-        onMount()
-    }, [])
-
     function storePaginatedRunData(rows: RunData[], page: number) {
         if (!rows.length) {
             return
