@@ -1,5 +1,4 @@
 import React from 'react'
-import { createHash } from 'crypto';
 import { Helmet } from 'react-helmet'
 import { MapPlot } from './MapPlot'
 import { ResultsTable } from './ResultsTable'

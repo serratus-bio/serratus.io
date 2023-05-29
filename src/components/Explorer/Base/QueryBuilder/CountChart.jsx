@@ -1,5 +1,16 @@
 import React from 'react'
-import * as d3 from 'd3'
+import {
+    axisBottom,
+    axisLeft,
+    group,
+    max,
+    scaleBand,
+    scaleLinear,
+    scaleSequential,
+    select,
+    stack,
+    stackOrderReverse,
+} from 'd3'
 
 const chartId = 'chart'
 
@@ -45,7 +56,7 @@ export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
     const svgWidth = chartWidth + margin.left + margin.right
     const svgHeight = chartHeight + margin.top + margin.bottom
 
-    const mainDiv = d3.select(`#${chartId}`)
+    const mainDiv = select(`#${chartId}`)
     const mainSvg = mainDiv.append('svg').attr('viewBox', `0 0 ${svgWidth} ${svgHeight}`)
     const chartG = mainSvg
         .append('g')
@@ -53,18 +64,18 @@ export const renderChart = (data, xDomain, zDomain, d3InterpolateFunction) => {
         .attr('height', chartHeight)
         .attr('transform', `translate(${margin.left}, ${margin.top})`)
 
-    xScale = d3.scaleBand().range([0, chartWidth])
+    xScale = scaleBand().range([0, chartWidth])
     xScale.domain(xLimValues)
-    yScale = d3.scaleLinear().range([chartHeight, 0])
+    yScale = scaleLinear().range([chartHeight, 0])
     yScale.domain(yLims).nice()
-    const colorScale = d3.scaleSequential(d3InterpolateFunction)
+    const colorScale = scaleSequential(d3InterpolateFunction)
     colorScale.domain(zDomain)
 
     xAxis = chartG
         .append('g')
         .attr('transform', `translate(0, ${chartHeight})`)
         .attr('class', 'x-axis')
-    xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()))
+    xAxis.call(axisBottom(xScale).tickValues(getXTicks()))
     yAxis = chartG.append('g').attr('class', 'y-axis')
 
     chartG
@@ -123,7 +134,7 @@ export const updateXLims = (begin, end) => {
     }
     setXLims([begin, end])
     xScale.domain(xLimValues)
-    xAxis.call(d3.axisBottom(xScale).tickValues(getXTicks()))
+    xAxis.call(axisBottom(xScale).tickValues(getXTicks()))
     updateStacks()
 }
 
@@ -138,9 +149,9 @@ export const updateZLims = (begin, end) => {
 export const updateYLims = (transitionDuration = 0) => {
     let maxDataY =
         1.2 *
-        d3.max(
+        max(
             dataByZStackFiltered.map((d) => {
-                return d3.max(d, (innerD) => {
+                return max(d, (innerD) => {
                     return innerD[1]
                 })
             })
@@ -148,7 +159,7 @@ export const updateYLims = (transitionDuration = 0) => {
     if (isNaN(maxDataY) || maxDataY < 10) maxDataY = 10 // set min upper limit of 10
     yLims = [0, maxDataY]
     yScale.domain(yLims).nice()
-    yAxis.transition().duration(transitionDuration).call(d3.axisLeft(yScale).ticks(5))
+    yAxis.transition().duration(transitionDuration).call(axisLeft(yScale).ticks(5))
     updateStacks(transitionDuration)
 }
 
@@ -175,8 +186,7 @@ const filterAndSetStackData = () => {
             d[zColumn] <= zLims[1]
         )
     })
-    const dataByX = d3
-        .nest()
+    const dataByX = group()
         .key((d) => d[xColumn])
         .entries(dataFiltered)
     // make entry for each x
@@ -201,10 +211,9 @@ const filterAndSetStackData = () => {
             d.ZtoY[z] = d.values[z] ? d.values[z] : 0
         })
     })
-    dataByZStackFiltered = d3
-        .stack()
+    dataByZStackFiltered = stack()
         .keys(zDomainValues)
-        .order(d3.stackOrderReverse)
+        .order(stackOrderReverse)
         .value((d, key) => d.ZtoY[key])(dataByX)
 }
 
