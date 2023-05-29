@@ -133,8 +133,33 @@ export const fetchPagedGeoMatches = async (
     return response.data as ResultPagination
 }
 
+export const fetchPagedHostMatches = async (
+    searchType:string,
+    page:number,
+    perPage:number,
+    runIds?:string[]
+) => {
+    let method:string = 'POST';
+    let payload:any = {
+        page,
+        perPage,
+        runIds
+    };
+
+    if(runIds && runIds.length < 64) {
+        method = 'GET';
+        payload = { params:{ ...payload, runIds:payload.runIds.join(',') } };
+    }
+
+    const response = await (axios as any)[method.toLowerCase()](`${baseUrl}/host/${searchType}/paged`, payload);
+
+    console.log('response.data', response.data);
+
+    return response.data as ResultPagination;
+}
+
 export const getPalmprintInfo = async (runId: string) => {
-    const palmprintUrl = `${baseUrl}/palmprint/run=${runId}`
-    const response = await axios.get(palmprintUrl)
-    return response.data
+    const palmprintUrl = `${baseUrl}/palmprint/run=${runId}`;
+    const response = await axios.get(palmprintUrl);
+    return response.data;
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Geo } from 'components/Geo'
+import { Host } from 'components/Host'
 import { BaseContext } from 'components/Explorer/Base/BaseContext'
 import { LoadIcon } from 'common/LoadIcon'
 import { Filters } from 'components/Explorer/types'
@@ -37,10 +38,14 @@ export const withTabs = ({ component, searchLevel, searchLevelValue, filters }: 
             <TabList>
                 <Tab>Sequence</Tab>
                 <Tab disabled={runIds.length === 0}>Geo</Tab>
+                <Tab disabled={runIds.length === 0}>Host</Tab>
             </TabList>
             <TabPanel>{component}</TabPanel>
             <TabPanel>
                 {runIds.length ? <Geo isEmbedded={true} runIds={runIds} /> : <LoadIcon />}
+            </TabPanel>
+            <TabPanel>
+                {runIds.length ? <Host isEmbedded={true} runIds={runIds} /> : <LoadIcon />}
             </TabPanel>
         </Tabs>
     )

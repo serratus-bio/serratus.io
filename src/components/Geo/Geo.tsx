@@ -1,4 +1,5 @@
 import React from 'react'
+import { createHash } from 'crypto';
 import { Helmet } from 'react-helmet'
 import { MapPlot } from './MapPlot'
 import { ResultsTable } from './ResultsTable'
@@ -59,7 +60,9 @@ export const Geo = ({ runIds, isEmbedded = false }: Props) => {
         const perPage = 20000
         const searchType = 'rdrp'
         const queryRunIds = shouldFetchAll() ? [] : runIds
+        console.log('fetchPagedGeoMatches(queryRunIds)', queryRunIds);
         const { result, total } = await fetchPagedGeoMatches(searchType, page, perPage, queryRunIds)
+        console.log('result', JSON.stringify(result).length, createHash('md5').update(JSON.stringify(result)).digest('hex'));
         storePaginatedRunData(result as RunData[], page)
 
         // Batch requests for remaining pages

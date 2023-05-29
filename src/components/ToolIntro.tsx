@@ -41,6 +41,15 @@ export const ToolIntro = () => {
                     </p>
                 </AboutCard>
                 <AboutCard
+                    link={routes.host.path}
+                    title='RNA Virome Targets (beta)'
+                    imgTop='/virome_targets.png'
+                    imgTopAlt='screenshot of rna virus targets'>
+                    <p className='my-2'>
+                        Evaluate the potential hosts of RNA viruses.
+                    </p>
+                </AboutCard>
+                <AboutCard
                     link={routes.trees.path}
                     title='Trees and Alignments (beta)'
                     imgTop='/trees_screenshot.png'
