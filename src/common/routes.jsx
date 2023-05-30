@@ -12,6 +12,7 @@ import { Trees } from '../components/Trees'
 import { Jbrowse } from '../components/Jbrowse'
 import { Access } from '../components/Access'
 import { Geo } from '../components/Geo'
+import { Host } from 'components/Host'
 import { Palmid } from '../components/Palmid'
 
 export const routes = {
@@ -56,6 +57,10 @@ export const routes = {
     geo: {
         path: '/geo',
         component: Geo,
+    },
+    host: {
+        path: '/host',
+        component: Host,
     },
     palmid: {
         path: '/palmid',
