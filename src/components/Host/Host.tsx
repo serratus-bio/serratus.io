@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { LegacyRef } from 'react'
 import { Helmet } from 'react-helmet'
 import { RunData } from './types'
 // import { helpIcon } from 'common'
@@ -29,6 +29,7 @@ const COLOR_SCALE = [
 export const Host = ({ runIds, isEmbedded = false }: Props) => {
     const [isFetching, setIsFetching] = React.useState<boolean>(true)
     const [runData, setRunData] = React.useState<RunData[]>([])
+    const hostBarPlotLegendRef = React.useRef()
 
     React.useEffect(() => {
         setIsFetching(true)
@@ -69,7 +70,7 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
     )
 
     React.useEffect(() => {
-        document.querySelectorAll('#host_barplot > svg').forEach((svg) => svg.remove())
+        document.querySelectorAll('#hostBarPlot > svg').forEach((svg) => svg.remove())
 
         if (runDataGroupEntries.length) {
             const orderList = Array.from(
@@ -97,7 +98,7 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
             const width = 800 - margin.left - margin.right
             const height = 600 - margin.top - margin.bottom
 
-            const svg = select('#host_barplot')
+            const svg = select('#hostBarPlot')
                 .append('svg')
                 .attr('width', width + margin.left + margin.right)
                 .attr('height', height + margin.top + margin.bottom)
@@ -139,7 +140,38 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                 .attr('width', (d: any) => (x as any)(d[1]['srarun.run'].length))
                 .attr('height', y.bandwidth())
                 .attr('fill', (d: any) => d[1].color)
-            // .attr('fill', 'url(\'#bar-pattern\')');
+
+            if (hostBarPlotLegendRef.current) {
+                while ((hostBarPlotLegendRef.current as any).childNodes.length)
+                    (hostBarPlotLegendRef.current as any).childNodes[0].remove()
+
+                // THIS SHOULD BE JSX ...
+                const legend = (hostBarPlotLegendRef.current as any).appendChild(
+                    document.createElement('div')
+                )
+                legend.style.display = 'flex'
+                legend.style.flexWrap = 'wrap'
+                legend.style.gap = '16px'
+
+                orderList.forEach((v, i) => {
+                    const legendItem = legend.appendChild(document.createElement('div'))
+                    legendItem.style.whiteSpace = 'nowrap'
+
+                    const legendItemBullet = legendItem.appendChild(document.createElement('span'))
+                    legendItemBullet.style.backgroundColor = COLOR_SCALE[i % COLOR_SCALE.length]
+                    legendItemBullet.style.display = 'inline-block'
+                    legendItemBullet.style.height = '16px'
+                    legendItemBullet.style.verticalAlign = 'top'
+                    legendItemBullet.style.width = '8px'
+
+                    const legendItemText = legendItem.appendChild(document.createElement('span'))
+                    legendItemText.innerHTML = v
+                    legendItemText.style.bottom = '4px'
+                    legendItemText.style.margin = '0 0 0 4px'
+                    legendItemText.style.position = 'relative'
+                    legendItemText.style.verticalAlign = 'top'
+                })
+            }
         }
     }, [runDataGroupEntries])
 
@@ -163,7 +195,10 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                         </div>
                     </div>
                     <div className='my-4'>
-                        <div className='w-full text-center' id='host_barplot'></div>
+                        <div className='w-full text-center' id='hostBarPlot'></div>
+                        <div
+                            className='w-full text-center'
+                            ref={hostBarPlotLegendRef as LegacyRef<any>}></div>
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                         {runDataGroupEntries.map((entry: any, entry_i: any) => {

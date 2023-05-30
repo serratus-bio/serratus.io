@@ -7,7 +7,14 @@ export const HostTaxIdResult = ({ entry }: { entry: any }) => {
         <div>
             <div>
                 <span className='font-bold text-xl'>{entry[1]['srarun.scientific_name']}</span>
-                <span className='ml-2 text-sm'>{'TAX ID: ' + entry[0]}</span>
+                <a
+                    className='ml-2 text-sm'
+                    href={'https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=' + entry[0]}
+                    rel='noreferrer'
+                    style={{ color: '#4BA3E3' }}
+                    target='_blank'>
+                    {'TAX ID: ' + entry[0]}
+                </a>
                 <span className='ml-2 text-sm'>
                     {entry[1]['srarun.run'].length +
                         ' result' +
