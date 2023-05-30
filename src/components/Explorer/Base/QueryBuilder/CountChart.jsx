@@ -2,7 +2,6 @@ import React from 'react'
 import {
     axisBottom,
     axisLeft,
-    group,
     max,
     scaleBand,
     scaleLinear,
@@ -186,9 +185,14 @@ const filterAndSetStackData = () => {
             d[zColumn] <= zLims[1]
         )
     })
-    const dataByX = group()
-        .key((d) => d[xColumn])
-        .entries(dataFiltered)
+    const dataByX = Object.entries(
+        dataFiltered.reduce((a, b) => {
+            if (!a[b[xColumn]]) a[b[xColumn]] = { key: xColumn, values: [] }
+            a[b[xColumn]].values.push(b)
+
+            return a
+        }, {})
+    ).map((v) => ({ key: v[0], values: v[1].values }))
     // make entry for each x
     const xKeys = dataByX.reduce((set, d) => {
         set.add(d.key)
