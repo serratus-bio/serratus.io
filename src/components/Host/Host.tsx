@@ -16,7 +16,7 @@ type Props = {
 export const Host = ({ runIds, isEmbedded = false }: Props) => {
     const [isFetching, setIsFetching] = React.useState<boolean>(true)
     const [runData, setRunData] = React.useState<RunData[]>([])
-    const [taxPlotRunData, setTaxPlotRunData] = React.useState([]);
+    const [taxPlotRunData, setTaxPlotRunData] = React.useState([])
     const hostBarPlotLegendRef = React.useRef()
 
     React.useEffect(() => {

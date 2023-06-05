@@ -16,15 +16,15 @@ export const COLOR_SCALE = [
     '#bab0ab',
 ]
 
-export const HostTaxPlot = ({ taxPlotRunData }: { taxPlotRunData:any }) => {
+export const HostTaxPlot = ({ taxPlotRunData }: { taxPlotRunData: any }) => {
     const margin = { top: 32, right: 8, bottom: 64, left: 256 }
     const width = 800 - margin.left - margin.right
     const height = 600 - margin.top - margin.bottom
 
-    const divRef = React.useRef();
+    const divRef = React.useRef()
 
     React.useEffect(() => {
-        if(divRef.current) {
+        if (divRef.current) {
             const svg = select(divRef.current)
                 .append('svg')
                 .attr('width', width + margin.left + margin.right)
@@ -43,7 +43,9 @@ export const HostTaxPlot = ({ taxPlotRunData }: { taxPlotRunData:any }) => {
                 .attr('width', 2)
                 .attr('fill', COLOR_SCALE[9])
 
-            const x = scaleLinear().domain([0, taxPlotRunData[0][1]['srarun.run'].length]).range([0, width])
+            const x = scaleLinear()
+                .domain([0, taxPlotRunData[0][1]['srarun.run'].length])
+                .range([0, width])
 
             svg.append('g')
                 .attr('transform', `translate(0, ${height})`)
@@ -68,7 +70,7 @@ export const HostTaxPlot = ({ taxPlotRunData }: { taxPlotRunData:any }) => {
                 .attr('height', y.bandwidth())
                 .attr('fill', (d: any) => d[1].color)
         }
-    }, [taxPlotRunData]);
+    }, [taxPlotRunData])
 
     return <div ref={divRef as LegacyRef<any>}></div>
 }
