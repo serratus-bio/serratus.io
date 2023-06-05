@@ -1,4 +1,5 @@
 import React, { LegacyRef } from 'react'
+import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
 import { RunData } from './types'
 // import { helpIcon } from 'common'
@@ -145,32 +146,34 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                 while ((hostBarPlotLegendRef.current as any).childNodes.length)
                     (hostBarPlotLegendRef.current as any).childNodes[0].remove()
 
-                // THIS SHOULD BE JSX ...
-                const legend = (hostBarPlotLegendRef.current as any).appendChild(
-                    document.createElement('div')
+                ReactDOM.render(
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+                        {orderList.map((v: any, i: number) => {
+                            return (
+                                <div key={i} style={{ whiteSpace: 'nowrap' }}>
+                                    <span
+                                        style={{
+                                            backgroundColor: COLOR_SCALE[i % COLOR_SCALE.length],
+                                            display: 'inline-block',
+                                            height: '16px',
+                                            verticalAlign: 'top',
+                                            width: '8px',
+                                        }}></span>
+                                    <span
+                                        style={{
+                                            bottom: '4px',
+                                            margin: '0 0 0 4px',
+                                            position: 'relative',
+                                            verticalAlign: 'top',
+                                        }}>
+                                        {v}
+                                    </span>
+                                </div>
+                            )
+                        })}
+                    </div>,
+                    hostBarPlotLegendRef.current
                 )
-                legend.style.display = 'flex'
-                legend.style.flexWrap = 'wrap'
-                legend.style.gap = '16px'
-
-                orderList.forEach((v, i) => {
-                    const legendItem = legend.appendChild(document.createElement('div'))
-                    legendItem.style.whiteSpace = 'nowrap'
-
-                    const legendItemBullet = legendItem.appendChild(document.createElement('span'))
-                    legendItemBullet.style.backgroundColor = COLOR_SCALE[i % COLOR_SCALE.length]
-                    legendItemBullet.style.display = 'inline-block'
-                    legendItemBullet.style.height = '16px'
-                    legendItemBullet.style.verticalAlign = 'top'
-                    legendItemBullet.style.width = '8px'
-
-                    const legendItemText = legendItem.appendChild(document.createElement('span'))
-                    legendItemText.innerHTML = v
-                    legendItemText.style.bottom = '4px'
-                    legendItemText.style.margin = '0 0 0 4px'
-                    legendItemText.style.position = 'relative'
-                    legendItemText.style.verticalAlign = 'top'
-                })
             }
         }
     }, [runDataGroupEntries])
