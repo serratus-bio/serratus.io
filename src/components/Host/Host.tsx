@@ -1,5 +1,4 @@
 import React, { LegacyRef } from 'react'
-import ReactDOM from 'react-dom'
 import { Helmet } from 'react-helmet'
 import { RunData } from './types'
 // import { helpIcon } from 'common'
@@ -16,8 +15,25 @@ type Props = {
 export const Host = ({ runIds, isEmbedded = false }: Props) => {
     const [isFetching, setIsFetching] = React.useState<boolean>(true)
     const [runData, setRunData] = React.useState<RunData[]>([])
-    const [taxPlotRunData, setTaxPlotRunData] = React.useState([])
+    const [taxPlotData, setTaxPlotData] = React.useState({})
+    const [taxPlotWidthHeight, setTaxPlotWidthHeight] = React.useState([800, 600])
     const hostBarPlotLegendRef = React.useRef()
+    const taxPlotContainerRef = React.useRef()
+    const taxPlotContainerRefCallback = React.useCallback((node: any) => {
+        const onWindowResize = () => {
+            if (taxPlotContainerRef.current)
+                setTaxPlotWidthHeight([(taxPlotContainerRef.current as any).offsetWidth, 600])
+        }
+
+        if (taxPlotContainerRef.current) window.removeEventListener('resize', onWindowResize)
+
+        taxPlotContainerRef.current = node
+        if (taxPlotContainerRef.current) {
+            window.addEventListener('resize', onWindowResize)
+
+            onWindowResize()
+        }
+    }, [])
 
     React.useEffect(() => {
         setIsFetching(true)
@@ -70,7 +86,7 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                 )
             )
 
-            const data = runDataGroupEntries.slice(0, 32).map((v: any) => {
+            const runData = runDataGroupEntries.slice(0, 32).map((v: any) => {
                 if (/metagenome/i.test(v[1]['srarun.scientific_name'])) v[1].color = COLOR_SCALE[8]
                 else if (orderList.indexOf(v[1]['tax_lineage.tax_order']) !== -1)
                     v[1].color =
@@ -82,38 +98,7 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                 return v
             })
 
-            setTaxPlotRunData(data)
-
-            // X vvvv
-            if (hostBarPlotLegendRef.current)
-                ReactDOM.render(
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
-                        {orderList.map((v: any, i: number) => {
-                            return (
-                                <div key={i} style={{ whiteSpace: 'nowrap' }}>
-                                    <span
-                                        style={{
-                                            backgroundColor: COLOR_SCALE[i % COLOR_SCALE.length],
-                                            display: 'inline-block',
-                                            height: '16px',
-                                            verticalAlign: 'top',
-                                            width: '8px',
-                                        }}></span>
-                                    <span
-                                        style={{
-                                            bottom: '4px',
-                                            margin: '0 0 0 4px',
-                                            position: 'relative',
-                                            verticalAlign: 'top',
-                                        }}>
-                                        {v}
-                                    </span>
-                                </div>
-                            )
-                        })}
-                    </div>,
-                    hostBarPlotLegendRef.current
-                )
+            setTaxPlotData({ orderList, runData })
         }
     }, [runData])
 
@@ -138,8 +123,11 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                     </div>
                     <div className='my-4'>
                         {/* <div className='w-full text-center' id='hostBarPlot'></div> */}
-                        <div className='w-full text-center'>
-                            <HostTaxPlot taxPlotRunData={taxPlotRunData} />
+                        <div className='w-full text-center' ref={taxPlotContainerRefCallback}>
+                            <HostTaxPlot
+                                taxPlotData={taxPlotData}
+                                taxPlotWidthHeight={taxPlotWidthHeight}
+                            />
                         </div>
                         <div
                             className='w-full text-center'
