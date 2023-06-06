@@ -122,7 +122,6 @@ export const Host = ({ runIds, isEmbedded = false }: Props) => {
                         </div>
                     </div>
                     <div className='my-4'>
-                        {/* <div className='w-full text-center' id='hostBarPlot'></div> */}
                         <div className='w-full text-center' ref={taxPlotContainerRefCallback}>
                             <HostTaxPlot
                                 taxPlotData={taxPlotData}
