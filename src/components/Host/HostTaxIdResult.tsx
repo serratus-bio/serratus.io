@@ -16,7 +16,7 @@ export const HostTaxIdResult = ({ entry }: { entry: any }) => {
                     {'TAX ID: ' + entry[0]}
                 </a>
                 <span className='ml-2 text-sm'>
-                    {entry[1]['srarun.run'].length +
+                    {entry[1]['srarun.run'].length.toLocaleString() +
                         ' result' +
                         (entry[1]['srarun.run'].length == 1 ? '' : 's')}
                 </span>
