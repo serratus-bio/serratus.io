@@ -13,7 +13,11 @@ import {
 
 const chartId = 'chart'
 
-export const CountChart = () => {
+let _onFilterAndSetStackData = undefined
+
+export const CountChart = ({ onFilterAndSetStackData }) => {
+    if (onFilterAndSetStackData) _onFilterAndSetStackData = onFilterAndSetStackData
+
     return <div id={chartId} />
 }
 
@@ -219,6 +223,9 @@ const filterAndSetStackData = () => {
         .keys(zDomainValues)
         .order(stackOrderReverse)
         .value((d, key) => d.ZtoY[key])(dataByX)
+
+    _onFilterAndSetStackData &&
+        _onFilterAndSetStackData({ matchN: dataFiltered.reduce((a, b) => a + b.count, 0) })
 }
 
 const getAllValues = (begin, end) => {

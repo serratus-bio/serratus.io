@@ -26,6 +26,7 @@ export const QueryBuilder = ({
     const context = React.useContext(BaseContext)
     const [errorMessage, setErrorMessage] = React.useState('')
     const debounceTime = 50
+    const viewMatchesButtonRef = React.useRef()
 
     // initial chart render
     const chartRendered = React.useRef(false)
@@ -122,12 +123,22 @@ export const QueryBuilder = ({
                     </div>
                 </div>
                 <div className={chartVisibility}>
-                    <CountChart />
+                    <CountChart
+                        onFilterAndSetStackData={(data) => {
+                            if (viewMatchesButtonRef.current)
+                                viewMatchesButtonRef.current.innerHTML =
+                                    'View ' +
+                                    data.matchN.toLocaleString() +
+                                    ' Match' +
+                                    (data.matchN !== 1 ? 'es' : '')
+                        }}
+                    />
                 </div>
                 <div className='flex flex-row justify-center items-center mt-4'>
                     <button
                         className='w-full m-auto rounded bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4'
-                        onClick={viewMatches}>
+                        onClick={viewMatches}
+                        ref={viewMatchesButtonRef}>
                         View Matches
                     </button>
                     <ExternalLink
