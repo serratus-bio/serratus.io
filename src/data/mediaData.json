@@ -1,0 +1,74 @@
+{
+    "coverages": [
+        {
+            "name": "Publication",
+            "items": [
+                {
+                    "title": "Petabase-scale sequence alignment catalyses viral discovery",
+                    "url": "https://www.nature.com/articles/s41586-021-04332-2",
+                    "publisher": "Nature"
+                },
+                {
+                    "title": "coronaSPAdes: from biosynthetic gene clusters to RNA viral assemblies",
+                    "url": "https://academic.oup.com/bioinformatics/article-abstract/38/1/1/6354349",
+                    "publisher": "Bioinformatics"
+                },
+                {
+                    "title": "Ribovirus classification by a polymerase barcode sequence",
+                    "url": "https://doi.org/10.1038/s41586-021-04332-2",
+                    "publisher": "PeerJ "
+                }
+            ]
+        },
+        {
+            "name": "Data Publication",
+            "items": [
+                {
+                    "title": "Diversification of mammalian deltaviruses by host shifting",
+                    "url": "https://www.pnas.org/content/118/3/e2019907118",
+                    "publisher": "PNAS"
+                },
+                {
+                    "title": "Two novel bornaviruses identified in colubrid and viperid snakes",
+                    "url": "https://doi.org/10.1007/s00705-021-05138-3",
+                    "publisher": "Archives of Virology"
+                }
+            ]
+        },
+        {
+            "name": "Media Coverage",
+            "items": [
+                {
+                    "title": "New dangers? Computers uncover 100,000 novel viruses in old genetic data",
+                    "url": "https://www.science.org/content/article/new-dangers-computers-uncover-100-000-novel-viruses-old-genetic-data",
+                    "publisher": "Science"
+                },
+                {
+                    "title": "130,000 new viruses discovered, chimpanzee social learning, what's moving the tectonic plates and more",
+                    "url": "https://www.cbc.ca/radio/quirks/jan-29-130-000-new-viruses-discovered-chimpanzee-social-learning-what-s-moving-the-tectonic-plates-and-more-1.6329726",
+                    "publisher": "CBC Quirks and Quarks"
+                },
+                {
+                    "title": "Supercomputer helps Canadian researcher uncover thousands of viruses that could cause human diseases",
+                    "url": "https://www.cbc.ca/news/health/supercomputer-virus-study-disease-1.6345158",
+                    "publisher": "CBC News"
+                },
+                {
+                    "title": "AWS-Powered Research Identifies 130,000+ New RNA Viruses",
+                    "url": "https://www.hpcwire.com/2022/02/08/aws-powered-research-identifies-130000-new-rna-viruses/",
+                    "publisher": "HPCwire"
+                },
+                {
+                    "title": "More than 130,000 viruses discovered thanks to a new computer tool",
+                    "url": "https://www.nationalgeographic.com.es/ciencia/descubiertos-mas-130000-virus-gracias-a-nueva-herramienta-informatica_17807",
+                    "publisher": "National Geographic España"
+                },
+                {
+                    "title": "COVID-19: Researchers identify nine new coronaviruses, all harmless to humans",
+                    "url": "https://vancouversun.com/health/researchers-identify-nine-new-coronaviruses-all-harmless-to-humans",
+                    "publisher": "Vancouver Sun"
+                }
+            ]
+        }
+    ]
+}
