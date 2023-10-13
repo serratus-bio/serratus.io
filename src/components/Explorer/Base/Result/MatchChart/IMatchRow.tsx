@@ -81,9 +81,14 @@ export class IMatchRow {
 
         const x = d3.scaleBand().range([0, barWidth]).domain(genomeBins).padding(0.01)
         const y = d3.scaleBand().range([0, barHeight]).domain([this.displayName]).padding(0.01)
-        const yAxis = mainG.append('svg:a')
-            .attr('xlink:href', `${window.location.pathname}?${this.linkSearchLevel}=${this.linkValue}`)
-            .append('g').call(d3.axisLeft(y))
+        const yAxis = mainG
+            .append('svg:a')
+            .attr(
+                'xlink:href',
+                `${window.location.pathname}?${this.linkSearchLevel}=${this.linkValue}`
+            )
+            .append('g')
+            .call(d3.axisLeft(y))
         yAxis.select('path').remove()
         yAxis.select('line').remove()
         yAxis
