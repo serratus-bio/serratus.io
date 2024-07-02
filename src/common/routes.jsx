@@ -85,4 +85,11 @@ export const routes = {
             return null
         },
     },
+    palmdb: {
+        path: '/palmdb',
+        component: () => {
+            window.location.href = 'https://github.com/ababaian/palmdb'
+            return null
+        },
+    },
 }
