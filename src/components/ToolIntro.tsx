@@ -73,7 +73,7 @@ export const ToolIntro = () => {
                     </p>
                 </AboutCard>
                 <AboutCard
-                    link='https://github.com/rcedgar/palmdb'
+                    link='https://github.com/ababaian/palmdb'
                     external={true}
                     title='palmDB: RdRP Palmprint Database'
                     imgTop='/palmdb_icon.png'
