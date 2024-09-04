@@ -22,7 +22,7 @@ export const Navbar = () => {
                 <div
                     className={`${
                         hamburgerButtonPressed ? 'flex flex-col' : 'hidden'
-                    } lg:flex lg:flex-row w-screen  bg-gray-50 sm:p-2 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
+                    } lg:flex lg:flex-row bg-gray-50 sm:p-2 lg:justify-between items-center gap-y-4 z-10 border-b-2  border-gray-200 font-montserrat font-medium`}>
                     <div className='hidden w-20 h-8 lg:flex align-middle'>
                         <NavLink exact to={routes.home.path}>
                             <img src='/logo.png' alt='logo'></img>
@@ -57,6 +57,13 @@ export const Navbar = () => {
                             className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
                             activeClassName='text-blue-600'>
                             Team
+                        </NavLink>
+                        <NavLink
+                            exact
+                            to={routes.media.path}
+                            className='ml-10 hover:text-blue-800 transition duration-300 ease-in-out'
+                            activeClassName='text-blue-600'>
+                            Media
                         </NavLink>
                         <ExternalLink
                             href='https://www.nature.com/articles/s41586-021-04332-2'

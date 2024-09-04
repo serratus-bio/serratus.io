@@ -14,6 +14,7 @@ import { Access } from '../components/Access'
 import { Geo } from '../components/Geo'
 import { Host } from 'components/Host'
 import { Palmid } from '../components/Palmid'
+import { Media } from 'components/Media'
 
 export const routes = {
     home: {
@@ -45,6 +46,10 @@ export const routes = {
     team: {
         path: '/team',
         component: Team,
+    },
+    media: {
+        path: '/media',
+        component: Media,
     },
     trees: {
         path: '/trees',

@@ -13,7 +13,7 @@ export const ToolIntro = () => {
     return (
         <div className='min-h-screen w-full sm:bg-gray-100 py-4'>
             {headTags}
-            <div className={`py-4 px-6 mx-4 ${classesBoxBorder}`}>
+            <div className={`py-4 flex justify-center items-center mx-4 ${classesBoxBorder}`}>
                 <h1 className='text-3xl font-bold text-center'>Serratus Toolkit</h1>
                 <p className='my-3 text-xl'></p>
             </div>
